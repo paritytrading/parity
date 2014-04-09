@@ -21,6 +21,7 @@
   <modules>
     <module>parity-match</module>
     <module>parity-util</module>
+    <module>parity-perf-test</module>
   </modules>
 
   <dependencyManagement>
