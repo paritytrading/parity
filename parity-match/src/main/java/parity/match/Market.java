@@ -31,13 +31,13 @@ public class Market {
     /**
      * Enter a market order.
      *
-     * The incoming order is matched against resting orders in the order book.
-     * This operation results in zero or more Match events.
+     * <p>The incoming order is matched against resting orders in the order
+     * book. This operation results in zero or more Match events.</p>
      *
-     * If the remaining quantity is not zero after the matching operation, a
-     * Cancel event is triggered for the remaining quantity.
+     * <p>If the remaining quantity is not zero after the matching operation,
+     * a Cancel event is triggered for the remaining quantity.</p>
      *
-     * If the order identifier is known, do nothing.
+     * <p>If the order identifier is known, do nothing.</p>
      *
      * @param orderId the order identifier
      * @param side the side
@@ -75,14 +75,14 @@ public class Market {
     /**
      * Enter a limit order.
      *
-     * The incoming order is first matched against resting orders in the order
-     * book. This operation results in zero or more Match events.
+     * <p>The incoming order is first matched against resting orders in the
+     * order book. This operation results in zero or more Match events.</p>
      *
-     * If the remaining quantity is not zero after the matching operation,
+     * <p>If the remaining quantity is not zero after the matching operation,
      * the remaining quantity is added to the order book and an Add event is
-     * triggered.
+     * triggered.</p>
      *
-     * If the order identifier is known, do nothing.
+     * <p>If the order identifier is known, do nothing.</p>
      *
      * @param orderId an order identifier
      * @param side the side
@@ -143,9 +143,9 @@ public class Market {
      * Cancel a quantity of an order in the order book. If the remaining
      * quantity reaches zero, the order is deleted from the order book.
      *
-     * A Cancel event is triggered.
+     * <p>A Cancel event is triggered.</p>
      *
-     * If the order identifier is unknown, do nothing.
+     * <p>If the order identifier is unknown, do nothing.</p>
      *
      * @param orderId the order identifier
      * @param quantity the canceled quantity
@@ -166,9 +166,9 @@ public class Market {
     /**
      * Delete an order from the order book.
      *
-     * A Delete event is triggered.
+     * <p>A Delete event is triggered.</p>
      *
-     * If the order identifier is unknown, do nothing.
+     * <p>If the order identifier is unknown, do nothing.</p>
      *
      * @param orderId the order identifier
      */
