@@ -21,7 +21,6 @@
 
   <modules>
     <module>parity-match</module>
-    <module>parity-util</module>
     <module>parity-perf-test</module>
   </modules>
 
@@ -38,9 +37,9 @@
         <version>4.11</version>
       </dependency>
       <dependency>
-        <groupId>org.apache.commons</groupId>
-        <artifactId>commons-lang3</artifactId>
-        <version>3.3.1</version>
+        <groupId>org.jvirtanen.value</groupId>
+        <artifactId>value</artifactId>
+        <version>0.1.0</version>
       </dependency>
       <dependency>
         <groupId>org.openjdk.jmh</groupId>

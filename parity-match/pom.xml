@@ -26,9 +26,8 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>parity</groupId>
-      <artifactId>parity-util</artifactId>
-      <version>${project.version}</version>
+      <groupId>org.jvirtanen.value</groupId>
+      <artifactId>value</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>

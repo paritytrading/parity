@@ -2,7 +2,7 @@ package parity.match;
 
 import java.util.ArrayList;
 import java.util.List;
-import parity.util.Value;
+import org.jvirtanen.value.Value;
 
 class MarketEvents implements MarketListener {
 
