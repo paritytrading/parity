@@ -4,7 +4,7 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>parity</groupId>
+  <groupId>org.jvirtanen.parity</groupId>
   <artifactId>parity-parent</artifactId>
   <version>0.1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
