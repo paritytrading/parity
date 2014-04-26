@@ -16,7 +16,7 @@ public class Market {
 
     /**
      * Create a matching engine.
-     *  
+     *
      * @param listener a listener for outbound events from the matching engine
      */
     public Market(MarketListener listener) {

@@ -26,7 +26,7 @@ public class MarketTest {
 
         Event bid = new Add(1, Side.BUY, 1000, 100);
 
-        assertEquals(asList(bid), events.collect());        
+        assertEquals(asList(bid), events.collect());
     }
 
     @Test

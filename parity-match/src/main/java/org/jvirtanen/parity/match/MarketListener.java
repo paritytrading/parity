@@ -21,7 +21,7 @@ public interface MarketListener {
      *
      * @param orderId the order identifier
      * @param side the side
-     * @param price the limit price 
+     * @param price the limit price
      * @param size the size
      */
     void add(long orderId, Side side, long price, int size);
