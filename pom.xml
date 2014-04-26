@@ -13,6 +13,13 @@
   <description>An exchange construction kit for the JVM.</description>
   <url>https://github.com/jvirtanen/parity</url>
 
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>1.7</java.version>
