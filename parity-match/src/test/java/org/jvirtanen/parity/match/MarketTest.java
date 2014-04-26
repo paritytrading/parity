@@ -1,9 +1,9 @@
-package parity.match;
+package org.jvirtanen.parity.match;
 
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
 import static org.junit.Assert.*;
-import static parity.match.MarketEvents.*;
+import static org.jvirtanen.parity.match.MarketEvents.*;
 
 import org.junit.Before;
 import org.junit.Test;

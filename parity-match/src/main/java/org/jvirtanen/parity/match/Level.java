@@ -1,4 +1,4 @@
-package parity.match;
+package org.jvirtanen.parity.match;
 
 import java.util.ArrayList;
 

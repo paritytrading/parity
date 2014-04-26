@@ -1,5 +1,8 @@
-package parity.perf;
+package org.jvirtanen.parity.perf;
 
+import org.jvirtanen.parity.match.MarketListener;
+import org.jvirtanen.parity.match.Market;
+import org.jvirtanen.parity.match.Side;
 import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.BenchmarkMode;
@@ -9,9 +12,6 @@ import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Mode;
 import java.util.concurrent.TimeUnit;
-import parity.match.MarketListener;
-import parity.match.Market;
-import parity.match.Side;
 
 @State(Scope.Thread)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)

@@ -1,4 +1,4 @@
-package parity.match;
+package org.jvirtanen.parity.match;
 
 class Order {
 
