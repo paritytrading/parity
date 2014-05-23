@@ -40,20 +40,48 @@
 
   <modules>
     <module>parity-match</module>
+    <module>parity-net</module>
     <module>parity-perf-test</module>
+    <module>parity-system</module>
+    <module>parity-util</module>
   </modules>
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>com.typesafe</groupId>
+        <artifactId>config</artifactId>
+        <version>1.2.0</version>
+      </dependency>
       <dependency>
         <groupId>it.unimi.dsi</groupId>
         <artifactId>fastutil</artifactId>
         <version>6.5.12</version>
       </dependency>
       <dependency>
+        <groupId>joda-time</groupId>
+        <artifactId>joda-time</artifactId>
+        <version>2.3</version>
+      </dependency>
+      <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
         <version>4.11</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jvirtanen.config</groupId>
+        <artifactId>config-extras</artifactId>
+        <version>0.1.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jvirtanen.nassau</groupId>
+        <artifactId>nassau</artifactId>
+        <version>0.1.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jvirtanen.nio</groupId>
+        <artifactId>nio-extras</artifactId>
+        <version>0.1.0</version>
       </dependency>
       <dependency>
         <groupId>org.jvirtanen.value</groupId>
@@ -83,6 +111,11 @@
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>2.9.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-release-plugin</artifactId>
           <version>2.5</version>
         </plugin>
@@ -100,6 +133,15 @@
         <configuration>
           <source>${java.version}</source>
           <target>${java.version}</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <links>
+            <link>http://typesafehub.github.io/config/latest/api/</link>
+          </links>
         </configuration>
       </plugin>
       <plugin>
