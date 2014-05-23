@@ -1,7 +1,7 @@
 Parity
 ======
 
-Parity is an exchange construction kit for the JVM.
+Parity is a financial exchange construction kit for the JVM.
 
 
 License
