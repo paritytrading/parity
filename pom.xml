@@ -40,7 +40,9 @@
 
   <modules>
     <module>parity-match</module>
+    <module>parity-net</module>
     <module>parity-perf-test</module>
+    <module>parity-util</module>
   </modules>
 
   <dependencyManagement>
@@ -54,6 +56,16 @@
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
         <version>4.11</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jvirtanen.nassau</groupId>
+        <artifactId>nassau</artifactId>
+        <version>0.1.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jvirtanen.nio</groupId>
+        <artifactId>nio-extras</artifactId>
+        <version>0.1.0</version>
       </dependency>
       <dependency>
         <groupId>org.jvirtanen.value</groupId>
