@@ -12,6 +12,13 @@ POE is Parity's native order entry protocol. See `POE.md` for the protocol
 specification.
 
 
+PMD
+---
+
+PMD is Parity's native market data protocol. See `PMD.md` for the protocol
+specification.
+
+
 License
 -------
 
