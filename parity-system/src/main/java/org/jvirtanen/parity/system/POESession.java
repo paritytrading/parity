@@ -19,6 +19,8 @@ class POESession implements SoupBinTCPServerStatusListener, POEServerListener {
 
     private SoupBinTCPServer transport;
 
+    private boolean heartbeatTimeout;
+
     public POESession() {
         this.loginAccepted = new SoupBinTCP.LoginAccepted();
 
@@ -26,6 +28,8 @@ class POESession implements SoupBinTCPServerStatusListener, POEServerListener {
         this.orderCanceled = new POE.OrderCanceled();
 
         this.buffer = ByteBuffer.allocate(128);
+
+        this.heartbeatTimeout = false;
     }
 
     public void attach(SoupBinTCPServer transport) {
@@ -34,6 +38,15 @@ class POESession implements SoupBinTCPServerStatusListener, POEServerListener {
 
     public SoupBinTCPServer getTransport() {
         return transport;
+    }
+
+    @Override
+    public void heartbeatTimeout() {
+        heartbeatTimeout = true;
+    }
+
+    public boolean hasHeartbeatTimeout() {
+        return heartbeatTimeout;
     }
 
     @Override

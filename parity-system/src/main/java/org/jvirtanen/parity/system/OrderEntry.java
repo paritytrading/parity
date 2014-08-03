@@ -94,6 +94,9 @@ class OrderEntry implements Runnable {
 
             try {
                 session.getTransport().keepAlive();
+
+                if (session.hasHeartbeatTimeout())
+                    toClose.add(session);
             } catch (IOException e) {
                 toClose.add(session);
             }
