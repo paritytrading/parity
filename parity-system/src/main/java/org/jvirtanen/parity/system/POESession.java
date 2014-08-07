@@ -2,11 +2,13 @@ package org.jvirtanen.parity.system;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.channels.SocketChannel;
 import org.jvirtanen.nassau.soupbintcp.SoupBinTCP;
 import org.jvirtanen.nassau.soupbintcp.SoupBinTCPServer;
 import org.jvirtanen.nassau.soupbintcp.SoupBinTCPServerStatusListener;
 import org.jvirtanen.parity.net.poe.POE;
 import org.jvirtanen.parity.net.poe.POEServerListener;
+import org.jvirtanen.parity.net.poe.POEServerParser;
 
 class POESession implements SoupBinTCPServerStatusListener, POEServerListener {
 
@@ -21,7 +23,7 @@ class POESession implements SoupBinTCPServerStatusListener, POEServerListener {
 
     private boolean heartbeatTimeout;
 
-    public POESession() {
+    public POESession(SocketChannel channel) {
         this.loginAccepted = new SoupBinTCP.LoginAccepted();
 
         this.orderAccepted = new POE.OrderAccepted();
@@ -29,11 +31,9 @@ class POESession implements SoupBinTCPServerStatusListener, POEServerListener {
 
         this.buffer = ByteBuffer.allocate(128);
 
-        this.heartbeatTimeout = false;
-    }
+        this.transport = new SoupBinTCPServer(channel, new POEServerParser(this), this);
 
-    public void attach(SoupBinTCPServer transport) {
-        this.transport = transport;
+        this.heartbeatTimeout = false;
     }
 
     public SoupBinTCPServer getTransport() {

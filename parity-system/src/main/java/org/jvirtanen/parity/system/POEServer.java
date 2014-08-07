@@ -5,8 +5,6 @@ import java.net.InetSocketAddress;
 import java.net.StandardSocketOptions;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
-import org.jvirtanen.nassau.soupbintcp.SoupBinTCPServer;
-import org.jvirtanen.parity.net.poe.POEServerParser;
 
 class POEServer {
 
@@ -37,13 +35,7 @@ class POEServer {
         channel.setOption(StandardSocketOptions.TCP_NODELAY, true);
         channel.configureBlocking(false);
 
-        POESession session = new POESession();
-
-        SoupBinTCPServer transport = new SoupBinTCPServer(channel, new POEServerParser(session), session);
-
-        session.attach(transport);
-
-        return session;
+        return new POESession(channel);
     }
 
 }
