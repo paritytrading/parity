@@ -43,6 +43,7 @@
     <module>parity-net</module>
     <module>parity-perf-test</module>
     <module>parity-system</module>
+    <module>parity-top</module>
     <module>parity-util</module>
   </modules>
 
