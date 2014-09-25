@@ -22,9 +22,7 @@ class TradingSystem {
 
         try {
             main(config(args[0]));
-        } catch (ConfigException e) {
-            error(e);
-        } catch (FileNotFoundException e) {
+        } catch (ConfigException | FileNotFoundException e) {
             error(e);
         }
     }
