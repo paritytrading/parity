@@ -55,7 +55,8 @@
               <mainClass>org.jvirtanen.parity.system.TradingSystem</mainClass>
             </transformer>
           </transformers>
-          <outputFile>${project.basedir}/parity-system.jar</outputFile>
+          <shadedArtifactAttached>true</shadedArtifactAttached>
+          <shadedClassifierName>jar-with-dependencies</shadedClassifierName>
         </configuration>
         <executions>
           <execution>
