@@ -16,7 +16,7 @@
   <packaging>pom</packaging>
 
   <name>Parity (Parent)</name>
-  <description>A financial exchange construction kit for the JVM.</description>
+  <description>An open source technology platform for trading venues.</description>
   <url>https://github.com/jvirtanen/parity</url>
 
   <licenses>
