@@ -6,21 +6,21 @@ import java.net.StandardSocketOptions;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 
-class POEServer {
+class OrderEntryServer {
 
     private ServerSocketChannel serverChannel;
 
-    private POEServer(ServerSocketChannel serverChannel) {
+    private OrderEntryServer(ServerSocketChannel serverChannel) {
         this.serverChannel = serverChannel;
     }
 
-    public static POEServer create(int port) throws IOException {
+    public static OrderEntryServer create(int port) throws IOException {
         ServerSocketChannel serverChannel = ServerSocketChannel.open();
 
         serverChannel.bind(new InetSocketAddress(port));
         serverChannel.configureBlocking(false);
 
-        return new POEServer(serverChannel);
+        return new OrderEntryServer(serverChannel);
     }
 
     public ServerSocketChannel getChannel() {

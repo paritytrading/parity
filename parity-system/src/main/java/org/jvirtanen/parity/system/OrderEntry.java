@@ -11,7 +11,7 @@ class OrderEntry implements Runnable {
 
     private static final int TIMEOUT_MILLIS = 1000;
 
-    private POEServer server;
+    private OrderEntryServer server;
 
     private List<POESession> sessions;
 
@@ -19,7 +19,7 @@ class OrderEntry implements Runnable {
 
     private Selector selector;
 
-    private OrderEntry(POEServer server) throws IOException {
+    private OrderEntry(OrderEntryServer server) throws IOException {
         this.server = server;
 
         this.sessions = new ArrayList<>();
@@ -31,7 +31,7 @@ class OrderEntry implements Runnable {
     }
 
     public static OrderEntry create(int port) throws IOException {
-        return new OrderEntry(POEServer.create(port));
+        return new OrderEntry(OrderEntryServer.create(port));
     }
 
     @Override
