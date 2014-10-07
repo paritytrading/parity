@@ -27,7 +27,7 @@ class OrderEntryServer {
         return serverChannel;
     }
 
-    public POESession accept() throws IOException {
+    public Session accept() throws IOException {
         SocketChannel channel = serverChannel.accept();
         if (channel == null)
             return null;
@@ -35,7 +35,7 @@ class OrderEntryServer {
         channel.setOption(StandardSocketOptions.TCP_NODELAY, true);
         channel.configureBlocking(false);
 
-        return new POESession(channel);
+        return new Session(channel);
     }
 
 }

@@ -13,9 +13,9 @@ class OrderEntry implements Runnable {
 
     private OrderEntryServer server;
 
-    private List<POESession> sessions;
+    private List<Session> sessions;
 
-    private List<POESession> toClose;
+    private List<Session> toClose;
 
     private Selector selector;
 
@@ -55,7 +55,7 @@ class OrderEntry implements Runnable {
                         accept();
 
                     if (key.isReadable())
-                        receive((POESession)key.attachment());
+                        receive((Session)key.attachment());
 
                     keys.remove();
                 }
@@ -69,7 +69,7 @@ class OrderEntry implements Runnable {
 
     private void accept() {
         try {
-            POESession session = server.accept();
+            Session session = server.accept();
             if (session != null) {
                 sessions.add(session);
 
@@ -79,7 +79,7 @@ class OrderEntry implements Runnable {
         }
     }
 
-    private void receive(POESession session) {
+    private void receive(Session session) {
         try {
             if (session.getTransport().receive() < 0)
                 toClose.add(session);
@@ -90,7 +90,7 @@ class OrderEntry implements Runnable {
 
     private void keepAlive() {
         for (int i = 0; i < sessions.size(); i++) {
-            POESession session = sessions.get(i);
+            Session session = sessions.get(i);
 
             try {
                 session.getTransport().keepAlive();
@@ -105,7 +105,7 @@ class OrderEntry implements Runnable {
 
     private void cleanUp() {
         for (int i = 0; i < toClose.size(); i++) {
-            POESession session = toClose.get(i);
+            Session session = toClose.get(i);
 
             sessions.remove(session);
 

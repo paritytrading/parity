@@ -10,7 +10,7 @@ import org.jvirtanen.parity.net.poe.POE;
 import org.jvirtanen.parity.net.poe.POEServerListener;
 import org.jvirtanen.parity.net.poe.POEServerParser;
 
-class POESession implements SoupBinTCPServerStatusListener, POEServerListener {
+class Session implements SoupBinTCPServerStatusListener, POEServerListener {
 
     private SoupBinTCP.LoginAccepted loginAccepted;
 
@@ -23,7 +23,7 @@ class POESession implements SoupBinTCPServerStatusListener, POEServerListener {
 
     private boolean heartbeatTimeout;
 
-    public POESession(SocketChannel channel) {
+    public Session(SocketChannel channel) {
         this.loginAccepted = new SoupBinTCP.LoginAccepted();
 
         this.orderAccepted = new POE.OrderAccepted();
