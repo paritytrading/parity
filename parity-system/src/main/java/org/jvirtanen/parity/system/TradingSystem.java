@@ -16,6 +16,23 @@ class TradingSystem {
 
     public static final long EPOCH_MILLIS = new LocalDate().toDateTimeAtStartOfDay().getMillis();
 
+    private MarketData marketData;
+    private OrderEntry orderEntry;
+
+    private TradingSystem(MarketData marketData, OrderEntry orderEntry) {
+        this.marketData = marketData;
+        this.orderEntry = orderEntry;
+    }
+
+    public void run() throws IOException {
+        PMD.Version message = new PMD.Version();
+        message.version = PMD.VERSION;
+
+        marketData.send(message);
+
+        orderEntry.run();
+    }
+
     public static void main(String[] args) throws Exception {
         if (args.length != 1)
             usage("parity-system <configuration-file>");
@@ -39,12 +56,7 @@ class TradingSystem {
 
         OrderEntry orderEntry = OrderEntry.create(orderEntryPort);
 
-        PMD.Version message = new PMD.Version();
-        message.version = PMD.VERSION;
-
-        marketData.send(message);
-
-        orderEntry.run();
+        new TradingSystem(marketData, orderEntry).run();
     }
 
 }
