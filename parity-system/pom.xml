@@ -55,17 +55,7 @@
               <mainClass>org.jvirtanen.parity.system.TradingSystem</mainClass>
             </transformer>
           </transformers>
-          <shadedArtifactAttached>true</shadedArtifactAttached>
-          <shadedClassifierName>jar-with-dependencies</shadedClassifierName>
         </configuration>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>
