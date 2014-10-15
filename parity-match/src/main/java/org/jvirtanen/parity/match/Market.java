@@ -69,7 +69,7 @@ public class Market {
         }
 
         if (remainingQuantity > 0)
-            listener.cancel(orderId, remainingQuantity);
+            listener.cancel(orderId, remainingQuantity, 0);
     }
 
     /**
@@ -155,12 +155,15 @@ public class Market {
         if (order == null)
             return;
 
-        if (quantity < order.getRemainingQuantity())
+        if (quantity < order.getRemainingQuantity()) {
             order.reduce(quantity);
-        else
+
+            listener.cancel(orderId, quantity, order.getRemainingQuantity());
+        } else {
             order.delete();
 
-        listener.cancel(orderId, quantity);
+            listener.cancel(orderId, quantity, 0);
+        }
     }
 
     /**

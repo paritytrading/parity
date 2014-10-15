@@ -17,8 +17,10 @@ class MarketEvents implements MarketListener {
     }
 
     @Override
-    public void match(long restingOrderId, long incomingOrderId, long price, int quantity) {
-        events.add(new Match(restingOrderId, incomingOrderId, price, quantity));
+    public void match(long restingOrderId, long incomingOrderId, long price,
+            int executedQuantity, int remainingQuantity) {
+        events.add(new Match(restingOrderId, incomingOrderId, price,
+                    executedQuantity, remainingQuantity));
     }
 
     @Override
@@ -27,8 +29,8 @@ class MarketEvents implements MarketListener {
     }
 
     @Override
-    public void cancel(long orderId, int quantity) {
-        events.add(new Cancel(orderId, quantity));
+    public void cancel(long orderId, int canceledQuantity, int remainingQuantity) {
+        events.add(new Cancel(orderId, canceledQuantity, remainingQuantity));
     }
 
     @Override
@@ -43,13 +45,16 @@ class MarketEvents implements MarketListener {
         public final long restingOrderId;
         public final long incomingOrderId;
         public final long price;
-        public final int  quantity;
+        public final int  executedQuantity;
+        public final int  remainingQuantity;
 
-        public Match(long restingOrderId, long incomingOrderId, long price, int quantity) {
-            this.restingOrderId  = restingOrderId;
-            this.incomingOrderId = incomingOrderId;
-            this.price           = price;
-            this.quantity        = quantity;
+        public Match(long restingOrderId, long incomingOrderId, long price,
+                int executedQuantity, int remainingQuantity) {
+            this.restingOrderId    = restingOrderId;
+            this.incomingOrderId   = incomingOrderId;
+            this.price             = price;
+            this.executedQuantity  = executedQuantity;
+            this.remainingQuantity = remainingQuantity;
         }
     }
 
@@ -69,11 +74,13 @@ class MarketEvents implements MarketListener {
 
     public static class Cancel extends Value implements Event {
         public final long orderId;
-        public final int  quantity;
+        public final int  canceledQuantity;
+        public final int  remainingQuantity;
 
-        public Cancel(long orderId, int quantity) {
-            this.orderId  = orderId;
-            this.quantity = quantity;
+        public Cancel(long orderId, int canceledQuantity, int remainingQuantity) {
+            this.orderId           = orderId;
+            this.canceledQuantity  = canceledQuantity;
+            this.remainingQuantity = remainingQuantity;
         }
     }
 
