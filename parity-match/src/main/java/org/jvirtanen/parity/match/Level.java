@@ -40,13 +40,13 @@ class Level {
             if (orderQuantity > quantity) {
                 order.reduce(quantity);
 
-                listener.match(order.getId(), orderId, quantity);
+                listener.match(order.getId(), orderId, price, quantity);
 
                 quantity = 0;
             } else {
                 toDelete.add(order);
 
-                listener.match(order.getId(), orderId, orderQuantity);
+                listener.match(order.getId(), orderId, price, orderQuantity);
 
                 quantity -= orderQuantity;
             }

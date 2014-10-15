@@ -23,7 +23,7 @@ public class MarketBenchmark {
     @Setup(Level.Iteration)
     public void prepare() {
         MarketListener listener = new MarketListener() {
-            public void match(long restingOrderId, long incomingOrderId, int quantity) {
+            public void match(long restingOrderId, long incomingOrderId, long price, int quantity) {
             }
             public void add(long orderId, Side side, long price, int size) {
             }
