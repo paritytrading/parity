@@ -13,17 +13,16 @@ class OrderEntry implements Runnable {
 
     private OrderEntryServer server;
 
-    private List<Session> sessions;
-
-    private List<Session> toClose;
+    private List<Session> toKeepAlive;
+    private List<Session> toCleanUp;
 
     private Selector selector;
 
     private OrderEntry(OrderEntryServer server) throws IOException {
         this.server = server;
 
-        this.sessions = new ArrayList<>();
-        this.toClose  = new ArrayList<>();
+        this.toKeepAlive = new ArrayList<>();
+        this.toCleanUp   = new ArrayList<>();
 
         this.selector = Selector.open();
 
@@ -71,7 +70,7 @@ class OrderEntry implements Runnable {
         try {
             Session session = server.accept();
             if (session != null) {
-                sessions.add(session);
+                toKeepAlive.add(session);
 
                 session.getTransport().getChannel().register(selector, SelectionKey.OP_READ, session);
             }
@@ -82,32 +81,32 @@ class OrderEntry implements Runnable {
     private void receive(Session session) {
         try {
             if (session.getTransport().receive() < 0)
-                toClose.add(session);
+                toCleanUp.add(session);
         } catch (IOException e) {
-            toClose.add(session);
+            toCleanUp.add(session);
         }
     }
 
     private void keepAlive() {
-        for (int i = 0; i < sessions.size(); i++) {
-            Session session = sessions.get(i);
+        for (int i = 0; i < toKeepAlive.size(); i++) {
+            Session session = toKeepAlive.get(i);
 
             try {
                 session.getTransport().keepAlive();
 
                 if (session.hasHeartbeatTimeout())
-                    toClose.add(session);
+                    toCleanUp.add(session);
             } catch (IOException e) {
-                toClose.add(session);
+                toCleanUp.add(session);
             }
         }
     }
 
     private void cleanUp() {
-        for (int i = 0; i < toClose.size(); i++) {
-            Session session = toClose.get(i);
+        for (int i = 0; i < toCleanUp.size(); i++) {
+            Session session = toCleanUp.get(i);
 
-            sessions.remove(session);
+            toKeepAlive.remove(session);
 
             try {
                 session.getTransport().close();
@@ -115,8 +114,8 @@ class OrderEntry implements Runnable {
             }
         }
 
-        if (!toClose.isEmpty())
-            toClose.clear();
+        if (!toCleanUp.isEmpty())
+            toCleanUp.clear();
     }
 
 }
