@@ -273,17 +273,4 @@ public class MarketTest {
         assertEquals(asList(bid, match), events.collect());
     }
 
-    @Test
-    public void delete() {
-        market.enter(1, Side.BUY, 1000, 100);
-        market.delete(1);
-        market.enter(2, Side.SELL, 1000, 100);
-
-        Event bid    = new Add(1, Side.BUY, 1000, 100);
-        Event delete = new Delete(1);
-        Event ask    = new Add(2, Side.SELL, 1000, 100);
-
-        assertEquals(asList(bid, delete, ask), events.collect());
-    }
-
 }

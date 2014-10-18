@@ -37,11 +37,4 @@ public interface MarketListener {
      */
     void cancel(long orderId, int canceledQuantity, int remainingQuantity);
 
-    /**
-     * Delete an order from the order book.
-     *
-     * @param orderId the order identifier
-     */
-    void delete(long orderId);
-
 }

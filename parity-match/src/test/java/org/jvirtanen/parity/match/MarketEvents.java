@@ -33,11 +33,6 @@ class MarketEvents implements MarketListener {
         events.add(new Cancel(orderId, canceledQuantity, remainingQuantity));
     }
 
-    @Override
-    public void delete(long orderId) {
-        events.add(new Delete(orderId));
-    }
-
     public interface Event {
     }
 
@@ -81,14 +76,6 @@ class MarketEvents implements MarketListener {
             this.orderId           = orderId;
             this.canceledQuantity  = canceledQuantity;
             this.remainingQuantity = remainingQuantity;
-        }
-    }
-
-    public static class Delete extends Value implements Event {
-        public final long orderId;
-
-        public Delete(long orderId) {
-            this.orderId = orderId;
         }
     }
 

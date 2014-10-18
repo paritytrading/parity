@@ -30,8 +30,6 @@ public class MarketBenchmark {
             }
             public void cancel(long orderId, int canceledQuantity, int remainingQuantity) {
             }
-            public void delete(long orderId) {
-            }
         };
 
         market = new Market(listener);
@@ -50,6 +48,6 @@ public class MarketBenchmark {
     public void testEnterAndDeleteOrder() {
         long id = sequence++;
         market.enter(id, Side.BUY, 34090, 100);
-        market.delete(id);
+        market.cancel(id, 0);
     }
 }

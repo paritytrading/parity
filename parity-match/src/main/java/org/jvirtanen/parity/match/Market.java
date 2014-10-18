@@ -169,23 +169,4 @@ public class Market {
         listener.cancel(orderId, remainingQuantity - size, size);
     }
 
-    /**
-     * Delete an order from the order book.
-     *
-     * <p>A Delete event is triggered.</p>
-     *
-     * <p>If the order identifier is unknown, do nothing.</p>
-     *
-     * @param orderId the order identifier
-     */
-    public void delete(long orderId) {
-        Order order = orders.get(orderId);
-        if (order == null)
-            return;
-
-        order.delete();
-
-        listener.delete(orderId);
-    }
-
 }
