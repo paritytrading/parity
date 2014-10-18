@@ -1,7 +1,7 @@
 Parity Utilities
 ================
 
-Parity Utilities contain miscellaneous support functions.
+Parity Utilities contains support functions used by Parity Trading System.
 
 
 License
