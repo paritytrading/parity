@@ -70,9 +70,9 @@ class OrderEntry implements Runnable {
         try {
             Session session = server.accept();
             if (session != null) {
-                toKeepAlive.add(session);
-
                 session.getTransport().getChannel().register(selector, SelectionKey.OP_READ, session);
+
+                toKeepAlive.add(session);
             }
         } catch (IOException e) {
         }
