@@ -108,10 +108,7 @@ class OrderEntry implements Runnable {
 
             toKeepAlive.remove(session);
 
-            try {
-                session.getTransport().close();
-            } catch (IOException e) {
-            }
+            session.close();
         }
 
         if (!toCleanUp.isEmpty())
