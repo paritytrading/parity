@@ -1,7 +1,7 @@
 Parity Trading System
 =====================
 
-Parity Trading System is a high-performance trading system for the JVM.
+Parity Trading System is an open source trading system.
 
 
 License
