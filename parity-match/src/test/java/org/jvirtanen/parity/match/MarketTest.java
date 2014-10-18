@@ -235,7 +235,7 @@ public class MarketTest {
     @Test
     public void cancel() {
         market.enter(1, Side.BUY, 1000, 100);
-        market.cancel(1, 100);
+        market.cancel(1, 0);
         market.enter(2, Side.SELL, 1000, 100);
 
         Event bid    = new Add(1, Side.BUY, 1000, 100);
@@ -248,15 +248,29 @@ public class MarketTest {
     @Test
     public void partialCancel() {
         market.enter(1, Side.BUY, 1000, 100);
-        market.cancel(1, 50);
+        market.cancel(1, 75);
         market.enter(2, Side.SELL, 1000, 100);
 
         Event bid    = new Add(1, Side.BUY, 1000, 100);
-        Event cancel = new Cancel(1, 50, 50);
-        Event match  = new Match(1, 2, 1000, 50, 0);
-        Event ask    = new Add(2, Side.SELL, 1000, 50);
+        Event cancel = new Cancel(1, 25, 75);
+        Event match  = new Match(1, 2, 1000, 75, 0);
+        Event ask    = new Add(2, Side.SELL, 1000, 25);
 
         assertEquals(asList(bid, cancel, match, ask), events.collect());
+    }
+
+    @Test
+    public void ineffectiveCancel() {
+        market.enter(1, Side.BUY, 1000, 100);
+        market.cancel(1, 100);
+        market.cancel(1, 150);
+        market.cancel(1, 100);
+        market.enter(2, Side.SELL, 1000, 100);
+
+        Event bid   = new Add(1, Side.BUY, 1000, 100);
+        Event match = new Match(1, 2, 1000, 100, 0);
+
+        assertEquals(asList(bid, match), events.collect());
     }
 
     @Test

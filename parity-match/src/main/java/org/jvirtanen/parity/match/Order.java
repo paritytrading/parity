@@ -28,6 +28,10 @@ class Order {
         remainingQuantity -= quantity;
     }
 
+    public void resize(int size) {
+        remainingQuantity = size;
+    }
+
     public void delete() {
         parent.delete(this);
     }
