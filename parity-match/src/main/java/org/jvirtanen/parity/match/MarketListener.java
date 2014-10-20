@@ -16,7 +16,7 @@ public interface MarketListener {
      * @param executedQuantity the executed quantity
      * @param remainingQuantity the remaining quantity of the resting order
      */
-    void match(long restingOrderId, long incomingOrderId, long price, int executedQuantity, int remainingQuantity);
+    void match(long restingOrderId, long incomingOrderId, long price, long executedQuantity, long remainingQuantity);
 
     /**
      * Add an order to the order book.
@@ -26,7 +26,7 @@ public interface MarketListener {
      * @param price the limit price
      * @param size the size
      */
-    void add(long orderId, Side side, long price, int size);
+    void add(long orderId, Side side, long price, long size);
 
     /**
      * Cancel a quantity of an order.
@@ -35,6 +35,6 @@ public interface MarketListener {
      * @param canceledQuantity the canceled quantity
      * @param remainingQuantity the remaining quantity
      */
-    void cancel(long orderId, int canceledQuantity, int remainingQuantity);
+    void cancel(long orderId, long canceledQuantity, long remainingQuantity);
 
 }

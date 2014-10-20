@@ -24,11 +24,11 @@ public class MarketBenchmark {
     public void prepare() {
         MarketListener listener = new MarketListener() {
             public void match(long restingOrderId, long incomingOrderId, long price,
-                    int executedQuantity, int remainingQuantity) {
+                    long executedQuantity, long remainingQuantity) {
             }
-            public void add(long orderId, Side side, long price, int size) {
+            public void add(long orderId, Side side, long price, long size) {
             }
-            public void cancel(long orderId, int canceledQuantity, int remainingQuantity) {
+            public void cancel(long orderId, long canceledQuantity, long remainingQuantity) {
             }
         };
 

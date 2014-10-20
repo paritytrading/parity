@@ -23,7 +23,7 @@ class Level {
         return price;
     }
 
-    public Order add(long orderId, int size) {
+    public Order add(long orderId, long size) {
         Order order = new Order(this, orderId, size);
 
         orders.add(order);
@@ -31,11 +31,11 @@ class Level {
         return order;
     }
 
-    public int match(long orderId, int quantity, MarketListener listener) {
+    public long match(long orderId, long quantity, MarketListener listener) {
         for (int i = 0; quantity > 0 && i < orders.size(); i++) {
             Order order = orders.get(i);
 
-            int orderQuantity = order.getRemainingQuantity();
+            long orderQuantity = order.getRemainingQuantity();
 
             if (orderQuantity > quantity) {
                 order.reduce(quantity);
