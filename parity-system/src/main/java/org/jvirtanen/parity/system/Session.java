@@ -22,7 +22,7 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
 
     private SoupBinTCPServer transport;
 
-    private boolean heartbeatTimeout;
+    private boolean terminated;
 
     public Session(SocketChannel channel) {
         this.loginAccepted = new SoupBinTCP.LoginAccepted();
@@ -34,11 +34,15 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
 
         this.transport = new SoupBinTCPServer(channel, new POEServerParser(this), this);
 
-        this.heartbeatTimeout = false;
+        this.terminated = false;
     }
 
     public SoupBinTCPServer getTransport() {
         return transport;
+    }
+
+    public boolean isTerminated() {
+        return terminated;
     }
 
     @Override
@@ -51,11 +55,7 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
 
     @Override
     public void heartbeatTimeout() {
-        heartbeatTimeout = true;
-    }
-
-    public boolean hasHeartbeatTimeout() {
-        return heartbeatTimeout;
+        terminated = true;
     }
 
     @Override
@@ -72,6 +72,7 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
 
     @Override
     public void logoutRequest() {
+        terminated = true;
     }
 
     @Override
