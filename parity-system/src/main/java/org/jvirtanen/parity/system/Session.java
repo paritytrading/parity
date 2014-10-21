@@ -13,25 +13,18 @@ import org.jvirtanen.parity.net.poe.POEServerParser;
 
 class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerListener {
 
-    private SoupBinTCP.LoginAccepted loginAccepted;
+    private static SoupBinTCP.LoginAccepted loginAccepted = new SoupBinTCP.LoginAccepted();
 
-    private POE.OrderAccepted orderAccepted;
-    private POE.OrderCanceled orderCanceled;
+    private static POE.OrderAccepted orderAccepted = new POE.OrderAccepted();
+    private static POE.OrderCanceled orderCanceled = new POE.OrderCanceled();
 
-    private ByteBuffer buffer;
+    private static ByteBuffer buffer = ByteBuffer.allocate(128);
 
     private SoupBinTCPServer transport;
 
     private boolean terminated;
 
     public Session(SocketChannel channel) {
-        this.loginAccepted = new SoupBinTCP.LoginAccepted();
-
-        this.orderAccepted = new POE.OrderAccepted();
-        this.orderCanceled = new POE.OrderCanceled();
-
-        this.buffer = ByteBuffer.allocate(128);
-
         this.transport = new SoupBinTCPServer(channel, new POEServerParser(this), this);
 
         this.terminated = false;
