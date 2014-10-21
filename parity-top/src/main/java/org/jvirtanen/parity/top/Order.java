@@ -4,9 +4,9 @@ class Order {
 
     private Level parent;
 
-    private int remainingQuantity;
+    private long remainingQuantity;
 
-    public Order(Level parent, int size) {
+    public Order(Level parent, long size) {
         this.parent = parent;
 
         this.remainingQuantity = size;
@@ -24,7 +24,7 @@ class Order {
         return parent.getParent().getSide();
     }
 
-    public int getRemainingQuantity() {
+    public long getRemainingQuantity() {
         return remainingQuantity;
     }
 
@@ -32,7 +32,7 @@ class Order {
         return parent.isBestLevel();
     }
 
-    public void reduce(int quantity) {
+    public void reduce(long quantity) {
         remainingQuantity -= quantity;
     }
 

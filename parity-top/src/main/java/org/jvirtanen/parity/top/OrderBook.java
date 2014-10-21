@@ -18,7 +18,7 @@ class OrderBook {
         return instrument;
     }
 
-    public Order add(Side side, long price, int size) {
+    public Order add(Side side, long price, long size) {
         switch (side) {
             case BUY:
                 return bids.add(price, size);

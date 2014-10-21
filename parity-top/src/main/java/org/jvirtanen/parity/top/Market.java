@@ -54,7 +54,7 @@ public class Market {
      * @param price the price
      * @param size the size
      */
-    public void add(long instrument, long orderId, Side side, long price, int size) {
+    public void add(long instrument, long orderId, Side side, long price, long size) {
         if (orders.containsKey(orderId))
             return;
 
@@ -80,7 +80,7 @@ public class Market {
      * @param orderId the order identifier
      * @param quantity the executed quantity
      */
-    public void execute(long orderId, int quantity) {
+    public void execute(long orderId, long quantity) {
         Order order = orders.get(orderId);
         if (order == null)
             return;
@@ -110,7 +110,7 @@ public class Market {
      * @param orderId the order identifier
      * @param quantity the canceled quantity
      */
-    public void cancel(long orderId, int quantity) {
+    public void cancel(long orderId, long quantity) {
         Order order = orders.get(orderId);
         if (order == null)
             return;

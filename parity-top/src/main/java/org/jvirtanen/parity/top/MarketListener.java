@@ -15,7 +15,7 @@ public interface MarketListener {
      * @param askPrice the ask price
      * @param askSize the ask size
      */
-    void bbo(long instrument, long bidPrice, int bidSize, long askPrice, int askSize);
+    void bbo(long instrument, long bidPrice, long bidSize, long askPrice, long askSize);
 
     /**
      * An event indicating that a trade has taken place.
@@ -25,6 +25,6 @@ public interface MarketListener {
      * @param price the trade price
      * @param size the trade size
      */
-    void trade(long instrument, Side side, long price, int size);
+    void trade(long instrument, Side side, long price, long size);
 
 }

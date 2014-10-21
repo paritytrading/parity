@@ -24,8 +24,8 @@ class Level {
         return price;
     }
 
-    public int getSize() {
-        int size = 0;
+    public long getSize() {
+        long size = 0;
 
         for (int i = 0; i < orders.size(); i++) {
             size += orders.get(i).getRemainingQuantity();
@@ -38,7 +38,7 @@ class Level {
         return this == parent.getBestLevel();
     }
 
-    public Order add(int size) {
+    public Order add(long size) {
         Order order = new Order(this, size);
 
         orders.add(order);
