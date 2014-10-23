@@ -6,9 +6,9 @@ class Order {
 
     private long id;
 
-    private int remainingQuantity;
+    private long remainingQuantity;
 
-    public Order(Level parent, long id, int size) {
+    public Order(Level parent, long id, long size) {
         this.parent = parent;
 
         this.id = id;
@@ -20,12 +20,16 @@ class Order {
         return id;
     }
 
-    public int getRemainingQuantity() {
+    public long getRemainingQuantity() {
         return remainingQuantity;
     }
 
-    public void reduce(int quantity) {
+    public void reduce(long quantity) {
         remainingQuantity -= quantity;
+    }
+
+    public void resize(long size) {
+        remainingQuantity = size;
     }
 
     public void delete() {

@@ -23,13 +23,12 @@ public class MarketBenchmark {
     @Setup(Level.Iteration)
     public void prepare() {
         MarketListener listener = new MarketListener() {
-            public void match(long restingOrderId, long incomingOrderId, int quantity) {
+            public void match(long restingOrderId, long incomingOrderId, long price,
+                    long executedQuantity, long remainingQuantity) {
             }
-            public void add(long orderId, Side side, long price, int size) {
+            public void add(long orderId, Side side, long price, long size) {
             }
-            public void cancel(long orderId, int quantity) {
-            }
-            public void delete(long orderId) {
+            public void cancel(long orderId, long canceledQuantity, long remainingQuantity) {
             }
         };
 
@@ -49,6 +48,6 @@ public class MarketBenchmark {
     public void testEnterAndDeleteOrder() {
         long id = sequence++;
         market.enter(id, Side.BUY, 34090, 100);
-        market.delete(id);
+        market.cancel(id, 0);
     }
 }

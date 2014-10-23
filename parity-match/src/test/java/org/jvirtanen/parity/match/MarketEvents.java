@@ -17,23 +17,20 @@ class MarketEvents implements MarketListener {
     }
 
     @Override
-    public void match(long restingOrderId, long incomingOrderId, int quantity) {
-        events.add(new Match(restingOrderId, incomingOrderId, quantity));
+    public void match(long restingOrderId, long incomingOrderId, long price,
+            long executedQuantity, long remainingQuantity) {
+        events.add(new Match(restingOrderId, incomingOrderId, price,
+                    executedQuantity, remainingQuantity));
     }
 
     @Override
-    public void add(long orderId, Side side, long price, int size) {
+    public void add(long orderId, Side side, long price, long size) {
         events.add(new Add(orderId, side, price, size));
     }
 
     @Override
-    public void cancel(long orderId, int quantity) {
-        events.add(new Cancel(orderId, quantity));
-    }
-
-    @Override
-    public void delete(long orderId) {
-        events.add(new Delete(orderId));
+    public void cancel(long orderId, long canceledQuantity, long remainingQuantity) {
+        events.add(new Cancel(orderId, canceledQuantity, remainingQuantity));
     }
 
     public interface Event {
@@ -42,12 +39,17 @@ class MarketEvents implements MarketListener {
     public static class Match extends Value implements Event {
         public final long restingOrderId;
         public final long incomingOrderId;
-        public final int  quantity;
+        public final long price;
+        public final long executedQuantity;
+        public final long remainingQuantity;
 
-        public Match(long restingOrderId, long incomingOrderId, int quantity) {
-            this.restingOrderId  = restingOrderId;
-            this.incomingOrderId = incomingOrderId;
-            this.quantity        = quantity;
+        public Match(long restingOrderId, long incomingOrderId, long price,
+                long executedQuantity, long remainingQuantity) {
+            this.restingOrderId    = restingOrderId;
+            this.incomingOrderId   = incomingOrderId;
+            this.price             = price;
+            this.executedQuantity  = executedQuantity;
+            this.remainingQuantity = remainingQuantity;
         }
     }
 
@@ -55,9 +57,9 @@ class MarketEvents implements MarketListener {
         public final long orderId;
         public final Side side;
         public final long price;
-        public final int  size;
+        public final long size;
 
-        public Add(long orderId, Side side, long price, int size) {
+        public Add(long orderId, Side side, long price, long size) {
             this.orderId = orderId;
             this.side    = side;
             this.price   = price;
@@ -67,19 +69,13 @@ class MarketEvents implements MarketListener {
 
     public static class Cancel extends Value implements Event {
         public final long orderId;
-        public final int  quantity;
+        public final long canceledQuantity;
+        public final long remainingQuantity;
 
-        public Cancel(long orderId, int quantity) {
-            this.orderId  = orderId;
-            this.quantity = quantity;
-        }
-    }
-
-    public static class Delete extends Value implements Event {
-        public final long orderId;
-
-        public Delete(long orderId) {
-            this.orderId = orderId;
+        public Cancel(long orderId, long canceledQuantity, long remainingQuantity) {
+            this.orderId           = orderId;
+            this.canceledQuantity  = canceledQuantity;
+            this.remainingQuantity = remainingQuantity;
         }
     }
 

@@ -43,7 +43,7 @@ public class Market {
      * @param side the side
      * @param size the size
      */
-    public void enter(long orderId, Side side, int size) {
+    public void enter(long orderId, Side side, long size) {
         if (orders.containsKey(orderId))
             return;
 
@@ -57,8 +57,8 @@ public class Market {
         }
     }
 
-    private void match(long orderId, Orders orders, int size) {
-        int remainingQuantity = size;
+    private void match(long orderId, Orders orders, long size) {
+        long remainingQuantity = size;
 
         Level top = orders.getBestLevel();
 
@@ -69,7 +69,7 @@ public class Market {
         }
 
         if (remainingQuantity > 0)
-            listener.cancel(orderId, remainingQuantity);
+            listener.cancel(orderId, remainingQuantity, 0);
     }
 
     /**
@@ -89,7 +89,7 @@ public class Market {
      * @param price the limit price
      * @param size the size
      */
-    public void enter(long orderId, Side side, long price, int size) {
+    public void enter(long orderId, Side side, long price, long size) {
         if (orders.containsKey(orderId))
             return;
 
@@ -103,8 +103,8 @@ public class Market {
         }
     }
 
-    private void buy(long orderId, long price, int size) {
-        int remainingQuantity = size;
+    private void buy(long orderId, long price, long size) {
+        long remainingQuantity = size;
 
         Level top = asks.getBestLevel();
 
@@ -121,8 +121,8 @@ public class Market {
         }
     }
 
-    private void sell(long orderId, long price, int size) {
-        int remainingQuantity = size;
+    private void sell(long orderId, long price, long size) {
+        long remainingQuantity = size;
 
         Level top = bids.getBestLevel();
 
@@ -140,46 +140,33 @@ public class Market {
     }
 
     /**
-     * Cancel a quantity of an order in the order book. If the remaining
-     * quantity reaches zero, the order is deleted from the order book.
+     * Cancel a quantity of an order in the order book. The size refers
+     * to the new order size. If the new order size is set to zero, the
+     * order is deleted from the order book.
      *
      * <p>A Cancel event is triggered.</p>
      *
      * <p>If the order identifier is unknown, do nothing.</p>
      *
      * @param orderId the order identifier
-     * @param quantity the canceled quantity
+     * @param size the new size
      */
-    public void cancel(long orderId, int quantity) {
+    public void cancel(long orderId, long size) {
         Order order = orders.get(orderId);
         if (order == null)
             return;
 
-        if (quantity < order.getRemainingQuantity())
-            order.reduce(quantity);
+        long remainingQuantity = order.getRemainingQuantity();
+
+        if (size >= remainingQuantity)
+            return;
+
+        if (size > 0)
+            order.resize(size);
         else
             order.delete();
 
-        listener.cancel(orderId, quantity);
-    }
-
-    /**
-     * Delete an order from the order book.
-     *
-     * <p>A Delete event is triggered.</p>
-     *
-     * <p>If the order identifier is unknown, do nothing.</p>
-     *
-     * @param orderId the order identifier
-     */
-    public void delete(long orderId) {
-        Order order = orders.get(orderId);
-        if (order == null)
-            return;
-
-        order.delete();
-
-        listener.delete(orderId);
+        listener.cancel(orderId, remainingQuantity - size, size);
     }
 
 }

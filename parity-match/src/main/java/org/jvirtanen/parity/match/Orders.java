@@ -18,7 +18,7 @@ class Orders {
         return levels.get(levels.firstLongKey());
     }
 
-    public Order add(long orderId, long price, int size) {
+    public Order add(long orderId, long price, long size) {
         Level level = levels.get(price);
         if (level == null) {
             level = new Level(this, price);
