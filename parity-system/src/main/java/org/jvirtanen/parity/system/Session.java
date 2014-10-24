@@ -1,5 +1,6 @@
 package org.jvirtanen.parity.system;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
@@ -10,59 +11,65 @@ import org.jvirtanen.parity.net.poe.POE;
 import org.jvirtanen.parity.net.poe.POEServerListener;
 import org.jvirtanen.parity.net.poe.POEServerParser;
 
-class Session implements SoupBinTCPServerStatusListener, POEServerListener {
+class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerListener {
 
-    private SoupBinTCP.LoginAccepted loginAccepted;
+    private static SoupBinTCP.LoginAccepted loginAccepted = new SoupBinTCP.LoginAccepted();
 
-    private POE.OrderAccepted orderAccepted;
-    private POE.OrderCanceled orderCanceled;
+    private static POE.OrderAccepted orderAccepted = new POE.OrderAccepted();
+    private static POE.OrderCanceled orderCanceled = new POE.OrderCanceled();
 
-    private ByteBuffer buffer;
+    private static ByteBuffer buffer = ByteBuffer.allocate(128);
 
     private SoupBinTCPServer transport;
 
-    private boolean heartbeatTimeout;
+    private boolean terminated;
 
     public Session(SocketChannel channel) {
-        this.loginAccepted = new SoupBinTCP.LoginAccepted();
-
-        this.orderAccepted = new POE.OrderAccepted();
-        this.orderCanceled = new POE.OrderCanceled();
-
-        this.buffer = ByteBuffer.allocate(128);
-
         this.transport = new SoupBinTCPServer(channel, new POEServerParser(this), this);
 
-        this.heartbeatTimeout = false;
+        this.terminated = false;
     }
 
     public SoupBinTCPServer getTransport() {
         return transport;
     }
 
+    public boolean isTerminated() {
+        return terminated;
+    }
+
+    @Override
+    public void close() {
+        try {
+            transport.close();
+        } catch (IOException e) {
+        }
+    }
+
     @Override
     public void heartbeatTimeout() {
-        heartbeatTimeout = true;
-    }
-
-    public boolean hasHeartbeatTimeout() {
-        return heartbeatTimeout;
+        terminated = true;
     }
 
     @Override
-    public void loginRequest(SoupBinTCP.LoginRequest payload) throws IOException {
+    public void loginRequest(SoupBinTCP.LoginRequest payload) {
         loginAccepted.session        = payload.requestedSession;
         loginAccepted.sequenceNumber = payload.requestedSequenceNumber;
 
-        transport.accept(loginAccepted);
+        try {
+            transport.accept(loginAccepted);
+        } catch (IOException e) {
+            close();
+        }
     }
 
     @Override
-    public void logoutRequest() throws IOException {
+    public void logoutRequest() {
+        terminated = true;
     }
 
     @Override
-    public void enterOrder(POE.EnterOrder message) throws IOException {
+    public void enterOrder(POE.EnterOrder message) {
         orderAccepted.timestamp   = timestamp();
         orderAccepted.orderId     = message.orderId;
         orderAccepted.side        = message.side;
@@ -75,7 +82,7 @@ class Session implements SoupBinTCPServerStatusListener, POEServerListener {
     }
 
     @Override
-    public void cancelOrder(POE.CancelOrder message) throws IOException {
+    public void cancelOrder(POE.CancelOrder message) {
         orderCanceled.timestamp        = timestamp();
         orderCanceled.orderId          = message.orderId;
         orderCanceled.canceledQuantity = 0;
@@ -84,12 +91,16 @@ class Session implements SoupBinTCPServerStatusListener, POEServerListener {
         send(orderCanceled);
     }
 
-    private void send(POE.OutboundMessage message) throws IOException {
+    private void send(POE.OutboundMessage message) {
         buffer.clear();
         message.put(buffer);
         buffer.flip();
 
-        transport.send(buffer);
+        try {
+            transport.send(buffer);
+        } catch (IOException e) {
+            close();
+        }
     }
 
     private long timestamp() {
