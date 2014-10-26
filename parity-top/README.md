@@ -5,6 +5,18 @@ Parity Top of Book implements high-performance order book reconstruction on the
 JVM.
 
 
+Download
+--------
+
+Add a Maven dependency to Parity Top of Book:
+
+    <dependency>
+      <groupId>org.jvirtanen.parity</groupId>
+      <artifactId>parity-top</artifactId>
+      <version><!-- latest version --></version>
+    </dependency>
+
+
 License
 -------
 
