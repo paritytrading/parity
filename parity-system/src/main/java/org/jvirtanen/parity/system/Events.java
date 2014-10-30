@@ -11,6 +11,7 @@ class Events implements Runnable {
 
     private static final int TIMEOUT_MILLIS = 1000;
 
+    private MarketDataServer marketData;
     private OrderEntryServer orderEntry;
 
     private List<Session> toKeepAlive;
@@ -18,7 +19,8 @@ class Events implements Runnable {
 
     private Selector selector;
 
-    public Events(OrderEntryServer orderEntry) throws IOException {
+    public Events(MarketDataServer marketData, OrderEntryServer orderEntry) throws IOException {
+        this.marketData = marketData;
         this.orderEntry = orderEntry;
 
         this.toKeepAlive = new ArrayList<>();
@@ -84,6 +86,11 @@ class Events implements Runnable {
     }
 
     private void keepAlive() {
+        try {
+            marketData.getTransport().keepAlive();
+        } catch (IOException e) {
+        }
+
         for (int i = 0; i < toKeepAlive.size(); i++) {
             Session session = toKeepAlive.get(i);
 

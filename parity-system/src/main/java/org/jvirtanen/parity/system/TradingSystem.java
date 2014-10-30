@@ -40,7 +40,7 @@ class TradingSystem {
 
         marketData.version();
 
-        new Events(orderEntry).run();
+        new Events(marketData, orderEntry).run();
     }
 
 }

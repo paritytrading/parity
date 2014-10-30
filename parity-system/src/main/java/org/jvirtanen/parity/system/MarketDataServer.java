@@ -38,6 +38,10 @@ class MarketDataServer {
         return new MarketDataServer(transport);
     }
 
+    public MoldUDP64Server getTransport() {
+        return transport;
+    }
+
     public void version() throws IOException {
         version.version = PMD.VERSION;
 
