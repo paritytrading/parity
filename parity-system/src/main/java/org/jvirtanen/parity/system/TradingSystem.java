@@ -16,11 +16,11 @@ class TradingSystem {
 
     public static final long EPOCH_MILLIS = new LocalDate().toDateTimeAtStartOfDay().getMillis();
 
-    private MarketData marketData;
+    private MarketDataServer marketData;
 
     private Events events;
 
-    private TradingSystem(MarketData marketData, Events events) {
+    private TradingSystem(MarketDataServer marketData, Events events) {
         this.marketData = marketData;
 
         this.events = events;
@@ -51,7 +51,7 @@ class TradingSystem {
         InetAddress marketDataMulticastGroup = Configs.getInetAddress(config, "market-data.multicast-group");
         int         marketDataMulticastPort  = Configs.getPort(config, "market-data.multicast-port");
 
-        MarketData marketData = MarketData.create(marketDataSession,
+        MarketDataServer marketData = MarketDataServer.create(marketDataSession,
                 new InetSocketAddress(marketDataMulticastGroup, marketDataMulticastPort));
 
         int orderEntryPort = Configs.getPort(config, "order-entry.port");
