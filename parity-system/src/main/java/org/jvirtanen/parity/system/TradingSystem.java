@@ -15,22 +15,6 @@ class TradingSystem {
 
     public static final long EPOCH_MILLIS = new LocalDate().toDateTimeAtStartOfDay().getMillis();
 
-    private MarketDataServer marketData;
-
-    private Events events;
-
-    private TradingSystem(MarketDataServer marketData, Events events) {
-        this.marketData = marketData;
-
-        this.events = events;
-    }
-
-    public void run() throws IOException {
-        marketData.version();
-
-        events.run();
-    }
-
     public static void main(String[] args) throws Exception {
         if (args.length != 1)
             usage("parity-system <configuration-file>");
@@ -54,9 +38,9 @@ class TradingSystem {
 
         OrderEntryServer orderEntry = OrderEntryServer.create(orderEntryPort);
 
-        Events events = new Events(orderEntry);
+        marketData.version();
 
-        new TradingSystem(marketData, events).run();
+        new Events(orderEntry).run();
     }
 
 }
