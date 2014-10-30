@@ -17,11 +17,13 @@ class TradingSystem {
     public static final long EPOCH_MILLIS = new LocalDate().toDateTimeAtStartOfDay().getMillis();
 
     private MarketData marketData;
-    private OrderEntry orderEntry;
 
-    private TradingSystem(MarketData marketData, OrderEntry orderEntry) {
+    private Events events;
+
+    private TradingSystem(MarketData marketData, Events events) {
         this.marketData = marketData;
-        this.orderEntry = orderEntry;
+
+        this.events = events;
     }
 
     public void run() throws IOException {
@@ -30,7 +32,7 @@ class TradingSystem {
 
         marketData.send(message);
 
-        orderEntry.run();
+        events.run();
     }
 
     public static void main(String[] args) throws Exception {
@@ -54,9 +56,11 @@ class TradingSystem {
 
         int orderEntryPort = Configs.getPort(config, "order-entry.port");
 
-        OrderEntry orderEntry = OrderEntry.create(orderEntryPort);
+        OrderEntryServer orderEntry = OrderEntryServer.create(orderEntryPort);
 
-        new TradingSystem(marketData, orderEntry).run();
+        Events events = new Events(orderEntry);
+
+        new TradingSystem(marketData, events).run();
     }
 
 }

@@ -7,30 +7,26 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-class OrderEntry implements Runnable {
+class Events implements Runnable {
 
     private static final int TIMEOUT_MILLIS = 1000;
 
-    private OrderEntryServer server;
+    private OrderEntryServer orderEntry;
 
     private List<Session> toKeepAlive;
     private List<Session> toCleanUp;
 
     private Selector selector;
 
-    private OrderEntry(OrderEntryServer server) throws IOException {
-        this.server = server;
+    public Events(OrderEntryServer orderEntry) throws IOException {
+        this.orderEntry = orderEntry;
 
         this.toKeepAlive = new ArrayList<>();
         this.toCleanUp   = new ArrayList<>();
 
         this.selector = Selector.open();
 
-        this.server.getChannel().register(this.selector, SelectionKey.OP_ACCEPT, null);
-    }
-
-    public static OrderEntry create(int port) throws IOException {
-        return new OrderEntry(OrderEntryServer.create(port));
+        this.orderEntry.getChannel().register(this.selector, SelectionKey.OP_ACCEPT, null);
     }
 
     @Override
@@ -68,7 +64,7 @@ class OrderEntry implements Runnable {
 
     private void accept() {
         try {
-            Session session = server.accept();
+            Session session = orderEntry.accept();
             if (session != null) {
                 session.getTransport().getChannel().register(selector, SelectionKey.OP_READ, session);
 
