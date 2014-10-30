@@ -11,6 +11,8 @@ import org.jvirtanen.parity.net.pmd.PMD;
 
 class MarketDataServer {
 
+    private PMD.Version version;
+
     private MoldUDP64Server transport;
 
     private MoldUDP64DownstreamPacket packet;
@@ -18,6 +20,8 @@ class MarketDataServer {
     private ByteBuffer buffer;
 
     private MarketDataServer(MoldUDP64Server transport) {
+        this.version = new PMD.Version();
+
         this.transport = transport;
 
         this.packet = new MoldUDP64DownstreamPacket();
@@ -34,7 +38,13 @@ class MarketDataServer {
         return new MarketDataServer(transport);
     }
 
-    public void send(PMD.Message message) throws IOException {
+    public void version() throws IOException {
+        version.version = PMD.VERSION;
+
+        send(version);
+    }
+
+    private void send(PMD.Message message) throws IOException {
         buffer.clear();
         message.put(buffer);
         buffer.flip();

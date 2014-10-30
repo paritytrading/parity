@@ -10,7 +10,6 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import org.joda.time.LocalDate;
 import org.jvirtanen.config.Configs;
-import org.jvirtanen.parity.net.pmd.PMD;
 
 class TradingSystem {
 
@@ -27,10 +26,7 @@ class TradingSystem {
     }
 
     public void run() throws IOException {
-        PMD.Version message = new PMD.Version();
-        message.version = PMD.VERSION;
-
-        marketData.send(message);
+        marketData.version();
 
         events.run();
     }
