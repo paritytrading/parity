@@ -28,6 +28,8 @@ class Events implements Runnable {
 
         this.selector = Selector.open();
 
+        this.marketData.getRequestTransport().getChannel().register(this.selector,
+                SelectionKey.OP_READ, null);
         this.orderEntry.getChannel().register(this.selector, SelectionKey.OP_ACCEPT, null);
     }
 
@@ -51,8 +53,13 @@ class Events implements Runnable {
                     if (key.isAcceptable())
                         accept();
 
-                    if (key.isReadable())
-                        receive((Session)key.attachment());
+                    if (key.isReadable()) {
+                        Object attachment = key.attachment();
+                        if (attachment == null)
+                            serve();
+                        else
+                            receive((Session)attachment);
+                    }
 
                     keys.remove();
                 }
@@ -61,6 +68,13 @@ class Events implements Runnable {
             keepAlive();
 
             cleanUp();
+        }
+    }
+
+    private void serve() {
+        try {
+            marketData.serve();
+        } catch (IOException e) {
         }
     }
 

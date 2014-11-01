@@ -30,9 +30,11 @@ class TradingSystem {
         String      marketDataSession        = config.getString("market-data.session");
         InetAddress marketDataMulticastGroup = Configs.getInetAddress(config, "market-data.multicast-group");
         int         marketDataMulticastPort  = Configs.getPort(config, "market-data.multicast-port");
+        int         marketDataRequestPort    = Configs.getPort(config, "market-data.request-port");
 
         MarketDataServer marketData = MarketDataServer.create(marketDataSession,
-                new InetSocketAddress(marketDataMulticastGroup, marketDataMulticastPort));
+                new InetSocketAddress(marketDataMulticastGroup, marketDataMulticastPort),
+                marketDataRequestPort);
 
         int orderEntryPort = Configs.getPort(config, "order-entry.port");
 
