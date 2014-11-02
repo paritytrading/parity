@@ -7,30 +7,30 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-class OrderEntry implements Runnable {
+class Events implements Runnable {
 
     private static final int TIMEOUT_MILLIS = 1000;
 
-    private OrderEntryServer server;
+    private MarketDataServer marketData;
+    private OrderEntryServer orderEntry;
 
     private List<Session> toKeepAlive;
     private List<Session> toCleanUp;
 
     private Selector selector;
 
-    private OrderEntry(OrderEntryServer server) throws IOException {
-        this.server = server;
+    public Events(MarketDataServer marketData, OrderEntryServer orderEntry) throws IOException {
+        this.marketData = marketData;
+        this.orderEntry = orderEntry;
 
         this.toKeepAlive = new ArrayList<>();
         this.toCleanUp   = new ArrayList<>();
 
         this.selector = Selector.open();
 
-        this.server.getChannel().register(this.selector, SelectionKey.OP_ACCEPT, null);
-    }
-
-    public static OrderEntry create(int port) throws IOException {
-        return new OrderEntry(OrderEntryServer.create(port));
+        this.marketData.getRequestTransport().getChannel().register(this.selector,
+                SelectionKey.OP_READ, null);
+        this.orderEntry.getChannel().register(this.selector, SelectionKey.OP_ACCEPT, null);
     }
 
     @Override
@@ -53,8 +53,13 @@ class OrderEntry implements Runnable {
                     if (key.isAcceptable())
                         accept();
 
-                    if (key.isReadable())
-                        receive((Session)key.attachment());
+                    if (key.isReadable()) {
+                        Object attachment = key.attachment();
+                        if (attachment == null)
+                            serve();
+                        else
+                            receive((Session)attachment);
+                    }
 
                     keys.remove();
                 }
@@ -66,9 +71,16 @@ class OrderEntry implements Runnable {
         }
     }
 
+    private void serve() {
+        try {
+            marketData.serve();
+        } catch (IOException e) {
+        }
+    }
+
     private void accept() {
         try {
-            Session session = server.accept();
+            Session session = orderEntry.accept();
             if (session != null) {
                 session.getTransport().getChannel().register(selector, SelectionKey.OP_READ, session);
 
@@ -88,6 +100,11 @@ class OrderEntry implements Runnable {
     }
 
     private void keepAlive() {
+        try {
+            marketData.getTransport().keepAlive();
+        } catch (IOException e) {
+        }
+
         for (int i = 0; i < toKeepAlive.size(); i++) {
             Session session = toKeepAlive.get(i);
 
