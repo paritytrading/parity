@@ -33,9 +33,23 @@ class OrderBook {
         Level bestBidLevel = bids.getBestLevel();
         Level bestAskLevel = asks.getBestLevel();
 
-        if (bestBidLevel != null && bestAskLevel != null)
-            listener.bbo(instrument, bestBidLevel.getPrice(), bestBidLevel.getSize(),
-                    bestAskLevel.getPrice(), bestAskLevel.getSize());
+        long bidPrice = 0;
+        long bidSize  = 0;
+
+        if (bestBidLevel != null) {
+            bidPrice = bestBidLevel.getPrice();
+            bidSize  = bestBidLevel.getSize();
+        }
+
+        long askPrice = 0;
+        long askSize  = 0;
+
+        if (bestAskLevel != null) {
+            askPrice = bestAskLevel.getPrice();
+            askSize  = bestAskLevel.getSize();
+        }
+
+        listener.bbo(instrument, bidPrice, bidSize, askPrice, askSize);
     }
 
 }
