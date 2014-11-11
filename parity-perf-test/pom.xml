@@ -47,7 +47,6 @@
           </transformers>
         </configuration>
       </plugin>
-
     </plugins>
   </build>
 
