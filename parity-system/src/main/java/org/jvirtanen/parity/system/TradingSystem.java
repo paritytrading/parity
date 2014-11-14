@@ -15,7 +15,7 @@ class TradingSystem {
 
     public static final long EPOCH_MILLIS = new LocalDate().toDateTimeAtStartOfDay().getMillis();
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
         if (args.length != 1)
             usage("parity-system <configuration-file>");
 
