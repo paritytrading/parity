@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.util.List;
 import org.joda.time.LocalDate;
 import org.jvirtanen.config.Configs;
 
@@ -36,9 +37,13 @@ class TradingSystem {
                 new InetSocketAddress(marketDataMulticastGroup, marketDataMulticastPort),
                 marketDataRequestPort);
 
+        List<String> instruments = config.getStringList("instruments");
+
+        MatchingEngine engine = new MatchingEngine(instruments);
+
         int orderEntryPort = Configs.getPort(config, "order-entry.port");
 
-        OrderEntryServer orderEntry = OrderEntryServer.create(orderEntryPort);
+        OrderEntryServer orderEntry = OrderEntryServer.create(orderEntryPort, engine);
 
         marketData.version();
 

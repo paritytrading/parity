@@ -10,17 +10,21 @@ class OrderEntryServer {
 
     private ServerSocketChannel serverChannel;
 
-    private OrderEntryServer(ServerSocketChannel serverChannel) {
+    private MatchingEngine engine;
+
+    private OrderEntryServer(ServerSocketChannel serverChannel, MatchingEngine engine) {
         this.serverChannel = serverChannel;
+
+        this.engine = engine;
     }
 
-    public static OrderEntryServer create(int port) throws IOException {
+    public static OrderEntryServer create(int port, MatchingEngine engine) throws IOException {
         ServerSocketChannel serverChannel = ServerSocketChannel.open();
 
         serverChannel.bind(new InetSocketAddress(port));
         serverChannel.configureBlocking(false);
 
-        return new OrderEntryServer(serverChannel);
+        return new OrderEntryServer(serverChannel, engine);
     }
 
     public ServerSocketChannel getChannel() {
@@ -35,7 +39,7 @@ class OrderEntryServer {
         channel.setOption(StandardSocketOptions.TCP_NODELAY, true);
         channel.configureBlocking(false);
 
-        return new Session(channel);
+        return new Session(channel, engine);
     }
 
 }
