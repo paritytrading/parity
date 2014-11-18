@@ -25,11 +25,12 @@ public class OrderEntryClient implements Closeable {
     private volatile boolean closed;
 
     private OrderEntryClient(Selector selector, SocketChannel channel, POEClientListener listener) {
-        this.buffer = ByteBuffer.allocate(1024);
+        this.buffer = ByteBuffer.allocate(POE.MAX_INBOUND_MESSAGE_LENGTH);
 
         this.selector = selector;
 
-        this.transport = new SoupBinTCPClient(channel, new POEClientParser(listener), new StatusListener());
+        this.transport = new SoupBinTCPClient(channel, POE.MAX_OUTBOUND_MESSAGE_LENGTH,
+                new POEClientParser(listener), new StatusListener());
 
         this.closed = false;
 
