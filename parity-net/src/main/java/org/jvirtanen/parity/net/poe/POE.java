@@ -16,6 +16,9 @@ public class POE {
     private POE() {
     }
 
+    public static final int MAX_INBOUND_MESSAGE_LENGTH  = 34;
+    public static final int MAX_OUTBOUND_MESSAGE_LENGTH = 50;
+
     public static final byte BUY  = 'B';
     public static final byte SELL = 'S';
 
