@@ -22,7 +22,7 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
     private static POE.OrderExecuted orderExecuted = new POE.OrderExecuted();
     private static POE.OrderCanceled orderCanceled = new POE.OrderCanceled();
 
-    private static ByteBuffer buffer = ByteBuffer.allocate(128);
+    private static ByteBuffer buffer = ByteBuffer.allocate(POE.MAX_OUTBOUND_MESSAGE_LENGTH);
 
     private SoupBinTCPServer transport;
 
@@ -35,7 +35,8 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
     private boolean terminated;
 
     public Session(SocketChannel channel, MatchingEngine engine) {
-        this.transport = new SoupBinTCPServer(channel, new POEServerParser(this), this);
+        this.transport = new SoupBinTCPServer(channel, POE.MAX_INBOUND_MESSAGE_LENGTH,
+                new POEServerParser(this), this);
 
         this.orders   = new HashMap<>();
         this.orderIds = new HashSet<>();
