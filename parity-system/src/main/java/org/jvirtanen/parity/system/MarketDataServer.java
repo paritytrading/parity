@@ -1,5 +1,7 @@
 package org.jvirtanen.parity.system;
 
+import static org.jvirtanen.parity.util.Applications.*;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.StandardProtocolFamily;
@@ -64,8 +66,12 @@ class MarketDataServer {
         return requestTransport;
     }
 
-    public void serve() throws IOException {
-        requestTransport.serve(messages);
+    public void serve() {
+        try {
+            requestTransport.serve(messages);
+        } catch (IOException e) {
+            fatal(e);
+        }
     }
 
     public void version() throws IOException {

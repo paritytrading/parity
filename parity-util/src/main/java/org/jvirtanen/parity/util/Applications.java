@@ -48,6 +48,20 @@ public class Applications {
     }
 
     /**
+     * Print a throwable's message and stack trace to the standard error and
+     * terminate.
+     *
+     * @param throwable a throwable
+     */
+    public static void fatal(Throwable throwable) {
+        System.err.println("fatal: " + throwable.getMessage());
+        System.err.println();
+        throwable.printStackTrace(System.err);
+        System.err.println();
+        System.exit(1);
+    }
+
+    /**
      * Print a usage message to the standard error and terminate.
      *
      * @param message the usage message

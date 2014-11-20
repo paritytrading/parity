@@ -56,7 +56,7 @@ class Events implements Runnable {
                     if (key.isReadable()) {
                         Object attachment = key.attachment();
                         if (attachment == null)
-                            serve();
+                            marketData.serve();
                         else
                             receive((Session)attachment);
                     }
@@ -68,13 +68,6 @@ class Events implements Runnable {
             keepAlive();
 
             cleanUp();
-        }
-    }
-
-    private void serve() {
-        try {
-            marketData.serve();
-        } catch (IOException e) {
         }
     }
 
