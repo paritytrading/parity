@@ -8,6 +8,7 @@ import java.util.List;
 import org.jvirtanen.parity.match.Market;
 import org.jvirtanen.parity.match.MarketListener;
 import org.jvirtanen.parity.match.Side;
+import org.jvirtanen.parity.net.pmd.PMD;
 import org.jvirtanen.parity.net.poe.POE;
 
 class MatchingEngine {
@@ -15,22 +16,28 @@ class MatchingEngine {
     private Long2ObjectArrayMap<Market>   markets;
     private Long2ObjectOpenHashMap<Order> orders;
 
+    private MarketDataServer marketData;
+
     private long nextOrderNumber;
     private long nextMatchNumber;
 
     private Order handling;
 
-    public MatchingEngine(List<String> instruments) {
-        markets = new Long2ObjectArrayMap<>();
-        orders  = new Long2ObjectOpenHashMap<>();
+    private long instrument;
+
+    public MatchingEngine(List<String> instruments, MarketDataServer marketData) {
+        this.markets = new Long2ObjectArrayMap<>();
+        this.orders  = new Long2ObjectOpenHashMap<>();
 
         EventHandler handler = new EventHandler();
 
         for (String instrument : instruments)
             markets.put(encodeLong(instrument), new Market(handler));
 
-        nextOrderNumber = 1;
-        nextMatchNumber = 1;
+        this.marketData = marketData;
+
+        this.nextOrderNumber = 1;
+        this.nextMatchNumber = 1;
     }
 
     public void enterOrder(POE.EnterOrder message, Session session) {
@@ -43,6 +50,8 @@ class MatchingEngine {
         long orderNumber = nextOrderNumber++;
 
         handling = new Order(message.orderId, orderNumber, session, market);
+
+        instrument = message.instrument;
 
         session.orderAccepted(message, handling);
 
@@ -92,24 +101,32 @@ class MatchingEngine {
             handling.getSession().orderExecuted(price, executedQuantity, POE.LIQUIDITY_FLAG_REMOVED_LIQUIDITY,
                     matchNumber, handling);
 
+            marketData.orderExecuted(resting.getOrderNumber(), executedQuantity, matchNumber);
+
             if (remainingQuantity == 0)
                 release(resting);
         }
 
         @Override
         public void add(long orderNumber, Side side, long price, long size) {
+            marketData.orderAdded(orderNumber, side(side), instrument, size, price);
+
             track(handling);
         }
 
         @Override
         public void cancel(long orderNumber, long canceledQuantity, long remainingQuantity) {
-            if (handling == null)
-                return;
+            if (handling != null)
+                handling.getSession().orderCanceled(canceledQuantity, POE.ORDER_CANCEL_REASON_REQUEST, handling);
 
-            handling.getSession().orderCanceled(canceledQuantity, POE.ORDER_CANCEL_REASON_REQUEST, handling);
+            if (remainingQuantity > 0) {
+                marketData.orderCanceled(orderNumber, canceledQuantity);
+            } else {
+                marketData.orderDeleted(orderNumber);
 
-            if (remainingQuantity == 0)
-                release(handling);
+                if (remainingQuantity == 0 && handling != null)
+                    release(handling);
+            }
         }
 
     }
@@ -123,6 +140,17 @@ class MatchingEngine {
         }
 
         return null;
+    }
+
+    private byte side(Side value) {
+        switch (value) {
+        case BUY:
+            return PMD.BUY;
+        case SELL:
+            return PMD.SELL;
+        }
+
+        return 0;
     }
 
 }
