@@ -77,23 +77,32 @@ class MarketDataServer {
     public void version() {
         version.version = PMD.VERSION;
 
-        send(version);
+        enqueue(version);
+
+        transmit();
     }
 
-    private void send(PMD.Message message) {
+    private void enqueue(PMD.Message message) {
         buffer.clear();
         message.put(buffer);
         buffer.flip();
 
         try {
-            packet.clear();
             packet.put(buffer);
+        } catch (IOException e) {
+            fatal(e);
+        }
+    }
 
+    private void transmit() {
+        try {
             transport.send(packet);
 
             packet.payload().flip();
 
             messages.put(packet);
+
+            packet.clear();
         } catch (IOException e) {
             fatal(e);
         }
