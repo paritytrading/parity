@@ -15,7 +15,12 @@ import org.jvirtanen.parity.net.pmd.PMD;
 
 class MarketDataServer {
 
-    private PMD.Version version;
+    private PMD.Version       version;
+    private PMD.Seconds       seconds;
+    private PMD.OrderAdded    orderAdded;
+    private PMD.OrderExecuted orderExecuted;
+    private PMD.OrderCanceled orderCanceled;
+    private PMD.OrderDeleted  orderDeleted;
 
     private MoldUDP64Server transport;
 
@@ -27,8 +32,17 @@ class MarketDataServer {
 
     private ByteBuffer buffer;
 
+    private long previousSecond;
+
+    private long timestamp;
+
     private MarketDataServer(MoldUDP64Server transport, MoldUDP64RequestServer requestTransport) {
-        this.version = new PMD.Version();
+        this.version       = new PMD.Version();
+        this.seconds       = new PMD.Seconds();
+        this.orderAdded    = new PMD.OrderAdded();
+        this.orderExecuted = new PMD.OrderExecuted();
+        this.orderCanceled = new PMD.OrderCanceled();
+        this.orderDeleted  = new PMD.OrderDeleted();
 
         this.transport = transport;
 
@@ -77,23 +91,99 @@ class MarketDataServer {
     public void version() {
         version.version = PMD.VERSION;
 
-        send(version);
+        enqueue(version);
+
+        transmit();
     }
 
-    private void send(PMD.Message message) {
+    public void orderAdded(long orderNumber, byte side, long instrument, long quantity, long price) {
+        timestamp();
+
+        orderAdded.timestamp   = timestamp;
+        orderAdded.orderNumber = orderNumber;
+        orderAdded.side        = side;
+        orderAdded.instrument  = instrument;
+        orderAdded.quantity    = quantity;
+        orderAdded.price       = price;
+
+        enqueue(orderAdded);
+
+        transmit();
+    }
+
+    public void orderExecuted(long orderNumber, long quantity, long matchNumber) {
+        timestamp();
+
+        orderExecuted.timestamp   = timestamp;
+        orderExecuted.orderNumber = orderNumber;
+        orderExecuted.quantity    = quantity;
+        orderExecuted.matchNumber = matchNumber;
+
+        enqueue(orderExecuted);
+
+        transmit();
+    }
+
+    public void orderCanceled(long orderNumber, long canceledQuantity) {
+        timestamp();
+
+        orderCanceled.timestamp        = timestamp;
+        orderCanceled.orderNumber      = orderNumber;
+        orderCanceled.canceledQuantity = canceledQuantity;
+
+        enqueue(orderCanceled);
+
+        transmit();
+    }
+
+    public void orderDeleted(long orderNumber) {
+        timestamp();
+
+        orderDeleted.timestamp   = timestamp;
+        orderDeleted.orderNumber = orderNumber;
+
+        enqueue(orderDeleted);
+
+        transmit();
+    }
+
+    private void timestamp() {
+        long currentTimeMillis = System.currentTimeMillis() - TradingSystem.EPOCH_MILLIS;
+
+        long currentSecond = currentTimeMillis / 1000;
+
+        if (currentSecond != previousSecond) {
+            seconds.second = currentSecond;
+
+            enqueue(seconds);
+        }
+
+        previousSecond = currentSecond;
+
+        timestamp = (currentTimeMillis - currentSecond * 1000) * 1000 * 1000;
+    }
+
+    private void enqueue(PMD.Message message) {
         buffer.clear();
         message.put(buffer);
         buffer.flip();
 
         try {
-            packet.clear();
             packet.put(buffer);
+        } catch (IOException e) {
+            fatal(e);
+        }
+    }
 
+    private void transmit() {
+        try {
             transport.send(packet);
 
             packet.payload().flip();
 
             messages.put(packet);
+
+            packet.clear();
         } catch (IOException e) {
             fatal(e);
         }

@@ -39,7 +39,7 @@ class TradingSystem {
 
         List<String> instruments = config.getStringList("instruments");
 
-        MatchingEngine engine = new MatchingEngine(instruments);
+        MatchingEngine engine = new MatchingEngine(instruments, marketData);
 
         int orderEntryPort = Configs.getPort(config, "order-entry.port");
 
