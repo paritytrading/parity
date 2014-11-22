@@ -10,12 +10,12 @@ public interface MarketListener {
      * An event indicating that the best bid and offer (BBO) has changed.
      *
      * @param instrument the instrument
-     * @param bidPrice the bid price
-     * @param bidSize the bid size
-     * @param askPrice the ask price
-     * @param askSize the ask size
+     * @param bidPrice the bid price or zero if there are no bids
+     * @param bidSize the bid size or zero if there are no bids
+     * @param askPrice the ask price or zero if there are no asks
+     * @param askSize the ask size or zero if there are no asks
      */
-    void bbo(long instrument, long bidPrice, int bidSize, long askPrice, int askSize);
+    void bbo(long instrument, long bidPrice, long bidSize, long askPrice, long askSize);
 
     /**
      * An event indicating that a trade has taken place.
@@ -25,6 +25,6 @@ public interface MarketListener {
      * @param price the trade price
      * @param size the trade size
      */
-    void trade(long instrument, Side side, long price, int size);
+    void trade(long instrument, Side side, long price, long size);
 
 }
