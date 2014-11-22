@@ -137,6 +137,7 @@
           <artifactId>maven-shade-plugin</artifactId>
           <version>2.2</version>
           <configuration>
+            <minimizeJar>true</minimizeJar>
             <shadedArtifactAttached>true</shadedArtifactAttached>
             <shadedClassifierName>jar-with-dependencies</shadedClassifierName>
           </configuration>
