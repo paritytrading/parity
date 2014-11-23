@@ -17,7 +17,6 @@ class Display implements MarketDataListener {
 
     private static final String MISSING = String.format("%9s %10s", "-", "-");
 
-    private Long2ObjectArrayMap<BBO>   bbos;
     private Long2ObjectArrayMap<Trade> trades;
 
     private long second;
@@ -26,13 +25,10 @@ class Display implements MarketDataListener {
     private int counter;
 
     public Display(List<String> instruments) {
-        bbos   = new Long2ObjectArrayMap<>();
         trades = new Long2ObjectArrayMap<>();
 
-        for (String instrument : instruments) {
-            bbos.put(encodeLong(instrument), new BBO());
+        for (String instrument : instruments)
             trades.put(encodeLong(instrument), new Trade());
-        }
 
         printf("\n%s\n", HEADER);
     }
@@ -49,14 +45,24 @@ class Display implements MarketDataListener {
 
     @Override
     public void bbo(long instrument, long bidPrice, long bidSize, long askPrice, long askSize) {
-        BBO bbo = bbos.get(instrument);
+        Trade trade = trades.get(instrument);
 
-        bbo.bidPrice = bidPrice;
-        bbo.bidSize  = bidSize;
-        bbo.askPrice = askPrice;
-        bbo.askSize  = askSize;
+        printf("%12s %8s ", Timestamps.format(second, timestamp), decodeLong(instrument));
 
-        update(instrument);
+        if (bidSize != 0)
+            printf("%9.2f %10d ", bidPrice / PRICE_FACTOR, bidSize);
+        else
+            printf("%s ", MISSING);
+
+        if (askSize != 0)
+            printf("%9.2f %10d ", askPrice / PRICE_FACTOR, askSize);
+        else
+            printf("%s ", MISSING);
+
+        if (trade.size != 0)
+            printf("%9.2f %10d\n", trade.price / PRICE_FACTOR, trade.size);
+        else
+            printf("%s\n", MISSING);
     }
 
     @Override
@@ -65,28 +71,6 @@ class Display implements MarketDataListener {
 
         trade.price = price;
         trade.size  = size;
-    }
-
-    private void update(long instrument) {
-        BBO   bbo   = bbos.get(instrument);
-        Trade trade = trades.get(instrument);
-
-        printf("%12s %8s ", Timestamps.format(second, timestamp), decodeLong(instrument));
-
-        if (bbo.bidSize != 0)
-            printf("%9.2f %10d ", bbo.bidPrice / PRICE_FACTOR, bbo.bidSize);
-        else
-            printf("%s ", MISSING);
-
-        if (bbo.askSize != 0)
-            printf("%9.2f %10d ", bbo.askPrice / PRICE_FACTOR, bbo.askSize);
-        else
-            printf("%s ", MISSING);
-
-        if (trade.size != 0)
-            printf("%9.2f %10d\n", trade.price / PRICE_FACTOR, trade.size);
-        else
-            printf("%s\n", MISSING);
     }
 
     private void printf(String format, Object... args) {
