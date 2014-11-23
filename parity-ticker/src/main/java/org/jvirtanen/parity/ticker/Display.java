@@ -65,8 +65,6 @@ class Display implements MarketDataListener {
 
         trade.price = price;
         trade.size  = size;
-
-        update(instrument);
     }
 
     private void update(long instrument) {
