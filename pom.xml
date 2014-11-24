@@ -165,7 +165,7 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
-          <excludePackageNames>org.jvirtanen.parity.client:org.jvirtanen.parity.system:org.jvirtanen.parity.ticker</excludePackageNames>
+          <excludePackageNames>org.jvirtanen.parity.client:org.jvirtanen.parity.system:org.jvirtanen.parity.ticker:*.perf</excludePackageNames>
           <links>
             <link>http://typesafehub.github.io/config/latest/api/</link>
           </links>
