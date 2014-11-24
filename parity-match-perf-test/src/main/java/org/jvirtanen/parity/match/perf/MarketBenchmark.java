@@ -1,4 +1,4 @@
-package org.jvirtanen.parity.perf;
+package org.jvirtanen.parity.match.perf;
 
 import org.jvirtanen.parity.match.MarketListener;
 import org.jvirtanen.parity.match.Market;
