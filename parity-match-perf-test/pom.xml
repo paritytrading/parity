@@ -39,6 +39,7 @@
         <artifactId>maven-shade-plugin</artifactId>
         <configuration>
           <finalName>microbenchmarks</finalName>
+          <minimizeJar>false</minimizeJar>
           <shadedArtifactAttached>false</shadedArtifactAttached>
           <transformers>
             <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
