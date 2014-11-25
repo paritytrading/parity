@@ -19,7 +19,7 @@ Messages from the client application to the trading system can be resent
 benignly. In case of a network disconnection, the client application can
 resend messages to which it has not yet received acknowledgements.
 
-POE uses NASDAQ SoupBinTCP 3.0 as the underlying transport protocol. The
+POE uses NASDAQ SoupBinTCP 3.00 as the underlying transport protocol. The
 protocol provides authentication and keep-alive as well as the aforementioned
 message sequencing mechanism.
 
