@@ -11,8 +11,8 @@ Architecture
 PMD consists of logical, sequenced messages sent by the trading system to the
 client application.
 
-PMD uses NASDAQ MoldUDP64 as the underlying transport protocol. It implements
-ordered, reliable IP multicast.
+PMD uses NASDAQ MoldUDP64 1.00 as the underlying transport protocol. It
+implements ordered, reliable IP multicast.
 
 
 Data Types
