@@ -4,6 +4,18 @@ Parity Matching Engine
 Parity Matching Engine is a high-performance matching engine for the JVM.
 
 
+Download
+--------
+
+Add a Maven dependency to Parity Matching Engine:
+
+    <dependency>
+      <groupId>org.jvirtanen.parity</groupId>
+      <artifactId>parity-match</artifactId>
+      <version><!-- latest version --></version>
+    </dependency>
+
+
 License
 -------
 
