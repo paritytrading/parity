@@ -12,6 +12,14 @@ Download Parity Trading System from the [Releases][] page.
   [Releases]: https://github.com/jvirtanen/parity/wiki/Releases
 
 
+Usage
+-----
+
+Run Parity Trading System with Java:
+
+    java -jar parity-system.jar parity-system.conf
+
+
 License
 -------
 
