@@ -13,6 +13,14 @@ Download Parity Terminal Client from the [Releases][] page.
   [Releases]: https://github.com/jvirtanen/parity/wiki/Releases
 
 
+Usage
+-----
+
+Run Parity Terminal Client with Java:
+
+    java -jar parity-client.jar parity-client.conf
+
+
 License
 -------
 
