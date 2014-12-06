@@ -4,6 +4,14 @@ Parity Trading System
 Parity Trading System is an open source trading system.
 
 
+Download
+--------
+
+Download Parity Trading System from the [Releases][] page.
+
+  [Releases]: https://github.com/jvirtanen/parity/wiki/Releases
+
+
 License
 -------
 
