@@ -12,6 +12,14 @@ Download Parity from the [Releases][] page.
   [Releases]: https://github.com/jvirtanen/parity/wiki/Releases
 
 
+Build
+-----
+
+Build Parity with Maven:
+
+    mvn package
+
+
 License
 -------
 
