@@ -13,6 +13,14 @@ Download Parity Stock Ticker from the [Releases][] page.
   [Releases]: https://github.com/jvirtanen/parity/wiki/Releases
 
 
+Usage
+-----
+
+Run Parity Stock Ticker with Java:
+
+    java -jar parity-ticker.jar parity-ticker.conf
+
+
 License
 -------
 
