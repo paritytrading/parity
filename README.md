@@ -44,12 +44,10 @@ protocols.
   [Connectivity]: https://github.com/jvirtanen/parity/wiki/Connectivity
 
 
-Build
------
+Development
+-----------
 
-Build Parity with Maven:
-
-    mvn package
+See the [Developer Guide](HACKING.md).
 
 
 License
