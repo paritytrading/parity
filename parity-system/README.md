@@ -17,7 +17,7 @@ Usage
 
 Run Parity Trading System with Java:
 
-    java -jar parity-system.jar parity-system.conf
+    java -jar <executable> <configuration-file>
 
 
 License

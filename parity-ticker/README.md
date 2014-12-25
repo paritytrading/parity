@@ -18,7 +18,7 @@ Usage
 
 Run Parity Stock Ticker with Java:
 
-    java -jar parity-ticker.jar parity-ticker.conf
+    java -jar <executable> <configuration-file>
 
 
 License

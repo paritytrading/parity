@@ -18,7 +18,7 @@ Usage
 
 Run Parity Terminal Client with Java:
 
-    java -jar parity-client.jar parity-client.conf
+    java -jar <executable> <configuration-file>
 
 
 License
