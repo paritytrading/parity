@@ -21,6 +21,12 @@ Run Parity Stock Ticker with Java:
     java -jar <executable> <configuration-file>
 
 
+Development
+-----------
+
+See the [Developer Guide](../HACKING.md).
+
+
 License
 -------
 

@@ -20,6 +20,12 @@ Run Parity Trading System with Java:
     java -jar <executable> <configuration-file>
 
 
+Development
+-----------
+
+See the [Developer Guide](../HACKING.md).
+
+
 License
 -------
 

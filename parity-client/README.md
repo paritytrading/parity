@@ -21,6 +21,12 @@ Run Parity Terminal Client with Java:
     java -jar <executable> <configuration-file>
 
 
+Development
+-----------
+
+See the [Developer Guide](../HACKING.md).
+
+
 License
 -------
 
