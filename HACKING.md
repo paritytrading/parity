@@ -8,6 +8,8 @@ get started with developing Parity on your own workstation.
 Build
 -----
 
-Build the project with Maven:
+Build the artifacts with Maven:
 
     mvn package
+
+Maven puts the artifacts into a `target` directory under each module.
