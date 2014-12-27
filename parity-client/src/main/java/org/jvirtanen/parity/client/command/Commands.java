@@ -1,5 +1,6 @@
 package org.jvirtanen.parity.client.command;
 
+import com.gs.collections.api.block.function.Function;
 import com.gs.collections.api.block.predicate.Predicate;
 import com.gs.collections.api.list.ImmutableList;
 import com.gs.collections.impl.factory.Lists;
@@ -34,6 +35,17 @@ public class Commands {
             }
 
         }).getFirst();
+    }
+
+    public static ImmutableList<String> names() {
+        return COMMANDS.collect(new Function<Command, String>() {
+
+            @Override
+            public String valueOf(Command command) {
+                return command.getName();
+            }
+
+        });
     }
 
 }
