@@ -13,6 +13,7 @@ import java.nio.channels.ClosedChannelException;
 import java.util.Locale;
 import java.util.Scanner;
 import jline.console.ConsoleReader;
+import jline.console.completer.StringsCompleter;
 import org.jvirtanen.config.Configs;
 import org.jvirtanen.parity.client.command.Command;
 import org.jvirtanen.parity.client.command.CommandException;
@@ -63,6 +64,8 @@ public class TerminalClient implements Closeable {
 
     public void run() throws IOException {
         ConsoleReader reader = new ConsoleReader();
+
+        reader.addCompleter(new StringsCompleter(Commands.names().castToList()));
 
         printf("Type 'help' for help.\n");
 
