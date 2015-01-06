@@ -19,6 +19,9 @@ Run Parity Trading System with Java:
 
     java -jar <executable> <configuration-file>
 
+When started, the trading system starts listening for order entry sessions
+initiated by market participants and publishing market data.
+
 
 Development
 -----------
