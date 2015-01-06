@@ -20,6 +20,10 @@ Run Parity Stock Ticker with Java:
 
     java -jar <executable> <configuration-file>
 
+After starting, the stock ticker first replays market events that have taken
+place before it started. Then it proceeds to display market events in real
+time.
+
 
 Development
 -----------
