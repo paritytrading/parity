@@ -3,7 +3,6 @@ package org.jvirtanen.parity.client.event;
 import com.gs.collections.api.list.ImmutableList;
 import com.gs.collections.api.map.MutableMap;
 import com.gs.collections.impl.factory.Maps;
-import java.util.Comparator;
 
 public class Orders extends DefaultEventVisitor {
 
@@ -22,14 +21,8 @@ public class Orders extends DefaultEventVisitor {
     }
 
     private ImmutableList<Order> getEvents() {
-        return orders.valuesView().toSortedList(new Comparator<Order>() {
-
-            @Override
-            public int compare(Order a, Order b) {
-                return Long.compare(a.getTimestamp(), b.getTimestamp());
-            }
-
-        }).toImmutable();
+        return orders.valuesView().toSortedList((a, b) ->
+                Long.compare(a.getTimestamp(), b.getTimestamp())).toImmutable();
     }
 
     @Override

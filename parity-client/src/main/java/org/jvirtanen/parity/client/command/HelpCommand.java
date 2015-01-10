@@ -1,6 +1,5 @@
 package org.jvirtanen.parity.client.command;
 
-import com.gs.collections.api.block.function.primitive.IntFunction;
 import java.util.Scanner;
 import org.jvirtanen.parity.client.TerminalClient;
 
@@ -39,14 +38,7 @@ class HelpCommand implements Command {
     }
 
     private int calculateMaxCommandNameLength() {
-        return Commands.all().collectInt(new IntFunction<Command>() {
-
-            @Override
-            public int intValueOf(Command command) {
-                return command.getName().length();
-            }
-
-        }).max();
+        return Commands.all().collectInt(c -> c.getName().length()).max();
     }
 
     @Override
