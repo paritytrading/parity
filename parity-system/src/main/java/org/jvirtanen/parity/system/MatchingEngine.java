@@ -87,8 +87,8 @@ class MatchingEngine {
     private class EventHandler implements MarketListener {
 
         @Override
-        public void match(long restingOrderNumber, long incomingOrderNumber, long price,
-                long executedQuantity, long remainingQuantity) {
+        public void match(long restingOrderNumber, long incomingOrderNumber, Side incomingSide,
+                long price, long executedQuantity, long remainingQuantity) {
             Order resting = orders.get(restingOrderNumber);
             if (resting == null)
                 return;
