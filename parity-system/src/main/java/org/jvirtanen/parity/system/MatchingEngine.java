@@ -16,7 +16,8 @@ class MatchingEngine {
     private Long2ObjectArrayMap<Market>   markets;
     private Long2ObjectOpenHashMap<Order> orders;
 
-    private MarketDataServer marketData;
+    private MarketDataServer  marketData;
+    private TradeReportServer tradeReport;
 
     private long nextOrderNumber;
     private long nextMatchNumber;
@@ -25,7 +26,7 @@ class MatchingEngine {
 
     private long instrument;
 
-    public MatchingEngine(List<String> instruments, MarketDataServer marketData) {
+    public MatchingEngine(List<String> instruments, MarketDataServer marketData, TradeReportServer tradeReport) {
         this.markets = new Long2ObjectArrayMap<>();
         this.orders  = new Long2ObjectOpenHashMap<>();
 
@@ -34,7 +35,8 @@ class MatchingEngine {
         for (String instrument : instruments)
             markets.put(encodeLong(instrument), new Market(handler));
 
-        this.marketData = marketData;
+        this.marketData  = marketData;
+        this.tradeReport = tradeReport;
 
         this.nextOrderNumber = 1;
         this.nextMatchNumber = 1;
@@ -102,6 +104,18 @@ class MatchingEngine {
                     matchNumber, handling);
 
             marketData.orderExecuted(resting.getOrderNumber(), executedQuantity, matchNumber);
+
+            long restingUsername  = resting.getSession().getUsername();
+            long incomingUsername = handling.getSession().getUsername();
+
+            long buyer  = incomingSide == Side.BUY  ? incomingUsername : restingUsername;
+            long seller = incomingSide == Side.SELL ? incomingUsername : restingUsername;
+
+            long buyOrderNumber  = incomingSide == Side.BUY  ? incomingOrderNumber : restingOrderNumber;
+            long sellOrderNumber = incomingSide == Side.SELL ? incomingOrderNumber : restingOrderNumber;
+
+            tradeReport.trade(matchNumber, instrument, executedQuantity, price, buyer, buyOrderNumber,
+                    seller, sellOrderNumber);
 
             if (remainingQuantity == 0)
                 release(resting);

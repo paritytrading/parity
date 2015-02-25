@@ -37,9 +37,18 @@ class TradingSystem {
                 new InetSocketAddress(marketDataMulticastGroup, marketDataMulticastPort),
                 marketDataRequestPort);
 
+        String      tradeReportSession        = config.getString("trade-report.session");
+        InetAddress tradeReportMulticastGroup = Configs.getInetAddress(config, "trade-report.multicast-group");
+        int         tradeReportMulticastPort  = Configs.getPort(config, "trade-report.multicast-port");
+        int         tradeReportRequestPort    = Configs.getPort(config, "trade-report.request-port");
+
+        TradeReportServer tradeReport = TradeReportServer.create(tradeReportSession,
+                new InetSocketAddress(tradeReportMulticastGroup, tradeReportMulticastPort),
+                tradeReportRequestPort);
+
         List<String> instruments = config.getStringList("instruments");
 
-        MatchingEngine engine = new MatchingEngine(instruments, marketData);
+        MatchingEngine engine = new MatchingEngine(instruments, marketData, tradeReport);
 
         int orderEntryPort = Configs.getPort(config, "order-entry.port");
 
@@ -47,7 +56,7 @@ class TradingSystem {
 
         marketData.version();
 
-        new Events(marketData, orderEntry).run();
+        new Events(marketData, tradeReport, orderEntry).run();
     }
 
 }
