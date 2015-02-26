@@ -43,6 +43,7 @@
     <module>parity-match</module>
     <module>parity-match-perf-test</module>
     <module>parity-net</module>
+    <module>parity-reporter</module>
     <module>parity-system</module>
     <module>parity-ticker</module>
     <module>parity-top</module>
@@ -165,7 +166,7 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
-          <excludePackageNames>org.jvirtanen.parity.client:org.jvirtanen.parity.system:org.jvirtanen.parity.ticker:*.perf</excludePackageNames>
+          <excludePackageNames>org.jvirtanen.parity.client:org.jvirtanen.parity.reporter:org.jvirtanen.parity.system:org.jvirtanen.parity.ticker:*.perf</excludePackageNames>
           <links>
             <link>http://typesafehub.github.io/config/latest/api/</link>
           </links>
