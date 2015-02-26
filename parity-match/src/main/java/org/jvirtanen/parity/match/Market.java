@@ -49,21 +49,21 @@ public class Market {
 
         switch (side) {
         case BUY:
-            match(orderId, asks, size);
+            match(orderId, side, asks, size);
             break;
         case SELL:
-            match(orderId, bids, size);
+            match(orderId, side, bids, size);
             break;
         }
     }
 
-    private void match(long orderId, Orders orders, long size) {
+    private void match(long orderId, Side side, Orders orders, long size) {
         long remainingQuantity = size;
 
         Level top = orders.getBestLevel();
 
         while (remainingQuantity > 0 && top != null) {
-            remainingQuantity = top.match(orderId, remainingQuantity, listener);
+            remainingQuantity = top.match(orderId, side, remainingQuantity, listener);
 
             top = orders.getBestLevel();
         }
@@ -109,7 +109,7 @@ public class Market {
         Level top = asks.getBestLevel();
 
         while (remainingQuantity > 0 && top != null && top.getPrice() <= price) {
-            remainingQuantity = top.match(orderId, remainingQuantity, listener);
+            remainingQuantity = top.match(orderId, Side.BUY, remainingQuantity, listener);
 
             top = asks.getBestLevel();
         }
@@ -127,7 +127,7 @@ public class Market {
         Level top = bids.getBestLevel();
 
         while (remainingQuantity > 0 && top != null && top.getPrice() >= price) {
-            remainingQuantity = top.match(orderId, remainingQuantity, listener);
+            remainingQuantity = top.match(orderId, Side.SELL, remainingQuantity, listener);
 
             top = bids.getBestLevel();
         }

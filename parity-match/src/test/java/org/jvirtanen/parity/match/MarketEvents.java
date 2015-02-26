@@ -17,10 +17,10 @@ class MarketEvents implements MarketListener {
     }
 
     @Override
-    public void match(long restingOrderId, long incomingOrderId, long price,
-            long executedQuantity, long remainingQuantity) {
-        events.add(new Match(restingOrderId, incomingOrderId, price,
-                    executedQuantity, remainingQuantity));
+    public void match(long restingOrderId, long incomingOrderId, Side incomingSide,
+            long price, long executedQuantity, long remainingQuantity) {
+        events.add(new Match(restingOrderId, incomingOrderId, incomingSide,
+                    price, executedQuantity, remainingQuantity));
     }
 
     @Override
@@ -39,14 +39,16 @@ class MarketEvents implements MarketListener {
     public static class Match extends Value implements Event {
         public final long restingOrderId;
         public final long incomingOrderId;
+        public final Side incomingSide;
         public final long price;
         public final long executedQuantity;
         public final long remainingQuantity;
 
-        public Match(long restingOrderId, long incomingOrderId, long price,
-                long executedQuantity, long remainingQuantity) {
+        public Match(long restingOrderId, long incomingOrderId, Side incomingSide,
+                long price, long executedQuantity, long remainingQuantity) {
             this.restingOrderId    = restingOrderId;
             this.incomingOrderId   = incomingOrderId;
+            this.incomingSide      = incomingSide;
             this.price             = price;
             this.executedQuantity  = executedQuantity;
             this.remainingQuantity = remainingQuantity;

@@ -1,5 +1,7 @@
 package org.jvirtanen.parity.system;
 
+import static org.jvirtanen.parity.util.Strings.*;
+
 import java.io.Closeable;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -34,9 +36,10 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
 
     private boolean terminated;
 
+    private long username;
+
     public Session(SocketChannel channel, MatchingEngine engine) {
-        this.transport = new SoupBinTCPServer(channel, POE.MAX_INBOUND_MESSAGE_LENGTH,
-                new POEServerParser(this), this);
+        this.transport = new SoupBinTCPServer(channel, new POEServerParser(this), this);
 
         this.orders   = new HashMap<>();
         this.orderIds = new HashSet<>();
@@ -48,6 +51,10 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
 
     public SoupBinTCPServer getTransport() {
         return transport;
+    }
+
+    public long getUsername() {
+        return username;
     }
 
     public boolean isTerminated() {
@@ -72,6 +79,11 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
 
     @Override
     public void loginRequest(SoupBinTCP.LoginRequest payload) {
+        if (username != 0) {
+            close();
+            return;
+        }
+
         loginAccepted.session        = payload.requestedSession;
         loginAccepted.sequenceNumber = payload.requestedSequenceNumber;
 
@@ -80,6 +92,8 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
         } catch (IOException e) {
             close();
         }
+
+        username = encodeLong(payload.username);
     }
 
     @Override
@@ -89,6 +103,11 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
 
     @Override
     public void enterOrder(POE.EnterOrder message) {
+        if (username == 0) {
+            close();
+            return;
+        }
+
         if (orderIds.contains(message.orderId))
             return;
 
@@ -97,6 +116,11 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
 
     @Override
     public void cancelOrder(POE.CancelOrder message) {
+        if (username == 0) {
+            close();
+            return;
+        }
+
         Order order = orders.get(message.orderId);
         if (order == null)
             return;

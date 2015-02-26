@@ -19,7 +19,7 @@ Download Parity from the [Releases][] page.
 Usage
 -----
 
-Parity consists of three applications:
+Parity consists of four applications:
 
   - [**Parity Trading System**](parity-system) is an open source trading
     system.
@@ -31,6 +31,9 @@ Parity consists of three applications:
     that displays the best bids and offers (BBOs) and latest trades in the
     trading system.
 
+  - [**Parity Trade Reporter**](parity-reporter) is a simple console
+    application that displays occurred trades in the trading system.
+
 The trading system uses two network protocols for communication with market
 participants:
 
@@ -41,6 +44,13 @@ participants:
   - [**PMD**](parity-net/doc/PMD.md) is the native market data protocol. The
     stock ticker is an example of an application that consumes market data
     using it.
+
+In addition, the trading system uses one network protocol for communication
+with post-trade processing systems:
+
+  - [**PTR**](parity-net/doc/PTR.md) is the native trade reporting protocol.
+    The trade reporter is an example of an application that listens to trade
+    reports using it.
 
 See the [Connectivity][] page for a list of implementations of the network
 protocols.

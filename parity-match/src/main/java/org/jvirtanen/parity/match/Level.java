@@ -31,7 +31,7 @@ class Level {
         return order;
     }
 
-    public long match(long orderId, long quantity, MarketListener listener) {
+    public long match(long orderId, Side side, long quantity, MarketListener listener) {
         for (int i = 0; quantity > 0 && i < orders.size(); i++) {
             Order order = orders.get(i);
 
@@ -40,13 +40,13 @@ class Level {
             if (orderQuantity > quantity) {
                 order.reduce(quantity);
 
-                listener.match(order.getId(), orderId, price, quantity, order.getRemainingQuantity());
+                listener.match(order.getId(), orderId, side, price, quantity, order.getRemainingQuantity());
 
                 quantity = 0;
             } else {
                 toDelete.add(order);
 
-                listener.match(order.getId(), orderId, price, orderQuantity, 0);
+                listener.match(order.getId(), orderId, side, price, orderQuantity, 0);
 
                 quantity -= orderQuantity;
             }

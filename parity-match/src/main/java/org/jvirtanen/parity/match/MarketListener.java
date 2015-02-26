@@ -12,11 +12,12 @@ public interface MarketListener {
      *
      * @param restingOrderId the order identifier of the resting order
      * @param incomingOrderId the order identifier of the incoming order
+     * @param incomingSide the side of the incoming order
      * @param price the execution price
      * @param executedQuantity the executed quantity
      * @param remainingQuantity the remaining quantity of the resting order
      */
-    void match(long restingOrderId, long incomingOrderId, long price, long executedQuantity, long remainingQuantity);
+    void match(long restingOrderId, long incomingOrderId, Side incomingSide, long price, long executedQuantity, long remainingQuantity);
 
     /**
      * Add an order to the order book.

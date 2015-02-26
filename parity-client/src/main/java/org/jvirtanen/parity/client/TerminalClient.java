@@ -15,6 +15,7 @@ import java.util.Scanner;
 import jline.console.ConsoleReader;
 import jline.console.completer.StringsCompleter;
 import org.jvirtanen.config.Configs;
+import org.jvirtanen.nassau.soupbintcp.SoupBinTCP;
 import org.jvirtanen.parity.client.command.Command;
 import org.jvirtanen.parity.client.command.CommandException;
 import org.jvirtanen.parity.client.command.Commands;
@@ -42,10 +43,19 @@ public class TerminalClient implements Closeable {
         this.orderIdGenerator = new OrderIDGenerator();
     }
 
-    public static TerminalClient open(InetSocketAddress address) throws IOException {
+    public static TerminalClient open(InetSocketAddress address, String username, String password) throws IOException {
         Events events = new Events();
 
         OrderEntryClient orderEntry = OrderEntryClient.open(address, events);
+
+        SoupBinTCP.LoginRequest loginRequest = new SoupBinTCP.LoginRequest();
+
+        loginRequest.username = username;
+        loginRequest.password = password;
+        loginRequest.requestedSession = "";
+        loginRequest.requestedSequenceNumber = 0;
+
+        orderEntry.getTransport().login(loginRequest);
 
         return new TerminalClient(events, orderEntry);
     }
@@ -127,10 +137,13 @@ public class TerminalClient implements Closeable {
     }
 
     private static void main(Config config) throws IOException {
-        InetAddress orderEntryAddress = Configs.getInetAddress(config, "order-entry.address");
-        int         orderEntryPort    = Configs.getPort(config, "order-entry.port");
+        InetAddress orderEntryAddress  = Configs.getInetAddress(config, "order-entry.address");
+        int         orderEntryPort     = Configs.getPort(config, "order-entry.port");
+        String      orderEntryUsername = config.getString("order-entry.username");
+        String      orderEntryPassword = config.getString("order-entry.password");
 
-        TerminalClient.open(new InetSocketAddress(orderEntryAddress, orderEntryPort)).run();
+        TerminalClient.open(new InetSocketAddress(orderEntryAddress, orderEntryPort),
+                orderEntryUsername, orderEntryPassword).run();
     }
 
 }
