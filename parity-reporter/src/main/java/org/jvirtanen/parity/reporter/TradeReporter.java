@@ -39,7 +39,6 @@ class TradeReporter {
 
         while (true)
             client.receive();
-
     }
 
 }
