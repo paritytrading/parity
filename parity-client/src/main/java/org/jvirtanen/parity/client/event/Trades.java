@@ -5,7 +5,6 @@ import com.gs.collections.api.map.MutableMap;
 import com.gs.collections.api.multimap.bag.MutableBagMultimap;
 import com.gs.collections.impl.factory.Maps;
 import com.gs.collections.impl.factory.Multimaps;
-import java.util.Comparator;
 
 public class Trades extends DefaultEventVisitor {
 
@@ -27,14 +26,8 @@ public class Trades extends DefaultEventVisitor {
     }
 
     private ImmutableList<Trade> getEvents() {
-        return trades.valuesView().toSortedList(new Comparator<Trade>() {
-
-            @Override
-            public int compare(Trade a, Trade b) {
-                return Long.compare(a.getTimestamp(), b.getTimestamp());
-            }
-
-        }).toImmutable();
+        return trades.valuesView().toSortedList((a, b) ->
+                Long.compare(a.getTimestamp(), b.getTimestamp())).toImmutable();
     }
 
     @Override
