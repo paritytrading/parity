@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+if [ $# -ne 1 ]; then
+    echo "Usage: $(basename $0) <version>" >&2
+    exit 2
+fi
+
+version=$1
+
+mkdir -p "target"
+
+git archive \
+    --format=zip \
+    --output="target/parity-$version-sources.zip" \
+    --prefix="parity-$version-sources/" \
+    $version
