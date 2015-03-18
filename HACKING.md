@@ -31,7 +31,7 @@ Run
 After building the artifacts, the executables can be found in the `target`
 directories. Their filenames have the following format:
 
-    <module>-<version>-jar-with-dependencies.jar
+    <module>-<version>.jar
 
 Run an executable with Java:
 

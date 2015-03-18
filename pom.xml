@@ -138,9 +138,8 @@
           <artifactId>maven-shade-plugin</artifactId>
           <version>2.3</version>
           <configuration>
+            <createDependencyReducedPom>false</createDependencyReducedPom>
             <minimizeJar>true</minimizeJar>
-            <shadedArtifactAttached>true</shadedArtifactAttached>
-            <shadedClassifierName>jar-with-dependencies</shadedClassifierName>
           </configuration>
           <executions>
             <execution>
