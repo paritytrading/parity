@@ -64,7 +64,7 @@ public class PMDParser implements MessageListener {
         }
     }
 
-    public void version(ByteBuffer buffer) throws IOException {
+    private void version(ByteBuffer buffer) throws IOException {
         version.get(buffer);
 
         listener.version(version);
