@@ -1,7 +1,7 @@
 package org.jvirtanen.parity.client.event;
 
+import static org.jvirtanen.lang.Strings.*;
 import static org.jvirtanen.parity.client.TerminalClient.*;
-import static org.jvirtanen.parity.util.Strings.*;
 
 import org.jvirtanen.parity.client.util.Timestamps;
 

@@ -1,6 +1,6 @@
 package org.jvirtanen.parity.system;
 
-import static org.jvirtanen.parity.util.Strings.*;
+import static org.jvirtanen.lang.Strings.*;
 
 import it.unimi.dsi.fastutil.longs.Long2ObjectArrayMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;

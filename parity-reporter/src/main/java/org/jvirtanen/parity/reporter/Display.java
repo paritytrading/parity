@@ -1,6 +1,6 @@
 package org.jvirtanen.parity.reporter;
 
-import static org.jvirtanen.parity.util.Strings.*;
+import static org.jvirtanen.lang.Strings.*;
 
 import org.jvirtanen.parity.net.ptr.PTR;
 import org.jvirtanen.parity.net.ptr.PTRListener;

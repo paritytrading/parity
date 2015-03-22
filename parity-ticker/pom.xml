@@ -28,6 +28,10 @@
       <artifactId>config-extras</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.jvirtanen.lang</groupId>
+      <artifactId>lang-extras</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.jvirtanen.nassau</groupId>
       <artifactId>nassau</artifactId>
     </dependency>

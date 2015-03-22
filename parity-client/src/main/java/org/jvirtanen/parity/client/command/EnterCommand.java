@@ -1,7 +1,7 @@
 package org.jvirtanen.parity.client.command;
 
+import static org.jvirtanen.lang.Strings.*;
 import static org.jvirtanen.parity.client.TerminalClient.*;
-import static org.jvirtanen.parity.util.Strings.*;
 
 import java.io.IOException;
 import java.util.NoSuchElementException;

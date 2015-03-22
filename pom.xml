@@ -88,6 +88,11 @@
         <version>0.1.0</version>
       </dependency>
       <dependency>
+        <groupId>org.jvirtanen.lang</groupId>
+        <artifactId>lang-extras</artifactId>
+        <version>0.1.0</version>
+      </dependency>
+      <dependency>
         <groupId>org.jvirtanen.nassau</groupId>
         <artifactId>nassau</artifactId>
         <version>0.3.0</version>

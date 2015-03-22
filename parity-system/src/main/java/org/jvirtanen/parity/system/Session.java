@@ -1,6 +1,6 @@
 package org.jvirtanen.parity.system;
 
-import static org.jvirtanen.parity.util.Strings.*;
+import static org.jvirtanen.lang.Strings.*;
 
 import java.io.Closeable;
 import java.io.IOException;

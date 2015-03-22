@@ -1,6 +1,6 @@
 package org.jvirtanen.parity.ticker;
 
-import static org.jvirtanen.parity.util.Strings.*;
+import static org.jvirtanen.lang.Strings.*;
 
 import java.io.IOException;
 import java.net.InetAddress;
