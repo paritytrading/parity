@@ -2,9 +2,9 @@ package org.jvirtanen.parity.reporter;
 
 import static org.jvirtanen.lang.Strings.*;
 
+import java.util.Locale;
 import org.jvirtanen.parity.net.ptr.PTR;
 import org.jvirtanen.parity.net.ptr.PTRListener;
-import java.util.Locale;
 
 class Display implements PTRListener {
 
