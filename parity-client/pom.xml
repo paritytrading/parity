@@ -15,6 +15,16 @@
 
   <dependencies>
     <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>parity-net</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>parity-util</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
       <groupId>com.goldmansachs</groupId>
       <artifactId>gs-collections</artifactId>
     </dependency>
@@ -46,16 +56,6 @@
     <dependency>
       <groupId>org.jvirtanen.nassau</groupId>
       <artifactId>nassau</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>parity-net</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>parity-util</artifactId>
-      <version>${project.version}</version>
     </dependency>
   </dependencies>
 
