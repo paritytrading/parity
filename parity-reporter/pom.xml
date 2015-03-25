@@ -9,7 +9,6 @@
     <version>0.1.1-SNAPSHOT</version>
   </parent>
 
-  <groupId>org.jvirtanen.parity</groupId>
   <artifactId>parity-reporter</artifactId>
 
   <name>Parity Trade Reporter</name>

@@ -9,7 +9,6 @@
     <version>0.1.1-SNAPSHOT</version>
   </parent>
 
-  <groupId>org.jvirtanen.parity</groupId>
   <artifactId>parity-top</artifactId>
 
   <name>Parity Top of Book</name>
