@@ -85,9 +85,33 @@ public class Market {
         if (order == null)
             return;
 
+        execute(orderId, order, quantity, order.getPrice());
+    }
+
+    /**
+     * Execute a quantity of an order in the order book. If the remaining
+     * quantity reaches zero, the order is deleted from the order book.
+     *
+     * <p>A Trade event and a BBO event are triggered.</p>
+     *
+     * <p>If the order identifier is unknown, do nothing.</p>
+     *
+     * @param orderId the order identifier
+     * @param quantity the executed quantity
+     * @param price the execution price
+     */
+    public void execute(long orderId, long quantity, long price) {
+        Order order = orders.get(orderId);
+        if (order == null)
+            return;
+
+        execute(orderId, order, quantity, price);
+    }
+
+    private void execute(long orderId, Order order, long quantity, long price) {
         OrderBook book = order.getOrderBook();
 
-        listener.trade(book.getInstrument(), order.getSide(), order.getPrice(), quantity);
+        listener.trade(book.getInstrument(), order.getSide(), price, quantity);
 
         if (quantity < order.getRemainingQuantity()) {
             order.reduce(quantity);
