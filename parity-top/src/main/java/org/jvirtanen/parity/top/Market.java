@@ -41,6 +41,16 @@ public class Market {
     }
 
     /**
+     * Get an order.
+     *
+     * @param orderId the order identifier
+     * @return the order or <code>null</code> if the order identifier is unknown
+     */
+    public Order get(long orderId) {
+        return orders.get(orderId);
+    }
+
+    /**
      * Add an order to the order book.
      *
      * <p>A BBO event is triggered if the top of the book changes.</p>
