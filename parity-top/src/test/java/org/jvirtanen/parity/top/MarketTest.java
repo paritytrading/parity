@@ -63,6 +63,21 @@ public class MarketTest {
     }
 
     @Test
+    public void executionWithPrice() {
+        market.add(INSTRUMENT, 1, Side.BUY,   999, 100);
+        market.add(INSTRUMENT, 2, Side.SELL, 1001, 200);
+        market.add(INSTRUMENT, 3, Side.SELL, 1002,  50);
+        market.execute(2, 200, 1000);
+
+        Event bboAfterBid      = new BBO(INSTRUMENT, 999, 100,    0,   0);
+        Event bboAfterFirstAsk = new BBO(INSTRUMENT, 999, 100, 1001, 200);
+        Event trade            = new Trade(INSTRUMENT, Side.SELL, 1000, 200);
+        Event bboAfterTrade    = new BBO(INSTRUMENT, 999, 100, 1002,  50);
+
+        assertEquals(asList(bboAfterBid, bboAfterFirstAsk, trade, bboAfterTrade), events.collect());
+    }
+
+    @Test
     public void partialExecution() {
         market.add(INSTRUMENT, 1, Side.BUY,   999, 100);
         market.add(INSTRUMENT, 2, Side.SELL, 1001, 200);
