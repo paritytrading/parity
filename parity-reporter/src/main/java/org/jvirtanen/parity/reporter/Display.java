@@ -5,6 +5,7 @@ import static org.jvirtanen.lang.Strings.*;
 import java.util.Locale;
 import org.jvirtanen.parity.net.ptr.PTR;
 import org.jvirtanen.parity.net.ptr.PTRListener;
+import org.jvirtanen.parity.util.Timestamps;
 
 class Display implements PTRListener {
 
