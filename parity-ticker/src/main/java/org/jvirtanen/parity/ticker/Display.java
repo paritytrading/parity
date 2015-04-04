@@ -6,6 +6,7 @@ import it.unimi.dsi.fastutil.longs.Long2ObjectArrayMap;
 import java.util.List;
 import java.util.Locale;
 import org.jvirtanen.parity.top.Side;
+import org.jvirtanen.parity.util.Timestamps;
 
 class Display implements MarketDataListener {
 
@@ -47,7 +48,7 @@ class Display implements MarketDataListener {
     public void bbo(long instrument, long bidPrice, long bidSize, long askPrice, long askSize) {
         Trade trade = trades.get(instrument);
 
-        printf("%12s %8s ", Timestamps.format(second, timestamp), decodeLong(instrument));
+        printf("%12s %8s ", Timestamps.format(1000 * 1000 * 1000 * second + timestamp), decodeLong(instrument));
 
         if (bidSize != 0)
             printf("%9.2f %10d ", bidPrice / PRICE_FACTOR, bidSize);
