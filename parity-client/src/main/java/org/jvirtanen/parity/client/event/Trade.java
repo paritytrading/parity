@@ -3,7 +3,7 @@ package org.jvirtanen.parity.client.event;
 import static org.jvirtanen.lang.Strings.*;
 import static org.jvirtanen.parity.client.TerminalClient.*;
 
-import org.jvirtanen.parity.client.util.Timestamps;
+import org.jvirtanen.parity.util.Timestamps;
 
 public class Trade {
 

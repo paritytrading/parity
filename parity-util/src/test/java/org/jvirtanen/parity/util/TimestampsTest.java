@@ -1,4 +1,4 @@
-package org.jvirtanen.parity.client.util;
+package org.jvirtanen.parity.util;
 
 import static org.junit.Assert.*;
 
