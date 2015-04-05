@@ -1,7 +1,8 @@
 Parity Trading System
 =====================
 
-Parity Trading System is an open source trading system.
+Parity Trading System is a server application that implements a trading
+system.
 
 
 Download
