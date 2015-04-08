@@ -60,7 +60,7 @@ public class Order {
     public String format() {
         return String.format(LOCALE, "%12s %16s %c %8s %10d %9.2f",
                 Timestamps.format(timestamp), orderId, side,
-                decodeLong(instrument), quantity, (double)price / PRICE_FACTOR);
+                decodeLong(instrument), quantity, price / PRICE_FACTOR);
     }
 
 }

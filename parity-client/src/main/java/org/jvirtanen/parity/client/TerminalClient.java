@@ -26,7 +26,7 @@ public class TerminalClient implements Closeable {
 
     public static final Locale LOCALE = Locale.US;
 
-    public static final long PRICE_FACTOR = 10000;
+    public static final double PRICE_FACTOR = 10000.0;
 
     private Events events;
 

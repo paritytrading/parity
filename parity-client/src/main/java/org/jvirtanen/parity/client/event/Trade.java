@@ -30,7 +30,7 @@ public class Trade {
     public String format() {
         return String.format(LOCALE, "%12s %16s %c %8s %10d %9.2f",
                 Timestamps.format(timestamp), order.getOrderId(), order.getSide(),
-                decodeLong(order.getInstrument()), quantity, (double)price / PRICE_FACTOR);
+                decodeLong(order.getInstrument()), quantity, price / PRICE_FACTOR);
     }
 
 }
