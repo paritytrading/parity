@@ -8,7 +8,7 @@ import java.util.Locale;
 import org.jvirtanen.parity.top.Side;
 import org.jvirtanen.parity.util.Timestamps;
 
-class Display implements MarketDataListener {
+class DisplayFormat implements MarketDataListener {
 
     private static final double PRICE_FACTOR = 10000.0;
 
@@ -29,7 +29,7 @@ class Display implements MarketDataListener {
 
     private int counter;
 
-    public Display(List<String> instruments) {
+    public DisplayFormat(List<String> instruments) {
         trades = new Long2ObjectArrayMap<>();
 
         for (String instrument : instruments)

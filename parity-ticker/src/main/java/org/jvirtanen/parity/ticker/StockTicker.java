@@ -35,12 +35,12 @@ class StockTicker {
 
         List<String> instruments = config.getStringList("instruments");
 
-        Display display = new Display(instruments);
+        DisplayFormat format = new DisplayFormat(instruments);
 
         MarketDataClient client = MarketDataClient.open(marketDataMulticastInterface,
                 new InetSocketAddress(marketDataMulticastGroup, marketDataMulticastPort),
                 new InetSocketAddress(marketDataRequestAddress, marketDataRequestPort),
-                instruments, display);
+                instruments, format);
 
         while (true)
             client.receive();
