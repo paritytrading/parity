@@ -83,4 +83,11 @@ class DisplayFormat implements MarketDataListener {
         System.out.printf(Locale.US, format, args);
     }
 
+    private static class Trade {
+
+        public long price;
+        public long size;
+
+    }
+
 }
