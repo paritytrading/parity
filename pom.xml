@@ -40,6 +40,7 @@
 
   <modules>
     <module>parity-client</module>
+    <module>parity-file</module>
     <module>parity-match</module>
     <module>parity-match-perf-test</module>
     <module>parity-net</module>
