@@ -17,11 +17,11 @@ public class Timestamps {
     /**
      * Format a timestamp as a string.
      *
-     * @param timestamp a timestamp in nanoseconds
+     * @param timestampMillis a timestamp in milliseconds
      * @return the timestamp as a string
      */
-    public static String format(long timestamp) {
-        return FORMATTER.print(LocalTime.fromMillisOfDay(timestamp / (1000 * 1000)));
+    public static String format(long timestampMillis) {
+        return FORMATTER.print(LocalTime.fromMillisOfDay(timestampMillis));
     }
 
 }
