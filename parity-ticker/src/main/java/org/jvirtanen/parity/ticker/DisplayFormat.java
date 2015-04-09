@@ -8,13 +8,9 @@ import java.util.Locale;
 import org.jvirtanen.parity.top.Side;
 import org.jvirtanen.parity.util.Timestamps;
 
-class Display implements MarketDataListener {
+class DisplayFormat extends MarketDataListener {
 
     private static final double PRICE_FACTOR = 10000.0;
-
-    private static final long MILLIS_PER_SEC = 1000;
-
-    private static final long NANOS_PER_MILLI = 1000 * 1000;
 
     private static final String HEADER = "" +
         "Timestamp    Inst     Bid Px    Bid Size   Ask Px    Ask Size   Last Px   Last Size\n" +
@@ -29,7 +25,7 @@ class Display implements MarketDataListener {
 
     private int counter;
 
-    public Display(List<String> instruments) {
+    public DisplayFormat(List<String> instruments) {
         trades = new Long2ObjectArrayMap<>();
 
         for (String instrument : instruments)
@@ -39,21 +35,10 @@ class Display implements MarketDataListener {
     }
 
     @Override
-    public void seconds(long second) {
-        this.second = second;
-    }
-
-    @Override
-    public void timestamp(long timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    @Override
     public void bbo(long instrument, long bidPrice, long bidSize, long askPrice, long askSize) {
         Trade trade = trades.get(instrument);
 
-        printf("%12s %8s ", Timestamps.format(MILLIS_PER_SEC * second + timestamp / NANOS_PER_MILLI),
-                decodeLong(instrument));
+        printf("%12s %8s ", Timestamps.format(timestampMillis()), decodeLong(instrument));
 
         if (bidSize != 0)
             printf("%9.2f %10d ", bidPrice / PRICE_FACTOR, bidSize);
@@ -81,6 +66,13 @@ class Display implements MarketDataListener {
 
     private void printf(String format, Object... args) {
         System.out.printf(Locale.US, format, args);
+    }
+
+    private static class Trade {
+
+        public long price;
+        public long size;
+
     }
 
 }

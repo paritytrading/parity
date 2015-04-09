@@ -57,6 +57,15 @@ protocols.
 
   [Connectivity]: https://github.com/jvirtanen/parity/wiki/Connectivity
 
+Historical market data from the trading system can be obtained in two formats:
+
+  - [**TAQ**](parity-file/doc/TAQ.md) is a historical market data file format
+    that consists of the best bids and offers (BBOs) and trades. The stock
+    ticker can produce TAQ files.
+
+  - [**PMD**](parity-net/doc/PMD.md) consists of all market events. Entire
+    market data sessions can be recorded into files for further processing.
+
 
 Development
 -----------
