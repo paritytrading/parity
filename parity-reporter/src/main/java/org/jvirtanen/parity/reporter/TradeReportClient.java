@@ -20,13 +20,13 @@ class TradeReportClient {
         this.transport = transport;
     }
 
-    public static TradeReportClient open(InetAddress multicastInterface, InetSocketAddress multicastGroup,
+    public static TradeReportClient open(NetworkInterface multicastInterface, InetSocketAddress multicastGroup,
             InetSocketAddress requestAddress, PTRListener listener) throws IOException {
 
         DatagramChannel channel = DatagramChannel.open(StandardProtocolFamily.INET);
         channel.setOption(StandardSocketOptions.SO_REUSEADDR, true);
         channel.bind(new InetSocketAddress(multicastGroup.getPort()));
-        channel.join(multicastGroup.getAddress(), NetworkInterface.getByInetAddress(multicastInterface));
+        channel.join(multicastGroup.getAddress(), multicastInterface);
 
         MoldUDP64ClientStatusListener statusListener = new MoldUDP64ClientStatusListener() {
 

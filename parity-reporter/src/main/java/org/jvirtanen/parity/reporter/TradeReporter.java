@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.NetworkInterface;
 import org.jvirtanen.config.Configs;
 
 class TradeReporter {
@@ -26,11 +27,11 @@ class TradeReporter {
     }
 
     private static void main(Config config) throws IOException {
-        InetAddress multicastInterface = Configs.getInetAddress(config, "trade-report.multicast-interface");
-        InetAddress multicastGroup     = Configs.getInetAddress(config, "trade-report.multicast-group");
-        int         multicastPort      = Configs.getPort(config, "trade-report.multicast-port");
-        InetAddress requestAddress     = Configs.getInetAddress(config, "trade-report.request-address");
-        int         requestPort        = Configs.getPort(config, "trade-report.request-port");
+        NetworkInterface multicastInterface = Configs.getNetworkInterface(config, "trade-report.multicast-interface");
+        InetAddress      multicastGroup     = Configs.getInetAddress(config, "trade-report.multicast-group");
+        int              multicastPort      = Configs.getPort(config, "trade-report.multicast-port");
+        InetAddress      requestAddress     = Configs.getInetAddress(config, "trade-report.request-address");
+        int              requestPort        = Configs.getPort(config, "trade-report.request-port");
 
         TradeReportClient client = TradeReportClient.open(multicastInterface,
                 new InetSocketAddress(multicastGroup, multicastPort),
