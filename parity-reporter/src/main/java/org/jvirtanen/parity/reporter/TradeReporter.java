@@ -26,15 +26,15 @@ class TradeReporter {
     }
 
     private static void main(Config config) throws IOException {
-        InetAddress tradeReportMulticastInterface = Configs.getInetAddress(config, "trade-report.multicast-interface");
-        InetAddress tradeReportMulticastGroup     = Configs.getInetAddress(config, "trade-report.multicast-group");
-        int         tradeReportMulticastPort      = Configs.getPort(config, "trade-report.multicast-port");
-        InetAddress tradeReportRequestAddress     = Configs.getInetAddress(config, "trade-report.request-address");
-        int         tradeReportRequestPort        = Configs.getPort(config, "trade-report.request-port");
+        InetAddress multicastInterface = Configs.getInetAddress(config, "trade-report.multicast-interface");
+        InetAddress multicastGroup     = Configs.getInetAddress(config, "trade-report.multicast-group");
+        int         multicastPort      = Configs.getPort(config, "trade-report.multicast-port");
+        InetAddress requestAddress     = Configs.getInetAddress(config, "trade-report.request-address");
+        int         requestPort        = Configs.getPort(config, "trade-report.request-port");
 
-        TradeReportClient client = TradeReportClient.open(tradeReportMulticastInterface,
-                new InetSocketAddress(tradeReportMulticastGroup, tradeReportMulticastPort),
-                new InetSocketAddress(tradeReportRequestAddress, tradeReportRequestPort),
+        TradeReportClient client = TradeReportClient.open(multicastInterface,
+                new InetSocketAddress(multicastGroup, multicastPort),
+                new InetSocketAddress(requestAddress, requestPort),
                 new Display());
 
         while (true)
