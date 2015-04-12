@@ -23,7 +23,7 @@ class MarketDataClient {
         this.transport = transport;
     }
 
-    public static MarketDataClient open(InetAddress multicastInterface, InetSocketAddress multicastGroup,
+    public static MarketDataClient open(NetworkInterface multicastInterface, InetSocketAddress multicastGroup,
             InetSocketAddress requestAddress, List<String> instruments, MarketDataListener listener) throws IOException {
         Market market = new Market(listener);
 
@@ -33,7 +33,7 @@ class MarketDataClient {
         DatagramChannel channel = DatagramChannel.open(StandardProtocolFamily.INET);
         channel.setOption(StandardSocketOptions.SO_REUSEADDR, true);
         channel.bind(new InetSocketAddress(multicastGroup.getPort()));
-        channel.join(multicastGroup.getAddress(), NetworkInterface.getByInetAddress(multicastInterface));
+        channel.join(multicastGroup.getAddress(), multicastInterface);
 
         MarketDataProcessor processor = new MarketDataProcessor(market, listener);
 

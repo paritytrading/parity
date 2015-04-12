@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.NetworkInterface;
 import java.util.List;
 import org.jvirtanen.config.Configs;
 
@@ -38,11 +39,11 @@ class StockTicker {
     }
 
     private static void main(Config config, boolean taq) throws IOException {
-        InetAddress multicastInterface = Configs.getInetAddress(config, "market-data.multicast-interface");
-        InetAddress multicastGroup     = Configs.getInetAddress(config, "market-data.multicast-group");
-        int         multicastPort      = Configs.getPort(config, "market-data.multicast-port");
-        InetAddress requestAddress     = Configs.getInetAddress(config, "market-data.request-address");
-        int         requestPort        = Configs.getPort(config, "market-data.request-port");
+        NetworkInterface multicastInterface = Configs.getNetworkInterface(config, "market-data.multicast-interface");
+        InetAddress      multicastGroup     = Configs.getInetAddress(config, "market-data.multicast-group");
+        int              multicastPort      = Configs.getPort(config, "market-data.multicast-port");
+        InetAddress      requestAddress     = Configs.getInetAddress(config, "market-data.request-address");
+        int              requestPort        = Configs.getPort(config, "market-data.request-port");
 
         List<String> instruments = config.getStringList("instruments");
 
