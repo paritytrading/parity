@@ -38,19 +38,19 @@ class StockTicker {
     }
 
     private static void main(Config config, boolean taq) throws IOException {
-        InetAddress marketDataMulticastInterface = Configs.getInetAddress(config, "market-data.multicast-interface");
-        InetAddress marketDataMulticastGroup     = Configs.getInetAddress(config, "market-data.multicast-group");
-        int         marketDataMulticastPort      = Configs.getPort(config, "market-data.multicast-port");
-        InetAddress marketDataRequestAddress     = Configs.getInetAddress(config, "market-data.request-address");
-        int         marketDataRequestPort        = Configs.getPort(config, "market-data.request-port");
+        InetAddress multicastInterface = Configs.getInetAddress(config, "market-data.multicast-interface");
+        InetAddress multicastGroup     = Configs.getInetAddress(config, "market-data.multicast-group");
+        int         multicastPort      = Configs.getPort(config, "market-data.multicast-port");
+        InetAddress requestAddress     = Configs.getInetAddress(config, "market-data.request-address");
+        int         requestPort        = Configs.getPort(config, "market-data.request-port");
 
         List<String> instruments = config.getStringList("instruments");
 
         MarketDataListener listener = taq ? new TAQFormat() : new DisplayFormat(instruments);
 
-        MarketDataClient client = MarketDataClient.open(marketDataMulticastInterface,
-                new InetSocketAddress(marketDataMulticastGroup, marketDataMulticastPort),
-                new InetSocketAddress(marketDataRequestAddress, marketDataRequestPort),
+        MarketDataClient client = MarketDataClient.open(multicastInterface,
+                new InetSocketAddress(multicastGroup, multicastPort),
+                new InetSocketAddress(requestAddress, requestPort),
                 instruments, listener);
 
         while (true)
