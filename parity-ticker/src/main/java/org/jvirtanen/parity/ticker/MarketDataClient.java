@@ -10,16 +10,17 @@ import java.net.StandardProtocolFamily;
 import java.net.StandardSocketOptions;
 import java.nio.channels.DatagramChannel;
 import java.util.List;
-import org.jvirtanen.nassau.moldudp64.MoldUDP64Client;
+import org.jvirtanen.nassau.moldudp64.MoldUDP64ClientState;
 import org.jvirtanen.nassau.moldudp64.MoldUDP64ClientStatusListener;
+import org.jvirtanen.nassau.moldudp64.SingleChannelMoldUDP64Client;
 import org.jvirtanen.parity.net.pmd.PMDParser;
 import org.jvirtanen.parity.top.Market;
 
 class MarketDataClient {
 
-    private MoldUDP64Client transport;
+    private SingleChannelMoldUDP64Client transport;
 
-    private MarketDataClient(MoldUDP64Client transport) {
+    private MarketDataClient(SingleChannelMoldUDP64Client transport) {
         this.transport = transport;
     }
 
@@ -40,6 +41,10 @@ class MarketDataClient {
         MoldUDP64ClientStatusListener statusListener = new MoldUDP64ClientStatusListener() {
 
             @Override
+            public void state(MoldUDP64ClientState next) {
+            }
+
+            @Override
             public void downstream() {
             }
 
@@ -53,7 +58,8 @@ class MarketDataClient {
 
         };
 
-        MoldUDP64Client transport = new MoldUDP64Client(channel, requestAddress, new PMDParser(processor), statusListener);
+        SingleChannelMoldUDP64Client transport = new SingleChannelMoldUDP64Client(channel,
+                requestAddress, new PMDParser(processor), statusListener);
 
         return new MarketDataClient(transport);
     }
