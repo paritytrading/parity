@@ -1,5 +1,6 @@
 package org.jvirtanen.parity.ticker;
 
+import static org.jvirtanen.lang.Strings.*;
 import static org.jvirtanen.parity.util.Applications.*;
 
 import com.typesafe.config.Config;
@@ -11,6 +12,9 @@ import java.net.InetSocketAddress;
 import java.net.NetworkInterface;
 import java.util.List;
 import org.jvirtanen.config.Configs;
+import org.jvirtanen.parity.net.pmd.PMDParser;
+import org.jvirtanen.parity.top.Market;
+import org.jvirtanen.parity.util.MoldUDP64Client;
 
 class StockTicker {
 
@@ -49,13 +53,20 @@ class StockTicker {
 
         MarketDataListener listener = taq ? new TAQFormat() : new DisplayFormat(instruments);
 
-        MarketDataClient client = MarketDataClient.open(multicastInterface,
+        Market market = new Market(listener);
+
+        for (String instrument : instruments)
+            market.open(encodeLong(instrument));
+
+        MarketDataProcessor processor = new MarketDataProcessor(market, listener);
+
+        MoldUDP64Client transport = MoldUDP64Client.open(multicastInterface,
                 new InetSocketAddress(multicastGroup, multicastPort),
                 new InetSocketAddress(requestAddress, requestPort),
-                instruments, listener);
+                new PMDParser(processor));
 
         while (true)
-            client.receive();
+            transport.receive();
     }
 
 }

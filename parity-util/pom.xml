@@ -27,6 +27,10 @@
       <artifactId>junit</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.jvirtanen.nassau</groupId>
+      <artifactId>nassau</artifactId>
+    </dependency>
   </dependencies>
 
 </project>
