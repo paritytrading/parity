@@ -43,7 +43,7 @@ executed orders, respectively.
 
 Name              | Length | Type   | Notes
 ------------------|--------|--------|------
-Message Type      |      1 | Text   | T
+Message Type      |      1 | Text   | `T`
 Timestamp         |      8 | Number |
 Match Number      |      4 | Number |
 Instrument        |      8 | Text   |
