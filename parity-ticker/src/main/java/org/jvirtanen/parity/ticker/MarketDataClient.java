@@ -3,7 +3,6 @@ package org.jvirtanen.parity.ticker;
 import static org.jvirtanen.lang.Strings.*;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.NetworkInterface;
 import java.net.StandardProtocolFamily;
