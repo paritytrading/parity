@@ -3,11 +3,11 @@ package org.jvirtanen.parity.reporter;
 import static org.jvirtanen.lang.Strings.*;
 
 import java.util.Locale;
-import org.jvirtanen.parity.net.ptr.PTR;
-import org.jvirtanen.parity.net.ptr.PTRListener;
+import org.jvirtanen.parity.net.pmr.PMR;
+import org.jvirtanen.parity.net.pmr.PMRListener;
 import org.jvirtanen.parity.util.Timestamps;
 
-class Display implements PTRListener {
+class Display implements PMRListener {
 
     private static final double PRICE_FACTOR = 10000.0;
 
@@ -22,7 +22,7 @@ class Display implements PTRListener {
     }
 
     @Override
-    public void trade(PTR.Trade message) {
+    public void trade(PMR.Trade message) {
         printf("%12s %8s %10d %9.2f %8s %8s\n", Timestamps.format(message.timestamp / NANOS_PER_MILLI),
                 decodeLong(message.instrument), message.quantity, message.price / PRICE_FACTOR,
                 decodeLong(message.buyer), decodeLong(message.seller));

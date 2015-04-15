@@ -1,13 +1,13 @@
-package org.jvirtanen.parity.net.ptr;
+package org.jvirtanen.parity.net.pmr;
 
-import static org.jvirtanen.parity.net.ptr.PTR.*;
+import static org.jvirtanen.parity.net.pmr.PMR.*;
 
 import java.io.IOException;
 
 /**
  * The interface for inbound messages.
  */
-public interface PTRListener {
+public interface PMRListener {
 
     /**
      * Receive a Trade message.

@@ -1,16 +1,16 @@
-PTR
+PMR
 ===
 
-PTR is Parity's native trade reporting protocol.
+PMR is Parity's native market reporting protocol.
 
 
 Architecture
 ------------
 
-PTR consists of logical, sequenced messages sent by the trading system to
+PMR consists of logical, sequenced messages sent by the trading system to
 a client application.
 
-PTR uses NASDAQ MoldUDP64 1.00 as the underlying transport protocol. It
+PMR uses NASDAQ MoldUDP64 1.00 as the underlying transport protocol. It
 implements ordered, reliable IP multicast.
 
 

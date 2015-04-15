@@ -1,4 +1,4 @@
-package org.jvirtanen.parity.net.ptr;
+package org.jvirtanen.parity.net.pmr;
 
 import static org.jvirtanen.nio.ByteBuffers.*;
 
@@ -10,9 +10,9 @@ import java.nio.ReadOnlyBufferException;
 /**
  * Common definitions.
  */
-public class PTR {
+public class PMR {
 
-    private PTR() {
+    private PMR() {
     }
 
     static final byte MESSAGE_TYPE_TRADE = 'T';

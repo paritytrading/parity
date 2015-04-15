@@ -11,11 +11,11 @@ import org.jvirtanen.nassau.moldudp64.MoldUDP64DefaultMessageStore;
 import org.jvirtanen.nassau.moldudp64.MoldUDP64DownstreamPacket;
 import org.jvirtanen.nassau.moldudp64.MoldUDP64RequestServer;
 import org.jvirtanen.nassau.moldudp64.MoldUDP64Server;
-import org.jvirtanen.parity.net.ptr.PTR;
+import org.jvirtanen.parity.net.pmr.PMR;
 
 class TradeReportServer {
 
-    private PTR.Trade trade;
+    private PMR.Trade trade;
 
     private MoldUDP64Server transport;
 
@@ -28,7 +28,7 @@ class TradeReportServer {
     private ByteBuffer buffer;
 
     private TradeReportServer(MoldUDP64Server transport, MoldUDP64RequestServer requestTransport) {
-        this.trade = new PTR.Trade();
+        this.trade = new PMR.Trade();
 
         this.transport = transport;
 

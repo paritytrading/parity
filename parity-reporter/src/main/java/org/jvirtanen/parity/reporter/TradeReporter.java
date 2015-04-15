@@ -10,7 +10,7 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.NetworkInterface;
 import org.jvirtanen.config.Configs;
-import org.jvirtanen.parity.net.ptr.PTRParser;
+import org.jvirtanen.parity.net.pmr.PMRParser;
 import org.jvirtanen.parity.util.MoldUDP64Client;
 
 class TradeReporter {
@@ -38,7 +38,7 @@ class TradeReporter {
         MoldUDP64Client transport = MoldUDP64Client.open(multicastInterface,
                 new InetSocketAddress(multicastGroup, multicastPort),
                 new InetSocketAddress(requestAddress, requestPort),
-                new PTRParser(new Display()));
+                new PMRParser(new Display()));
 
         while (true)
             transport.receive();
