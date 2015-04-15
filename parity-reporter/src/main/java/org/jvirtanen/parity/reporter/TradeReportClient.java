@@ -20,10 +20,11 @@ class TradeReportClient {
         this.transport = transport;
     }
 
-    public static TradeReportClient open(NetworkInterface multicastInterface, InetSocketAddress multicastGroup,
-            InetSocketAddress requestAddress, PTRListener listener) throws IOException {
-
+    public static TradeReportClient open(NetworkInterface multicastInterface,
+            InetSocketAddress multicastGroup, InetSocketAddress requestAddress,
+            PTRListener listener) throws IOException {
         DatagramChannel channel = DatagramChannel.open(StandardProtocolFamily.INET);
+
         channel.setOption(StandardSocketOptions.SO_REUSEADDR, true);
         channel.bind(new InetSocketAddress(multicastGroup.getPort()));
         channel.join(multicastGroup.getAddress(), multicastInterface);
