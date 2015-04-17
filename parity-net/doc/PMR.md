@@ -35,6 +35,29 @@ Messages
 All messages are sent by the trading system to the client application.
 
 
+### Order
+
+An Order message indicates that an order has been entered.
+
+Name         | Length | Type   | Notes
+-------------|--------|--------|----------
+Message Type |      1 | Text   | `O`
+Timestamp    |      8 | Number |
+Order Number |      8 | Number |
+Username     |      8 | Text   |
+Side         |      1 | Text   | See below
+Instrument   |      8 | Text   |
+Quantity     |      4 | Number |
+Price        |      4 | Number |
+
+The sides are enumerated below.
+
+Side | Description
+-----|------------
+`B`  | Buy
+`S`  | Sell
+
+
 ### Trade
 
 A Trade message indicates that a trade has taken place. The match number and
