@@ -15,6 +15,7 @@ public class PMR {
     private PMR() {
     }
 
+    static final byte MESSAGE_TYPE_ORDER = 'O';
     static final byte MESSAGE_TYPE_TRADE = 'T';
 
     /**
@@ -41,6 +42,42 @@ public class PMR {
          */
         void put(ByteBuffer buffer);
 
+    }
+
+    /**
+     * An Order message.
+     */
+    public static class Order implements Message {
+        public long timestamp;
+        public long orderNumber;
+        public long username;
+        public byte side;
+        public long instrument;
+        public long quantity;
+        public long price;
+
+        @Override
+        public void get(ByteBuffer buffer) {
+            timestamp   = buffer.getLong();
+            orderNumber = buffer.getLong();
+            username    = buffer.getLong();
+            side        = buffer.get();
+            instrument  = buffer.getLong();
+            quantity    = buffer.getLong();
+            price       = getUnsignedInt(buffer);
+        }
+
+        @Override
+        public void put(ByteBuffer buffer) {
+            buffer.put(MESSAGE_TYPE_ORDER);
+            buffer.putLong(timestamp);
+            buffer.putLong(orderNumber);
+            buffer.putLong(username);
+            buffer.put(side);
+            buffer.putLong(instrument);
+            buffer.putLong(quantity);
+            putUnsignedInt(buffer, price);
+        }
     }
 
     /**

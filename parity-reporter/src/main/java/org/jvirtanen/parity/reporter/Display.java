@@ -22,6 +22,10 @@ class Display implements PMRListener {
     }
 
     @Override
+    public void order(PMR.Order message) {
+    }
+
+    @Override
     public void trade(PMR.Trade message) {
         printf("%12s %8s %10d %9.2f %8s %8s\n", Timestamps.format(message.timestamp / NANOS_PER_MILLI),
                 decodeLong(message.instrument), message.quantity, message.price / PRICE_FACTOR,
