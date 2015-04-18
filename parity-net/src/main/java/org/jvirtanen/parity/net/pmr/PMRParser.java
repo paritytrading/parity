@@ -1,6 +1,6 @@
-package org.jvirtanen.parity.net.ptr;
+package org.jvirtanen.parity.net.pmr;
 
-import static org.jvirtanen.parity.net.ptr.PTR.*;
+import static org.jvirtanen.parity.net.pmr.PMR.*;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -9,13 +9,15 @@ import org.jvirtanen.nassau.MessageListener;
 /**
  * A parser for inbound messages.
  */
-public class PTRParser implements MessageListener {
+public class PMRParser implements MessageListener {
 
+    private Order order;
     private Trade trade;
 
-    private PTRListener listener;
+    private PMRListener listener;
 
-    public PTRParser(PTRListener listener) {
+    public PMRParser(PMRListener listener) {
+        this.order = new Order();
         this.trade = new Trade();
 
         this.listener = listener;
@@ -26,12 +28,21 @@ public class PTRParser implements MessageListener {
         byte messageType = buffer.get();
 
         switch (messageType) {
+        case MESSAGE_TYPE_ORDER:
+            order(buffer);
+            break;
         case MESSAGE_TYPE_TRADE:
             trade(buffer);
             break;
         default:
-            throw new PTRException("Unknown message type: " + (char)messageType);
+            throw new PMRException("Unknown message type: " + (char)messageType);
         }
+    }
+
+    private void order(ByteBuffer buffer) throws IOException {
+        order.get(buffer);
+
+        listener.order(order);
     }
 
     private void trade(ByteBuffer buffer) throws IOException {

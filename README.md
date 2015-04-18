@@ -46,9 +46,9 @@ participants:
     using it.
 
 In addition, the trading system uses one network protocol for communication
-with post-trade processing systems:
+with post-trade processing and market surveillance systems:
 
-  - [**PTR**](parity-net/doc/PTR.md) is the native trade reporting protocol.
+  - [**PMR**](parity-net/doc/PMR.md) is the native market reporting protocol.
     The trade reporter is an example of an application that listens to trade
     reports using it.
 
