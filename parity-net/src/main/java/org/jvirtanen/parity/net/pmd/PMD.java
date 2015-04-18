@@ -2,10 +2,8 @@ package org.jvirtanen.parity.net.pmd;
 
 import static org.jvirtanen.nio.ByteBuffers.*;
 
-import java.nio.BufferOverflowException;
-import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
-import java.nio.ReadOnlyBufferException;
+import org.jvirtanen.parity.net.ProtocolMessage;
 
 /**
  * Common definitions.
@@ -31,27 +29,7 @@ public class PMD {
     /**
      * A message.
      */
-    public interface Message {
-
-        /**
-         * Read this message from the buffer.
-         *
-         * @param buffer a buffer
-         * @throws BufferUnderflowException if there are fewer bytes remaining
-         *   in the buffer than what this message consists of
-         */
-        void get(ByteBuffer buffer);
-
-        /**
-         * Write this message to the buffer.
-         *
-         * @param buffer a buffer
-         * @throws BufferOverflowException if there are fewer bytes remaining
-         *   in the buffer than what this message consists of
-         * @throws ReadOnlyBufferException if the buffer is read-only
-         */
-        void put(ByteBuffer buffer);
-
+    public interface Message extends ProtocolMessage {
     }
 
     /**
