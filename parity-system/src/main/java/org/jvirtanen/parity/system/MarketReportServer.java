@@ -15,6 +15,7 @@ import org.jvirtanen.parity.net.pmr.PMR;
 
 class MarketReportServer {
 
+    private PMR.Order order;
     private PMR.Trade trade;
 
     private MoldUDP64Server transport;
@@ -28,6 +29,7 @@ class MarketReportServer {
     private ByteBuffer buffer;
 
     private MarketReportServer(MoldUDP64Server transport, MoldUDP64RequestServer requestTransport) {
+        this.order = new PMR.Order();
         this.trade = new PMR.Trade();
 
         this.transport = transport;
@@ -74,11 +76,21 @@ class MarketReportServer {
         }
     }
 
+    public void order(long username, long orderNumber, byte side, long instrument, long quantity, long price) {
+        order.timestamp   = timestamp();
+        order.username    = username;
+        order.orderNumber = orderNumber;
+        order.side        = side;
+        order.instrument  = instrument;
+        order.quantity    = quantity;
+        order.price       = price;
+
+        send(order);
+    }
+
     public void trade(long matchNumber, long instrument, long quantity, long price, long buyer,
             long buyOrderNumber, long seller, long sellOrderNumber) {
-        long currentTimeMillis = System.currentTimeMillis() - TradingSystem.EPOCH_MILLIS;
-
-        trade.timestamp       = currentTimeMillis * 1000 * 1000;
+        trade.timestamp       = timestamp();
         trade.matchNumber     = matchNumber;
         trade.instrument      = instrument;
         trade.quantity        = quantity;
@@ -88,8 +100,12 @@ class MarketReportServer {
         trade.seller          = seller;
         trade.sellOrderNumber = sellOrderNumber;
 
+        send(trade);
+    }
+
+    private void send(PMR.Message message) {
         buffer.clear();
-        trade.put(buffer);
+        message.put(buffer);
         buffer.flip();
 
         try {
@@ -105,6 +121,10 @@ class MarketReportServer {
         } catch (IOException e) {
             fatal(e);
         }
+    }
+
+    private long timestamp() {
+        return (System.currentTimeMillis() - TradingSystem.EPOCH_MILLIS) * 1000 * 1000;
     }
 
 }

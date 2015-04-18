@@ -9,6 +9,7 @@ import org.jvirtanen.parity.match.Market;
 import org.jvirtanen.parity.match.MarketListener;
 import org.jvirtanen.parity.match.Side;
 import org.jvirtanen.parity.net.pmd.PMD;
+import org.jvirtanen.parity.net.pmr.PMR;
 import org.jvirtanen.parity.net.poe.POE;
 
 class MatchingEngine {
@@ -57,7 +58,10 @@ class MatchingEngine {
 
         session.orderAccepted(message, handling);
 
-        market.enter(orderNumber, side(message.side), message.price, message.quantity);
+        marketReport.order(session.getUsername(), orderNumber, pmr(message.side),
+                instrument, message.quantity, message.price);
+
+        market.enter(orderNumber, poe(message.side), message.price, message.quantity);
     }
 
     public void cancelOrder(POE.CancelOrder message, Order order) {
@@ -123,7 +127,7 @@ class MatchingEngine {
 
         @Override
         public void add(long orderNumber, Side side, long price, long size) {
-            marketData.orderAdded(orderNumber, side(side), instrument, size, price);
+            marketData.orderAdded(orderNumber, pmd(side), instrument, size, price);
 
             track(handling);
         }
@@ -145,8 +149,8 @@ class MatchingEngine {
 
     }
 
-    private Side side(byte value) {
-        switch (value) {
+    private Side poe(byte side) {
+        switch (side) {
         case POE.BUY:
             return Side.BUY;
         case POE.SELL:
@@ -156,12 +160,23 @@ class MatchingEngine {
         return null;
     }
 
-    private byte side(Side value) {
-        switch (value) {
+    private byte pmd(Side side) {
+        switch (side) {
         case BUY:
             return PMD.BUY;
         case SELL:
             return PMD.SELL;
+        }
+
+        return 0;
+    }
+
+    private byte pmr(byte side) {
+        switch (side) {
+        case POE.BUY:
+            return PMR.BUY;
+        case POE.SELL:
+            return PMR.SELL;
         }
 
         return 0;
