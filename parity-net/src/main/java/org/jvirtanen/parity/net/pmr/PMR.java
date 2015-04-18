@@ -18,6 +18,9 @@ public class PMR {
     static final byte MESSAGE_TYPE_ORDER = 'O';
     static final byte MESSAGE_TYPE_TRADE = 'T';
 
+    public static final byte BUY  = 'B';
+    public static final byte SELL = 'S';
+
     /**
      * A message.
      */
