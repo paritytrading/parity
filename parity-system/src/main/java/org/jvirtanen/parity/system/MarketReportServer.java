@@ -13,7 +13,7 @@ import org.jvirtanen.nassau.moldudp64.MoldUDP64RequestServer;
 import org.jvirtanen.nassau.moldudp64.MoldUDP64Server;
 import org.jvirtanen.parity.net.pmr.PMR;
 
-class TradeReportServer {
+class MarketReportServer {
 
     private PMR.Trade trade;
 
@@ -27,7 +27,7 @@ class TradeReportServer {
 
     private ByteBuffer buffer;
 
-    private TradeReportServer(MoldUDP64Server transport, MoldUDP64RequestServer requestTransport) {
+    private MarketReportServer(MoldUDP64Server transport, MoldUDP64RequestServer requestTransport) {
         this.trade = new PMR.Trade();
 
         this.transport = transport;
@@ -40,7 +40,7 @@ class TradeReportServer {
         this.buffer = ByteBuffer.allocate(1024);
     }
 
-    public static TradeReportServer create(String session, InetSocketAddress multicastGroup,
+    public static MarketReportServer create(String session, InetSocketAddress multicastGroup,
             int requestPort) throws IOException {
         DatagramChannel channel = DatagramChannel.open(StandardProtocolFamily.INET);
 
@@ -55,7 +55,7 @@ class TradeReportServer {
 
         MoldUDP64RequestServer requestTransport = new MoldUDP64RequestServer(requestChannel);
 
-        return new TradeReportServer(transport, requestTransport);
+        return new MarketReportServer(transport, requestTransport);
     }
 
     public MoldUDP64Server getTransport() {

@@ -16,8 +16,8 @@ class MatchingEngine {
     private Long2ObjectArrayMap<Market>   markets;
     private Long2ObjectOpenHashMap<Order> orders;
 
-    private MarketDataServer  marketData;
-    private TradeReportServer tradeReport;
+    private MarketDataServer   marketData;
+    private MarketReportServer marketReport;
 
     private long nextOrderNumber;
     private long nextMatchNumber;
@@ -26,7 +26,7 @@ class MatchingEngine {
 
     private long instrument;
 
-    public MatchingEngine(List<String> instruments, MarketDataServer marketData, TradeReportServer tradeReport) {
+    public MatchingEngine(List<String> instruments, MarketDataServer marketData, MarketReportServer marketReport) {
         this.markets = new Long2ObjectArrayMap<>();
         this.orders  = new Long2ObjectOpenHashMap<>();
 
@@ -35,8 +35,8 @@ class MatchingEngine {
         for (String instrument : instruments)
             markets.put(encodeLong(instrument), new Market(handler));
 
-        this.marketData  = marketData;
-        this.tradeReport = tradeReport;
+        this.marketData   = marketData;
+        this.marketReport = marketReport;
 
         this.nextOrderNumber = 1;
         this.nextMatchNumber = 1;
@@ -114,7 +114,7 @@ class MatchingEngine {
             long buyOrderNumber  = incomingSide == Side.BUY  ? incomingOrderNumber : restingOrderNumber;
             long sellOrderNumber = incomingSide == Side.SELL ? incomingOrderNumber : restingOrderNumber;
 
-            tradeReport.trade(matchNumber, instrument, executedQuantity, price, buyer, buyOrderNumber,
+            marketReport.trade(matchNumber, instrument, executedQuantity, price, buyer, buyOrderNumber,
                     seller, sellOrderNumber);
 
             if (remainingQuantity == 0)

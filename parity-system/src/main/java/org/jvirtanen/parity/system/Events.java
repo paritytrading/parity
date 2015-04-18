@@ -11,20 +11,20 @@ class Events implements Runnable {
 
     private static final int TIMEOUT_MILLIS = 1000;
 
-    private MarketDataServer  marketData;
-    private TradeReportServer tradeReport;
-    private OrderEntryServer  orderEntry;
+    private MarketDataServer   marketData;
+    private MarketReportServer marketReport;
+    private OrderEntryServer   orderEntry;
 
     private List<Session> toKeepAlive;
     private List<Session> toCleanUp;
 
     private Selector selector;
 
-    public Events(MarketDataServer marketData, TradeReportServer tradeReport,
+    public Events(MarketDataServer marketData, MarketReportServer marketReport,
             OrderEntryServer orderEntry) throws IOException {
-        this.marketData  = marketData;
-        this.tradeReport = tradeReport;
-        this.orderEntry  = orderEntry;
+        this.marketData   = marketData;
+        this.marketReport = marketReport;
+        this.orderEntry   = orderEntry;
 
         this.toKeepAlive = new ArrayList<>();
         this.toCleanUp   = new ArrayList<>();
@@ -33,8 +33,8 @@ class Events implements Runnable {
 
         this.marketData.getRequestTransport().getChannel().register(this.selector,
                 SelectionKey.OP_READ, this.marketData);
-        this.tradeReport.getRequestTransport().getChannel().register(this.selector,
-                SelectionKey.OP_READ, this.tradeReport);
+        this.marketReport.getRequestTransport().getChannel().register(this.selector,
+                SelectionKey.OP_READ, this.marketReport);
         this.orderEntry.getChannel().register(this.selector, SelectionKey.OP_ACCEPT, null);
     }
 
@@ -62,8 +62,8 @@ class Events implements Runnable {
                         Object attachment = key.attachment();
                         if (attachment == marketData)
                             marketData.serve();
-                        else if (attachment == tradeReport)
-                            tradeReport.serve();
+                        else if (attachment == marketReport)
+                            marketReport.serve();
                         else
                             receive((Session)attachment);
                     }
@@ -106,7 +106,7 @@ class Events implements Runnable {
         }
 
         try {
-            tradeReport.getTransport().keepAlive();
+            marketReport.getTransport().keepAlive();
         } catch (IOException e) {
         }
 
