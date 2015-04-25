@@ -43,8 +43,8 @@ Name         | Length | Type   | Notes
 -------------|--------|--------|----------
 Message Type |      1 | Text   | `O`
 Timestamp    |      8 | Number |
-Order Number |      8 | Number |
 Username     |      8 | Text   |
+Order Number |      8 | Number |
 Side         |      1 | Text   | See below
 Instrument   |      8 | Text   |
 Quantity     |      4 | Number |

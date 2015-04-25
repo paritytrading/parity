@@ -13,8 +13,9 @@ import org.jvirtanen.nassau.moldudp64.MoldUDP64RequestServer;
 import org.jvirtanen.nassau.moldudp64.MoldUDP64Server;
 import org.jvirtanen.parity.net.pmr.PMR;
 
-class TradeReportServer {
+class MarketReportServer {
 
+    private PMR.Order order;
     private PMR.Trade trade;
 
     private MoldUDP64Server transport;
@@ -27,7 +28,8 @@ class TradeReportServer {
 
     private ByteBuffer buffer;
 
-    private TradeReportServer(MoldUDP64Server transport, MoldUDP64RequestServer requestTransport) {
+    private MarketReportServer(MoldUDP64Server transport, MoldUDP64RequestServer requestTransport) {
+        this.order = new PMR.Order();
         this.trade = new PMR.Trade();
 
         this.transport = transport;
@@ -40,7 +42,7 @@ class TradeReportServer {
         this.buffer = ByteBuffer.allocate(1024);
     }
 
-    public static TradeReportServer create(String session, InetSocketAddress multicastGroup,
+    public static MarketReportServer create(String session, InetSocketAddress multicastGroup,
             int requestPort) throws IOException {
         DatagramChannel channel = DatagramChannel.open(StandardProtocolFamily.INET);
 
@@ -55,7 +57,7 @@ class TradeReportServer {
 
         MoldUDP64RequestServer requestTransport = new MoldUDP64RequestServer(requestChannel);
 
-        return new TradeReportServer(transport, requestTransport);
+        return new MarketReportServer(transport, requestTransport);
     }
 
     public MoldUDP64Server getTransport() {
@@ -74,11 +76,21 @@ class TradeReportServer {
         }
     }
 
+    public void order(long username, long orderNumber, byte side, long instrument, long quantity, long price) {
+        order.timestamp   = timestamp();
+        order.username    = username;
+        order.orderNumber = orderNumber;
+        order.side        = side;
+        order.instrument  = instrument;
+        order.quantity    = quantity;
+        order.price       = price;
+
+        send(order);
+    }
+
     public void trade(long matchNumber, long instrument, long quantity, long price, long buyer,
             long buyOrderNumber, long seller, long sellOrderNumber) {
-        long currentTimeMillis = System.currentTimeMillis() - TradingSystem.EPOCH_MILLIS;
-
-        trade.timestamp       = currentTimeMillis * 1000 * 1000;
+        trade.timestamp       = timestamp();
         trade.matchNumber     = matchNumber;
         trade.instrument      = instrument;
         trade.quantity        = quantity;
@@ -88,8 +100,12 @@ class TradeReportServer {
         trade.seller          = seller;
         trade.sellOrderNumber = sellOrderNumber;
 
+        send(trade);
+    }
+
+    private void send(PMR.Message message) {
         buffer.clear();
-        trade.put(buffer);
+        message.put(buffer);
         buffer.flip();
 
         try {
@@ -105,6 +121,10 @@ class TradeReportServer {
         } catch (IOException e) {
             fatal(e);
         }
+    }
+
+    private long timestamp() {
+        return (System.currentTimeMillis() - TradingSystem.EPOCH_MILLIS) * 1000 * 1000;
     }
 
 }
