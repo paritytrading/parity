@@ -39,7 +39,8 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
     private long username;
 
     public Session(SocketChannel channel, MatchingEngine engine) {
-        this.transport = new SoupBinTCPServer(channel, new POEServerParser(this), this);
+        this.transport = new SoupBinTCPServer(channel, POE.MAX_INBOUND_MESSAGE_LENGTH,
+                new POEServerParser(this), this);
 
         this.orders   = new HashMap<>();
         this.orderIds = new HashSet<>();
