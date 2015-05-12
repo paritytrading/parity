@@ -69,10 +69,8 @@ class DisplayFormat extends MarketDataListener {
     }
 
     private static class Trade {
-
         public long price;
         public long size;
-
     }
 
 }
