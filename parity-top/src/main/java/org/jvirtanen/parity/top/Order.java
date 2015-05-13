@@ -1,7 +1,7 @@
 package org.jvirtanen.parity.top;
 
 /**
- * <code>Order</code> represents an order in an order book.
+ * An order in an order book.
  */
 public class Order {
 
