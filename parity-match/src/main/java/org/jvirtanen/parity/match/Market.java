@@ -3,7 +3,7 @@ package org.jvirtanen.parity.match;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 
 /**
- * <code>Market</code> represents the matching engine.
+ * A matching engine.
  */
 public class Market {
 
