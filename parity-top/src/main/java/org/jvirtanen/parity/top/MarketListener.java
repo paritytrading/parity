@@ -1,8 +1,7 @@
 package org.jvirtanen.parity.top;
 
 /**
- * <code>MarketListener</code> is the interface for outbound events from the
- * order book reconstruction.
+ * The interface for outbound events from the order book reconstruction.
  */
 public interface MarketListener {
 
