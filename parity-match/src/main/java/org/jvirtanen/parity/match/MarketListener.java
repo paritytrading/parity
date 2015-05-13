@@ -1,8 +1,7 @@
 package org.jvirtanen.parity.match;
 
 /**
- * <code>MarketListener</code> is the interface for outbound events from the
- * matching engine.
+ * The interface for outbound events from the matching engine.
  */
 public interface MarketListener {
 
