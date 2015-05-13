@@ -3,7 +3,7 @@ package org.jvirtanen.parity.top;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 
 /**
- * <code>Market</code> represents an order book reconstruction.
+ * An order book reconstruction.
  */
 public class Market {
 
