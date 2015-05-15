@@ -21,6 +21,11 @@ public class PMDParser implements MessageListener {
 
     private PMDListener listener;
 
+    /**
+     * Create a parser for inbound messages.
+     *
+     * @param listener the message listener
+     */
     public PMDParser(PMDListener listener) {
         this.version       = new Version();
         this.seconds       = new Seconds();
