@@ -16,6 +16,11 @@ public class POEServerParser implements MessageListener {
 
     private POEServerListener listener;
 
+    /**
+     * Create a parser for inbound messages on the server side.
+     *
+     * @param listener the message listener
+     */
     public POEServerParser(POEServerListener listener) {
         this.enterOrder  = new EnterOrder();
         this.cancelOrder = new CancelOrder();

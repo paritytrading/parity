@@ -19,6 +19,11 @@ public class POEClientParser implements MessageListener {
 
     private POEClientListener listener;
 
+    /**
+     * Create a parser for inbound messages on the client side.
+     *
+     * @param listener the message listener
+     */
     public POEClientParser(POEClientListener listener) {
         this.orderAccepted = new OrderAccepted();
         this.orderRejected = new OrderRejected();
