@@ -16,6 +16,11 @@ public class PMRParser implements MessageListener {
 
     private PMRListener listener;
 
+    /**
+     * Create a parser for inbound messages.
+     *
+     * @param listener the message listener
+     */
     public PMRParser(PMRListener listener) {
         this.order = new Order();
         this.trade = new Trade();
