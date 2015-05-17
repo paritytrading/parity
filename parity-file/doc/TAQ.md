@@ -51,3 +51,9 @@ Record Type | Description
 ------------|------------
 `Q`         | Quote
 `T`         | Trade
+
+
+History
+-------
+
+- **Version 1.** Initial version.
