@@ -76,3 +76,9 @@ Buyer             |      8 | Text   |
 Buy Order Number  |      8 | Number |
 Seller            |      8 | Text   |
 Sell Order Number |      8 | Number |
+
+
+History
+-------
+
+- **Version 1.** Initial version.
