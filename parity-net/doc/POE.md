@@ -183,3 +183,9 @@ Reason | Description
 -------|------------
 `C`    | Consent
 `S`    | Supervisory
+
+
+History
+-------
+
+- **Version 1.** Initial version.
