@@ -1,8 +1,7 @@
 Parity Trading System
 =====================
 
-Parity Trading System is a server application that implements a trading
-system.
+Parity Trading System is a server application for running a trading venue.
 
 
 Download
