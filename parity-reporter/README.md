@@ -5,14 +5,6 @@ Parity Trade Reporter is a simple console application that displays occurred
 trades in Parity Trading System.
 
 
-Download
---------
-
-Download Parity Trade Reporter from the [Releases][] page.
-
-  [Releases]: https://github.com/jvirtanen/parity/wiki/Releases
-
-
 Usage
 -----
 
