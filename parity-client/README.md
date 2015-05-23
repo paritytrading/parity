@@ -32,8 +32,8 @@ order will remain open. To list the open orders, use the `orders` command:
 Use the `help` command to see a list of all available commands.
 
 
-Development
------------
+Build
+-----
 
 See the [Developer Guide](../HACKING.md).
 
