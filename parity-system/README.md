@@ -16,8 +16,8 @@ initiated by market participants, publishing market data, and reporting
 occurred trades.
 
 
-Development
------------
+Build
+-----
 
 See the [Developer Guide](../HACKING.md).
 
