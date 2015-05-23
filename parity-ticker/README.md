@@ -22,8 +22,8 @@ option is given, it formats the output as [TAQ][] instead.
   [TAQ]: ../parity-file/doc/TAQ.md
 
 
-Development
------------
+Build
+-----
 
 See the [Developer Guide](../HACKING.md).
 
