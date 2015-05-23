@@ -4,14 +4,6 @@ Parity Trading System
 Parity Trading System is a server application for running a trading venue.
 
 
-Download
---------
-
-Download Parity Trading System from the [Releases][] page.
-
-  [Releases]: https://github.com/jvirtanen/parity/wiki/Releases
-
-
 Usage
 -----
 
