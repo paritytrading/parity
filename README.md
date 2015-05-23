@@ -59,8 +59,8 @@ Historical market data from the trading system can be obtained in two formats:
     market data sessions can be recorded into files for further processing.
 
 
-Development
------------
+Build
+-----
 
 See the [Developer Guide](HACKING.md).
 
