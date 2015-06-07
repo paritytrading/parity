@@ -8,10 +8,10 @@ or research market microstructure.
 Parity requires Java Runtime Environment (JRE) 8 or newer.
 
 
-Usage
------
+Features
+--------
 
-Parity consists of four applications:
+Parity consists of the following applications:
 
   - [**Parity Trading System**](parity-system) is a server application for
     running a trading venue.
@@ -26,37 +26,14 @@ Parity consists of four applications:
   - [**Parity Trade Reporter**](parity-reporter) is a simple console
     application that displays occurred trades in the trading system.
 
-The trading system uses two network protocols for communication with market
-participants:
+In addition, Parity contains the following libraries:
 
-  - [**POE**](parity-net/doc/POE.md) is the native order entry protocol. The
-    terminal client is an example of an application that uses it to enter
-    orders.
+  - [**Parity File Formats**](parity-file) contains file format specifications
+    and reference implementations for file formats used by the trading system.
 
-  - [**PMD**](parity-net/doc/PMD.md) is the native market data protocol. The
-    stock ticker is an example of an application that consumes market data
-    using it.
-
-In addition, the trading system uses one network protocol for communication
-with post-trade processing and market surveillance systems:
-
-  - [**PMR**](parity-net/doc/PMR.md) is the native market reporting protocol.
-    The trade reporter is an example of an application that listens to trade
-    reports using it.
-
-See the [Connectivity][] page for a list of implementations of the network
-protocols.
-
-  [Connectivity]: https://github.com/jvirtanen/parity/wiki/Connectivity
-
-Historical market data from the trading system can be obtained in two formats:
-
-  - [**TAQ**](parity-file/doc/TAQ.md) is a historical market data file format
-    that consists of the best bids and offers (BBOs) and trades. The stock
-    ticker can produce TAQ files.
-
-  - [**PMD**](parity-net/doc/PMD.md) consists of all market events. Entire
-    market data sessions can be recorded into files for further processing.
+  - [**Parity Network Protocols**](parity-net) contains protocol specifications
+    and reference implementations for network protocols used by the trading
+    system.
 
 
 Build
