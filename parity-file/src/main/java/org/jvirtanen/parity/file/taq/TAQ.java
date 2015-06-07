@@ -11,8 +11,9 @@ public class TAQ {
     static final char RECORD_TYPE_QUOTE = 'Q';
     static final char RECORD_TYPE_TRADE = 'T';
 
-    public static final char BUY  = 'B';
-    public static final char SELL = 'S';
+    public static final char BUY     = 'B';
+    public static final char SELL    = 'S';
+    public static final char UNKNOWN = ' ';
 
     private TAQ() {
     }
@@ -89,7 +90,8 @@ public class TAQ {
         public long size;
 
         /**
-         * The side of the resting order.
+         * The side of the resting order or `UNKNOWN` if the side of the
+         * resting order is not available.
          */
         public char side;
     }

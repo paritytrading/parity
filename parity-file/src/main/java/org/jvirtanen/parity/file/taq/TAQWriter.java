@@ -103,7 +103,10 @@ public class TAQWriter implements Closeable, Flushable {
         sink.print(FIELD_SEPARATOR);
         sink.print(record.size);
         sink.print(FIELD_SEPARATOR);
-        sink.print(record.side);
+
+        if (record.side != UNKNOWN)
+            sink.print(record.side);
+
         sink.print(RECORD_SEPARATOR);
     }
 
