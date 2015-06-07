@@ -5,6 +5,15 @@ Parity File Formats contains file format specifications and reference
 implementations for file formats used by Parity Trading System.
 
 
+Features
+--------
+
+Parity File Formats specifies and implements the following formats:
+
+  - [**TAQ**](doc/TAQ.md): a historical market data file format that consists
+    of the best bids and offers (BBOs) and trades.
+
+
 Download
 --------
 
