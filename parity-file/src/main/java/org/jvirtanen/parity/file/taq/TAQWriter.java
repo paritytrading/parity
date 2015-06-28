@@ -1,5 +1,6 @@
 package org.jvirtanen.parity.file.taq;
 
+import static java.nio.charset.StandardCharsets.*;
 import static org.jvirtanen.parity.file.taq.TAQ.*;
 
 import java.io.BufferedOutputStream;
@@ -20,8 +21,6 @@ import org.jvirtanen.parity.util.Timestamps;
  * A writer.
  */
 public class TAQWriter implements Closeable, Flushable {
-
-    private static final Charset US_ASCII = Charset.forName("US-ASCII");
 
     private static final double PRICE_FACTOR = 10000.0;
 
