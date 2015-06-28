@@ -1,13 +1,12 @@
 package org.jvirtanen.parity.net.poe;
 
+import static java.nio.charset.StandardCharsets.*;
+
 import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
 
 class ByteBuffers {
 
     private static final byte SPACE = ' ';
-
-    private static final Charset US_ASCII = Charset.forName("US-ASCII");
 
     static String getString(ByteBuffer buffer, int length) {
         byte[] bytes = new  byte[length];

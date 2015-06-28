@@ -1,15 +1,13 @@
 package org.jvirtanen.parity.net.poe;
 
+import static java.nio.charset.StandardCharsets.*;
 import static org.junit.Assert.*;
 import static org.jvirtanen.parity.net.poe.ByteBuffers.*;
 
 import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
 import org.junit.Test;
 
 public class ByteBuffersTest {
-
-    private static final Charset US_ASCII = Charset.forName("US-ASCII");
 
     @Test
     public void gettingString() {
