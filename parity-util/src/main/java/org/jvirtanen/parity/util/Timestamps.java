@@ -1,15 +1,14 @@
 package org.jvirtanen.parity.util;
 
-import org.joda.time.LocalTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * This class contains utility methods for working with timestamps.
  */
 public class Timestamps {
 
-    private static final DateTimeFormatter FORMATTER = DateTimeFormat.forPattern("HH:mm:ss.SSS");
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
 
     private Timestamps() {
     }
@@ -21,7 +20,7 @@ public class Timestamps {
      * @return the timestamp as a string
      */
     public static String format(long timestampMillis) {
-        return FORMATTER.print(LocalTime.fromMillisOfDay(timestampMillis));
+        return FORMATTER.format(LocalTime.ofNanoOfDay(timestampMillis % (24 * 60 * 60 * 1000) * 1000 * 1000));
     }
 
 }
