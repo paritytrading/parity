@@ -1,11 +1,11 @@
 package org.jvirtanen.parity.ticker;
 
+import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 import static org.jvirtanen.lang.Strings.*;
 
 import it.unimi.dsi.fastutil.longs.Long2ObjectArrayMap;
 import java.nio.charset.Charset;
-import org.joda.time.LocalDate;
-import org.joda.time.format.ISODateTimeFormat;
+import java.time.LocalDate;
 import org.jvirtanen.parity.file.taq.TAQ;
 import org.jvirtanen.parity.file.taq.TAQWriter;
 import org.jvirtanen.parity.top.Side;
@@ -25,7 +25,7 @@ class TAQFormat extends MarketDataListener {
         quote = new TAQ.Quote();
         trade = new TAQ.Trade();
 
-        String date = ISODateTimeFormat.date().print(LocalDate.now());
+        String date = ISO_LOCAL_DATE.format(LocalDate.now());
 
         quote.date = date;
         trade.date = date;
