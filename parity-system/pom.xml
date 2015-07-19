@@ -38,10 +38,6 @@
       <artifactId>fastutil</artifactId>
     </dependency>
     <dependency>
-      <groupId>joda-time</groupId>
-      <artifactId>joda-time</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.jvirtanen.config</groupId>
       <artifactId>config-extras</artifactId>
     </dependency>

@@ -8,13 +8,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
-import org.joda.time.LocalDate;
 import org.jvirtanen.config.Configs;
 
 class TradingSystem {
 
-    public static final long EPOCH_MILLIS = new LocalDate().toDateTimeAtStartOfDay().getMillis();
+    public static final long EPOCH_MILLIS = LocalDate.now().atStartOfDay(ZoneId.systemDefault())
+        .toInstant().toEpochMilli();
 
     public static void main(String[] args) throws IOException {
         if (args.length != 1)
