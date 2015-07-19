@@ -19,6 +19,11 @@ Parity Network Protocols specifies and implements the following protocols:
   - [**PMR**](doc/PMR.md): the native market reporting protocol, used by
     market surveillance systems and post-trade processing systems.
 
+Parity Network Protocols uses [Nassau][] for NASDAQ transport protocol
+support.
+
+  [Nassau]: https://github.com/jvirtanen/nassau
+
 
 Download
 --------
