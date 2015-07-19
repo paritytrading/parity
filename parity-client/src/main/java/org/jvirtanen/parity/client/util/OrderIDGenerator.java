@@ -1,12 +1,11 @@
 package org.jvirtanen.parity.client.util;
 
-import org.joda.time.LocalTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class OrderIDGenerator {
 
-    private static final DateTimeFormatter FORMATTER = DateTimeFormat.forPattern("HH:mm:ss");
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     private String prefix;
 
@@ -17,7 +16,7 @@ public class OrderIDGenerator {
     }
 
     public OrderIDGenerator(LocalTime time) {
-        prefix = FORMATTER.print(time);
+        prefix = FORMATTER.format(time);
         count  = 1;
     }
 
