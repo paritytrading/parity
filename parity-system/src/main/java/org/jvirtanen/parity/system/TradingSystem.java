@@ -30,14 +30,7 @@ class TradingSystem {
     }
 
     private static void main(Config config) throws IOException {
-        String      marketDataSession        = config.getString("market-data.session");
-        InetAddress marketDataMulticastGroup = Configs.getInetAddress(config, "market-data.multicast-group");
-        int         marketDataMulticastPort  = Configs.getPort(config, "market-data.multicast-port");
-        int         marketDataRequestPort    = Configs.getPort(config, "market-data.request-port");
-
-        MarketDataServer marketData = MarketDataServer.create(marketDataSession,
-                new InetSocketAddress(marketDataMulticastGroup, marketDataMulticastPort),
-                marketDataRequestPort);
+        MarketDataServer marketData = marketData(config);
 
         String      marketReportSession        = config.getString("market-report.session");
         InetAddress marketReportMulticastGroup = Configs.getInetAddress(config, "market-report.multicast-group");
@@ -59,6 +52,16 @@ class TradingSystem {
         marketData.version();
 
         new Events(marketData, marketReport, orderEntry).run();
+    }
+
+    private static MarketDataServer marketData(Config config) throws IOException {
+        String      session        = config.getString("market-data.session");
+        InetAddress multicastGroup = Configs.getInetAddress(config, "market-data.multicast-group");
+        int         multicastPort  = Configs.getPort(config, "market-data.multicast-port");
+        int         requestPort    = Configs.getPort(config, "market-data.request-port");
+
+        return MarketDataServer.create(session, new InetSocketAddress(multicastGroup, multicastPort),
+                requestPort);
     }
 
 }
