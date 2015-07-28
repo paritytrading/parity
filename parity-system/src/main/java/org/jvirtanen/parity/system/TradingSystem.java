@@ -32,14 +32,7 @@ class TradingSystem {
     private static void main(Config config) throws IOException {
         MarketDataServer marketData = marketData(config);
 
-        String      marketReportSession        = config.getString("market-report.session");
-        InetAddress marketReportMulticastGroup = Configs.getInetAddress(config, "market-report.multicast-group");
-        int         marketReportMulticastPort  = Configs.getPort(config, "market-report.multicast-port");
-        int         marketReportRequestPort    = Configs.getPort(config, "market-report.request-port");
-
-        MarketReportServer marketReport = MarketReportServer.create(marketReportSession,
-                new InetSocketAddress(marketReportMulticastGroup, marketReportMulticastPort),
-                marketReportRequestPort);
+        MarketReportServer marketReport = marketReport(config);
 
         List<String> instruments = config.getStringList("instruments");
 
@@ -61,6 +54,16 @@ class TradingSystem {
         int         requestPort    = Configs.getPort(config, "market-data.request-port");
 
         return MarketDataServer.create(session, new InetSocketAddress(multicastGroup, multicastPort),
+                requestPort);
+    }
+
+    private static MarketReportServer marketReport(Config config) throws IOException {
+        String      session        = config.getString("market-report.session");
+        InetAddress multicastGroup = Configs.getInetAddress(config, "market-report.multicast-group");
+        int         multicastPort  = Configs.getPort(config, "market-report.multicast-port");
+        int         requestPort    = Configs.getPort(config, "market-report.request-port");
+
+        return MarketReportServer.create(session, new InetSocketAddress(multicastGroup, multicastPort),
                 requestPort);
     }
 
