@@ -90,8 +90,8 @@ public class TAQ {
         public long size;
 
         /**
-         * The side of the resting order or `UNKNOWN` if the side of the
-         * resting order is not available.
+         * The side of the resting order or <code>UNKNOWN</code> if the side
+         * of the resting order is not available.
          */
         public char side;
     }
