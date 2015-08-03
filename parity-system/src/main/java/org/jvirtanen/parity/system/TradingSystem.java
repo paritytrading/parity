@@ -30,7 +30,7 @@ class TradingSystem {
     }
 
     private static void main(Config config) throws IOException {
-        MarketDataServer marketData = marketData(config);
+        MarketData marketData = marketData(config);
 
         MarketReportServer marketReport = marketReport(config);
 
@@ -45,13 +45,13 @@ class TradingSystem {
         new Events(marketData, marketReport, orderEntry).run();
     }
 
-    private static MarketDataServer marketData(Config config) throws IOException {
+    private static MarketData marketData(Config config) throws IOException {
         String      session        = config.getString("market-data.session");
         InetAddress multicastGroup = Configs.getInetAddress(config, "market-data.multicast-group");
         int         multicastPort  = Configs.getPort(config, "market-data.multicast-port");
         int         requestPort    = Configs.getPort(config, "market-data.request-port");
 
-        return MarketDataServer.create(session, new InetSocketAddress(multicastGroup, multicastPort),
+        return MarketData.open(session, new InetSocketAddress(multicastGroup, multicastPort),
                 requestPort);
     }
 

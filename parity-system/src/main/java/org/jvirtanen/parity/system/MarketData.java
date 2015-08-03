@@ -13,7 +13,7 @@ import org.jvirtanen.nassau.moldudp64.MoldUDP64RequestServer;
 import org.jvirtanen.nassau.moldudp64.MoldUDP64Server;
 import org.jvirtanen.parity.net.pmd.PMD;
 
-class MarketDataServer {
+class MarketData {
 
     private PMD.Version       version;
     private PMD.Seconds       seconds;
@@ -36,7 +36,7 @@ class MarketDataServer {
 
     private long timestamp;
 
-    private MarketDataServer(MoldUDP64Server transport, MoldUDP64RequestServer requestTransport) {
+    private MarketData(MoldUDP64Server transport, MoldUDP64RequestServer requestTransport) {
         this.version       = new PMD.Version();
         this.seconds       = new PMD.Seconds();
         this.orderAdded    = new PMD.OrderAdded();
@@ -54,7 +54,7 @@ class MarketDataServer {
         this.buffer = ByteBuffer.allocate(1024);
     }
 
-    public static MarketDataServer create(String session, InetSocketAddress multicastGroup,
+    public static MarketData open(String session, InetSocketAddress multicastGroup,
             int requestPort) throws IOException {
         DatagramChannel channel = DatagramChannel.open(StandardProtocolFamily.INET);
 
@@ -69,7 +69,7 @@ class MarketDataServer {
 
         MoldUDP64RequestServer requestTransport = new MoldUDP64RequestServer(requestChannel);
 
-        return new MarketDataServer(transport, requestTransport);
+        return new MarketData(transport, requestTransport);
     }
 
     public MoldUDP64Server getTransport() {

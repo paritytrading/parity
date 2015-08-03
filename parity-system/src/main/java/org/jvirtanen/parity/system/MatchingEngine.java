@@ -17,7 +17,7 @@ class MatchingEngine {
     private Long2ObjectArrayMap<Market>   markets;
     private Long2ObjectOpenHashMap<Order> orders;
 
-    private MarketDataServer   marketData;
+    private MarketData         marketData;
     private MarketReportServer marketReport;
 
     private long nextOrderNumber;
@@ -27,7 +27,7 @@ class MatchingEngine {
 
     private long instrument;
 
-    public MatchingEngine(List<String> instruments, MarketDataServer marketData, MarketReportServer marketReport) {
+    public MatchingEngine(List<String> instruments, MarketData marketData, MarketReportServer marketReport) {
         this.markets = new Long2ObjectArrayMap<>();
         this.orders  = new Long2ObjectOpenHashMap<>();
 

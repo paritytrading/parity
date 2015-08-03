@@ -11,7 +11,7 @@ class Events implements Runnable {
 
     private static final int TIMEOUT_MILLIS = 1000;
 
-    private MarketDataServer   marketData;
+    private MarketData         marketData;
     private MarketReportServer marketReport;
     private OrderEntryServer   orderEntry;
 
@@ -20,7 +20,7 @@ class Events implements Runnable {
 
     private Selector selector;
 
-    public Events(MarketDataServer marketData, MarketReportServer marketReport,
+    public Events(MarketData marketData, MarketReportServer marketReport,
             OrderEntryServer orderEntry) throws IOException {
         this.marketData   = marketData;
         this.marketReport = marketReport;
