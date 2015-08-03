@@ -32,17 +32,17 @@ class TradingSystem {
     private static void main(Config config) throws IOException {
         MarketData marketData = marketData(config);
 
-        MarketReportServer marketReport = marketReport(config);
+        MarketReporting marketReporting = marketReporting(config);
 
         List<String> instruments = config.getStringList("instruments");
 
-        MatchingEngine engine = new MatchingEngine(instruments, marketData, marketReport);
+        MatchingEngine engine = new MatchingEngine(instruments, marketData, marketReporting);
 
         OrderEntryServer orderEntry = orderEntry(config, engine);
 
         marketData.version();
 
-        new Events(marketData, marketReport, orderEntry).run();
+        new Events(marketData, marketReporting, orderEntry).run();
     }
 
     private static MarketData marketData(Config config) throws IOException {
@@ -55,13 +55,13 @@ class TradingSystem {
                 requestPort);
     }
 
-    private static MarketReportServer marketReport(Config config) throws IOException {
+    private static MarketReporting marketReporting(Config config) throws IOException {
         String      session        = config.getString("market-report.session");
         InetAddress multicastGroup = Configs.getInetAddress(config, "market-report.multicast-group");
         int         multicastPort  = Configs.getPort(config, "market-report.multicast-port");
         int         requestPort    = Configs.getPort(config, "market-report.request-port");
 
-        return MarketReportServer.create(session, new InetSocketAddress(multicastGroup, multicastPort),
+        return MarketReporting.open(session, new InetSocketAddress(multicastGroup, multicastPort),
                 requestPort);
     }
 

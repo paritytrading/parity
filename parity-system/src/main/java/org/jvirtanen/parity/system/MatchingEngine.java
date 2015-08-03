@@ -17,8 +17,8 @@ class MatchingEngine {
     private Long2ObjectArrayMap<Market>   markets;
     private Long2ObjectOpenHashMap<Order> orders;
 
-    private MarketData         marketData;
-    private MarketReportServer marketReport;
+    private MarketData      marketData;
+    private MarketReporting marketReporting;
 
     private long nextOrderNumber;
     private long nextMatchNumber;
@@ -27,7 +27,7 @@ class MatchingEngine {
 
     private long instrument;
 
-    public MatchingEngine(List<String> instruments, MarketData marketData, MarketReportServer marketReport) {
+    public MatchingEngine(List<String> instruments, MarketData marketData, MarketReporting marketReporting) {
         this.markets = new Long2ObjectArrayMap<>();
         this.orders  = new Long2ObjectOpenHashMap<>();
 
@@ -36,8 +36,8 @@ class MatchingEngine {
         for (String instrument : instruments)
             markets.put(encodeLong(instrument), new Market(handler));
 
-        this.marketData   = marketData;
-        this.marketReport = marketReport;
+        this.marketData      = marketData;
+        this.marketReporting = marketReporting;
 
         this.nextOrderNumber = 1;
         this.nextMatchNumber = 1;
@@ -58,7 +58,7 @@ class MatchingEngine {
 
         session.orderAccepted(message, handling);
 
-        marketReport.order(session.getUsername(), orderNumber, pmr(message.side),
+        marketReporting.order(session.getUsername(), orderNumber, pmr(message.side),
                 instrument, message.quantity, message.price);
 
         market.enter(orderNumber, poe(message.side), message.price, message.quantity);
@@ -118,7 +118,7 @@ class MatchingEngine {
             long buyOrderNumber  = incomingSide == Side.BUY  ? incomingOrderNumber : restingOrderNumber;
             long sellOrderNumber = incomingSide == Side.SELL ? incomingOrderNumber : restingOrderNumber;
 
-            marketReport.trade(matchNumber, instrument, executedQuantity, price, buyer, buyOrderNumber,
+            marketReporting.trade(matchNumber, instrument, executedQuantity, price, buyer, buyOrderNumber,
                     seller, sellOrderNumber);
 
             if (remainingQuantity == 0)
