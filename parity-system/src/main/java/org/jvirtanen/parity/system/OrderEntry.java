@@ -6,25 +6,25 @@ import java.net.StandardSocketOptions;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 
-class OrderEntryServer {
+class OrderEntry {
 
     private ServerSocketChannel serverChannel;
 
     private MatchingEngine engine;
 
-    private OrderEntryServer(ServerSocketChannel serverChannel, MatchingEngine engine) {
+    private OrderEntry(ServerSocketChannel serverChannel, MatchingEngine engine) {
         this.serverChannel = serverChannel;
 
         this.engine = engine;
     }
 
-    public static OrderEntryServer create(int port, MatchingEngine engine) throws IOException {
+    public static OrderEntry open(int port, MatchingEngine engine) throws IOException {
         ServerSocketChannel serverChannel = ServerSocketChannel.open();
 
         serverChannel.bind(new InetSocketAddress(port));
         serverChannel.configureBlocking(false);
 
-        return new OrderEntryServer(serverChannel, engine);
+        return new OrderEntry(serverChannel, engine);
     }
 
     public ServerSocketChannel getChannel() {

@@ -38,7 +38,7 @@ class TradingSystem {
 
         MatchingEngine engine = new MatchingEngine(instruments, marketData, marketReporting);
 
-        OrderEntryServer orderEntry = orderEntry(config, engine);
+        OrderEntry orderEntry = orderEntry(config, engine);
 
         marketData.version();
 
@@ -65,10 +65,10 @@ class TradingSystem {
                 requestPort);
     }
 
-    private static OrderEntryServer orderEntry(Config config, MatchingEngine engine) throws IOException {
+    private static OrderEntry orderEntry(Config config, MatchingEngine engine) throws IOException {
         int port = Configs.getPort(config, "order-entry.port");
 
-        return OrderEntryServer.create(port, engine);
+        return OrderEntry.open(port, engine);
     }
 
 }
