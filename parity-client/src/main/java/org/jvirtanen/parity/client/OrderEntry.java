@@ -14,7 +14,7 @@ import org.jvirtanen.parity.net.poe.POE;
 import org.jvirtanen.parity.net.poe.POEClientListener;
 import org.jvirtanen.parity.net.poe.POEClientParser;
 
-public class OrderEntryClient implements Closeable {
+public class OrderEntry implements Closeable {
 
     private ByteBuffer buffer;
 
@@ -24,7 +24,7 @@ public class OrderEntryClient implements Closeable {
 
     private volatile boolean closed;
 
-    private OrderEntryClient(Selector selector, SocketChannel channel, POEClientListener listener) {
+    private OrderEntry(Selector selector, SocketChannel channel, POEClientListener listener) {
         this.buffer = ByteBuffer.allocate(POE.MAX_INBOUND_MESSAGE_LENGTH);
 
         this.selector = selector;
@@ -37,7 +37,7 @@ public class OrderEntryClient implements Closeable {
         new Thread(new Receiver()).start();
     }
 
-    public static OrderEntryClient open(InetSocketAddress address, POEClientListener listener) throws IOException {
+    public static OrderEntry open(InetSocketAddress address, POEClientListener listener) throws IOException {
         SocketChannel channel = SocketChannel.open();
 
         channel.connect(address);
@@ -47,7 +47,7 @@ public class OrderEntryClient implements Closeable {
 
         channel.register(selector, SelectionKey.OP_READ);
 
-        return new OrderEntryClient(selector, channel, listener);
+        return new OrderEntry(selector, channel, listener);
     }
 
     @Override

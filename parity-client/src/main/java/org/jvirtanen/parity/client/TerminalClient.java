@@ -32,13 +32,13 @@ public class TerminalClient implements Closeable {
 
     private Events events;
 
-    private OrderEntryClient orderEntry;
+    private OrderEntry orderEntry;
 
     private OrderIDGenerator orderIdGenerator;
 
     private boolean closed;
 
-    private TerminalClient(Events events, OrderEntryClient orderEntry) {
+    private TerminalClient(Events events, OrderEntry orderEntry) {
         this.events     = events;
         this.orderEntry = orderEntry;
 
@@ -48,7 +48,7 @@ public class TerminalClient implements Closeable {
     public static TerminalClient open(InetSocketAddress address, String username, String password) throws IOException {
         Events events = new Events();
 
-        OrderEntryClient orderEntry = OrderEntryClient.open(address, events);
+        OrderEntry orderEntry = OrderEntry.open(address, events);
 
         SoupBinTCP.LoginRequest loginRequest = new SoupBinTCP.LoginRequest();
 
@@ -62,7 +62,7 @@ public class TerminalClient implements Closeable {
         return new TerminalClient(events, orderEntry);
     }
 
-    public OrderEntryClient getOrderEntry() {
+    public OrderEntry getOrderEntry() {
         return orderEntry;
     }
 
