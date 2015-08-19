@@ -17,12 +17,10 @@ class ByteBuffers {
     }
 
     static void putString(ByteBuffer buffer, String value, int length) {
-        byte[] bytes = value.getBytes(US_ASCII);
-
         int i = 0;
 
-        for (; i < Math.min(bytes.length, length); i++)
-            buffer.put(bytes[i]);
+        for (; i < Math.min(value.length(), length); i++)
+            buffer.put((byte)value.charAt(i));
 
         for (; i < length; i++)
             buffer.put(SPACE);
