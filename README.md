@@ -35,6 +35,9 @@ In addition, Parity contains the following libraries:
     and reference implementations for network protocols used by the trading
     system.
 
+  - [**Parity Top of Book**](parity-top) implements high-performance order book
+    reconstruction on the JVM.
+
 
 Build
 -----
