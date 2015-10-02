@@ -176,6 +176,7 @@
         <configuration>
           <excludePackageNames>org.jvirtanen.parity.client:org.jvirtanen.parity.reporter:org.jvirtanen.parity.system:org.jvirtanen.parity.ticker:*.perf</excludePackageNames>
           <links>
+            <link>http://api.paritytrading.com/nassau/latest/</link>
             <link>http://typesafehub.github.io/config/latest/api/</link>
           </links>
         </configuration>
