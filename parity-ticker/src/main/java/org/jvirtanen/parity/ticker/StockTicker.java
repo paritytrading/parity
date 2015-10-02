@@ -65,8 +65,7 @@ class StockTicker {
                 new InetSocketAddress(requestAddress, requestPort),
                 new PMDParser(processor));
 
-        while (true)
-            transport.receive();
+        transport.run();
     }
 
 }

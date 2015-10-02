@@ -1,6 +1,5 @@
 package org.jvirtanen.parity.util;
 
-import java.io.Closeable;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.NetworkInterface;
@@ -17,20 +16,11 @@ import org.jvirtanen.nassau.moldudp64.MultiChannelMoldUDP64Client;
 /**
  * This class implements a MoldUDP64 client.
  */
-public class MoldUDP64Client implements Closeable {
-
-    private Selector selector;
-
-    private SelectionKey requestChannelKey;
+public class MoldUDP64Client {
 
     private MultiChannelMoldUDP64Client backing;
 
-    private MoldUDP64Client(Selector selector, SelectionKey requestChannelKey,
-            MultiChannelMoldUDP64Client backing) {
-        this.selector = selector;
-
-        this.requestChannelKey = requestChannelKey;
-
+    private MoldUDP64Client(MultiChannelMoldUDP64Client backing) {
         this.backing = backing;
     }
 
@@ -79,17 +69,10 @@ public class MoldUDP64Client implements Closeable {
 
         };
 
-        Selector selector = Selector.open();
-
-        channel.register(selector, SelectionKey.OP_READ, null);
-
-        SelectionKey requestChannelKey = requestChannel.register(selector,
-                SelectionKey.OP_READ, null);
-
         MultiChannelMoldUDP64Client backing = new MultiChannelMoldUDP64Client(channel,
                 requestChannel, listener, statusListener);
 
-        return new MoldUDP64Client(selector, requestChannelKey, backing);
+        return new MoldUDP64Client(backing);
     }
 
     /**
@@ -97,27 +80,24 @@ public class MoldUDP64Client implements Closeable {
      *
      * @throws IOException if an I/O error occurs
      */
-    public void receive() throws IOException {
-        while (selector.select() == 0);
+    public void run() throws IOException {
+        Selector selector = Selector.open();
 
-        if (requestChannelKey.isReadable()) {
-            backing.receiveResponse();
+        SelectionKey channelKey = backing.getChannel().register(selector, SelectionKey.OP_READ);
 
-            selector.selectedKeys().remove(requestChannelKey);
-        }
+        SelectionKey requestChannelKey = backing.getRequestChannel().register(selector, SelectionKey.OP_READ);
 
-        if (selector.selectedKeys().size() > 0) {
-            backing.receive();
+        while (true) {
+            while (selector.select() == 0);
+
+            if (selector.selectedKeys().contains(channelKey))
+                backing.receive();
+
+            if (selector.selectedKeys().contains(requestChannelKey))
+                backing.receiveResponse();
 
             selector.selectedKeys().clear();
         }
-    }
-
-    @Override
-    public void close() throws IOException {
-        selector.close();
-
-        backing.close();
     }
 
 }

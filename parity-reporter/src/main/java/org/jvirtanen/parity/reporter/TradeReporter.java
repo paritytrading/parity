@@ -53,8 +53,7 @@ class TradeReporter {
                 new InetSocketAddress(requestAddress, requestPort),
                 new PMRParser(listener));
 
-        while (true)
-            transport.receive();
+        transport.run();
     }
 
 }
