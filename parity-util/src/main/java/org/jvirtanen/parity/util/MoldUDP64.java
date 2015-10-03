@@ -14,27 +14,23 @@ import org.jvirtanen.nassau.moldudp64.MoldUDP64ClientStatusListener;
 import org.jvirtanen.nassau.moldudp64.MultiChannelMoldUDP64Client;
 
 /**
- * This class implements a MoldUDP64 client.
+ * This class contains utility methods for MoldUDP64.
  */
-public class MoldUDP64Client {
+public class MoldUDP64 {
 
-    private MultiChannelMoldUDP64Client backing;
-
-    private MoldUDP64Client(MultiChannelMoldUDP64Client backing) {
-        this.backing = backing;
+    private MoldUDP64() {
     }
 
     /**
-     * Open a MoldUDP64 client.
+     * Receive messages.
      *
      * @param multicastInterface the multicast interface
      * @param multicastGroup the multicast group
      * @param requestAddress the request address
      * @param listener the message listener
-     * @return a MoldUDP64 client
      * @throws IOException if an I/O error occurs
      */
-    public static MoldUDP64Client open(NetworkInterface multicastInterface,
+    public static void receive(NetworkInterface multicastInterface,
             InetSocketAddress multicastGroup, InetSocketAddress requestAddress,
             MessageListener listener) throws IOException {
         DatagramChannel channel = DatagramChannel.open(StandardProtocolFamily.INET);
@@ -69,32 +65,25 @@ public class MoldUDP64Client {
 
         };
 
-        MultiChannelMoldUDP64Client backing = new MultiChannelMoldUDP64Client(channel,
-                requestChannel, listener, statusListener);
-
-        return new MoldUDP64Client(backing);
+        receive(new MultiChannelMoldUDP64Client(channel, requestChannel, listener,
+                    statusListener));
     }
 
-    /**
-     * Receive data.
-     *
-     * @throws IOException if an I/O error occurs
-     */
-    public void run() throws IOException {
+    private static void receive(MultiChannelMoldUDP64Client client) throws IOException {
         Selector selector = Selector.open();
 
-        SelectionKey channelKey = backing.getChannel().register(selector, SelectionKey.OP_READ);
+        SelectionKey channelKey = client.getChannel().register(selector, SelectionKey.OP_READ);
 
-        SelectionKey requestChannelKey = backing.getRequestChannel().register(selector, SelectionKey.OP_READ);
+        SelectionKey requestChannelKey = client.getRequestChannel().register(selector, SelectionKey.OP_READ);
 
         while (true) {
             while (selector.select() == 0);
 
             if (selector.selectedKeys().contains(channelKey))
-                backing.receive();
+                client.receive();
 
             if (selector.selectedKeys().contains(requestChannelKey))
-                backing.receiveResponse();
+                client.receiveResponse();
 
             selector.selectedKeys().clear();
         }

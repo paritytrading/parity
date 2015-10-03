@@ -11,7 +11,7 @@ import java.net.InetSocketAddress;
 import java.net.NetworkInterface;
 import org.jvirtanen.config.Configs;
 import org.jvirtanen.parity.net.pmr.PMRParser;
-import org.jvirtanen.parity.util.MoldUDP64Client;
+import org.jvirtanen.parity.util.MoldUDP64;
 
 class TradeReporter {
 
@@ -48,12 +48,8 @@ class TradeReporter {
 
         MarketReportListener listener = tsv ? new TSVFormat() : new DisplayFormat();
 
-        MoldUDP64Client transport = MoldUDP64Client.open(multicastInterface,
-                new InetSocketAddress(multicastGroup, multicastPort),
-                new InetSocketAddress(requestAddress, requestPort),
-                new PMRParser(listener));
-
-        transport.run();
+        MoldUDP64.receive(multicastInterface, new InetSocketAddress(multicastGroup, multicastPort),
+                new InetSocketAddress(requestAddress, requestPort), new PMRParser(listener));
     }
 
 }

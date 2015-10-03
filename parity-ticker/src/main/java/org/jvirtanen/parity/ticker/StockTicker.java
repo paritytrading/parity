@@ -14,7 +14,7 @@ import java.util.List;
 import org.jvirtanen.config.Configs;
 import org.jvirtanen.parity.net.pmd.PMDParser;
 import org.jvirtanen.parity.top.Market;
-import org.jvirtanen.parity.util.MoldUDP64Client;
+import org.jvirtanen.parity.util.MoldUDP64;
 
 class StockTicker {
 
@@ -60,12 +60,8 @@ class StockTicker {
 
         MarketDataProcessor processor = new MarketDataProcessor(market, listener);
 
-        MoldUDP64Client transport = MoldUDP64Client.open(multicastInterface,
-                new InetSocketAddress(multicastGroup, multicastPort),
-                new InetSocketAddress(requestAddress, requestPort),
-                new PMDParser(processor));
-
-        transport.run();
+        MoldUDP64.receive(multicastInterface, new InetSocketAddress(multicastGroup, multicastPort),
+                new InetSocketAddress(requestAddress, requestPort), new PMDParser(processor));
     }
 
 }
