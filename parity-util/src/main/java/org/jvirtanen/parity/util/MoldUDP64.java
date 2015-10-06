@@ -9,9 +9,9 @@ import java.nio.channels.DatagramChannel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import org.jvirtanen.nassau.MessageListener;
+import org.jvirtanen.nassau.moldudp64.MoldUDP64Client;
 import org.jvirtanen.nassau.moldudp64.MoldUDP64ClientState;
 import org.jvirtanen.nassau.moldudp64.MoldUDP64ClientStatusListener;
-import org.jvirtanen.nassau.moldudp64.MultiChannelMoldUDP64Client;
 
 /**
  * This class contains utility methods for MoldUDP64.
@@ -42,7 +42,6 @@ public class MoldUDP64 {
 
         DatagramChannel requestChannel = DatagramChannel.open(StandardProtocolFamily.INET);
 
-        requestChannel.connect(requestAddress);
         requestChannel.configureBlocking(false);
 
         MoldUDP64ClientStatusListener statusListener = new MoldUDP64ClientStatusListener() {
@@ -65,11 +64,11 @@ public class MoldUDP64 {
 
         };
 
-        receive(new MultiChannelMoldUDP64Client(channel, requestChannel, listener,
+        receive(new MoldUDP64Client(channel, requestChannel, requestAddress, listener,
                     statusListener));
     }
 
-    private static void receive(MultiChannelMoldUDP64Client client) throws IOException {
+    private static void receive(MoldUDP64Client client) throws IOException {
         Selector selector = Selector.open();
 
         SelectionKey channelKey = client.getChannel().register(selector, SelectionKey.OP_READ);
