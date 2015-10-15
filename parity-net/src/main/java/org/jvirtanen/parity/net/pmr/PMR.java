@@ -44,7 +44,7 @@ public class PMR {
             orderNumber = buffer.getLong();
             side        = buffer.get();
             instrument  = buffer.getLong();
-            quantity    = buffer.getLong();
+            quantity    = getUnsignedInt(buffer);
             price       = getUnsignedInt(buffer);
         }
 
@@ -56,7 +56,7 @@ public class PMR {
             buffer.putLong(orderNumber);
             buffer.put(side);
             buffer.putLong(instrument);
-            buffer.putLong(quantity);
+            putUnsignedInt(buffer, quantity);
             putUnsignedInt(buffer, price);
         }
     }
