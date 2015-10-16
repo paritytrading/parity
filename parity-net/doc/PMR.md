@@ -58,6 +58,19 @@ Side | Description
 `S`  | Sell
 
 
+### Cancel
+
+A Cancel message indicates that an order has been canceled in part of fully.
+
+Name              | Length | Type   | Notes
+------------------|--------|--------|------
+Message Type      |      1 | Text   | `X`
+Timestamp         |      8 | Number |
+Username          |      8 | Text   |
+Order Number      |      8 | Number |
+Canceled Quantity |      4 | Number |
+
+
 ### Trade
 
 A Trade message indicates that a trade has taken place. The match number and
