@@ -13,8 +13,9 @@ public class PMR {
     private PMR() {
     }
 
-    static final byte MESSAGE_TYPE_ORDER = 'O';
-    static final byte MESSAGE_TYPE_TRADE = 'T';
+    static final byte MESSAGE_TYPE_ORDER  = 'O';
+    static final byte MESSAGE_TYPE_CANCEL = 'X';
+    static final byte MESSAGE_TYPE_TRADE  = 'T';
 
     public static final byte BUY  = 'B';
     public static final byte SELL = 'S';
@@ -58,6 +59,33 @@ public class PMR {
             buffer.putLong(instrument);
             putUnsignedInt(buffer, quantity);
             putUnsignedInt(buffer, price);
+        }
+    }
+
+    /**
+     * A Cancel message.
+     */
+    public static class Cancel implements Message {
+        public long timestamp;
+        public long username;
+        public long orderNumber;
+        public long canceledQuantity;
+
+        @Override
+        public void get(ByteBuffer buffer) {
+            timestamp        = buffer.getLong();
+            username         = buffer.getLong();
+            orderNumber      = buffer.getLong();
+            canceledQuantity = getUnsignedInt(buffer);
+        }
+
+        @Override
+        public void put(ByteBuffer buffer) {
+            buffer.put(MESSAGE_TYPE_CANCEL);
+            buffer.putLong(timestamp);
+            buffer.putLong(username);
+            buffer.putLong(orderNumber);
+            putUnsignedInt(buffer, canceledQuantity);
         }
     }
 

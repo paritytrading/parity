@@ -11,8 +11,9 @@ import org.jvirtanen.nassau.MessageListener;
  */
 public class PMRParser implements MessageListener {
 
-    private Order order;
-    private Trade trade;
+    private Order  order;
+    private Cancel cancel;
+    private Trade  trade;
 
     private PMRListener listener;
 
@@ -22,8 +23,9 @@ public class PMRParser implements MessageListener {
      * @param listener the message listener
      */
     public PMRParser(PMRListener listener) {
-        this.order = new Order();
-        this.trade = new Trade();
+        this.order  = new Order();
+        this.cancel = new Cancel();
+        this.trade  = new Trade();
 
         this.listener = listener;
     }
@@ -35,6 +37,9 @@ public class PMRParser implements MessageListener {
         switch (messageType) {
         case MESSAGE_TYPE_ORDER:
             order(buffer);
+            break;
+        case MESSAGE_TYPE_CANCEL:
+            cancel(buffer);
             break;
         case MESSAGE_TYPE_TRADE:
             trade(buffer);
@@ -48,6 +53,12 @@ public class PMRParser implements MessageListener {
         order.get(buffer);
 
         listener.order(order);
+    }
+
+    private void cancel(ByteBuffer buffer) throws IOException {
+        cancel.get(buffer);
+
+        listener.cancel(cancel);
     }
 
     private void trade(ByteBuffer buffer) throws IOException {
