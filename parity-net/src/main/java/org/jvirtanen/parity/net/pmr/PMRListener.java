@@ -18,6 +18,14 @@ public interface PMRListener {
     void order(Order message) throws IOException;
 
     /**
+     * Receive a Cancel message.
+     *
+     * @param message the message
+     * @throws IOException if an I/O error occurs
+     */
+    void cancel(Cancel message) throws IOException;
+
+    /**
      * Receive a Trade message.
      *
      * @param message the message

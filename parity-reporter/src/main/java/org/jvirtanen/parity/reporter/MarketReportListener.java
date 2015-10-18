@@ -14,6 +14,10 @@ abstract class MarketReportListener implements PMRListener {
     public void order(PMR.Order message) {
     }
 
+    @Override
+    public void cancel(PMR.Cancel message) {
+    }
+
     protected void printf(String format, Object... args) {
         System.out.printf(Locale.US, format, args);
     }

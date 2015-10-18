@@ -145,6 +145,8 @@ class MatchingEngine {
                 if (remainingQuantity == 0 && handling != null)
                     release(handling);
             }
+
+            marketReporting.cancel(handling.getSession().getUsername(), orderNumber, canceledQuantity);
         }
 
     }

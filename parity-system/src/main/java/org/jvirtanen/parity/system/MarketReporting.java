@@ -15,8 +15,9 @@ import org.jvirtanen.parity.net.pmr.PMR;
 
 class MarketReporting {
 
-    private PMR.Order order;
-    private PMR.Trade trade;
+    private PMR.Order  order;
+    private PMR.Cancel cancel;
+    private PMR.Trade  trade;
 
     private MoldUDP64Server transport;
 
@@ -29,8 +30,9 @@ class MarketReporting {
     private ByteBuffer buffer;
 
     private MarketReporting(MoldUDP64Server transport, MoldUDP64RequestServer requestTransport) {
-        this.order = new PMR.Order();
-        this.trade = new PMR.Trade();
+        this.order  = new PMR.Order();
+        this.cancel = new PMR.Cancel();
+        this.trade  = new PMR.Trade();
 
         this.transport = transport;
 
@@ -86,6 +88,15 @@ class MarketReporting {
         order.price       = price;
 
         send(order);
+    }
+
+    public void cancel(long username, long orderNumber, long canceledQuantity) {
+        cancel.timestamp        = timestamp();
+        cancel.username         = username;
+        cancel.orderNumber      = orderNumber;
+        cancel.canceledQuantity = canceledQuantity;
+
+        send(cancel);
     }
 
     public void trade(long matchNumber, long instrument, long quantity, long price, long buyer,
