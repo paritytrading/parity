@@ -31,6 +31,8 @@ public class POE {
     public static final byte BROKEN_TRADE_REASON_CONSENT     = 'C';
     public static final byte BROKEN_TRADE_REASON_SUPERVISORY = 'S';
 
+    private static final byte ORDER_ID_LENGTH = 16;
+
     /**
      * A message.
      */
@@ -58,7 +60,7 @@ public class POE {
 
         @Override
         public void get(ByteBuffer buffer) {
-            orderId    = getString(buffer, 16);
+            orderId    = getString(buffer, ORDER_ID_LENGTH);
             side       = buffer.get();
             instrument = buffer.getLong();
             quantity   = getUnsignedInt(buffer);
@@ -68,7 +70,7 @@ public class POE {
         @Override
         public void put(ByteBuffer buffer) {
             buffer.put(MESSAGE_TYPE_ENTER_ORDER);
-            putString(buffer, orderId, 16);
+            putString(buffer, orderId, ORDER_ID_LENGTH);
             buffer.put(side);
             buffer.putLong(instrument);
             putUnsignedInt(buffer, quantity);
@@ -85,14 +87,14 @@ public class POE {
 
         @Override
         public void get(ByteBuffer buffer) {
-            orderId  = getString(buffer, 16);
+            orderId  = getString(buffer, ORDER_ID_LENGTH);
             quantity = getUnsignedInt(buffer);
         }
 
         @Override
         public void put(ByteBuffer buffer) {
             buffer.put(MESSAGE_TYPE_CANCEL_ORDER);
-            putString(buffer, orderId, 16);
+            putString(buffer, orderId, ORDER_ID_LENGTH);
             putUnsignedInt(buffer, quantity);
         }
     }
@@ -124,7 +126,7 @@ public class POE {
         @Override
         public void get(ByteBuffer buffer) {
             timestamp   = buffer.getLong();
-            orderId     = getString(buffer, 16);
+            orderId     = getString(buffer, ORDER_ID_LENGTH);
             side        = buffer.get();
             instrument  = buffer.getLong();
             quantity    = getUnsignedInt(buffer);
@@ -136,7 +138,7 @@ public class POE {
         public void put(ByteBuffer buffer) {
             buffer.put(MESSAGE_TYPE_ORDER_ACCEPTED);
             buffer.putLong(timestamp);
-            putString(buffer, orderId, 16);
+            putString(buffer, orderId, ORDER_ID_LENGTH);
             buffer.put(side);
             buffer.putLong(instrument);
             putUnsignedInt(buffer, quantity);
@@ -156,7 +158,7 @@ public class POE {
         @Override
         public void get(ByteBuffer buffer) {
             timestamp = buffer.getLong();
-            orderId   = getString(buffer, 16);
+            orderId   = getString(buffer, ORDER_ID_LENGTH);
             reason    = buffer.get();
         }
 
@@ -164,7 +166,7 @@ public class POE {
         public void put(ByteBuffer buffer) {
             buffer.put(MESSAGE_TYPE_ORDER_REJECTED);
             buffer.putLong(timestamp);
-            putString(buffer, orderId, 16);
+            putString(buffer, orderId, ORDER_ID_LENGTH);
             buffer.put(reason);
         }
     }
@@ -183,7 +185,7 @@ public class POE {
         @Override
         public void get(ByteBuffer buffer) {
             timestamp     = buffer.getLong();
-            orderId       = getString(buffer, 16);
+            orderId       = getString(buffer, ORDER_ID_LENGTH);
             quantity      = getUnsignedInt(buffer);
             price         = getUnsignedInt(buffer);
             liquidityFlag = buffer.get();
@@ -194,7 +196,7 @@ public class POE {
         public void put(ByteBuffer buffer) {
             buffer.put(MESSAGE_TYPE_ORDER_EXECUTED);
             buffer.putLong(timestamp);
-            putString(buffer, orderId, 16);
+            putString(buffer, orderId, ORDER_ID_LENGTH);
             putUnsignedInt(buffer, quantity);
             putUnsignedInt(buffer, price);
             buffer.put(liquidityFlag);
@@ -214,7 +216,7 @@ public class POE {
         @Override
         public void get(ByteBuffer buffer) {
             timestamp        = buffer.getLong();
-            orderId          = getString(buffer, 16);
+            orderId          = getString(buffer, ORDER_ID_LENGTH);
             canceledQuantity = getUnsignedInt(buffer);
             reason           = buffer.get();
         }
@@ -223,7 +225,7 @@ public class POE {
         public void put(ByteBuffer buffer) {
             buffer.put(MESSAGE_TYPE_ORDER_CANCELED);
             buffer.putLong(timestamp);
-            putString(buffer, orderId, 16);
+            putString(buffer, orderId, ORDER_ID_LENGTH);
             putUnsignedInt(buffer, canceledQuantity);
             buffer.put(reason);
         }
@@ -241,7 +243,7 @@ public class POE {
         @Override
         public void get(ByteBuffer buffer) {
             timestamp   = buffer.getLong();
-            orderId     = getString(buffer, 16);
+            orderId     = getString(buffer, ORDER_ID_LENGTH);
             matchNumber = getUnsignedInt(buffer);
             reason      = buffer.get();
         }
@@ -250,7 +252,7 @@ public class POE {
         public void put(ByteBuffer buffer) {
             buffer.put(MESSAGE_TYPE_BROKEN_TRADE);
             buffer.putLong(timestamp);
-            putString(buffer, orderId, 16);
+            putString(buffer, orderId, ORDER_ID_LENGTH);
             putUnsignedInt(buffer, matchNumber);
             buffer.put(reason);
         }
