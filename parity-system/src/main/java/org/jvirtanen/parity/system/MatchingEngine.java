@@ -14,6 +14,11 @@ import org.jvirtanen.parity.net.poe.POE;
 
 class MatchingEngine {
 
+    private enum CancelReason {
+        REQUEST,
+        SYSTEM,
+    }
+
     private Long2ObjectArrayMap<Market>   markets;
     private Long2ObjectOpenHashMap<Order> orders;
 
@@ -26,6 +31,8 @@ class MatchingEngine {
     private Order handling;
 
     private long instrument;
+
+    private CancelReason cancelReason;
 
     public MatchingEngine(List<String> instruments, MarketData marketData, MarketReporting marketReporting) {
         this.markets = new Long2ObjectArrayMap<>();
@@ -67,11 +74,15 @@ class MatchingEngine {
     public void cancelOrder(POE.CancelOrder message, Order order) {
         handling = order;
 
+        cancelReason = CancelReason.REQUEST;
+
         order.getMarket().cancel(order.getOrderNumber(), message.quantity);
     }
 
     public void cancel(Order order) {
-        handling = null;
+        handling = order;
+
+        cancelReason = CancelReason.SYSTEM;
 
         order.getMarket().cancel(order.getOrderNumber(), 0);
 
@@ -134,7 +145,7 @@ class MatchingEngine {
 
         @Override
         public void cancel(long orderNumber, long canceledQuantity, long remainingQuantity) {
-            if (handling != null)
+            if (cancelReason == CancelReason.REQUEST)
                 handling.getSession().orderCanceled(canceledQuantity, POE.ORDER_CANCEL_REASON_REQUEST, handling);
 
             if (remainingQuantity > 0) {
@@ -142,7 +153,7 @@ class MatchingEngine {
             } else {
                 marketData.orderDeleted(orderNumber);
 
-                if (remainingQuantity == 0 && handling != null)
+                if (remainingQuantity == 0 && cancelReason == CancelReason.REQUEST)
                     release(handling);
             }
 
