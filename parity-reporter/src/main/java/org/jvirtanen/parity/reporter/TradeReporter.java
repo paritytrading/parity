@@ -10,8 +10,10 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.NetworkInterface;
 import org.jvirtanen.config.Configs;
+import org.jvirtanen.nassau.MessageListener;
 import org.jvirtanen.parity.net.pmr.PMRParser;
 import org.jvirtanen.parity.util.MoldUDP64;
+import org.jvirtanen.parity.util.SoupBinTCP;
 
 class TradeReporter {
 
@@ -40,16 +42,25 @@ class TradeReporter {
     }
 
     private static void main(Config config, boolean tsv) throws IOException {
-        NetworkInterface multicastInterface = Configs.getNetworkInterface(config, "trade-report.multicast-interface");
-        InetAddress      multicastGroup     = Configs.getInetAddress(config, "trade-report.multicast-group");
-        int              multicastPort      = Configs.getPort(config, "trade-report.multicast-port");
-        InetAddress      requestAddress     = Configs.getInetAddress(config, "trade-report.request-address");
-        int              requestPort        = Configs.getPort(config, "trade-report.request-port");
+        MessageListener listener = new PMRParser(tsv ? new TSVFormat() : new DisplayFormat());
 
-        MarketReportListener listener = tsv ? new TSVFormat() : new DisplayFormat();
+        if (config.hasPath("trade-report.multicast-interface")) {
+            NetworkInterface multicastInterface = Configs.getNetworkInterface(config, "trade-report.multicast-interface");
+            InetAddress      multicastGroup     = Configs.getInetAddress(config, "trade-report.multicast-group");
+            int              multicastPort      = Configs.getPort(config, "trade-report.multicast-port");
+            InetAddress      requestAddress     = Configs.getInetAddress(config, "trade-report.request-address");
+            int              requestPort        = Configs.getPort(config, "trade-report.request-port");
 
-        MoldUDP64.receive(multicastInterface, new InetSocketAddress(multicastGroup, multicastPort),
-                new InetSocketAddress(requestAddress, requestPort), new PMRParser(listener));
+            MoldUDP64.receive(multicastInterface, new InetSocketAddress(multicastGroup, multicastPort),
+                    new InetSocketAddress(requestAddress, requestPort), listener);
+        } else {
+            InetAddress address  = Configs.getInetAddress(config, "trade-report.address");
+            int         port     = Configs.getPort(config, "trade-report.port");
+            String      username = config.getString("trade-report.username");
+            String      password = config.getString("trade-report.password");
+
+            SoupBinTCP.receive(new InetSocketAddress(address, port), username, password, listener);
+        }
     }
 
 }
