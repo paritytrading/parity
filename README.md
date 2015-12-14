@@ -38,9 +38,9 @@ In addition, Parity contains the following libraries:
   - [**Parity Top of Book**](parity-top) implements high-performance order book
     reconstruction on the JVM.
 
-See [Parity Extras][] for additional applications.
+See the [Wiki][] for additional applications.
 
-  [Parity Extras]: https://github.com/jvirtanen/parity-extras
+  [Wiki]: https://github.com/jvirtanen/parity/wiki
 
 
 Build
