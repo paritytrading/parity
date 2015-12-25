@@ -4,7 +4,9 @@ import static org.jvirtanen.parity.util.Applications.*;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.net.NetworkInterface;
 import java.net.StandardProtocolFamily;
+import java.net.StandardSocketOptions;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 import org.jvirtanen.nassau.moldudp64.MoldUDP64DefaultMessageStore;
@@ -44,10 +46,11 @@ class MarketReporting {
         this.buffer = ByteBuffer.allocate(1024);
     }
 
-    public static MarketReporting open(String session, InetSocketAddress multicastGroup,
-            int requestPort) throws IOException {
+    public static MarketReporting open(String session, NetworkInterface multicastInterface,
+            InetSocketAddress multicastGroup, int requestPort) throws IOException {
         DatagramChannel channel = DatagramChannel.open(StandardProtocolFamily.INET);
 
+        channel.setOption(StandardSocketOptions.IP_MULTICAST_IF, multicastInterface);
         channel.connect(multicastGroup);
 
         MoldUDP64Server transport = new MoldUDP64Server(channel, session);
