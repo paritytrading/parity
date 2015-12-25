@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.NetworkInterface;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
@@ -46,13 +47,14 @@ class TradingSystem {
     }
 
     private static MarketData marketData(Config config) throws IOException {
-        String      session        = config.getString("market-data.session");
-        InetAddress multicastGroup = Configs.getInetAddress(config, "market-data.multicast-group");
-        int         multicastPort  = Configs.getPort(config, "market-data.multicast-port");
-        int         requestPort    = Configs.getPort(config, "market-data.request-port");
+        String           session            = config.getString("market-data.session");
+        NetworkInterface multicastInterface = Configs.getNetworkInterface(config, "market-data.multicast-interface");
+        InetAddress      multicastGroup     = Configs.getInetAddress(config, "market-data.multicast-group");
+        int              multicastPort      = Configs.getPort(config, "market-data.multicast-port");
+        int              requestPort        = Configs.getPort(config, "market-data.request-port");
 
-        return MarketData.open(session, new InetSocketAddress(multicastGroup, multicastPort),
-                requestPort);
+        return MarketData.open(session, multicastInterface,
+                new InetSocketAddress(multicastGroup, multicastPort), requestPort);
     }
 
     private static MarketReporting marketReporting(Config config) throws IOException {
