@@ -2,6 +2,21 @@ Release Notes
 =============
 
 
+0.3.0 (2015-12-25)
+------------------
+
+- Improve network protocol performance
+- Upgrade to Nassau 0.6.0
+- Improve MoldUDP64 client interface
+- Fix PMR reference implementation
+- Add cancel message to PMR protocol
+- Add SoupBinTCP client
+- Add SoupBinTCP support to Parity Stock Ticker
+- Add SoupBinTCP support to Parity Trade Reporter
+- Improve market data configuration in Parity Trading System
+- Improve market reporting configuration in Parity Trading System
+
+
 0.2.0 (2015-06-07)
 ------------------
 
