@@ -50,12 +50,7 @@ public class TerminalClient implements Closeable {
 
         OrderEntry orderEntry = OrderEntry.open(address, events);
 
-        SoupBinTCP.LoginRequest loginRequest = new SoupBinTCP.LoginRequest();
-
-        loginRequest.username = username;
-        loginRequest.password = password;
-        loginRequest.requestedSession = "";
-        loginRequest.requestedSequenceNumber = 0;
+        SoupBinTCP.LoginRequest loginRequest = new SoupBinTCP.LoginRequest(username, password, "", 0);
 
         orderEntry.getTransport().login(loginRequest);
 
