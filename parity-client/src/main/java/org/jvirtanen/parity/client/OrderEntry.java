@@ -24,6 +24,8 @@ public class OrderEntry implements Closeable {
 
     private volatile boolean closed;
 
+    private Object rxLock;
+
     private OrderEntry(Selector selector, SocketChannel channel, POEClientListener listener) {
         this.buffer = ByteBuffer.allocate(POE.MAX_INBOUND_MESSAGE_LENGTH);
 
@@ -33,6 +35,8 @@ public class OrderEntry implements Closeable {
                 new POEClientParser(listener), new StatusListener());
 
         this.closed = false;
+
+        this.rxLock = new Object();
 
         new Thread(new Receiver()).start();
     }
@@ -64,7 +68,9 @@ public class OrderEntry implements Closeable {
         message.put(buffer);
         buffer.flip();
 
-        transport.send(buffer);
+        synchronized (rxLock) {
+            transport.send(buffer);
+        }
     }
 
     private class StatusListener implements SoupBinTCPClientStatusListener {
@@ -105,7 +111,9 @@ public class OrderEntry implements Closeable {
                         selector.selectedKeys().clear();
                     }
 
-                    transport.keepAlive();
+                    synchronized (rxLock) {
+                        transport.keepAlive();
+                    }
                 }
             } catch (IOException e) {
             }
