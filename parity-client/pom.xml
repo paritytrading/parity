@@ -23,11 +23,7 @@
       <groupId>${project.groupId}</groupId>
       <artifactId>parity-util</artifactId>
       <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.goldmansachs</groupId>
-      <artifactId>gs-collections</artifactId>
-    </dependency>
+    </dependency> 
     <dependency>
       <groupId>com.typesafe</groupId>
       <artifactId>config</artifactId>
@@ -53,6 +49,16 @@
       <groupId>org.jvirtanen.nassau</groupId>
       <artifactId>nassau</artifactId>
     </dependency>
+    <dependency>
+    	<groupId>org.eclipse.collections</groupId>
+    	<artifactId>eclipse-collections-api</artifactId>
+    	<version>7.0.0</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.eclipse.collections</groupId>
+    	<artifactId>eclipse-collections</artifactId>
+    	<version>7.0.0</version>
+    </dependency>        
   </dependencies>
 
   <build>

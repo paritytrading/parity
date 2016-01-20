@@ -1,8 +1,8 @@
 package org.jvirtanen.parity.client.event;
 
-import com.gs.collections.api.list.ImmutableList;
-import com.gs.collections.api.list.MutableList;
-import com.gs.collections.impl.factory.Lists;
+import org.eclipse.collections.api.list.ImmutableList;
+import org.eclipse.collections.api.list.MutableList;
+import org.eclipse.collections.impl.factory.Lists;
 
 public class Errors extends DefaultEventVisitor {
 
