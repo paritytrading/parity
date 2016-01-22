@@ -1,7 +1,7 @@
 package org.jvirtanen.parity.client.event;
 
-import com.gs.collections.api.list.ImmutableList;
-import com.gs.collections.impl.factory.Lists;
+import org.eclipse.collections.api.list.ImmutableList;
+import org.eclipse.collections.impl.factory.Lists;
 import org.jvirtanen.parity.net.poe.POE;
 import org.jvirtanen.parity.net.poe.POEClientListener;
 

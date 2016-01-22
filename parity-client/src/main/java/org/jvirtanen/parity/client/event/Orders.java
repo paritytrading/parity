@@ -1,8 +1,8 @@
 package org.jvirtanen.parity.client.event;
 
-import com.gs.collections.api.list.ImmutableList;
-import com.gs.collections.api.map.MutableMap;
-import com.gs.collections.impl.factory.Maps;
+import org.eclipse.collections.api.list.ImmutableList;
+import org.eclipse.collections.api.map.MutableMap;
+import org.eclipse.collections.impl.factory.Maps;
 
 public class Orders extends DefaultEventVisitor {
 
