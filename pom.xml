@@ -55,14 +55,14 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-    	<groupId>org.eclipse.collections</groupId>
-    	<artifactId>eclipse-collections-api</artifactId>
-    	<version>${eclipse.collections.version}</version>
+        <groupId>org.eclipse.collections</groupId>
+        <artifactId>eclipse-collections-api</artifactId>
+        <version>${eclipse.collections.version}</version>
       </dependency>
       <dependency>
-    	<groupId>org.eclipse.collections</groupId>
-    	<artifactId>eclipse-collections</artifactId>
-    	<version>${eclipse.collections.version}</version>
+        <groupId>org.eclipse.collections</groupId>
+        <artifactId>eclipse-collections</artifactId>
+        <version>${eclipse.collections.version}</version>
       </dependency>
       <dependency>
         <groupId>com.typesafe</groupId>
