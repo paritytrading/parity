@@ -50,6 +50,10 @@
       <artifactId>nassau</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.jvirtanen.util</groupId>
+      <artifactId>util-extras</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.eclipse.collections</groupId>
       <artifactId>eclipse-collections-api</artifactId>
     </dependency>
