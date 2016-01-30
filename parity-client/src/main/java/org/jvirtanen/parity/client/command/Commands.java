@@ -2,7 +2,6 @@ package org.jvirtanen.parity.client.command;
 
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.impl.factory.Lists;
-
 import org.jvirtanen.parity.net.poe.POE;
 
 public class Commands {
