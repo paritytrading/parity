@@ -1,7 +1,7 @@
 package org.jvirtanen.parity.ticker;
 
 import static org.jvirtanen.lang.Strings.*;
-import static org.jvirtanen.parity.util.Applications.*;
+import static org.jvirtanen.util.Applications.*;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigException;

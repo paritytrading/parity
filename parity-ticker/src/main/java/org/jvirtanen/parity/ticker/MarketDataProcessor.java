@@ -1,6 +1,6 @@
 package org.jvirtanen.parity.ticker;
 
-import static org.jvirtanen.parity.util.Applications.*;
+import static org.jvirtanen.util.Applications.*;
 
 import org.jvirtanen.parity.net.pmd.PMD;
 import org.jvirtanen.parity.net.pmd.PMDListener;
