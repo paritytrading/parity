@@ -1,6 +1,6 @@
 package org.jvirtanen.parity.system;
 
-import static org.jvirtanen.parity.util.Applications.*;
+import static org.jvirtanen.util.Applications.*;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

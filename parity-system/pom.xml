@@ -25,11 +25,6 @@
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>parity-util</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
       <groupId>com.typesafe</groupId>
       <artifactId>config</artifactId>
     </dependency>
@@ -48,6 +43,10 @@
     <dependency>
       <groupId>org.jvirtanen.nassau</groupId>
       <artifactId>nassau</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jvirtanen.util</groupId>
+      <artifactId>util-extras</artifactId>
     </dependency>
   </dependencies>
 
