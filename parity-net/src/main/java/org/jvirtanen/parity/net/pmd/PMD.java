@@ -139,7 +139,7 @@ public class PMD {
         @Override
         public void get(ByteBuffer buffer) {
             timestamp        = getUnsignedInt(buffer);
-            orderNumber      = buffer.get();
+            orderNumber      = buffer.getLong();
             canceledQuantity = getUnsignedInt(buffer);
         }
 
