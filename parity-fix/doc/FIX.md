@@ -220,7 +220,7 @@ OrdRejReason(103) | Description
 ### Order Executed
 
 An order execution is indicated with an Execution Report message with
-ExecType(150) of 1 (Partial fill) or 2 (Fill).
+ExecType(150) of F (Trade).
 
 Tag               | Req'd | Description
 ------------------|-------|-----------------------------------
@@ -228,7 +228,7 @@ _Message Header_  |   Y   | MsgType(35) = 8 (Execution Report)
 OrderID(37)       |   Y   |
 ClOrdID(11)       |   Y   |
 ExecID(17)        |   Y   |
-ExecType(150)     |   Y   | See below
+ExecType(150)     |   Y   | F (Trade)
 OrdStatus(39)     |   Y   |
 Account(1)        |   N   |
 Symbol(55)        |   Y   |
@@ -238,13 +238,6 @@ LeavesQty(151)    |   Y   |
 CumQty(14)        |   Y   |
 AvgPx(6)          |   Y   |
 _Message Trailer_ |   Y   |
-
-The execution types for order execution are enumerated below.
-
-ExecType(150) | Description
---------------|-------------
-1             | Partial fill
-2             | Fill
 
 
 ### Order Canceled
