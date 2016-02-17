@@ -112,7 +112,7 @@ Symbol(55)        |   Y   |
 Side(54)          |   Y   | See below
 TransactTime(60)  |   Y   |
 OrderQty(38)      |   Y   |
-OrdType(40)       |   Y   | 1 (Limit order)
+OrdType(40)       |   Y   | 2 (Limit)
 Price(44)         |   Y   |
 _Message Trailer_ |   Y   |
 
