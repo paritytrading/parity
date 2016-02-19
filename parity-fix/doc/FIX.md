@@ -235,6 +235,7 @@ Symbol(55)        |   Y   |
 Side(54)          |   Y   |
 OrderQty(38)      |   Y   |
 LastQty(32)       |   Y   |
+LastPx(31)        |   Y   |
 LeavesQty(151)    |   Y   |
 CumQty(14)        |   Y   |
 AvgPx(6)          |   Y   |
