@@ -242,6 +242,38 @@ AvgPx(6)          |   Y   |
 _Message Trailer_ |   Y   |
 
 
+### Order Cancel Acknowledgement
+
+An order cancellation is immediately acknowledged with an Execution Report
+message with ExecType(150) of 6 (Pending cancel) or E (Pending replace).
+
+Tag               | Req'd | Description
+------------------|-------|-----------------------------------
+_Message Header_  |   Y   | MsgType(35) = 8 (Execution Report)
+OrderID(37)       |   Y   |
+ClOrdID(11)       |   Y   |
+OrigClOrdID(41)   |   Y   |
+ExecID(17)        |   Y   |
+ExecType(150)     |   Y   | See below
+OrdStatus(39)     |   Y   |
+Account(1)        |   N   |
+Symbol(55)        |   Y   |
+Side(54)          |   Y   |
+OrderQty(38)      |   Y   |
+LeavesQty(151)    |   Y   |
+CumQty(14)        |   Y   |
+AvgPx(6)          |   Y   |
+_Message Trailer_ |   Y   |
+
+The execution types for order cancellation acknowledgement are enumerated
+below.
+
+ExecType(150) | Description
+--------------|----------------
+6             | Pending cancel
+E             | Pending replace
+
+
 ### Order Canceled
 
 An order cancellation is indicated with an Execution Report message with
