@@ -211,7 +211,8 @@ _Message Trailer_ |   Y   |
 The reasons for order rejection are enumerated below.
 
 OrdRejReason(103) | Description
-------------------|------------
+------------------|-----------------------
+0                 | Broker/exchange option
 1                 | Unknown symbol
 6                 | Duplicate order
 13                | Incorrect quantity
