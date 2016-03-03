@@ -20,10 +20,9 @@ These definitions apply to both inbound and outbound messages.
 
 ### Fields
 
-Account(1) is optional. If it is present in a New Order Single message, it
-will be present in subsequent Execution Report messages. If it is present in
-an Order Cancel Request or Order Cancel/Replace Request message, it will be
-present in the possible Order Cancel Reject message.
+Account(1) is optional. If it is present in a New Order Single message,
+it will be present in subsequent Execution Report and Order Cancel Reject
+messages.
 
 ClOrdID(11) has a maximum length of 16 characters.
 
