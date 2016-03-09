@@ -161,10 +161,12 @@ public class Market {
         if (size >= remainingQuantity)
             return;
 
-        if (size > 0)
+        if (size > 0) {
             order.resize(size);
-        else
+        } else {
+            orders.remove(orderId);
             order.delete();
+        }
 
         listener.cancel(orderId, remainingQuantity - size, size);
     }

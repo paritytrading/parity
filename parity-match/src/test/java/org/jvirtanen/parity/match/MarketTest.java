@@ -273,4 +273,16 @@ public class MarketTest {
         assertEquals(asList(bid, match), events.collect());
     }
 
+    @Test
+    public void unknownOrder() {
+        market.enter(1, Side.BUY, 1000, 100);
+        market.cancel(1, 0);
+        market.cancel(1, 0);
+
+        Event bid    = new Add(1, Side.BUY, 1000, 100);
+        Event cancel = new Cancel(1, 100, 0);
+
+        assertEquals(asList(bid, cancel), events.collect());
+    }
+
 }
