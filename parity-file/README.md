@@ -29,4 +29,4 @@ Add a Maven dependency to Parity File Formats:
 License
 -------
 
-Parity File Formats are released under the Apache License, Version 2.0.
+Parity File Formats is released under the Apache License, Version 2.0.
