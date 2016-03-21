@@ -40,4 +40,4 @@ Add a Maven dependency to Parity Network Protocols:
 License
 -------
 
-Parity Network Protocols are released under the Apache License, Version 2.0.
+Parity Network Protocols is released under the Apache License, Version 2.0.
