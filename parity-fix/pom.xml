@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.jvirtanen.parity</groupId>
+    <artifactId>parity-parent</artifactId>
+    <version>0.3.1-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>parity-fix</artifactId>
+
+  <name>Parity FIX Gateway</name>
+
+  <dependencies>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>parity-net</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>parity-util</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jvirtanen.config</groupId>
+      <artifactId>config-extras</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jvirtanen.lang</groupId>
+      <artifactId>lang-extras</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jvirtanen.nassau</groupId>
+      <artifactId>nassau</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jvirtanen.philadelphia</groupId>
+      <artifactId>philadelphia</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jvirtanen.util</groupId>
+      <artifactId>util-extras</artifactId>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <configuration>
+          <transformers>
+            <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+              <mainClass>org.jvirtanen.parity.fix.FIXGateway</mainClass>
+            </transformer>
+          </transformers>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

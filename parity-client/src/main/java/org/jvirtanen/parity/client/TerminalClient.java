@@ -20,7 +20,7 @@ import org.jvirtanen.parity.client.command.Command;
 import org.jvirtanen.parity.client.command.CommandException;
 import org.jvirtanen.parity.client.command.Commands;
 import org.jvirtanen.parity.client.event.Events;
-import org.jvirtanen.parity.client.util.OrderIDGenerator;
+import org.jvirtanen.parity.util.OrderIDGenerator;
 
 public class TerminalClient implements Closeable {
 

@@ -42,6 +42,7 @@
   <modules>
     <module>parity-client</module>
     <module>parity-file</module>
+    <module>parity-fix</module>
     <module>parity-match</module>
     <module>parity-match-perf-test</module>
     <module>parity-net</module>
@@ -102,6 +103,11 @@
       <dependency>
         <groupId>org.jvirtanen.nio</groupId>
         <artifactId>nio-extras</artifactId>
+        <version>0.2.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jvirtanen.philadelphia</groupId>
+        <artifactId>philadelphia</artifactId>
         <version>0.2.0</version>
       </dependency>
       <dependency>
@@ -185,7 +191,7 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
-          <excludePackageNames>org.jvirtanen.parity.client:org.jvirtanen.parity.reporter:org.jvirtanen.parity.system:org.jvirtanen.parity.ticker:*.perf</excludePackageNames>
+          <excludePackageNames>org.jvirtanen.parity.client:org.jvirtanen.parity.fix:org.jvirtanen.parity.reporter:org.jvirtanen.parity.system:org.jvirtanen.parity.ticker:*.perf</excludePackageNames>
           <links>
             <link>http://api.paritytrading.com/nassau/latest/</link>
             <link>http://typesafehub.github.io/config/latest/api/</link>

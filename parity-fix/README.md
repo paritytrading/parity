@@ -8,9 +8,30 @@ Parity Trading System.
 Features
 --------
 
-Parity FIX Gateway specifies the following protocols:
+Parity FIX Gateway specifies and implements the following protocols:
 
   - [**FIX**](doc/FIX.md): an alternative order entry protocol
+
+Parity FIX Gateway uses [Philadelphia][] for FIX protocol support.
+
+  [Philadelphia]: https://github.com/jvirtanen/philadelphia
+
+
+Usage
+-----
+
+Run Parity FIX Gateway with Java:
+
+    java -jar <executable> <configuration-file>
+
+After starting, the gateway starts listening for FIX sessions initiated by
+clients.
+
+
+Build
+-----
+
+See the [Developer Guide](../HACKING.md).
 
 
 License
