@@ -56,16 +56,6 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>org.eclipse.collections</groupId>
-        <artifactId>eclipse-collections-api</artifactId>
-        <version>${eclipse.collections.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.eclipse.collections</groupId>
-        <artifactId>eclipse-collections</artifactId>
-        <version>${eclipse.collections.version}</version>
-      </dependency>
-      <dependency>
         <groupId>com.typesafe</groupId>
         <artifactId>config</artifactId>
         <version>1.2.0</version>
@@ -84,6 +74,16 @@
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
         <version>4.11</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.collections</groupId>
+        <artifactId>eclipse-collections-api</artifactId>
+        <version>${eclipse.collections.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.collections</groupId>
+        <artifactId>eclipse-collections</artifactId>
+        <version>${eclipse.collections.version}</version>
       </dependency>
       <dependency>
         <groupId>org.jvirtanen.config</groupId>
