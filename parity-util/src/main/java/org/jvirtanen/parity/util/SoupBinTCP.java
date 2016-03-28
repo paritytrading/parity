@@ -40,21 +40,21 @@ public class SoupBinTCP {
         SoupBinTCPClientStatusListener statusListener = new SoupBinTCPClientStatusListener() {
 
             @Override
-            public void heartbeatTimeout() throws IOException {
+            public void heartbeatTimeout(SoupBinTCPClient session) throws IOException {
                 throw new IOException("Heartbeat timeout");
             }
 
             @Override
-            public void loginAccepted(LoginAccepted payload) {
+            public void loginAccepted(SoupBinTCPClient session, LoginAccepted payload) {
             }
 
             @Override
-            public void loginRejected(LoginRejected payload) throws IOException {
+            public void loginRejected(SoupBinTCPClient session, LoginRejected payload) throws IOException {
                 throw new IOException("Login rejected");
             }
 
             @Override
-            public void endOfSession() {
+            public void endOfSession(SoupBinTCPClient session) {
             }
 
         };

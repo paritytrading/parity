@@ -644,17 +644,17 @@ class Session implements Closeable {
         }
 
         @Override
-        public void heartbeatTimeout() throws IOException {
+        public void heartbeatTimeout(SoupBinTCPClient session) throws IOException {
             fix.sendLogout("Trading system not available");
         }
 
         @Override
-        public void loginAccepted(SoupBinTCP.LoginAccepted payload) throws IOException {
+        public void loginAccepted(SoupBinTCPClient session, SoupBinTCP.LoginAccepted payload) throws IOException {
             fix.sendLogon(false);
         }
 
         @Override
-        public void loginRejected(SoupBinTCP.LoginRejected payload) throws IOException {
+        public void loginRejected(SoupBinTCPClient session, SoupBinTCP.LoginRejected payload) throws IOException {
             switch (payload.rejectReasonCode) {
             case SoupBinTCP.LOGIN_REJECT_CODE_NOT_AUTHORIZED:
                 fix.sendLogout("Not authorized");
@@ -666,7 +666,7 @@ class Session implements Closeable {
         }
 
         @Override
-        public void endOfSession() throws IOException {
+        public void endOfSession(SoupBinTCPClient session) throws IOException {
             fix.sendLogout();
         }
 

@@ -76,21 +76,21 @@ public class OrderEntry implements Closeable {
     private class StatusListener implements SoupBinTCPClientStatusListener {
 
         @Override
-        public void heartbeatTimeout() {
+        public void heartbeatTimeout(SoupBinTCPClient session) {
             close();
         }
 
         @Override
-        public void loginAccepted(SoupBinTCP.LoginAccepted payload) {
+        public void loginAccepted(SoupBinTCPClient session, SoupBinTCP.LoginAccepted payload) {
         }
 
         @Override
-        public void loginRejected(SoupBinTCP.LoginRejected payload) {
+        public void loginRejected(SoupBinTCPClient session, SoupBinTCP.LoginRejected payload) {
             close();
         }
 
         @Override
-        public void endOfSession() {
+        public void endOfSession(SoupBinTCPClient session) {
         }
 
     }

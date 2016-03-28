@@ -74,12 +74,12 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
     }
 
     @Override
-    public void heartbeatTimeout() {
+    public void heartbeatTimeout(SoupBinTCPServer session) {
         terminated = true;
     }
 
     @Override
-    public void loginRequest(SoupBinTCP.LoginRequest payload) {
+    public void loginRequest(SoupBinTCPServer session, SoupBinTCP.LoginRequest payload) {
         if (username != 0) {
             close();
             return;
@@ -98,7 +98,7 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
     }
 
     @Override
-    public void logoutRequest() {
+    public void logoutRequest(SoupBinTCPServer session) {
         terminated = true;
     }
 
