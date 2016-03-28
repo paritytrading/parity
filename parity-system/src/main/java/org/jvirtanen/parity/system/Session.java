@@ -2,15 +2,15 @@ package org.jvirtanen.parity.system;
 
 import static org.jvirtanen.lang.Strings.*;
 
+import com.paritytrading.nassau.soupbintcp.SoupBinTCP;
+import com.paritytrading.nassau.soupbintcp.SoupBinTCPServer;
+import com.paritytrading.nassau.soupbintcp.SoupBinTCPServerStatusListener;
 import java.io.Closeable;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.HashMap;
 import java.util.HashSet;
-import org.jvirtanen.nassau.soupbintcp.SoupBinTCP;
-import org.jvirtanen.nassau.soupbintcp.SoupBinTCPServer;
-import org.jvirtanen.nassau.soupbintcp.SoupBinTCPServerStatusListener;
 import org.jvirtanen.parity.net.poe.POE;
 import org.jvirtanen.parity.net.poe.POEServerListener;
 import org.jvirtanen.parity.net.poe.POEServerParser;

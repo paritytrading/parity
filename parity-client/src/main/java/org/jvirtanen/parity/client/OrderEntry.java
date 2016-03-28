@@ -1,5 +1,8 @@
 package org.jvirtanen.parity.client;
 
+import com.paritytrading.nassau.soupbintcp.SoupBinTCP;
+import com.paritytrading.nassau.soupbintcp.SoupBinTCPClient;
+import com.paritytrading.nassau.soupbintcp.SoupBinTCPClientStatusListener;
 import java.io.Closeable;
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -7,9 +10,6 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
-import org.jvirtanen.nassau.soupbintcp.SoupBinTCP;
-import org.jvirtanen.nassau.soupbintcp.SoupBinTCPClient;
-import org.jvirtanen.nassau.soupbintcp.SoupBinTCPClientStatusListener;
 import org.jvirtanen.parity.net.poe.POE;
 import org.jvirtanen.parity.net.poe.POEClientListener;
 import org.jvirtanen.parity.net.poe.POEClientParser;

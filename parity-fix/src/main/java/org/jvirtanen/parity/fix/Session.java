@@ -5,15 +5,15 @@ import static org.jvirtanen.philadelphia.fix44.FIX44Enumerations.*;
 import static org.jvirtanen.philadelphia.fix44.FIX44MsgTypes.*;
 import static org.jvirtanen.philadelphia.fix44.FIX44Tags.*;
 
+import com.paritytrading.nassau.soupbintcp.SoupBinTCP;
+import com.paritytrading.nassau.soupbintcp.SoupBinTCPClient;
+import com.paritytrading.nassau.soupbintcp.SoupBinTCPClientStatusListener;
 import java.io.Closeable;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
 import java.util.List;
-import org.jvirtanen.nassau.soupbintcp.SoupBinTCP;
-import org.jvirtanen.nassau.soupbintcp.SoupBinTCPClient;
-import org.jvirtanen.nassau.soupbintcp.SoupBinTCPClientStatusListener;
 import org.jvirtanen.parity.net.poe.POE;
 import org.jvirtanen.parity.net.poe.POEClientListener;
 import org.jvirtanen.parity.util.OrderIDGenerator;

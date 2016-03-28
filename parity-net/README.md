@@ -22,7 +22,7 @@ Parity Network Protocols specifies and implements the following protocols:
 Parity Network Protocols uses [Nassau][] for NASDAQ transport protocol
 support.
 
-  [Nassau]: https://github.com/jvirtanen/nassau
+  [Nassau]: https://github.com/paritytrading/nassau
 
 
 Download

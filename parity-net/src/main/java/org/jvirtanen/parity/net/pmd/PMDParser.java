@@ -2,9 +2,9 @@ package org.jvirtanen.parity.net.pmd;
 
 import static org.jvirtanen.parity.net.pmd.PMD.*;
 
+import com.paritytrading.nassau.MessageListener;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import org.jvirtanen.nassau.MessageListener;
 
 /**
  * A parser for inbound messages.

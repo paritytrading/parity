@@ -56,6 +56,11 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
+        <groupId>com.paritytrading.nassau</groupId>
+        <artifactId>nassau</artifactId>
+        <version>0.9.0</version>
+      </dependency>
+      <dependency>
         <groupId>com.typesafe</groupId>
         <artifactId>config</artifactId>
         <version>1.2.0</version>
@@ -94,11 +99,6 @@
         <groupId>org.jvirtanen.lang</groupId>
         <artifactId>lang-extras</artifactId>
         <version>0.1.0</version>
-      </dependency>
-      <dependency>
-        <groupId>org.jvirtanen.nassau</groupId>
-        <artifactId>nassau</artifactId>
-        <version>0.8.0</version>
       </dependency>
       <dependency>
         <groupId>org.jvirtanen.nio</groupId>

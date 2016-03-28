@@ -3,6 +3,7 @@ package org.jvirtanen.parity.ticker;
 import static org.jvirtanen.lang.Strings.*;
 import static org.jvirtanen.util.Applications.*;
 
+import com.paritytrading.nassau.MessageListener;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigException;
 import java.io.FileNotFoundException;
@@ -12,7 +13,6 @@ import java.net.InetSocketAddress;
 import java.net.NetworkInterface;
 import java.util.List;
 import org.jvirtanen.config.Configs;
-import org.jvirtanen.nassau.MessageListener;
 import org.jvirtanen.parity.net.pmd.PMDParser;
 import org.jvirtanen.parity.top.Market;
 import org.jvirtanen.parity.util.MoldUDP64;

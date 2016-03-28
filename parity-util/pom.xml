@@ -15,6 +15,10 @@
 
   <dependencies>
     <dependency>
+      <groupId>com.paritytrading.nassau</groupId>
+      <artifactId>nassau</artifactId>
+    </dependency>
+    <dependency>
       <groupId>com.typesafe</groupId>
       <artifactId>config</artifactId>
     </dependency>
@@ -22,10 +26,6 @@
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jvirtanen.nassau</groupId>
-      <artifactId>nassau</artifactId>
     </dependency>
   </dependencies>
 

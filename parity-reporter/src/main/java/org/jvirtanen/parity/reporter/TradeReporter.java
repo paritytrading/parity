@@ -2,6 +2,7 @@ package org.jvirtanen.parity.reporter;
 
 import static org.jvirtanen.util.Applications.*;
 
+import com.paritytrading.nassau.MessageListener;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigException;
 import java.io.FileNotFoundException;
@@ -10,7 +11,6 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.NetworkInterface;
 import org.jvirtanen.config.Configs;
-import org.jvirtanen.nassau.MessageListener;
 import org.jvirtanen.parity.net.pmr.PMRParser;
 import org.jvirtanen.parity.util.MoldUDP64;
 import org.jvirtanen.parity.util.SoupBinTCP;

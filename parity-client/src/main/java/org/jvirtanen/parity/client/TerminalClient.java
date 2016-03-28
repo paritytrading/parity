@@ -2,6 +2,7 @@ package org.jvirtanen.parity.client;
 
 import static org.jvirtanen.util.Applications.*;
 
+import com.paritytrading.nassau.soupbintcp.SoupBinTCP;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigException;
 import java.io.Closeable;
@@ -15,7 +16,6 @@ import java.util.Scanner;
 import jline.console.ConsoleReader;
 import jline.console.completer.StringsCompleter;
 import org.jvirtanen.config.Configs;
-import org.jvirtanen.nassau.soupbintcp.SoupBinTCP;
 import org.jvirtanen.parity.client.command.Command;
 import org.jvirtanen.parity.client.command.CommandException;
 import org.jvirtanen.parity.client.command.Commands;

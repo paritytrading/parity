@@ -2,6 +2,10 @@ package org.jvirtanen.parity.system;
 
 import static org.jvirtanen.util.Applications.*;
 
+import com.paritytrading.nassau.moldudp64.MoldUDP64DefaultMessageStore;
+import com.paritytrading.nassau.moldudp64.MoldUDP64DownstreamPacket;
+import com.paritytrading.nassau.moldudp64.MoldUDP64RequestServer;
+import com.paritytrading.nassau.moldudp64.MoldUDP64Server;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.NetworkInterface;
@@ -9,10 +13,6 @@ import java.net.StandardProtocolFamily;
 import java.net.StandardSocketOptions;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
-import org.jvirtanen.nassau.moldudp64.MoldUDP64DefaultMessageStore;
-import org.jvirtanen.nassau.moldudp64.MoldUDP64DownstreamPacket;
-import org.jvirtanen.nassau.moldudp64.MoldUDP64RequestServer;
-import org.jvirtanen.nassau.moldudp64.MoldUDP64Server;
 import org.jvirtanen.parity.net.pmr.PMR;
 
 class MarketReporting {

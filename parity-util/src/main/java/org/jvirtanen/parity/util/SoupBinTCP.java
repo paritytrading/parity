@@ -1,15 +1,15 @@
 package org.jvirtanen.parity.util;
 
-import static org.jvirtanen.nassau.soupbintcp.SoupBinTCP.*;
+import static com.paritytrading.nassau.soupbintcp.SoupBinTCP.*;
 
+import com.paritytrading.nassau.MessageListener;
+import com.paritytrading.nassau.soupbintcp.SoupBinTCPClient;
+import com.paritytrading.nassau.soupbintcp.SoupBinTCPClientStatusListener;
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.nio.channels.Selector;
 import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
-import org.jvirtanen.nassau.MessageListener;
-import org.jvirtanen.nassau.soupbintcp.SoupBinTCPClient;
-import org.jvirtanen.nassau.soupbintcp.SoupBinTCPClientStatusListener;
 
 /**
  * This class contains utility methods for SoupBinTCP.

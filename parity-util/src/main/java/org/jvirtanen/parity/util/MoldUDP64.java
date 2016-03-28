@@ -1,5 +1,9 @@
 package org.jvirtanen.parity.util;
 
+import com.paritytrading.nassau.MessageListener;
+import com.paritytrading.nassau.moldudp64.MoldUDP64Client;
+import com.paritytrading.nassau.moldudp64.MoldUDP64ClientState;
+import com.paritytrading.nassau.moldudp64.MoldUDP64ClientStatusListener;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.NetworkInterface;
@@ -8,10 +12,6 @@ import java.net.StandardSocketOptions;
 import java.nio.channels.DatagramChannel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
-import org.jvirtanen.nassau.MessageListener;
-import org.jvirtanen.nassau.moldudp64.MoldUDP64Client;
-import org.jvirtanen.nassau.moldudp64.MoldUDP64ClientState;
-import org.jvirtanen.nassau.moldudp64.MoldUDP64ClientStatusListener;
 
 /**
  * This class contains utility methods for MoldUDP64.
