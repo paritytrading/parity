@@ -2,12 +2,12 @@ package org.jvirtanen.parity.fix;
 
 import java.io.IOException;
 
+import com.paritytrading.philadelphia.FIXConfig;
+import com.paritytrading.philadelphia.FIXVersion;
 import java.net.InetSocketAddress;
 import java.net.StandardSocketOptions;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
-import org.jvirtanen.philadelphia.FIXConfig;
-import org.jvirtanen.philadelphia.FIXVersion;
 
 class FIXAcceptor {
 

@@ -61,6 +61,11 @@
         <version>0.9.0</version>
       </dependency>
       <dependency>
+        <groupId>com.paritytrading.philadelphia</groupId>
+        <artifactId>philadelphia</artifactId>
+        <version>0.3.0</version>
+      </dependency>
+      <dependency>
         <groupId>com.typesafe</groupId>
         <artifactId>config</artifactId>
         <version>1.2.0</version>
@@ -103,11 +108,6 @@
       <dependency>
         <groupId>org.jvirtanen.nio</groupId>
         <artifactId>nio-extras</artifactId>
-        <version>0.2.0</version>
-      </dependency>
-      <dependency>
-        <groupId>org.jvirtanen.philadelphia</groupId>
-        <artifactId>philadelphia</artifactId>
         <version>0.2.0</version>
       </dependency>
       <dependency>

@@ -1,6 +1,6 @@
 package org.jvirtanen.parity.fix;
 
-import static org.jvirtanen.philadelphia.fix44.FIX44Enumerations.*;
+import static com.paritytrading.philadelphia.fix44.FIX44Enumerations.*;
 
 import org.jvirtanen.parity.net.poe.POE;
 

@@ -1,13 +1,21 @@
 package org.jvirtanen.parity.fix;
 
+import static com.paritytrading.philadelphia.fix44.FIX44Enumerations.*;
+import static com.paritytrading.philadelphia.fix44.FIX44MsgTypes.*;
+import static com.paritytrading.philadelphia.fix44.FIX44Tags.*;
 import static org.jvirtanen.lang.Strings.*;
-import static org.jvirtanen.philadelphia.fix44.FIX44Enumerations.*;
-import static org.jvirtanen.philadelphia.fix44.FIX44MsgTypes.*;
-import static org.jvirtanen.philadelphia.fix44.FIX44Tags.*;
 
 import com.paritytrading.nassau.soupbintcp.SoupBinTCP;
 import com.paritytrading.nassau.soupbintcp.SoupBinTCPClient;
 import com.paritytrading.nassau.soupbintcp.SoupBinTCPClientStatusListener;
+import com.paritytrading.philadelphia.FIXConfig;
+import com.paritytrading.philadelphia.FIXField;
+import com.paritytrading.philadelphia.FIXMessage;
+import com.paritytrading.philadelphia.FIXMessageListener;
+import com.paritytrading.philadelphia.FIXSession;
+import com.paritytrading.philadelphia.FIXStatusListener;
+import com.paritytrading.philadelphia.FIXValue;
+import com.paritytrading.philadelphia.FIXValueFormatException;
 import java.io.Closeable;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -17,14 +25,6 @@ import java.util.List;
 import org.jvirtanen.parity.net.poe.POE;
 import org.jvirtanen.parity.net.poe.POEClientListener;
 import org.jvirtanen.parity.util.OrderIDGenerator;
-import org.jvirtanen.philadelphia.FIXConfig;
-import org.jvirtanen.philadelphia.FIXField;
-import org.jvirtanen.philadelphia.FIXMessage;
-import org.jvirtanen.philadelphia.FIXMessageListener;
-import org.jvirtanen.philadelphia.FIXSession;
-import org.jvirtanen.philadelphia.FIXStatusListener;
-import org.jvirtanen.philadelphia.FIXValue;
-import org.jvirtanen.philadelphia.FIXValueFormatException;
 
 class Session implements Closeable {
 
