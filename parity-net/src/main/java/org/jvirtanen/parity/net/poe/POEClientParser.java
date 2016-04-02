@@ -40,53 +40,28 @@ public class POEClientParser implements MessageListener {
 
         switch (messageType) {
         case MESSAGE_TYPE_ORDER_ACCEPTED:
-            orderAccepted(buffer);
+            orderAccepted.get(buffer);
+            listener.orderAccepted(orderAccepted);
             break;
         case MESSAGE_TYPE_ORDER_REJECTED:
-            orderRejected(buffer);
+            orderRejected.get(buffer);
+            listener.orderRejected(orderRejected);
             break;
         case MESSAGE_TYPE_ORDER_EXECUTED:
-            orderExecuted(buffer);
+            orderExecuted.get(buffer);
+            listener.orderExecuted(orderExecuted);
             break;
         case MESSAGE_TYPE_ORDER_CANCELED:
-            orderCanceled(buffer);
+            orderCanceled.get(buffer);
+            listener.orderCanceled(orderCanceled);
             break;
         case MESSAGE_TYPE_BROKEN_TRADE:
-            brokenTrade(buffer);
+            brokenTrade.get(buffer);
+            listener.brokenTrade(brokenTrade);
             break;
         default:
             throw new POEException("Unknown message type: " + (char)messageType);
         }
-    }
-
-    private void orderAccepted(ByteBuffer buffer) throws IOException {
-        orderAccepted.get(buffer);
-
-        listener.orderAccepted(orderAccepted);
-    }
-
-    private void orderRejected(ByteBuffer buffer) throws IOException {
-        orderRejected.get(buffer);
-
-        listener.orderRejected(orderRejected);
-    }
-
-    private void orderExecuted(ByteBuffer buffer) throws IOException {
-        orderExecuted.get(buffer);
-
-        listener.orderExecuted(orderExecuted);
-    }
-
-    private void orderCanceled(ByteBuffer buffer) throws IOException {
-        orderCanceled.get(buffer);
-
-        listener.orderCanceled(orderCanceled);
-    }
-
-    private void brokenTrade(ByteBuffer buffer) throws IOException {
-        brokenTrade.get(buffer);
-
-        listener.brokenTrade(brokenTrade);
     }
 
 }
