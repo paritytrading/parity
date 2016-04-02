@@ -34,26 +34,16 @@ public class POEServerParser implements MessageListener {
 
         switch (messageType) {
         case MESSAGE_TYPE_ENTER_ORDER:
-            enterOrder(buffer);
+            enterOrder.get(buffer);
+            listener.enterOrder(enterOrder);
             break;
         case MESSAGE_TYPE_CANCEL_ORDER:
-            cancelOrder(buffer);
+            cancelOrder.get(buffer);
+            listener.cancelOrder(cancelOrder);
             break;
         default:
             throw new POEException("Unknown message type: " + (char)messageType);
         }
-    }
-
-    private void enterOrder(ByteBuffer buffer) throws IOException {
-        enterOrder.get(buffer);
-
-        listener.enterOrder(enterOrder);
-    }
-
-    private void cancelOrder(ByteBuffer buffer) throws IOException {
-        cancelOrder.get(buffer);
-
-        listener.cancelOrder(cancelOrder);
     }
 
 }
