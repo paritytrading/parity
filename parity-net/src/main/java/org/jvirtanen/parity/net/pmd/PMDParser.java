@@ -44,71 +44,36 @@ public class PMDParser implements MessageListener {
 
         switch (messageType) {
         case MESSAGE_TYPE_VERSION:
-            version(buffer);
+            version.get(buffer);
+            listener.version(version);
             break;
         case MESSAGE_TYPE_SECONDS:
-            seconds(buffer);
+            seconds.get(buffer);
+            listener.seconds(seconds);
             break;
         case MESSAGE_TYPE_ORDER_ADDED:
-            orderAdded(buffer);
+            orderAdded.get(buffer);
+            listener.orderAdded(orderAdded);
             break;
         case MESSAGE_TYPE_ORDER_EXECUTED:
-            orderExecuted(buffer);
+            orderExecuted.get(buffer);
+            listener.orderExecuted(orderExecuted);
             break;
         case MESSAGE_TYPE_ORDER_CANCELED:
-            orderCanceled(buffer);
+            orderCanceled.get(buffer);
+            listener.orderCanceled(orderCanceled);
             break;
         case MESSAGE_TYPE_ORDER_DELETED:
-            orderDeleted(buffer);
+            orderDeleted.get(buffer);
+            listener.orderDeleted(orderDeleted);
             break;
         case MESSAGE_TYPE_BROKEN_TRADE:
-            brokenTrade(buffer);
+            brokenTrade.get(buffer);
+            listener.brokenTrade(brokenTrade);
             break;
         default:
             throw new PMDException("Unknown message type: " + (char)messageType);
         }
-    }
-
-    private void version(ByteBuffer buffer) throws IOException {
-        version.get(buffer);
-
-        listener.version(version);
-    }
-
-    private void seconds(ByteBuffer buffer) throws IOException {
-        seconds.get(buffer);
-
-        listener.seconds(seconds);
-    }
-
-    private void orderAdded(ByteBuffer buffer) throws IOException {
-        orderAdded.get(buffer);
-
-        listener.orderAdded(orderAdded);
-    }
-
-    private void orderExecuted(ByteBuffer buffer) throws IOException {
-        orderExecuted.get(buffer);
-
-        listener.orderExecuted(orderExecuted);
-    }
-
-    private void orderCanceled(ByteBuffer buffer) throws IOException {
-        orderCanceled.get(buffer);
-
-        listener.orderCanceled(orderCanceled);
-    }
-
-    private void orderDeleted(ByteBuffer buffer) throws IOException {
-        orderDeleted.get(buffer);
-
-        listener.orderDeleted(orderDeleted);
-    }
-
-    private void brokenTrade(ByteBuffer buffer) throws IOException {
-        brokenTrade.get(buffer);
-
-        listener.brokenTrade(brokenTrade);
     }
 
 }
