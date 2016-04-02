@@ -36,35 +36,20 @@ public class PMRParser implements MessageListener {
 
         switch (messageType) {
         case MESSAGE_TYPE_ORDER:
-            order(buffer);
+            order.get(buffer);
+            listener.order(order);
             break;
         case MESSAGE_TYPE_CANCEL:
-            cancel(buffer);
+            cancel.get(buffer);
+            listener.cancel(cancel);
             break;
         case MESSAGE_TYPE_TRADE:
-            trade(buffer);
+            trade.get(buffer);
+            listener.trade(trade);
             break;
         default:
             throw new PMRException("Unknown message type: " + (char)messageType);
         }
-    }
-
-    private void order(ByteBuffer buffer) throws IOException {
-        order.get(buffer);
-
-        listener.order(order);
-    }
-
-    private void cancel(ByteBuffer buffer) throws IOException {
-        cancel.get(buffer);
-
-        listener.cancel(cancel);
-    }
-
-    private void trade(ByteBuffer buffer) throws IOException {
-        trade.get(buffer);
-
-        listener.trade(trade);
     }
 
 }
