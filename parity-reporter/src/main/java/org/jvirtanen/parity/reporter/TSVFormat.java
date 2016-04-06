@@ -1,7 +1,6 @@
 package org.jvirtanen.parity.reporter;
 
-import static org.jvirtanen.lang.Strings.*;
-
+import com.paritytrading.foundation.ASCII;
 import org.jvirtanen.parity.net.pmr.PMR;
 import org.jvirtanen.parity.util.Timestamps;
 
@@ -27,12 +26,12 @@ class TSVFormat extends MarketReportListener {
         printf("%s\t%d\t%s\t%d\t%.2f\t%s\t%d\t%s\t%d\n",
                 Timestamps.format(message.timestamp / NANOS_PER_MILLI),
                 message.matchNumber,
-                decodeLong(message.instrument).trim(),
+                ASCII.unpackLong(message.instrument).trim(),
                 message.quantity,
                 message.price / PRICE_FACTOR,
-                decodeLong(message.buyer).trim(),
+                ASCII.unpackLong(message.buyer).trim(),
                 message.buyOrderNumber,
-                decodeLong(message.seller).trim(),
+                ASCII.unpackLong(message.seller).trim(),
                 message.sellOrderNumber);
     }
 
