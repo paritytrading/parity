@@ -1,6 +1,6 @@
 package org.jvirtanen.parity.net.pmd;
 
-import static org.jvirtanen.nio.ByteBuffers.*;
+import static com.paritytrading.foundation.ByteBuffers.*;
 
 import java.nio.ByteBuffer;
 import org.jvirtanen.parity.net.ProtocolMessage;
