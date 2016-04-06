@@ -1,8 +1,8 @@
 package org.jvirtanen.parity.ticker;
 
-import static org.jvirtanen.lang.Strings.*;
 import static org.jvirtanen.util.Applications.*;
 
+import com.paritytrading.foundation.ASCII;
 import com.paritytrading.nassau.MessageListener;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigException;
@@ -52,7 +52,7 @@ class StockTicker {
         Market market = new Market(listener);
 
         for (String instrument : instruments)
-            market.open(encodeLong(instrument));
+            market.open(ASCII.packLong(instrument));
 
         MarketDataProcessor processor = new MarketDataProcessor(market, listener);
 

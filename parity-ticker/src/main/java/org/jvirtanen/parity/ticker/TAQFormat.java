@@ -1,8 +1,8 @@
 package org.jvirtanen.parity.ticker;
 
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
-import static org.jvirtanen.lang.Strings.*;
 
+import com.paritytrading.foundation.ASCII;
 import it.unimi.dsi.fastutil.longs.Long2ObjectArrayMap;
 import java.nio.charset.Charset;
 import java.time.LocalDate;
@@ -62,7 +62,7 @@ class TAQFormat extends MarketDataListener {
     private String instrument(long instrument) {
         String cached = instruments.get(instrument);
         if (cached == null) {
-            cached = decodeLong(instrument).trim();
+            cached = ASCII.unpackLong(instrument).trim();
 
             instruments.put(instrument, cached);
         }
