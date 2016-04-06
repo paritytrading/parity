@@ -1,8 +1,8 @@
 package org.jvirtanen.parity.client.command;
 
-import static org.jvirtanen.lang.Strings.*;
 import static org.jvirtanen.parity.client.TerminalClient.*;
 
+import com.paritytrading.foundation.ASCII;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -23,7 +23,7 @@ class EnterCommand implements Command {
     public void execute(TerminalClient client, Scanner arguments) throws CommandException, IOException {
         try {
             long quantity   = arguments.nextInt();
-            long instrument = encodeLong(arguments.next());
+            long instrument = ASCII.packLong(arguments.next());
             long price      = (int)(arguments.nextDouble() * PRICE_FACTOR);
 
             if (arguments.hasNext())
