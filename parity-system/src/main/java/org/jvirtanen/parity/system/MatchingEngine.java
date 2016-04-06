@@ -1,7 +1,6 @@
 package org.jvirtanen.parity.system;
 
-import static org.jvirtanen.lang.Strings.*;
-
+import com.paritytrading.foundation.ASCII;
 import it.unimi.dsi.fastutil.longs.Long2ObjectArrayMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import java.util.List;
@@ -41,7 +40,7 @@ class MatchingEngine {
         EventHandler handler = new EventHandler();
 
         for (String instrument : instruments)
-            markets.put(encodeLong(instrument), new Market(handler));
+            markets.put(ASCII.packLong(instrument), new Market(handler));
 
         this.marketData      = marketData;
         this.marketReporting = marketReporting;
