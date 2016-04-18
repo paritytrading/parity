@@ -55,6 +55,10 @@ public class Order {
         return remainingQuantity;
     }
 
+    void setRemainingQuantity(long remainingQuantity) {
+        this.remainingQuantity = remainingQuantity;
+    }
+
     boolean isOnBestLevel() {
         return parent.isBestLevel();
     }
