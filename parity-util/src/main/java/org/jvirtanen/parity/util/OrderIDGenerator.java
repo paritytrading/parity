@@ -33,6 +33,8 @@ public class OrderIDGenerator {
 
     /**
      * Generate an order identifier.
+     *
+     * @return an order identifier
      */
     public String next() {
         return String.format("%s-%07d", prefix, count++);
