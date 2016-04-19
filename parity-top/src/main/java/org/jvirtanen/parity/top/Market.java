@@ -80,6 +80,36 @@ public class Market {
     }
 
     /**
+     * Modify an order in the order book. The order will retain its time
+     * priority. If the new size is zero, the order is deleted from the
+     * order book.
+     *
+     * <p>A BBO event is triggered if the top of the book changes.</p>
+     *
+     * <p>If the order identifier is unknown, do nothing.</p>
+     *
+     * @param orderId the order identifier
+     * @param size the new size
+     */
+    public void modify(long orderId, long size) {
+        Order order = orders.get(orderId);
+        if (order == null)
+            return;
+
+        boolean onBestLevel = order.isOnBestLevel();
+
+        if (size > 0) {
+            order.setRemainingQuantity(size);
+        } else {
+            orders.remove(orderId);
+            order.delete();
+        }
+
+        if (onBestLevel)
+            order.getOrderBook().bbo(listener);
+    }
+
+    /**
      * Execute a quantity of an order in the order book. If the remaining
      * quantity reaches zero, the order is deleted from the order book.
      *
