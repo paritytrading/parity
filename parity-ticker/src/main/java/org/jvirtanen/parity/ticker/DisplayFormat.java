@@ -1,7 +1,6 @@
 package org.jvirtanen.parity.ticker;
 
-import static org.jvirtanen.lang.Strings.*;
-
+import com.paritytrading.foundation.ASCII;
 import it.unimi.dsi.fastutil.longs.Long2ObjectArrayMap;
 import java.util.List;
 import java.util.Locale;
@@ -29,7 +28,7 @@ class DisplayFormat extends MarketDataListener {
         trades = new Long2ObjectArrayMap<>();
 
         for (String instrument : instruments)
-            trades.put(encodeLong(instrument), new Trade());
+            trades.put(ASCII.packLong(instrument), new Trade());
 
         printf("\n%s\n", HEADER);
     }
@@ -38,7 +37,7 @@ class DisplayFormat extends MarketDataListener {
     public void bbo(long instrument, long bidPrice, long bidSize, long askPrice, long askSize) {
         Trade trade = trades.get(instrument);
 
-        printf("%12s %8s ", Timestamps.format(timestampMillis()), decodeLong(instrument));
+        printf("%12s %8s ", Timestamps.format(timestampMillis()), ASCII.unpackLong(instrument));
 
         if (bidSize != 0)
             printf("%9.2f %10d ", bidPrice / PRICE_FACTOR, bidSize);

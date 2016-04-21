@@ -1,6 +1,6 @@
 package org.jvirtanen.parity.net.poe;
 
-import static org.jvirtanen.nio.ByteBuffers.*;
+import static com.paritytrading.foundation.ByteBuffers.*;
 import static org.jvirtanen.parity.net.poe.ByteBuffers.*;
 
 import java.nio.ByteBuffer;

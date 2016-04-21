@@ -3,8 +3,8 @@ package org.jvirtanen.parity.fix;
 import static com.paritytrading.philadelphia.fix44.FIX44Enumerations.*;
 import static com.paritytrading.philadelphia.fix44.FIX44MsgTypes.*;
 import static com.paritytrading.philadelphia.fix44.FIX44Tags.*;
-import static org.jvirtanen.lang.Strings.*;
 
+import com.paritytrading.foundation.ASCII;
 import com.paritytrading.nassau.soupbintcp.SoupBinTCP;
 import com.paritytrading.nassau.soupbintcp.SoupBinTCPClient;
 import com.paritytrading.nassau.soupbintcp.SoupBinTCPClientStatusListener;
@@ -199,7 +199,7 @@ class Session implements Closeable {
             String symbol = symbolValue.asString();
 
             try {
-                enterOrder.instrument = encodeLong(symbol);
+                enterOrder.instrument = ASCII.packLong(symbol);
             } catch (IllegalArgumentException e) {
                 incorrectDataFormatForValue(message, "Expected 'String' in Symbol(55)");
                 return;

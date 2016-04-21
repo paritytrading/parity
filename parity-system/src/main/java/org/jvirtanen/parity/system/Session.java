@@ -1,7 +1,6 @@
 package org.jvirtanen.parity.system;
 
-import static org.jvirtanen.lang.Strings.*;
-
+import com.paritytrading.foundation.ASCII;
 import com.paritytrading.nassau.soupbintcp.SoupBinTCP;
 import com.paritytrading.nassau.soupbintcp.SoupBinTCPServer;
 import com.paritytrading.nassau.soupbintcp.SoupBinTCPServerStatusListener;
@@ -94,7 +93,7 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
             close();
         }
 
-        username = encodeLong(payload.username);
+        username = ASCII.packLong(payload.username);
     }
 
     @Override

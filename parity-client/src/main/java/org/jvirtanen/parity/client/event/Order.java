@@ -1,8 +1,8 @@
 package org.jvirtanen.parity.client.event;
 
-import static org.jvirtanen.lang.Strings.*;
 import static org.jvirtanen.parity.client.TerminalClient.*;
 
+import com.paritytrading.foundation.ASCII;
 import org.jvirtanen.parity.util.Timestamps;
 
 public class Order {
@@ -60,7 +60,7 @@ public class Order {
     public String format() {
         return String.format(LOCALE, "%12s %16s %c %8s %10d %9.2f",
                 Timestamps.format(timestamp / NANOS_PER_MILLI), orderId, side,
-                decodeLong(instrument), quantity, price / PRICE_FACTOR);
+                ASCII.unpackLong(instrument), quantity, price / PRICE_FACTOR);
     }
 
 }

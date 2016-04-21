@@ -25,6 +25,10 @@
       <version>${project.version}</version>
     </dependency> 
     <dependency>
+      <groupId>com.paritytrading.foundation</groupId>
+      <artifactId>foundation</artifactId>
+    </dependency>
+    <dependency>
       <groupId>com.paritytrading.nassau</groupId>
       <artifactId>nassau</artifactId>
     </dependency>
@@ -44,10 +48,6 @@
     <dependency>
       <groupId>org.jvirtanen.config</groupId>
       <artifactId>config-extras</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.jvirtanen.lang</groupId>
-      <artifactId>lang-extras</artifactId>
     </dependency>
     <dependency>
       <groupId>org.jvirtanen.util</groupId>
