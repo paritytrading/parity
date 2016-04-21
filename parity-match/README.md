@@ -10,7 +10,7 @@ Download
 Add a Maven dependency to Parity Matching Engine:
 
     <dependency>
-      <groupId>org.jvirtanen.parity</groupId>
+      <groupId>com.paritytrading.parity</groupId>
       <artifactId>parity-match</artifactId>
       <version><!-- latest version --></version>
     </dependency>

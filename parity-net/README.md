@@ -31,7 +31,7 @@ Download
 Add a Maven dependency to Parity Network Protocols:
 
     <dependency>
-      <groupId>org.jvirtanen.parity</groupId>
+      <groupId>com.paritytrading.parity</groupId>
       <artifactId>parity-net</artifactId>
       <version><!-- latest version --></version>
     </dependency>

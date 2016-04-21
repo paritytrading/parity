@@ -20,7 +20,7 @@ Download
 Add a Maven dependency to Parity File Formats:
 
     <dependency>
-      <groupId>org.jvirtanen.parity</groupId>
+      <groupId>com.paritytrading.parity</groupId>
       <artifactId>parity-file</artifactId>
       <version><!-- latest version --></version>
     </dependency>
