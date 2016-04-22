@@ -11,7 +11,7 @@ Download
 Add a Maven dependency to Parity Top of Book:
 
     <dependency>
-      <groupId>org.jvirtanen.parity</groupId>
+      <groupId>com.paritytrading.parity</groupId>
       <artifactId>parity-top</artifactId>
       <version><!-- latest version --></version>
     </dependency>
