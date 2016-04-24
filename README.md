@@ -52,6 +52,17 @@ Build
 See the [Developer Guide](HACKING.md).
 
 
+Links
+-----
+
+For more information on Parity:
+
+  - Follow [@paritytrading](https://twitter.com/paritytrading) on Twitter for
+    news and announcements
+  - Join [paritytrading/chat](https://gitter.im/paritytrading/chat) on Gitter
+    for discussions
+
+
 License
 -------
 
