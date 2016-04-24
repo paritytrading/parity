@@ -2,6 +2,18 @@ Release Notes
 =============
 
 
+0.4.0 (2016-04-24)
+------------------
+
+- Add FIX protocol
+- Add Parity FIX Gateway
+- Fix PMD reference implementation
+- Fix order cancellation in Parity Trading System
+- Upgrade to Nassau 0.9.0
+- Add support for order modification to Parity Top of Book
+- Move to `com.paritytrading` namespace
+
+
 0.3.0 (2015-12-25)
 ------------------
 
