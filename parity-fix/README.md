@@ -14,7 +14,7 @@ Parity FIX Gateway specifies and implements the following protocols:
 
 Parity FIX Gateway uses [Philadelphia][] for FIX protocol support.
 
-  [Philadelphia]: https://github.com/jvirtanen/philadelphia
+  [Philadelphia]: https://github.com/paritytrading/philadelphia
 
 
 Usage
