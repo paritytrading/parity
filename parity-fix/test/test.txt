@@ -2,7 +2,7 @@
 # These are Philadelphia Terminal Client commands for testing Parity FIX
 # Gateway. For more information on Philadelphia Terminal Client, see:
 #
-#   https://github.com/jvirtanen/philadelphia
+#   https://github.com/paritytrading/philadelphia
 #
 
 #
