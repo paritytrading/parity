@@ -26,9 +26,9 @@
   </licenses>
 
   <scm>
-    <connection>scm:git:git@github.com:jvirtanen/parity.git</connection>
-    <developerConnection>scm:git:git@github.com:jvirtanen/parity.git</developerConnection>
-    <url>https://github.com/jvirtanen/parity</url>
+    <connection>scm:git:git@github.com:paritytrading/parity.git</connection>
+    <developerConnection>scm:git:git@github.com:paritytrading/parity.git</developerConnection>
+    <url>https://github.com/paritytrading/parity</url>
     <tag>HEAD</tag>
   </scm>
 
