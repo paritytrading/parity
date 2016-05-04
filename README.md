@@ -43,7 +43,7 @@ In addition, Parity contains the following libraries:
 
 See the [Wiki][] for additional applications.
 
-  [Wiki]: https://github.com/jvirtanen/parity/wiki
+  [Wiki]: https://github.com/paritytrading/parity/wiki
 
 
 Build
