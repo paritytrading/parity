@@ -24,7 +24,7 @@ public class OrderEntry implements Closeable {
 
     private volatile boolean closed;
 
-    private Object rxLock;
+    private Object txLock;
 
     private OrderEntry(Selector selector, SocketChannel channel, POEClientListener listener) {
         this.buffer = ByteBuffer.allocate(POE.MAX_INBOUND_MESSAGE_LENGTH);
@@ -36,7 +36,7 @@ public class OrderEntry implements Closeable {
 
         this.closed = false;
 
-        this.rxLock = new Object();
+        this.txLock = new Object();
 
         new Thread(new Receiver()).start();
     }
@@ -68,7 +68,7 @@ public class OrderEntry implements Closeable {
         message.put(buffer);
         buffer.flip();
 
-        synchronized (rxLock) {
+        synchronized (txLock) {
             transport.send(buffer);
         }
     }
@@ -111,7 +111,7 @@ public class OrderEntry implements Closeable {
                         selector.selectedKeys().clear();
                     }
 
-                    synchronized (rxLock) {
+                    synchronized (txLock) {
                         transport.keepAlive();
                     }
                 }
