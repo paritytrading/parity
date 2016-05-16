@@ -16,7 +16,7 @@ import java.nio.channels.SocketChannel;
 
 public class OrderEntry implements Closeable {
 
-    private ByteBuffer buffer;
+    private ByteBuffer txBuffer;
 
     private Selector selector;
 
@@ -27,7 +27,7 @@ public class OrderEntry implements Closeable {
     private Object txLock;
 
     private OrderEntry(Selector selector, SocketChannel channel, POEClientListener listener) {
-        this.buffer = ByteBuffer.allocate(POE.MAX_INBOUND_MESSAGE_LENGTH);
+        this.txBuffer = ByteBuffer.allocate(POE.MAX_INBOUND_MESSAGE_LENGTH);
 
         this.selector = selector;
 
@@ -64,12 +64,12 @@ public class OrderEntry implements Closeable {
     }
 
     public void send(POE.InboundMessage message) throws IOException {
-        buffer.clear();
-        message.put(buffer);
-        buffer.flip();
+        txBuffer.clear();
+        message.put(txBuffer);
+        txBuffer.flip();
 
         synchronized (txLock) {
-            transport.send(buffer);
+            transport.send(txBuffer);
         }
     }
 
