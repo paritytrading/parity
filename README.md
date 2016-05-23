@@ -49,7 +49,9 @@ See the [Wiki][] for additional applications.
 Build
 -----
 
-See the [Developer Guide](HACKING.md).
+See [Parity Guide][].
+
+  [Parity Guide]: https://github.com/paritytrading/documentation
 
 
 Links
