@@ -68,7 +68,7 @@
       <dependency>
         <groupId>com.paritytrading.philadelphia</groupId>
         <artifactId>philadelphia</artifactId>
-        <version>0.3.0</version>
+        <version>0.4.0</version>
       </dependency>
       <dependency>
         <groupId>com.typesafe</groupId>
