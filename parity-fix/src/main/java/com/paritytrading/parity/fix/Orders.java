@@ -19,7 +19,7 @@ class Orders {
         for (int i = 0; i < orders.size(); i++) {
             Order order = orders.get(i);
 
-            if (order.getClOrdID().equals(clOrdId))
+            if (clOrdId.equals(order.getClOrdID()))
                 return order;
         }
 
@@ -30,7 +30,7 @@ class Orders {
         for (int i = 0; i < orders.size(); i++) {
             Order order = orders.get(i);
 
-            if (order.getOrigClOrdID().equals(origClOrdId))
+            if (origClOrdId.equals(order.getOrigClOrdID()))
                 return order;
         }
 
@@ -41,7 +41,7 @@ class Orders {
         for (int i = 0; i < orders.size(); i++) {
             Order order = orders.get(i);
 
-            if (order.getOrderEntryID().equals(orderEntryId))
+            if (orderEntryId.equals(order.getOrderEntryID()))
                 return order;
         }
 
@@ -52,7 +52,7 @@ class Orders {
         for (int i = 0; i < orders.size(); i++) {
             Order order = orders.get(i);
 
-            if (order.getOrderEntryID().equals(orderEntryId)) {
+            if (orderEntryId.equals(order.getOrderEntryID())) {
                 orders.remove(i);
                 break;
             }
