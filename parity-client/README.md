@@ -35,7 +35,9 @@ Use the `help` command to see a list of all available commands.
 Build
 -----
 
-See the [Developer Guide](../HACKING.md).
+See [Parity Guide][].
+
+  [Parity Guide]: https://github.com/paritytrading/documentation
 
 
 License
