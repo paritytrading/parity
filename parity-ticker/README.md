@@ -25,7 +25,9 @@ option is given, it formats the output as [TAQ][] instead.
 Build
 -----
 
-See the [Developer Guide](../HACKING.md).
+See [Parity Guide][].
+
+  [Parity Guide]: https://github.com/paritytrading/documentation
 
 
 License
