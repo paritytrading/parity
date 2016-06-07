@@ -19,14 +19,6 @@ By default, the trade reporter formats its output for display. If the `-t`
 option is given, it formats the output as tab-separated values (TSV) instead.
 
 
-Build
------
-
-See [Parity Guide][].
-
-  [Parity Guide]: https://github.com/paritytrading/documentation
-
-
 License
 -------
 

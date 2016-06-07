@@ -28,14 +28,6 @@ After starting, the gateway starts listening for FIX sessions initiated by
 clients.
 
 
-Build
------
-
-See [Parity Guide][].
-
-  [Parity Guide]: https://github.com/paritytrading/documentation
-
-
 License
 -------
 

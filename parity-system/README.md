@@ -16,14 +16,6 @@ initiated by market participants, publishing market data, and reporting
 occurred trades.
 
 
-Build
------
-
-See [Parity Guide][].
-
-  [Parity Guide]: https://github.com/paritytrading/documentation
-
-
 License
 -------
 

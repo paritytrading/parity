@@ -46,19 +46,13 @@ See the [Wiki][] for additional applications.
   [Wiki]: https://github.com/paritytrading/parity/wiki
 
 
-Build
------
-
-See [Parity Guide][].
-
-  [Parity Guide]: https://github.com/paritytrading/documentation
-
-
 Links
 -----
 
 For more information on Parity:
 
+  - See [Parity Guide](https://github.com/paritytrading/documentation) for
+    the user and developer documentation
   - Follow [@paritytrading](https://twitter.com/paritytrading) on Twitter for
     news and announcements
   - Join [paritytrading/chat](https://gitter.im/paritytrading/chat) on Gitter

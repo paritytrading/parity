@@ -32,14 +32,6 @@ order will remain open. To list the open orders, use the `orders` command:
 Use the `help` command to see a list of all available commands.
 
 
-Build
------
-
-See [Parity Guide][].
-
-  [Parity Guide]: https://github.com/paritytrading/documentation
-
-
 License
 -------
 

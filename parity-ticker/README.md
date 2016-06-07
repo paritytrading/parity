@@ -22,14 +22,6 @@ option is given, it formats the output as [TAQ][] instead.
   [TAQ]: ../parity-file/doc/TAQ.md
 
 
-Build
------
-
-See [Parity Guide][].
-
-  [Parity Guide]: https://github.com/paritytrading/documentation
-
-
 License
 -------
 
