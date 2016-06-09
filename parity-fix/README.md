@@ -10,7 +10,7 @@ Features
 
 Parity FIX Gateway specifies and implements the following protocols:
 
-  - [**FIX**](doc/FIX.md): an alternative order entry protocol
+- [**FIX**](doc/FIX.md): an alternative order entry protocol
 
 Parity FIX Gateway uses [Philadelphia][] for FIX protocol support.
 

@@ -10,14 +10,14 @@ Features
 
 Parity Network Protocols specifies and implements the following protocols:
 
-  - [**POE**](doc/POE.md): the native order entry protocol, used by market
-    participants to enter orders into the trading system.
+- [**POE**](doc/POE.md): the native order entry protocol, used by market
+  participants to enter orders into the trading system.
 
-  - [**PMD**](doc/PMD.md): the native market data protocol, used by all
-    parties interested in the state of the market.
+- [**PMD**](doc/PMD.md): the native market data protocol, used by all
+  parties interested in the state of the market.
 
-  - [**PMR**](doc/PMR.md): the native market reporting protocol, used by
-    market surveillance systems and post-trade processing systems.
+- [**PMR**](doc/PMR.md): the native market reporting protocol, used by
+  market surveillance systems and post-trade processing systems.
 
 Parity Network Protocols uses [Nassau][] for NASDAQ transport protocol
 support.
