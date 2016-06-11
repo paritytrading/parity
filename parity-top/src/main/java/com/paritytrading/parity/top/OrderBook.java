@@ -20,10 +20,10 @@ class OrderBook {
 
     public Order add(Side side, long price, long size) {
         switch (side) {
-            case BUY:
-                return bids.add(price, size);
-            case SELL:
-                return asks.add(price, size);
+        case BUY:
+            return bids.add(price, size);
+        case SELL:
+            return asks.add(price, size);
         }
 
         return null;
