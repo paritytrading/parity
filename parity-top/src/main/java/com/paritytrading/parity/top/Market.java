@@ -72,7 +72,10 @@ public class Market {
         if (book == null)
             return;
 
-        Order order = book.add(side, price, size);
+        Order order = new Order(book, side, price, size);
+
+        book.add(side, price, size);
+
         orders.put(orderId, order);
 
         if (order.isOnBestLevel())
@@ -96,17 +99,21 @@ public class Market {
         if (order == null)
             return;
 
+        OrderBook book = order.getOrderBook();
+
+        long newSize = Math.max(0, size);
+
         boolean onBestLevel = order.isOnBestLevel();
 
-        if (size > 0) {
-            order.setRemainingQuantity(size);
-        } else {
+        book.update(order.getSide(), order.getPrice(), newSize - order.getRemainingQuantity());
+
+        if (newSize == 0)
             orders.remove(orderId);
-            order.delete();
-        }
+        else
+            order.setRemainingQuantity(newSize);
 
         if (onBestLevel)
-            order.getOrderBook().bbo(listener);
+            book.bbo(listener);
     }
 
     /**
@@ -151,14 +158,20 @@ public class Market {
     private void execute(long orderId, Order order, long quantity, long price) {
         OrderBook book = order.getOrderBook();
 
-        listener.trade(book.getInstrument(), order.getSide(), price, quantity);
+        Side side = order.getSide();
 
-        if (quantity < order.getRemainingQuantity()) {
-            order.reduce(quantity);
-        } else {
+        long remainingQuantity = order.getRemainingQuantity();
+
+        long executedQuantity = Math.min(quantity, remainingQuantity);
+
+        listener.trade(book.getInstrument(), side, price, executedQuantity);
+
+        book.update(side, order.getPrice(), -executedQuantity);
+
+        if (executedQuantity == remainingQuantity)
             orders.remove(orderId);
-            order.delete();
-        }
+        else
+            order.reduce(executedQuantity);
 
         book.bbo(listener);
     }
@@ -179,17 +192,23 @@ public class Market {
         if (order == null)
             return;
 
+        OrderBook book = order.getOrderBook();
+
+        long remainingQuantity = order.getRemainingQuantity();
+
+        long canceledQuantity = Math.min(quantity, remainingQuantity);
+
         boolean onBestLevel = order.isOnBestLevel();
 
-        if (quantity < order.getRemainingQuantity()) {
-            order.reduce(quantity);
-        } else {
+        book.update(order.getSide(), order.getPrice(), -canceledQuantity);
+
+        if (canceledQuantity == remainingQuantity)
             orders.remove(orderId);
-            order.delete();
-        }
+        else
+            order.reduce(canceledQuantity);
 
         if (onBestLevel)
-            order.getOrderBook().bbo(listener);
+            book.bbo(listener);
     }
 
     /**
@@ -206,13 +225,16 @@ public class Market {
         if (order == null)
             return;
 
+        OrderBook book = order.getOrderBook();
+
         boolean onBestLevel = order.isOnBestLevel();
 
+        book.update(order.getSide(), order.getPrice(), -order.getRemainingQuantity());
+
         orders.remove(orderId);
-        order.delete();
 
         if (onBestLevel)
-            order.getOrderBook().bbo(listener);
+            book.bbo(listener);
     }
 
 }
