@@ -5,18 +5,24 @@ package com.paritytrading.parity.top;
  */
 public class Order {
 
-    private Level parent;
+    private OrderBook book;
+
+    private Side side;
+    private long price;
 
     private long remainingQuantity;
 
-    Order(Level parent, long size) {
-        this.parent = parent;
+    Order(OrderBook book, Side side, long price, long size) {
+        this.book = book;
+
+        this.side  = side;
+        this.price = price;
 
         this.remainingQuantity = size;
     }
 
     OrderBook getOrderBook() {
-        return parent.getParent().getParent();
+        return book;
     }
 
     /**
@@ -25,7 +31,7 @@ public class Order {
      * @return the instrument
      */
     public long getInstrument() {
-        return getOrderBook().getInstrument();
+        return book.getInstrument();
     }
 
     /**
@@ -34,7 +40,7 @@ public class Order {
      * @return the price
      */
     public long getPrice() {
-        return parent.getPrice();
+        return price;
     }
 
     /**
@@ -43,7 +49,7 @@ public class Order {
      * @return the side
      */
     public Side getSide() {
-        return parent.getParent().getSide();
+        return side;
     }
 
     /**
@@ -60,15 +66,11 @@ public class Order {
     }
 
     boolean isOnBestLevel() {
-        return parent.isBestLevel();
+        return price == book.getBestPrice(side);
     }
 
     void reduce(long quantity) {
         remainingQuantity -= quantity;
-    }
-
-    void delete() {
-        parent.delete(this);
     }
 
 }
