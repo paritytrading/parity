@@ -41,12 +41,12 @@ public class Market {
     }
 
     /**
-     * Get an order.
+     * Find an order.
      *
      * @param orderId the order identifier
      * @return the order or <code>null</code> if the order identifier is unknown
      */
-    public Order get(long orderId) {
+    public Order find(long orderId) {
         return orders.get(orderId);
     }
 
