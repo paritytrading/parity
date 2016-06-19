@@ -8,7 +8,7 @@ abstract class MarketReportListener implements PMRListener {
 
     protected static final double PRICE_FACTOR = 10000.0;
 
-    protected static final long NANOS_PER_MILLI = 1000 * 1000;
+    protected static final long NANOS_PER_MILLI = 1_000_000;
 
     @Override
     public void order(PMR.Order message) {
