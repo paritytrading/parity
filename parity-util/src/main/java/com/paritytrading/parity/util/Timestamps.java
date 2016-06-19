@@ -20,7 +20,7 @@ public class Timestamps {
      * @return the timestamp as a string
      */
     public static String format(long timestampMillis) {
-        return FORMATTER.format(LocalTime.ofNanoOfDay(timestampMillis % (24 * 60 * 60 * 1000) * 1000 * 1000));
+        return FORMATTER.format(LocalTime.ofNanoOfDay(timestampMillis % (24 * 60 * 60 * 1000) * 1_000_000));
     }
 
 }
