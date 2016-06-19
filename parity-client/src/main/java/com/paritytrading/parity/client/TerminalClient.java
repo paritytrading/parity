@@ -28,7 +28,7 @@ public class TerminalClient implements Closeable {
 
     public static final double PRICE_FACTOR = 10000.0;
 
-    public static final long NANOS_PER_MILLI = 1000 * 1000;
+    public static final long NANOS_PER_MILLI = 1_000_000;
 
     private Events events;
 
