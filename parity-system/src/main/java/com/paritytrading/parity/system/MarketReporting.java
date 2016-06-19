@@ -138,7 +138,7 @@ class MarketReporting {
     }
 
     private long timestamp() {
-        return (System.currentTimeMillis() - TradingSystem.EPOCH_MILLIS) * 1000 * 1000;
+        return (System.currentTimeMillis() - TradingSystem.EPOCH_MILLIS) * 1_000_000;
     }
 
 }

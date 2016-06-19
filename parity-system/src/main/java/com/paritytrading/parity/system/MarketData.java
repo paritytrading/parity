@@ -163,7 +163,7 @@ class MarketData {
 
         previousSecond = currentSecond;
 
-        timestamp = (currentTimeMillis - currentSecond * 1000) * 1000 * 1000;
+        timestamp = (currentTimeMillis - currentSecond * 1000) * 1_000_000;
     }
 
     private void enqueue(PMD.Message message) {
