@@ -20,24 +20,30 @@ class OrderBook {
         return instrument;
     }
 
-    public void add(Side side, long price, long quantity) {
+    public boolean add(Side side, long price, long quantity) {
         Long2LongRBTreeMap levels = getLevels(side);
 
         long size = levels.get(price);
 
         levels.put(price, size + quantity);
+
+        return price == levels.firstLongKey();
     }
 
-    public void update(Side side, long price, long quantity) {
+    public boolean update(Side side, long price, long quantity) {
         Long2LongRBTreeMap levels = getLevels(side);
 
         long oldSize = levels.get(price);
         long newSize = oldSize + quantity;
 
+        boolean onBestLevel = price == levels.firstLongKey();
+
         if (newSize > 0)
             levels.put(price, newSize);
         else
             levels.remove(price);
+
+        return onBestLevel;
     }
 
     private Long2LongRBTreeMap getLevels(Side side) {
@@ -49,10 +55,6 @@ class OrderBook {
         }
 
         return null;
-    }
-
-    public long getBestPrice(Side side) {
-        return getLevels(side).firstLongKey();
     }
 
     public void bbo(MarketListener listener) {

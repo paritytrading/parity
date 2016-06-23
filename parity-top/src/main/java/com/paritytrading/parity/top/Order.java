@@ -65,10 +65,6 @@ public class Order {
         this.remainingQuantity = remainingQuantity;
     }
 
-    boolean isOnBestLevel() {
-        return price == book.getBestPrice(side);
-    }
-
     void reduce(long quantity) {
         remainingQuantity -= quantity;
     }

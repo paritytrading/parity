@@ -74,11 +74,11 @@ public class Market {
 
         Order order = new Order(book, side, price, size);
 
-        book.add(side, price, size);
+        boolean onBestLevel = book.add(side, price, size);
 
         orders.put(orderId, order);
 
-        if (order.isOnBestLevel())
+        if (onBestLevel)
             book.bbo(listener);
     }
 
@@ -103,9 +103,8 @@ public class Market {
 
         long newSize = Math.max(0, size);
 
-        boolean onBestLevel = order.isOnBestLevel();
-
-        book.update(order.getSide(), order.getPrice(), newSize - order.getRemainingQuantity());
+        boolean onBestLevel = book.update(order.getSide(), order.getPrice(),
+                newSize - order.getRemainingQuantity());
 
         if (newSize == 0)
             orders.remove(orderId);
@@ -198,9 +197,7 @@ public class Market {
 
         long canceledQuantity = Math.min(quantity, remainingQuantity);
 
-        boolean onBestLevel = order.isOnBestLevel();
-
-        book.update(order.getSide(), order.getPrice(), -canceledQuantity);
+        boolean onBestLevel = book.update(order.getSide(), order.getPrice(), -canceledQuantity);
 
         if (canceledQuantity == remainingQuantity)
             orders.remove(orderId);
@@ -227,9 +224,7 @@ public class Market {
 
         OrderBook book = order.getOrderBook();
 
-        boolean onBestLevel = order.isOnBestLevel();
-
-        book.update(order.getSide(), order.getPrice(), -order.getRemainingQuantity());
+        boolean onBestLevel = book.update(order.getSide(), order.getPrice(), -order.getRemainingQuantity());
 
         orders.remove(orderId);
 
