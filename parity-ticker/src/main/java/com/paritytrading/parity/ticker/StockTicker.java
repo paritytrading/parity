@@ -1,82 +1,47 @@
 package com.paritytrading.parity.ticker;
 
+import static java.util.Arrays.*;
 import static org.jvirtanen.util.Applications.*;
 
-import com.paritytrading.foundation.ASCII;
-import com.paritytrading.nassau.MessageListener;
-import com.paritytrading.parity.net.pmd.PMDParser;
-import com.paritytrading.parity.top.Market;
-import com.paritytrading.parity.util.MoldUDP64;
-import com.paritytrading.parity.util.SoupBinTCP;
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigException;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.NetworkInterface;
+import java.util.HashMap;
 import java.util.List;
-import org.jvirtanen.config.Configs;
+import java.util.Map;
 
 class StockTicker {
 
-    private static final String USAGE = "parity-ticker [-t] <configuration-file>";
+    private static final Map<String, Command> COMMANDS = new HashMap<>();
+
+    static {
+        COMMANDS.put("listen", new ListenCommand());
+    }
 
     public static void main(String[] args) {
-        if (args.length != 1 && args.length != 2)
-            usage(USAGE);
+        if (args.length < 1)
+            usage();
 
-        boolean taq = false;
+        Command command = COMMANDS.get(args[0]);
+        if (command == null)
+            error("Unknown command: " + command);
 
-        if (args.length == 2) {
-            if (!args[0].equals("-t"))
-                usage(USAGE);
-
-            taq = true;
-        }
+        List<String> arguments = asList(args).subList(1, args.length);
 
         try {
-            main(config(args[taq ? 1 : 0]), taq);
-        } catch (ConfigException | FileNotFoundException e) {
-            error(e);
+            command.execute(arguments);
         } catch (IOException e) {
             fatal(e);
         }
     }
 
-    private static void main(Config config, boolean taq) throws IOException {
-        List<String> instruments = config.getStringList("instruments");
+    private static void usage() {
+        System.err.printf("Usage: parity-ticker <command>\n\n");
+        System.err.printf("Commands:\n");
 
-        MarketDataListener listener = taq ? new TAQFormat() : new DisplayFormat(instruments);
+        for (Command command : COMMANDS.values())
+            System.err.printf("  %s  %s\n", command.getName(), command.getDescription());
 
-        Market market = new Market(listener);
-
-        for (String instrument : instruments)
-            market.open(ASCII.packLong(instrument));
-
-        MarketDataProcessor processor = new MarketDataProcessor(market, listener);
-
-        main(config, new PMDParser(processor));
-    }
-
-    private static void main(Config config, MessageListener listener) throws IOException {
-        if (config.hasPath("market-data.multicast-interface")) {
-            NetworkInterface multicastInterface = Configs.getNetworkInterface(config, "market-data.multicast-interface");
-            InetAddress      multicastGroup     = Configs.getInetAddress(config, "market-data.multicast-group");
-            int              multicastPort      = Configs.getPort(config, "market-data.multicast-port");
-            InetAddress      requestAddress     = Configs.getInetAddress(config, "market-data.request-address");
-            int              requestPort        = Configs.getPort(config, "market-data.request-port");
-
-            MoldUDP64.receive(multicastInterface, new InetSocketAddress(multicastGroup, multicastPort),
-                    new InetSocketAddress(requestAddress, requestPort), listener);
-        } else {
-            InetAddress address  = Configs.getInetAddress(config, "market-data.address");
-            int         port     = Configs.getPort(config, "market-data.port");
-            String      username = config.getString("market-data.username");
-            String      password = config.getString("market-data.password");
-
-            SoupBinTCP.receive(new InetSocketAddress(address, port), username, password, listener);
-        }
+        System.err.printf("\n");
+        System.exit(2);
     }
 
 }
