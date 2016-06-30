@@ -15,6 +15,7 @@ import org.openjdk.jmh.annotations.State;
 
 @State(Scope.Thread)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
+@BenchmarkMode(Mode.SampleTime)
 public class MarketBenchmark {
 
     private long sequence;
@@ -38,13 +39,11 @@ public class MarketBenchmark {
     }
 
     @GenerateMicroBenchmark
-    @BenchmarkMode(Mode.SampleTime)
     public void testEnterOrder() {
         market.enter(sequence++, Side.BUY, 34090, 100);
     }
 
     @GenerateMicroBenchmark
-    @BenchmarkMode(Mode.SampleTime)
     public void testEnterAndDeleteOrder() {
         long id = sequence++;
         market.enter(id, Side.BUY, 34090, 100);
