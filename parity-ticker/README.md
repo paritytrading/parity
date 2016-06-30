@@ -20,6 +20,10 @@ When listening to a live market data feed, the stock ticker first replays
 market events that have taken place before it started. Then it proceeds to
 display market events in real time.
 
+To read a historical market data file, use the `read` command:
+
+    java -jar <executable> read [-t] <input-file> [<instrument> ...]
+
 By default, the stock ticker formats its output for display. If the `-t`
 option is given, it formats the output as [TAQ][] instead.
 

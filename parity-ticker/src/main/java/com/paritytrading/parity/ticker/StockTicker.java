@@ -1,9 +1,11 @@
 package com.paritytrading.parity.ticker;
 
 import static java.util.Arrays.*;
+import static java.util.Comparator.*;
 import static org.jvirtanen.util.Applications.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +16,7 @@ class StockTicker {
 
     static {
         COMMANDS.put("listen", new ListenCommand());
+        COMMANDS.put("read",   new ReadCommand());
     }
 
     public static void main(String[] args) {
@@ -34,11 +37,17 @@ class StockTicker {
     }
 
     private static void usage() {
+        List<Command> commands = new ArrayList<>(COMMANDS.values());
+
+        commands.sort(comparing(c -> c.getName()));
+
+        int maxCommandNameLength = commands.stream().mapToInt(c -> c.getName().length()).max().orElse(0);
+
         System.err.printf("Usage: parity-ticker <command>\n\n");
         System.err.printf("Commands:\n");
 
-        for (Command command : COMMANDS.values())
-            System.err.printf("  %s  %s\n", command.getName(), command.getDescription());
+        for (Command command : commands)
+            System.err.printf("  %-" + maxCommandNameLength + "s  %s\n", command.getName(), command.getDescription());
 
         System.err.printf("\n");
         System.exit(2);
