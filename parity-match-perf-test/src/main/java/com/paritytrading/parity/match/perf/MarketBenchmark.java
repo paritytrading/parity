@@ -4,8 +4,8 @@ import com.paritytrading.parity.match.Market;
 import com.paritytrading.parity.match.MarketListener;
 import com.paritytrading.parity.match.Side;
 import java.util.concurrent.TimeUnit;
+import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
-import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
@@ -38,12 +38,12 @@ public class MarketBenchmark {
         sequence = 0;
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public void testEnterOrder() {
         market.enter(sequence++, Side.BUY, 34090, 100);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public void testEnterAndDeleteOrder() {
         long id = sequence++;
         market.enter(id, Side.BUY, 34090, 100);
