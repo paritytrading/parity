@@ -47,6 +47,9 @@ In addition, Parity contains the following libraries:
 - [**Parity Top of Book**](parity-top) implements high-performance order book
   reconstruction on the JVM.
 
+- [**Parity Utilities**](parity-util) contains support functions used by the
+  trading system.
+
 - [**Parity Matching Engine**](parity-match) implements a high-performance
   matching engine for the JVM.
 
