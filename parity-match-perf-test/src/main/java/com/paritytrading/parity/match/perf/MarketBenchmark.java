@@ -13,7 +13,7 @@ import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 
-@State(Scope.Thread)
+@State(Scope.Benchmark)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @BenchmarkMode(Mode.SampleTime)
 public class MarketBenchmark {
