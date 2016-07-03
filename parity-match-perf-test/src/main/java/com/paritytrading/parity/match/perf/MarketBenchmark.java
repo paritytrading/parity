@@ -18,8 +18,9 @@ import org.openjdk.jmh.annotations.State;
 @BenchmarkMode(Mode.SampleTime)
 public class MarketBenchmark {
 
-    private long sequence;
     private Market market;
+
+    private long sequence;
 
     @Setup(Level.Iteration)
     public void prepare() {
@@ -46,7 +47,9 @@ public class MarketBenchmark {
     @Benchmark
     public void testEnterAndDeleteOrder() {
         long id = sequence++;
+
         market.enter(id, Side.BUY, 34090, 100);
         market.cancel(id, 0);
     }
+
 }
