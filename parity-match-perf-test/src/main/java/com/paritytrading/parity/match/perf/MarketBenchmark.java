@@ -40,12 +40,12 @@ public class MarketBenchmark {
     }
 
     @Benchmark
-    public void testEnterOrder() {
+    public void enter() {
         market.enter(sequence++, Side.BUY, 34090, 100);
     }
 
     @Benchmark
-    public void testEnterAndDeleteOrder() {
+    public void enterAndCancel() {
         long id = sequence++;
 
         market.enter(id, Side.BUY, 34090, 100);
