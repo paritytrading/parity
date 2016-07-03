@@ -32,6 +32,9 @@ Parity consists of the following applications:
 - [**Parity Matching Engine Performance Test**](parity-match-perf-test)
   contains microbenchmarks for the matching engine.
 
+- [**Parity Top of Book Performance Test**](parity-top-perf-test) contains
+  microbenchmarks for the order book reconstruction.
+
 In addition, Parity contains the following libraries:
 
 - [**Parity File Formats**](parity-file) contains file format specifications

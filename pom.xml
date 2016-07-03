@@ -50,6 +50,7 @@
     <module>parity-system</module>
     <module>parity-ticker</module>
     <module>parity-top</module>
+    <module>parity-top-perf-test</module>
     <module>parity-util</module>
   </modules>
 
