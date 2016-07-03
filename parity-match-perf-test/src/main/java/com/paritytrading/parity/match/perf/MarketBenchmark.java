@@ -26,36 +26,41 @@ public class MarketBenchmark {
 
     private Market market;
 
-    private long sequence;
+    private long nextOrderId;
 
     @Setup(Level.Iteration)
     public void prepare() {
-        MarketListener listener = new MarketListener() {
+        market = new Market(new MarketListener() {
+
+            @Override
             public void match(long restingOrderId, long incomingOrderId, Side incomingSide, long price,
                     long executedQuantity, long remainingQuantity) {
             }
+
+            @Override
             public void add(long orderId, Side side, long price, long size) {
             }
+
+            @Override
             public void cancel(long orderId, long canceledQuantity, long remainingQuantity) {
             }
-        };
 
-        market = new Market(listener);
+        });
 
-        sequence = 0;
+        nextOrderId = 0;
     }
 
     @Benchmark
     public void enter() {
-        market.enter(sequence++, Side.BUY, 34090, 100);
+        market.enter(nextOrderId++, Side.BUY, 100000, 100);
     }
 
     @Benchmark
     public void enterAndCancel() {
-        long id = sequence++;
+        long orderId = nextOrderId++;
 
-        market.enter(id, Side.BUY, 34090, 100);
-        market.cancel(id, 0);
+        market.enter(orderId, Side.BUY, 100000, 100);
+        market.cancel(orderId, 0);
     }
 
 }
