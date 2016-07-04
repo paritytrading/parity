@@ -2,6 +2,21 @@ Release Notes
 =============
 
 
+0.5.0 (2016-07-04)
+------------------
+
+- Upgrade to Philadelphia 0.4.0
+- Fix order cancellation in Parity FIX Gateway
+- Improve Parity Top of Book performance
+- Rename order accessor in Parity Top of Book
+- Provide two example configuration files for Parity Stock Ticker
+- Add BinaryFILE reader
+- Add BinaryFILE support to Parity Stock Ticker
+- Clean up Parity Matching Engine Performance Test
+- Add Parity Top of Book Performance Test
+- Upgrade to Foundation 0.2.0
+
+
 0.4.0 (2016-04-24)
 ------------------
 
