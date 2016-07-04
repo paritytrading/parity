@@ -6,7 +6,7 @@
   <parent>
     <groupId>com.paritytrading.parity</groupId>
     <artifactId>parity-parent</artifactId>
-    <version>0.5.0</version>
+    <version>0.5.1-SNAPSHOT</version>
   </parent>
 
   <artifactId>parity-reporter</artifactId>
