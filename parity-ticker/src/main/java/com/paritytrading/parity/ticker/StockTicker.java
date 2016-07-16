@@ -25,7 +25,7 @@ class StockTicker {
 
         Command command = COMMANDS.get(args[0]);
         if (command == null)
-            error("Unknown command: " + command);
+            error("Unknown command: " + args[0]);
 
         List<String> arguments = asList(args).subList(1, args.length);
 
