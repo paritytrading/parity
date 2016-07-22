@@ -3,9 +3,9 @@ package com.paritytrading.parity.ticker;
 import static org.jvirtanen.util.Applications.*;
 
 import com.paritytrading.foundation.ASCII;
+import com.paritytrading.nassau.util.BinaryFILE;
 import com.paritytrading.parity.net.pmd.PMDParser;
 import com.paritytrading.parity.top.Market;
-import com.paritytrading.parity.util.BinaryFILE;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;

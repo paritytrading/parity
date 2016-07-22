@@ -2,6 +2,7 @@ package com.paritytrading.parity.client;
 
 import static org.jvirtanen.util.Applications.*;
 
+import com.paritytrading.foundation.ASCII;
 import com.paritytrading.nassau.soupbintcp.SoupBinTCP;
 import com.paritytrading.parity.client.command.Command;
 import com.paritytrading.parity.client.command.CommandException;
@@ -50,7 +51,12 @@ public class TerminalClient implements Closeable {
 
         OrderEntry orderEntry = OrderEntry.open(address, events);
 
-        SoupBinTCP.LoginRequest loginRequest = new SoupBinTCP.LoginRequest(username, password, "", 0);
+        SoupBinTCP.LoginRequest loginRequest = new SoupBinTCP.LoginRequest();
+
+        ASCII.putLeft(loginRequest.username, username);
+        ASCII.putLeft(loginRequest.password, password);
+        ASCII.putRight(loginRequest.requestedSession, "");
+        ASCII.putLongRight(loginRequest.requestedSequenceNumber, 0);
 
         orderEntry.getTransport().login(loginRequest);
 

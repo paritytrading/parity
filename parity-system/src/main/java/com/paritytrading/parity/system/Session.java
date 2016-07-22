@@ -1,6 +1,6 @@
 package com.paritytrading.parity.system;
 
-import com.paritytrading.foundation.ASCII;
+import com.paritytrading.foundation.ByteArrays;
 import com.paritytrading.nassau.soupbintcp.SoupBinTCP;
 import com.paritytrading.nassau.soupbintcp.SoupBinTCPServer;
 import com.paritytrading.nassau.soupbintcp.SoupBinTCPServerStatusListener;
@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerListener {
+
+    private static final byte SPACE = ' ';
 
     private static SoupBinTCP.LoginAccepted loginAccepted = new SoupBinTCP.LoginAccepted();
 
@@ -93,7 +95,7 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
             close();
         }
 
-        username = ASCII.packLong(payload.username);
+        username = ByteArrays.packLong(payload.username, SPACE);
     }
 
     @Override

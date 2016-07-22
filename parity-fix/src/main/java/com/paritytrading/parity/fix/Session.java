@@ -30,8 +30,7 @@ class Session implements Closeable {
 
     private static final String UNKNOWN_ORDER_ID = "NONE";
 
-    private static SoupBinTCP.LoginRequest loginRequest =
-        new SoupBinTCP.LoginRequest("", "", "", 0);
+    private static SoupBinTCP.LoginRequest loginRequest = new SoupBinTCP.LoginRequest();
 
     private static POE.EnterOrder enterOrder = new POE.EnterOrder();
 
@@ -366,8 +365,10 @@ class Session implements Closeable {
 
             fix.updateCompID(message);
 
-            loginRequest.username = username.asString();
-            loginRequest.password = password.asString();
+            ASCII.putLeft(loginRequest.username, username.asString());
+            ASCII.putLeft(loginRequest.password, password.asString());
+            ASCII.putRight(loginRequest.requestedSession, "");
+            ASCII.putLongRight(loginRequest.requestedSequenceNumber, 0);
 
             orderEntry.login(loginRequest);
         }

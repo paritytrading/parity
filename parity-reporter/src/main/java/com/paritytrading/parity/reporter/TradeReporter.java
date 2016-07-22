@@ -3,9 +3,9 @@ package com.paritytrading.parity.reporter;
 import static org.jvirtanen.util.Applications.*;
 
 import com.paritytrading.nassau.MessageListener;
+import com.paritytrading.nassau.util.MoldUDP64;
+import com.paritytrading.nassau.util.SoupBinTCP;
 import com.paritytrading.parity.net.pmr.PMRParser;
-import com.paritytrading.parity.util.MoldUDP64;
-import com.paritytrading.parity.util.SoupBinTCP;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigException;
 import java.io.FileNotFoundException;

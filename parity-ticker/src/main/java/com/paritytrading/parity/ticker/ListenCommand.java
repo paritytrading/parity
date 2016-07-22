@@ -4,10 +4,10 @@ import static org.jvirtanen.util.Applications.*;
 
 import com.paritytrading.foundation.ASCII;
 import com.paritytrading.nassau.MessageListener;
+import com.paritytrading.nassau.util.MoldUDP64;
+import com.paritytrading.nassau.util.SoupBinTCP;
 import com.paritytrading.parity.net.pmd.PMDParser;
 import com.paritytrading.parity.top.Market;
-import com.paritytrading.parity.util.MoldUDP64;
-import com.paritytrading.parity.util.SoupBinTCP;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigException;
 import java.io.FileNotFoundException;
