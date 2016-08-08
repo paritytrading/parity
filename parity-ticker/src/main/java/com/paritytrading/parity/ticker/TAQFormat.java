@@ -3,9 +3,9 @@ package com.paritytrading.parity.ticker;
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 
 import com.paritytrading.foundation.ASCII;
+import com.paritytrading.parity.book.Side;
 import com.paritytrading.parity.file.taq.TAQ;
 import com.paritytrading.parity.file.taq.TAQWriter;
-import com.paritytrading.parity.top.Side;
 import it.unimi.dsi.fastutil.longs.Long2ObjectArrayMap;
 import java.nio.charset.Charset;
 import java.time.LocalDate;

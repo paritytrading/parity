@@ -41,6 +41,8 @@
   </properties>
 
   <modules>
+    <module>parity-book</module>
+    <module>parity-book-perf-test</module>
     <module>parity-client</module>
     <module>parity-file</module>
     <module>parity-fix</module>
@@ -50,8 +52,6 @@
     <module>parity-reporter</module>
     <module>parity-system</module>
     <module>parity-ticker</module>
-    <module>parity-top</module>
-    <module>parity-top-perf-test</module>
     <module>parity-util</module>
   </modules>
 

@@ -1,7 +1,7 @@
 package com.paritytrading.parity.ticker;
 
 import com.paritytrading.foundation.ASCII;
-import com.paritytrading.parity.top.Side;
+import com.paritytrading.parity.book.Side;
 import com.paritytrading.parity.util.Timestamps;
 import it.unimi.dsi.fastutil.longs.Long2ObjectArrayMap;
 import java.util.List;
