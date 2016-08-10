@@ -10,13 +10,10 @@ class Level {
 
     private ArrayList<Order> orders;
 
-    private ArrayList<Order> toDelete;
-
     public Level(Orders parent, long price) {
-        this.parent   = parent;
-        this.price    = price;
-        this.orders   = new ArrayList<>();
-        this.toDelete = new ArrayList<>();
+        this.parent = parent;
+        this.price  = price;
+        this.orders = new ArrayList<>();
     }
 
     public long getPrice() {
@@ -31,7 +28,8 @@ class Level {
         return order;
     }
 
-    public long match(long orderId, Side side, long quantity, MarketListener listener) {
+    public long match(long orderId, Side side, long quantity, MarketListener listener,
+            ArrayList<Order> toDelete) {
         for (int i = 0; quantity > 0 && i < orders.size(); i++) {
             Order order = orders.get(i);
 

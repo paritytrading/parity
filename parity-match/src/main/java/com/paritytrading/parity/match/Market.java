@@ -1,6 +1,7 @@
 package com.paritytrading.parity.match;
 
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
+import java.util.ArrayList;
 
 /**
  * A matching engine.
@@ -14,6 +15,8 @@ public class Market {
 
     private MarketListener listener;
 
+    private ArrayList<Order> toDelete;
+
     /**
      * Create a matching engine.
      *
@@ -26,6 +29,8 @@ public class Market {
         this.orders = new Long2ObjectOpenHashMap<>();
 
         this.listener = listener;
+
+        this.toDelete = new ArrayList<>();
     }
 
     /**
@@ -63,7 +68,8 @@ public class Market {
         Level top = orders.getBestLevel();
 
         while (remainingQuantity > 0 && top != null) {
-            remainingQuantity = top.match(orderId, side, remainingQuantity, listener);
+            remainingQuantity = top.match(orderId, side, remainingQuantity,
+                    listener, toDelete);
 
             top = orders.getBestLevel();
         }
@@ -109,7 +115,8 @@ public class Market {
         Level top = asks.getBestLevel();
 
         while (remainingQuantity > 0 && top != null && top.getPrice() <= price) {
-            remainingQuantity = top.match(orderId, Side.BUY, remainingQuantity, listener);
+            remainingQuantity = top.match(orderId, Side.BUY, remainingQuantity,
+                    listener, toDelete);
 
             top = asks.getBestLevel();
         }
@@ -127,7 +134,8 @@ public class Market {
         Level top = bids.getBestLevel();
 
         while (remainingQuantity > 0 && top != null && top.getPrice() >= price) {
-            remainingQuantity = top.match(orderId, Side.SELL, remainingQuantity, listener);
+            remainingQuantity = top.match(orderId, Side.SELL, remainingQuantity,
+                    listener, toDelete);
 
             top = bids.getBestLevel();
         }
