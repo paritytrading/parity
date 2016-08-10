@@ -1,6 +1,7 @@
 package com.paritytrading.parity.match;
 
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.longs.Long2ObjectRBTreeMap;
 import java.util.ArrayList;
 
 /**
@@ -8,8 +9,8 @@ import java.util.ArrayList;
  */
 public class Market {
 
-    private Orders bids;
-    private Orders asks;
+    private Long2ObjectRBTreeMap<Level> bids;
+    private Long2ObjectRBTreeMap<Level> asks;
 
     private Long2ObjectOpenHashMap<Order> orders;
 
@@ -23,8 +24,8 @@ public class Market {
      * @param listener a listener for outbound events from the matching engine
      */
     public Market(MarketListener listener) {
-        this.bids = new Orders(BidComparator.INSTANCE);
-        this.asks = new Orders(AskComparator.INSTANCE);
+        this.bids = new Long2ObjectRBTreeMap<>(BidComparator.INSTANCE);
+        this.asks = new Long2ObjectRBTreeMap<>(AskComparator.INSTANCE);
 
         this.orders = new Long2ObjectOpenHashMap<>();
 
@@ -62,16 +63,19 @@ public class Market {
         }
     }
 
-    private void match(long orderId, Side side, Orders orders, long size) {
+    private void match(long orderId, Side side, Long2ObjectRBTreeMap<Level> levels, long size) {
         long remainingQuantity = size;
 
-        Level top = orders.getBestLevel();
+        Level bestLevel = getBestLevel(levels);
 
-        while (remainingQuantity > 0 && top != null) {
-            remainingQuantity = top.match(orderId, side, remainingQuantity,
+        while (remainingQuantity > 0 && bestLevel != null) {
+            remainingQuantity = bestLevel.match(orderId, side, remainingQuantity,
                     listener, toDelete);
 
-            top = orders.getBestLevel();
+            if (bestLevel.isEmpty())
+                levels.remove(bestLevel.getPrice());
+
+            bestLevel = getBestLevel(levels);
         }
 
         if (remainingQuantity > 0)
@@ -112,17 +116,20 @@ public class Market {
     private void buy(long orderId, long price, long size) {
         long remainingQuantity = size;
 
-        Level top = asks.getBestLevel();
+        Level bestLevel = getBestLevel(asks);
 
-        while (remainingQuantity > 0 && top != null && top.getPrice() <= price) {
-            remainingQuantity = top.match(orderId, Side.BUY, remainingQuantity,
+        while (remainingQuantity > 0 && bestLevel != null && bestLevel.getPrice() <= price) {
+            remainingQuantity = bestLevel.match(orderId, Side.BUY, remainingQuantity,
                     listener, toDelete);
 
-            top = asks.getBestLevel();
+            if (bestLevel.isEmpty())
+                asks.remove(bestLevel.getPrice());
+
+            bestLevel = getBestLevel(asks);
         }
 
         if (remainingQuantity > 0) {
-            orders.put(orderId, bids.add(orderId, price, remainingQuantity));
+            orders.put(orderId, add(bids, orderId, Side.BUY, price, remainingQuantity));
 
             listener.add(orderId, Side.BUY, price, remainingQuantity);
         }
@@ -131,17 +138,20 @@ public class Market {
     private void sell(long orderId, long price, long size) {
         long remainingQuantity = size;
 
-        Level top = bids.getBestLevel();
+        Level bestLevel = getBestLevel(bids);
 
-        while (remainingQuantity > 0 && top != null && top.getPrice() >= price) {
-            remainingQuantity = top.match(orderId, Side.SELL, remainingQuantity,
+        while (remainingQuantity > 0 && bestLevel != null && bestLevel.getPrice() >= price) {
+            remainingQuantity = bestLevel.match(orderId, Side.SELL, remainingQuantity,
                     listener, toDelete);
 
-            top = bids.getBestLevel();
+            if (bestLevel.isEmpty())
+                bids.remove(bestLevel.getPrice());
+
+            bestLevel = getBestLevel(bids);
         }
 
         if (remainingQuantity > 0) {
-            orders.put(orderId, asks.add(orderId, price, remainingQuantity));
+            orders.put(orderId, add(asks, orderId, Side.SELL, price, remainingQuantity));
 
             listener.add(orderId, Side.SELL, price, remainingQuantity);
         }
@@ -172,11 +182,49 @@ public class Market {
         if (size > 0) {
             order.resize(size);
         } else {
+            delete(order);
+
             orders.remove(orderId);
-            order.delete();
         }
 
         listener.cancel(orderId, remainingQuantity - size, size);
+    }
+
+    private Level getBestLevel(Long2ObjectRBTreeMap<Level> levels) {
+        if (levels.isEmpty())
+            return null;
+
+        return levels.get(levels.firstLongKey());
+    }
+
+    private Order add(Long2ObjectRBTreeMap<Level> levels, long orderId, Side side, long price, long size) {
+        Level level = levels.get(price);
+        if (level == null) {
+            level = new Level(side, price);
+            levels.put(price, level);
+        }
+
+        return level.add(orderId, size);
+    }
+
+    private void delete(Order order) {
+        Level level = order.getLevel();
+
+        level.delete(order);
+
+        if (level.isEmpty())
+            delete(level);
+    }
+
+    private void delete(Level level) {
+        switch (level.getSide()) {
+        case BUY:
+            bids.remove(level.getPrice());
+            break;
+        case SELL:
+            asks.remove(level.getPrice());
+            break;
+        }
     }
 
 }

@@ -2,18 +2,22 @@ package com.paritytrading.parity.match;
 
 class Order {
 
-    private Level parent;
+    private Level level;
 
     private long id;
 
     private long remainingQuantity;
 
-    public Order(Level parent, long id, long size) {
-        this.parent = parent;
+    public Order(Level level, long id, long size) {
+        this.level = level;
 
         this.id = id;
 
         this.remainingQuantity = size;
+    }
+
+    public Level getLevel() {
+        return level;
     }
 
     public long getId() {
@@ -30,10 +34,6 @@ class Order {
 
     public void resize(long size) {
         remainingQuantity = size;
-    }
-
-    public void delete() {
-        parent.delete(this);
     }
 
 }
