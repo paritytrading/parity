@@ -17,31 +17,25 @@ class MarketEvents implements MarketListener {
     }
 
     @Override
-    public void bbo(long instrument, long bidPrice, long bidSize, long askPrice, long askSize) {
-        events.add(new BBO(instrument, bidPrice, bidSize, askPrice, askSize));
+    public void update(OrderBook book, boolean bbo) {
+        events.add(new Update(book.getInstrument(), bbo));
     }
 
     @Override
-    public void trade(long instrument, Side side, long price, long size) {
-        events.add(new Trade(instrument, side, price, size));
+    public void trade(OrderBook book, Side side, long price, long size) {
+        events.add(new Trade(book.getInstrument(), side, price, size));
     }
 
     public interface Event {
     }
 
-    public static class BBO extends Value implements Event {
-        public final long instrument;
-        public final long bidPrice;
-        public final long bidSize;
-        public final long askPrice;
-        public final long askSize;
+    public static class Update extends Value implements Event {
+        public final long    instrument;
+        public final boolean bbo;
 
-        public BBO(long instrument, long bidPrice, long bidSize, long askPrice, long askSize) {
+        public Update(long instrument, boolean bbo) {
             this.instrument = instrument;
-            this.bidPrice   = bidPrice;
-            this.bidSize    = bidSize;
-            this.askPrice   = askPrice;
-            this.askSize    = askSize;
+            this.bbo        = bbo;
         }
     }
 

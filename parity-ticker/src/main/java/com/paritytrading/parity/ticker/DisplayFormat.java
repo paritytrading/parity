@@ -1,6 +1,7 @@
 package com.paritytrading.parity.ticker;
 
 import com.paritytrading.foundation.ASCII;
+import com.paritytrading.parity.book.OrderBook;
 import com.paritytrading.parity.book.Side;
 import com.paritytrading.parity.util.Timestamps;
 import it.unimi.dsi.fastutil.longs.Long2ObjectArrayMap;
@@ -34,8 +35,17 @@ class DisplayFormat extends MarketDataListener {
     }
 
     @Override
-    public void bbo(long instrument, long bidPrice, long bidSize, long askPrice, long askSize) {
-        Trade trade = trades.get(instrument);
+    public void update(OrderBook book, boolean bbo) {
+        if (!bbo)
+            return;
+
+        long instrument = book.getInstrument();
+
+        long bidPrice = book.getBestBidPrice();
+        long bidSize  = book.getBidSize(bidPrice);
+
+        long askPrice = book.getBestAskPrice();
+        long askSize  = book.getAskSize(askPrice);
 
         printf("%12s %8s ", Timestamps.format(timestampMillis()), ASCII.unpackLong(instrument));
 
@@ -49,6 +59,8 @@ class DisplayFormat extends MarketDataListener {
         else
             printf("%s ", MISSING);
 
+        Trade trade = trades.get(instrument);
+
         if (trade.size != 0)
             printf("%9.2f %10d\n", trade.price / PRICE_FACTOR, trade.size);
         else
@@ -56,8 +68,8 @@ class DisplayFormat extends MarketDataListener {
     }
 
     @Override
-    public void trade(long instrument, Side side, long price, long size) {
-        Trade trade = trades.get(instrument);
+    public void trade(OrderBook book, Side side, long price, long size) {
+        Trade trade = trades.get(book.getInstrument());
 
         trade.price = price;
         trade.size  = size;

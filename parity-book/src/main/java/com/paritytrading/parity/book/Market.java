@@ -3,7 +3,7 @@ package com.paritytrading.parity.book;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 
 /**
- * An order book reconstruction.
+ * A market.
  */
 public class Market {
 
@@ -14,10 +14,9 @@ public class Market {
     private MarketListener listener;
 
     /**
-     * Create an order book reconstruction.
+     * Create a market.
      *
-     * @param listener a listener for outbound events from the order book
-     *   reconstruction
+     * @param listener a listener for outbound events from the market
      */
     public Market(MarketListener listener) {
         this.books  = new Long2ObjectOpenHashMap<>();
@@ -32,12 +31,18 @@ public class Market {
      * <p>If the order book for the instrument is already open, do nothing.</p>
      *
      * @param instrument an instrument
+     * @return the order book
      */
-    public void open(long instrument) {
-        if (books.containsKey(instrument))
-            return;
+    public OrderBook open(long instrument) {
+        OrderBook book = books.get(instrument);
+        if (book != null)
+            return book;
 
-        books.put(instrument, new OrderBook(instrument));
+        book = new OrderBook(instrument);
+
+        books.put(instrument, book);
+
+        return book;
     }
 
     /**
@@ -51,9 +56,9 @@ public class Market {
     }
 
     /**
-     * Add an order to the order book.
+     * Add an order to an order book.
      *
-     * <p>A BBO event is triggered if the top of the book changes.</p>
+     * <p>An update event is triggered.</p>
      *
      * <p>If the order book for the instrument is closed or the order
      * identifier is known, do nothing.</p>
@@ -74,20 +79,19 @@ public class Market {
 
         Order order = new Order(book, side, price, size);
 
-        boolean onBestLevel = book.add(side, price, size);
+        boolean bbo = book.add(side, price, size);
 
         orders.put(orderId, order);
 
-        if (onBestLevel)
-            book.bbo(listener);
+        listener.update(book, bbo);
     }
 
     /**
-     * Modify an order in the order book. The order will retain its time
+     * Modify an order in an order book. The order will retain its time
      * priority. If the new size is zero, the order is deleted from the
      * order book.
      *
-     * <p>A BBO event is triggered if the top of the book changes.</p>
+     * <p>An update event is triggered.</p>
      *
      * <p>If the order identifier is unknown, do nothing.</p>
      *
@@ -103,7 +107,7 @@ public class Market {
 
         long newSize = Math.max(0, size);
 
-        boolean onBestLevel = book.update(order.getSide(), order.getPrice(),
+        boolean bbo = book.update(order.getSide(), order.getPrice(),
                 newSize - order.getRemainingQuantity());
 
         if (newSize == 0)
@@ -111,15 +115,14 @@ public class Market {
         else
             order.setRemainingQuantity(newSize);
 
-        if (onBestLevel)
-            book.bbo(listener);
+        listener.update(book, bbo);
     }
 
     /**
-     * Execute a quantity of an order in the order book. If the remaining
+     * Execute a quantity of an order in an order book. If the remaining
      * quantity reaches zero, the order is deleted from the order book.
      *
-     * <p>A Trade event and a BBO event are triggered.</p>
+     * <p>A Trade event and an update event are triggered.</p>
      *
      * <p>If the order identifier is unknown, do nothing.</p>
      *
@@ -135,10 +138,10 @@ public class Market {
     }
 
     /**
-     * Execute a quantity of an order in the order book. If the remaining
+     * Execute a quantity of an order in an order book. If the remaining
      * quantity reaches zero, the order is deleted from the order book.
      *
-     * <p>A Trade event and a BBO event are triggered.</p>
+     * <p>A Trade event and an update event are triggered.</p>
      *
      * <p>If the order identifier is unknown, do nothing.</p>
      *
@@ -163,7 +166,7 @@ public class Market {
 
         long executedQuantity = Math.min(quantity, remainingQuantity);
 
-        listener.trade(book.getInstrument(), side, price, executedQuantity);
+        listener.trade(book, side, price, executedQuantity);
 
         book.update(side, order.getPrice(), -executedQuantity);
 
@@ -172,14 +175,14 @@ public class Market {
         else
             order.reduce(executedQuantity);
 
-        book.bbo(listener);
+        listener.update(book, true);
     }
 
     /**
-     * Cancel a quantity of an order in the order book. If the remaining
+     * Cancel a quantity of an order in an order book. If the remaining
      * quantity reaches zero, the order is deleted from the order book.
      *
-     * <p>A BBO event is triggered if the top of the book changes.</p>
+     * <p>An update event is triggered if the top of the book changes.</p>
      *
      * <p>If the order identifier is unknown, do nothing.</p>
      *
@@ -197,21 +200,20 @@ public class Market {
 
         long canceledQuantity = Math.min(quantity, remainingQuantity);
 
-        boolean onBestLevel = book.update(order.getSide(), order.getPrice(), -canceledQuantity);
+        boolean bbo = book.update(order.getSide(), order.getPrice(), -canceledQuantity);
 
         if (canceledQuantity == remainingQuantity)
             orders.remove(orderId);
         else
             order.reduce(canceledQuantity);
 
-        if (onBestLevel)
-            book.bbo(listener);
+        listener.update(book, bbo);
     }
 
     /**
-     * Delete an order from the order book.
+     * Delete an order from an order book.
      *
-     * <p>A BBO event is triggered if the top of the book changes.</p>
+     * <p>An update event is triggered if the top of the book changes.</p>
      *
      * <p>If the order identifier is unknown, do nothing.</p>
      *
@@ -224,12 +226,11 @@ public class Market {
 
         OrderBook book = order.getOrderBook();
 
-        boolean onBestLevel = book.update(order.getSide(), order.getPrice(), -order.getRemainingQuantity());
+        boolean bbo = book.update(order.getSide(), order.getPrice(), -order.getRemainingQuantity());
 
         orders.remove(orderId);
 
-        if (onBestLevel)
-            book.bbo(listener);
+        listener.update(book, bbo);
     }
 
 }

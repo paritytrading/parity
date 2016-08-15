@@ -2,6 +2,7 @@ package com.paritytrading.parity.book.perf;
 
 import com.paritytrading.parity.book.Market;
 import com.paritytrading.parity.book.MarketListener;
+import com.paritytrading.parity.book.OrderBook;
 import com.paritytrading.parity.book.Side;
 import java.util.concurrent.TimeUnit;
 import org.openjdk.jmh.annotations.Benchmark;
@@ -35,11 +36,11 @@ public class MarketBenchmark {
         market = new Market(new MarketListener() {
 
             @Override
-            public void bbo(long instrument, long bidPrice, long bidSize, long askPrice, long askSize) {
+            public void update(OrderBook book, boolean bbo) {
             }
 
             @Override
-            public void trade(long instrument, Side side, long price, long size) {
+            public void trade(OrderBook book, Side side, long price, long size) {
             }
 
         });

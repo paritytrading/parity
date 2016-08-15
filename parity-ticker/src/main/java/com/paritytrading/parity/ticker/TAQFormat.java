@@ -3,6 +3,7 @@ package com.paritytrading.parity.ticker;
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 
 import com.paritytrading.foundation.ASCII;
+import com.paritytrading.parity.book.OrderBook;
 import com.paritytrading.parity.book.Side;
 import com.paritytrading.parity.file.taq.TAQ;
 import com.paritytrading.parity.file.taq.TAQWriter;
@@ -35,22 +36,25 @@ class TAQFormat extends MarketDataListener {
     }
 
     @Override
-    public void bbo(long instrument, long bidPrice, long bidSize, long askPrice, long askSize) {
+    public void update(OrderBook book, boolean bbo) {
+        if (!bbo)
+            return;
+
         quote.timestampMillis = timestampMillis();
-        quote.instrument      = instrument(instrument);
-        quote.bidPrice        = bidPrice;
-        quote.bidSize         = bidSize;
-        quote.askPrice        = askPrice;
-        quote.askSize         = askSize;
+        quote.instrument      = instrument(book.getInstrument());
+        quote.bidPrice        = book.getBestBidPrice();
+        quote.bidSize         = book.getBidSize(quote.bidPrice);
+        quote.askPrice        = book.getBestAskPrice();
+        quote.askSize         = book.getAskSize(quote.askPrice);
 
         writer.write(quote);
         writer.flush();
     }
 
     @Override
-    public void trade(long instrument, Side side, long price, long size) {
+    public void trade(OrderBook book, Side side, long price, long size) {
         trade.timestampMillis = timestampMillis();
-        trade.instrument      = instrument(instrument);
+        trade.instrument      = instrument(book.getInstrument());
         trade.price           = price;
         trade.size            = size;
         trade.side            = side(side);

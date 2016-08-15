@@ -1,29 +1,26 @@
 package com.paritytrading.parity.book;
 
 /**
- * The interface for outbound events from the order book reconstruction.
+ * The interface for outbound events from a market.
  */
 public interface MarketListener {
 
     /**
-     * An event indicating that the best bid and offer (BBO) has changed.
+     * An event indicating that an order book has changed.
      *
-     * @param instrument the instrument
-     * @param bidPrice the bid price or zero if there are no bids
-     * @param bidSize the bid size or zero if there are no bids
-     * @param askPrice the ask price or zero if there are no asks
-     * @param askSize the ask size or zero if there are no asks
+     * @param book the order book
+     * @param bbo true if the best bid and offer (BBO) has changed, otherwise false
      */
-    void bbo(long instrument, long bidPrice, long bidSize, long askPrice, long askSize);
+    void update(OrderBook book, boolean bbo);
 
     /**
      * An event indicating that a trade has taken place.
      *
-     * @param instrument the instrument
+     * @param book the order book
      * @param side the side of the resting order
      * @param price the trade price
      * @param size the trade size
      */
-    void trade(long instrument, Side side, long price, long size);
+    void trade(OrderBook book, Side side, long price, long size);
 
 }

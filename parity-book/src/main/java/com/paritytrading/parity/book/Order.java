@@ -1,7 +1,7 @@
 package com.paritytrading.parity.book;
 
 /**
- * An order in an order book.
+ * An order.
  */
 public class Order {
 
@@ -21,17 +21,13 @@ public class Order {
         this.remainingQuantity = size;
     }
 
-    OrderBook getOrderBook() {
-        return book;
-    }
-
     /**
-     * Get the instrument.
+     * Get the order book.
      *
-     * @return the instrument
+     * @return the order book
      */
-    public long getInstrument() {
-        return book.getInstrument();
+    public OrderBook getOrderBook() {
+        return book;
     }
 
     /**

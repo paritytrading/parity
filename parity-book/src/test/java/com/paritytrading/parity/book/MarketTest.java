@@ -2,10 +2,15 @@ package com.paritytrading.parity.book;
 
 import static com.paritytrading.parity.book.MarketEvents.*;
 import static java.util.Arrays.*;
+import static java.util.Collections.*;
 import static org.junit.Assert.*;
 
+import it.unimi.dsi.fastutil.longs.LongIterator;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
+import org.jvirtanen.value.Value;
 
 public class MarketTest {
 
@@ -15,12 +20,14 @@ public class MarketTest {
 
     private Market market;
 
+    private OrderBook book;
+
     @Before
     public void setUp() {
         events = new MarketEvents();
         market = new Market(events);
 
-        market.open(INSTRUMENT);
+        book = market.open(INSTRUMENT);
     }
 
     @Test
@@ -28,10 +35,12 @@ public class MarketTest {
         market.add(INSTRUMENT, 1, Side.BUY,   999, 100);
         market.add(INSTRUMENT, 2, Side.SELL, 1001, 200);
 
-        Event bboAfterBid = new BBO(INSTRUMENT, 999, 100,    0,   0);
-        Event bboAfterAsk = new BBO(INSTRUMENT, 999, 100, 1001, 200);
+        assertEquals(asList(new Level(999, 100, 1001, 200)), levels(book));
 
-        assertEquals(asList(bboAfterBid, bboAfterAsk), events.collect());
+        Event updateAfterBid = new Update(INSTRUMENT, true);
+        Event updateAfterAsk = new Update(INSTRUMENT, true);
+
+        assertEquals(asList(updateAfterBid, updateAfterAsk), events.collect());
     }
 
     @Test
@@ -40,11 +49,15 @@ public class MarketTest {
         market.add(INSTRUMENT, 2, Side.SELL, 1001, 200);
         market.add(INSTRUMENT, 3, Side.BUY,  1000,  50);
 
-        Event bboAfterFirstBid  = new BBO(INSTRUMENT,  999, 100,    0,   0);
-        Event bboAfterAsk       = new BBO(INSTRUMENT,  999, 100, 1001, 200);
-        Event bboAfterSecondBid = new BBO(INSTRUMENT, 1000,  50, 1001, 200);
+        assertEquals(asList(new Level(1000, 50, 1001, 200),
+                    new Level(999, 100, 0, 0)), levels(book));
 
-        assertEquals(asList(bboAfterFirstBid, bboAfterAsk, bboAfterSecondBid), events.collect());
+        Event updateAfterFirstBid  = new Update(INSTRUMENT, true);
+        Event updateAfterAsk       = new Update(INSTRUMENT, true);
+        Event updateAfterSecondBid = new Update(INSTRUMENT, true);
+
+        assertEquals(asList(updateAfterFirstBid, updateAfterAsk, updateAfterSecondBid),
+                events.collect());
     }
 
     @Test
@@ -53,11 +66,14 @@ public class MarketTest {
         market.add(INSTRUMENT, 2, Side.SELL, 1001, 200);
         market.modify(2, 100);
 
-        Event bboAfterBid          = new BBO(INSTRUMENT, 999, 100,    0,   0);
-        Event bboAfterAsk          = new BBO(INSTRUMENT, 999, 100, 1001, 200);
-        Event bboAfterModification = new BBO(INSTRUMENT, 999, 100, 1001, 100);
+        assertEquals(asList(new Level(999, 100, 1001, 100)), levels(book));
 
-        assertEquals(asList(bboAfterBid, bboAfterAsk, bboAfterModification), events.collect());
+        Event updateAfterBid          = new Update(INSTRUMENT, true);
+        Event updateAfterAsk          = new Update(INSTRUMENT, true);
+        Event updateAfterModification = new Update(INSTRUMENT, true);
+
+        assertEquals(asList(updateAfterBid, updateAfterAsk, updateAfterModification),
+                events.collect());
     }
 
     @Test
@@ -67,12 +83,16 @@ public class MarketTest {
         market.add(INSTRUMENT, 3, Side.SELL, 1002,  50);
         market.execute(2, 200);
 
-        Event bboAfterBid      = new BBO(INSTRUMENT, 999, 100,    0,   0);
-        Event bboAfterFirstAsk = new BBO(INSTRUMENT, 999, 100, 1001, 200);
-        Event trade            = new Trade(INSTRUMENT, Side.SELL, 1001, 200);
-        Event bboAfterTrade    = new BBO(INSTRUMENT, 999, 100, 1002,  50);
+        assertEquals(asList(new Level(999, 100, 1002, 50)), levels(book));
 
-        assertEquals(asList(bboAfterBid, bboAfterFirstAsk, trade, bboAfterTrade), events.collect());
+        Event updateAfterBid       = new Update(INSTRUMENT, true);
+        Event updateAfterFirstAsk  = new Update(INSTRUMENT, true);
+        Event updateAfterSecondAsk = new Update(INSTRUMENT, false);
+        Event trade                = new Trade(INSTRUMENT, Side.SELL, 1001, 200);
+        Event updateAfterTrade     = new Update(INSTRUMENT, true);
+
+        assertEquals(asList(updateAfterBid, updateAfterFirstAsk, updateAfterSecondAsk,
+                    trade, updateAfterTrade), events.collect());
     }
 
     @Test
@@ -82,12 +102,16 @@ public class MarketTest {
         market.add(INSTRUMENT, 3, Side.SELL, 1002,  50);
         market.execute(2, 200, 1000);
 
-        Event bboAfterBid      = new BBO(INSTRUMENT, 999, 100,    0,   0);
-        Event bboAfterFirstAsk = new BBO(INSTRUMENT, 999, 100, 1001, 200);
-        Event trade            = new Trade(INSTRUMENT, Side.SELL, 1000, 200);
-        Event bboAfterTrade    = new BBO(INSTRUMENT, 999, 100, 1002,  50);
+        assertEquals(asList(new Level(999, 100, 1002, 50)), levels(book));
 
-        assertEquals(asList(bboAfterBid, bboAfterFirstAsk, trade, bboAfterTrade), events.collect());
+        Event updateAfterBid       = new Update(INSTRUMENT, true);
+        Event updateAfterFirstAsk  = new Update(INSTRUMENT, true);
+        Event updateAfterSecondAsk = new Update(INSTRUMENT, false);
+        Event trade                = new Trade(INSTRUMENT, Side.SELL, 1000, 200);
+        Event updateAfterTrade     = new Update(INSTRUMENT, true);
+
+        assertEquals(asList(updateAfterBid, updateAfterFirstAsk, updateAfterSecondAsk,
+                    trade, updateAfterTrade), events.collect());
     }
 
     @Test
@@ -96,12 +120,15 @@ public class MarketTest {
         market.add(INSTRUMENT, 2, Side.SELL, 1001, 200);
         market.execute(2, 100);
 
-        Event bboAfterBid   = new BBO(INSTRUMENT, 999, 100,    0,   0);
-        Event bboAfterAsk   = new BBO(INSTRUMENT, 999, 100, 1001, 200);
-        Event trade         = new Trade(INSTRUMENT, Side.SELL, 1001, 100);
-        Event bboAfterTrade = new BBO(INSTRUMENT, 999, 100, 1001, 100);
+        assertEquals(asList(new Level(999, 100, 1001, 100)), levels(book));
 
-        assertEquals(asList(bboAfterBid, bboAfterAsk, trade, bboAfterTrade), events.collect());
+        Event updateAfterBid   = new Update(INSTRUMENT, true);
+        Event updateAfterAsk   = new Update(INSTRUMENT, true);
+        Event trade            = new Trade(INSTRUMENT, Side.SELL, 1001, 100);
+        Event updateAfterTrade = new Update(INSTRUMENT, true);
+
+        assertEquals(asList(updateAfterBid, updateAfterAsk, trade, updateAfterTrade),
+                events.collect());
     }
 
     @Test
@@ -111,11 +138,15 @@ public class MarketTest {
         market.add(INSTRUMENT, 3, Side.SELL, 1002,  50);
         market.cancel(2, 200);
 
-        Event bboAfterBid      = new BBO(INSTRUMENT, 999, 100,    0,   0);
-        Event bboAfterFirstAsk = new BBO(INSTRUMENT, 999, 100, 1001, 200);
-        Event bboAfterCancel   = new BBO(INSTRUMENT, 999, 100, 1002,  50);
+        assertEquals(asList(new Level(999, 100, 1002, 50)), levels(book));
 
-        assertEquals(asList(bboAfterBid, bboAfterFirstAsk, bboAfterCancel), events.collect());
+        Event updateAfterBid       = new Update(INSTRUMENT, true);
+        Event updateAfterFirstAsk  = new Update(INSTRUMENT, true);
+        Event updateAfterSecondAsk = new Update(INSTRUMENT, false);
+        Event updateAfterCancel    = new Update(INSTRUMENT, true);
+
+        assertEquals(asList(updateAfterBid, updateAfterFirstAsk,
+                    updateAfterSecondAsk, updateAfterCancel), events.collect());
     }
 
     @Test
@@ -124,11 +155,14 @@ public class MarketTest {
         market.add(INSTRUMENT, 2, Side.SELL, 1001, 200);
         market.cancel(2, 100);
 
-        Event bboAfterBid    = new BBO(INSTRUMENT, 999, 100,    0,   0);
-        Event bboAfterAsk    = new BBO(INSTRUMENT, 999, 100, 1001, 200);
-        Event bboAfterCancel = new BBO(INSTRUMENT, 999, 100, 1001, 100);
+        assertEquals(asList(new Level(999, 100, 1001, 100)), levels(book));
 
-        assertEquals(asList(bboAfterBid, bboAfterAsk, bboAfterCancel), events.collect());
+        Event updateAfterBid    = new Update(INSTRUMENT, true);
+        Event updateAfterAsk    = new Update(INSTRUMENT, true);
+        Event updateAfterCancel = new Update(INSTRUMENT, true);
+
+        assertEquals(asList(updateAfterBid, updateAfterAsk, updateAfterCancel),
+                events.collect());
     }
 
     @Test
@@ -138,11 +172,15 @@ public class MarketTest {
         market.add(INSTRUMENT, 3, Side.SELL, 1002,  50);
         market.delete(2);
 
-        Event bboAfterBid      = new BBO(INSTRUMENT, 999, 100,    0,   0);
-        Event bboAfterFirstAsk = new BBO(INSTRUMENT, 999, 100, 1001, 200);
-        Event bboAfterDelete   = new BBO(INSTRUMENT, 999, 100, 1002,  50);
+        assertEquals(asList(new Level(999, 100, 1002, 50)), levels(book));
 
-        assertEquals(asList(bboAfterBid, bboAfterFirstAsk, bboAfterDelete), events.collect());
+        Event updateAfterBid       = new Update(INSTRUMENT, true);
+        Event updateAfterFirstAsk  = new Update(INSTRUMENT, true);
+        Event updateAfterSecondAsk = new Update(INSTRUMENT, false);
+        Event updateAfterDelete    = new Update(INSTRUMENT, true);
+
+        assertEquals(asList(updateAfterBid, updateAfterFirstAsk,
+                    updateAfterSecondAsk, updateAfterDelete), events.collect());
     }
 
     @Test
@@ -152,13 +190,57 @@ public class MarketTest {
         market.delete(2);
         market.delete(1);
 
-        Event bboAfterBid          = new BBO(INSTRUMENT, 999, 100,    0,   0);
-        Event bboAfterAsk          = new BBO(INSTRUMENT, 999, 100, 1001, 200);
-        Event bboAfterFirstDelete  = new BBO(INSTRUMENT, 999, 100,    0,   0);
-        Event bboAfterSecondDelete = new BBO(INSTRUMENT,   0,   0,    0,   0);
+        assertEquals(emptyList(), levels(book));
 
-        assertEquals(asList(bboAfterBid, bboAfterAsk, bboAfterFirstDelete, bboAfterSecondDelete),
-                events.collect());
+        Event updateAfterBid          = new Update(INSTRUMENT, true);
+        Event updateAfterAsk          = new Update(INSTRUMENT, true);
+        Event updateAfterFirstDelete  = new Update(INSTRUMENT, true);
+        Event updateAfterSecondDelete = new Update(INSTRUMENT, true);
+
+        assertEquals(asList(updateAfterBid, updateAfterAsk,
+                    updateAfterFirstDelete, updateAfterSecondDelete), events.collect());
+    }
+
+    private static class Level extends Value {
+        public final long bidPrice;
+        public final long bidSize;
+        public final long askPrice;
+        public final long askSize;
+
+        public Level(long bidPrice, long bidSize, long askPrice, long askSize) {
+            this.bidPrice = bidPrice;
+            this.bidSize  = bidSize;
+            this.askPrice = askPrice;
+            this.askSize  = askSize;
+        }
+    }
+
+    private static List<Level> levels(OrderBook book) {
+        List<Level> levels = new ArrayList<>();
+
+        LongIterator bidPrices = book.getBidPrices().iterator();
+        LongIterator askPrices = book.getAskPrices().iterator();
+
+        while (true) {
+            long bidPrice = 0;
+            long askPrice = 0;
+
+            if (bidPrices.hasNext())
+                bidPrice = bidPrices.nextLong();
+
+            if (askPrices.hasNext())
+                askPrice = askPrices.nextLong();
+
+            if (bidPrice == 0 && askPrice == 0)
+                break;
+
+            long bidSize = book.getBidSize(bidPrice);
+            long askSize = book.getAskSize(askPrice);
+
+            levels.add(new Level(bidPrice, bidSize, askPrice, askSize));
+        }
+
+        return levels;
     }
 
 }
