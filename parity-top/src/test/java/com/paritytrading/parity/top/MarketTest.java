@@ -18,7 +18,7 @@ public class MarketTest {
     @Before
     public void setUp() {
         events = new MarketEvents();
-	market = new Market(events);
+        market = new Market(events);
 
         market.open(INSTRUMENT);
     }
