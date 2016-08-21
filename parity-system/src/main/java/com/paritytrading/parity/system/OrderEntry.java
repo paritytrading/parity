@@ -18,10 +18,10 @@ class OrderEntry {
         this.engine = engine;
     }
 
-    public static OrderEntry open(int port, MatchingEngine engine) throws IOException {
+    public static OrderEntry open(InetSocketAddress address, MatchingEngine engine) throws IOException {
         ServerSocketChannel serverChannel = ServerSocketChannel.open();
 
-        serverChannel.bind(new InetSocketAddress(port));
+        serverChannel.bind(address);
         serverChannel.configureBlocking(false);
 
         return new OrderEntry(serverChannel, engine);

@@ -69,9 +69,10 @@ class TradingSystem {
     }
 
     private static OrderEntry orderEntry(Config config, MatchingEngine engine) throws IOException {
-        int port = Configs.getPort(config, "order-entry.port");
+        InetAddress address = Configs.getInetAddress(config, "order-entry.address");
+        int         port    = Configs.getPort(config, "order-entry.port");
 
-        return OrderEntry.open(port, engine);
+        return OrderEntry.open(new InetSocketAddress(address, port), engine);
     }
 
 }
