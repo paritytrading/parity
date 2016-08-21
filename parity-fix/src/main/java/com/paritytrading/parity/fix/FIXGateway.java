@@ -40,10 +40,11 @@ class FIXGateway {
     }
 
     private static FIXAcceptor fix(OrderEntryFactory orderEntry, Config config) throws IOException {
-        int    port         = Configs.getPort(config, "fix.port");
-        String senderCompId = config.getString("fix.sender-comp-id");
+        InetAddress address      = Configs.getInetAddress(config, "fix.address");
+        int         port         = Configs.getPort(config, "fix.port");
+        String      senderCompId = config.getString("fix.sender-comp-id");
 
-        return FIXAcceptor.open(orderEntry, port, senderCompId);
+        return FIXAcceptor.open(orderEntry, new InetSocketAddress(address, port), senderCompId);
     }
 
 }

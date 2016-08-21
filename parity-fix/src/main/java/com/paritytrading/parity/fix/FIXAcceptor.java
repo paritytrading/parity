@@ -29,11 +29,11 @@ class FIXAcceptor {
             .build();
     }
 
-    public static FIXAcceptor open(OrderEntryFactory orderEntry, int port,
-            String senderCompId) throws IOException {
+    public static FIXAcceptor open(OrderEntryFactory orderEntry,
+            InetSocketAddress address, String senderCompId) throws IOException {
         ServerSocketChannel serverChannel = ServerSocketChannel.open();
 
-        serverChannel.bind(new InetSocketAddress(port));
+        serverChannel.bind(address);
         serverChannel.configureBlocking(false);
 
         return new FIXAcceptor(orderEntry, serverChannel, senderCompId);
