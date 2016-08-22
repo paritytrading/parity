@@ -41,6 +41,8 @@
   </properties>
 
   <modules>
+    <module>parity-book</module>
+    <module>parity-book-perf-test</module>
     <module>parity-client</module>
     <module>parity-file</module>
     <module>parity-fix</module>
@@ -50,8 +52,6 @@
     <module>parity-reporter</module>
     <module>parity-system</module>
     <module>parity-ticker</module>
-    <module>parity-top</module>
-    <module>parity-top-perf-test</module>
     <module>parity-util</module>
   </modules>
 
@@ -196,6 +196,7 @@
           <excludePackageNames>com.paritytrading.parity.client:com.paritytrading.parity.fix:com.paritytrading.parity.reporter:com.paritytrading.parity.system:com.paritytrading.parity.ticker:*.perf</excludePackageNames>
           <links>
             <link>http://api.paritytrading.com/nassau/latest/</link>
+            <link>http://fastutil.di.unimi.it/docs/</link>
             <link>http://typesafehub.github.io/config/latest/api/</link>
           </links>
         </configuration>

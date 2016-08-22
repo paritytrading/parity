@@ -32,7 +32,7 @@ Parity consists of the following applications:
 - [**Parity Matching Engine Performance Test**](parity-match-perf-test)
   contains microbenchmarks for the matching engine.
 
-- [**Parity Top of Book Performance Test**](parity-top-perf-test) contains
+- [**Parity Order Book Performance Test**](parity-book-perf-test) contains
   microbenchmarks for the order book reconstruction.
 
 In addition, Parity contains the following libraries:
@@ -44,7 +44,7 @@ In addition, Parity contains the following libraries:
   and reference implementations for network protocols used by the trading
   system.
 
-- [**Parity Top of Book**](parity-top) implements high-performance order book
+- [**Parity Order Book**](parity-book) implements high-performance order book
   reconstruction on the JVM.
 
 - [**Parity Utilities**](parity-util) contains support functions used by the

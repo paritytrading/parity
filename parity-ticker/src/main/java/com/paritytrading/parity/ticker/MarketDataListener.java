@@ -1,6 +1,6 @@
 package com.paritytrading.parity.ticker;
 
-import com.paritytrading.parity.top.MarketListener;
+import com.paritytrading.parity.book.MarketListener;
 
 abstract class MarketDataListener implements MarketListener {
 
