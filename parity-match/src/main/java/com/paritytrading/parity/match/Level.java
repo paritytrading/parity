@@ -4,23 +4,28 @@ import java.util.ArrayList;
 
 class Level {
 
-    private Orders parent;
+    private Side side;
 
     private long price;
 
     private ArrayList<Order> orders;
 
-    private ArrayList<Order> toDelete;
+    public Level(Side side, long price) {
+        this.side   = side;
+        this.price  = price;
+        this.orders = new ArrayList<>();
+    }
 
-    public Level(Orders parent, long price) {
-        this.parent   = parent;
-        this.price    = price;
-        this.orders   = new ArrayList<>();
-        this.toDelete = new ArrayList<>();
+    public Side getSide() {
+        return side;
     }
 
     public long getPrice() {
         return price;
+    }
+
+    public boolean isEmpty() {
+        return orders.isEmpty();
     }
 
     public Order add(long orderId, long size) {
@@ -31,7 +36,8 @@ class Level {
         return order;
     }
 
-    public long match(long orderId, Side side, long quantity, MarketListener listener) {
+    public long match(long orderId, Side side, long quantity, OrderBookListener listener,
+            ArrayList<Order> toDelete) {
         for (int i = 0; quantity > 0 && i < orders.size(); i++) {
             Order order = orders.get(i);
 
@@ -54,7 +60,7 @@ class Level {
 
         if (!toDelete.isEmpty()) {
             for (int i = 0; i < toDelete.size(); i++)
-                toDelete.get(i).delete();
+                orders.remove(toDelete.get(i));
 
             toDelete.clear();
         }
@@ -64,9 +70,6 @@ class Level {
 
     public void delete(Order order) {
         orders.remove(order);
-
-        if (orders.isEmpty())
-            parent.delete(this);
     }
 
 }

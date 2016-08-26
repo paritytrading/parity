@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import org.jvirtanen.value.Value;
 
-class MarketEvents implements MarketListener {
+class OrderBookEvents implements OrderBookListener {
 
     private List<Event> events;
 
-    public MarketEvents() {
+    public OrderBookEvents() {
         this.events = new ArrayList<>();
     }
 

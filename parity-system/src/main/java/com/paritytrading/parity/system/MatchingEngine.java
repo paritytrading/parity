@@ -1,8 +1,8 @@
 package com.paritytrading.parity.system;
 
 import com.paritytrading.foundation.ASCII;
-import com.paritytrading.parity.match.Market;
-import com.paritytrading.parity.match.MarketListener;
+import com.paritytrading.parity.match.OrderBook;
+import com.paritytrading.parity.match.OrderBookListener;
 import com.paritytrading.parity.match.Side;
 import com.paritytrading.parity.net.pmd.PMD;
 import com.paritytrading.parity.net.pmr.PMR;
@@ -18,8 +18,8 @@ class MatchingEngine {
         SYSTEM,
     }
 
-    private Long2ObjectArrayMap<Market>   markets;
-    private Long2ObjectOpenHashMap<Order> orders;
+    private Long2ObjectArrayMap<OrderBook> books;
+    private Long2ObjectOpenHashMap<Order>  orders;
 
     private MarketData      marketData;
     private MarketReporting marketReporting;
@@ -34,13 +34,13 @@ class MatchingEngine {
     private CancelReason cancelReason;
 
     public MatchingEngine(List<String> instruments, MarketData marketData, MarketReporting marketReporting) {
-        this.markets = new Long2ObjectArrayMap<>();
-        this.orders  = new Long2ObjectOpenHashMap<>();
+        this.books  = new Long2ObjectArrayMap<>();
+        this.orders = new Long2ObjectOpenHashMap<>();
 
         EventHandler handler = new EventHandler();
 
         for (String instrument : instruments)
-            markets.put(ASCII.packLong(instrument), new Market(handler));
+            books.put(ASCII.packLong(instrument), new OrderBook(handler));
 
         this.marketData      = marketData;
         this.marketReporting = marketReporting;
@@ -50,15 +50,15 @@ class MatchingEngine {
     }
 
     public void enterOrder(POE.EnterOrder message, Session session) {
-        Market market = markets.get(message.instrument);
-        if (market == null) {
+        OrderBook book = books.get(message.instrument);
+        if (book == null) {
             session.orderRejected(message, POE.ORDER_REJECT_REASON_UNKNOWN_INSTRUMENT);
             return;
         }
 
         long orderNumber = nextOrderNumber++;
 
-        handling = new Order(message.orderId, orderNumber, session, market);
+        handling = new Order(message.orderId, orderNumber, session, book);
 
         instrument = message.instrument;
 
@@ -67,7 +67,7 @@ class MatchingEngine {
         marketReporting.order(session.getUsername(), orderNumber, pmr(message.side),
                 instrument, message.quantity, message.price);
 
-        market.enter(orderNumber, poe(message.side), message.price, message.quantity);
+        book.enter(orderNumber, poe(message.side), message.price, message.quantity);
     }
 
     public void cancelOrder(POE.CancelOrder message, Order order) {
@@ -75,7 +75,7 @@ class MatchingEngine {
 
         cancelReason = CancelReason.REQUEST;
 
-        order.getMarket().cancel(order.getOrderNumber(), message.quantity);
+        order.getBook().cancel(order.getOrderNumber(), message.quantity);
     }
 
     public void cancel(Order order) {
@@ -83,7 +83,7 @@ class MatchingEngine {
 
         cancelReason = CancelReason.SYSTEM;
 
-        order.getMarket().cancel(order.getOrderNumber(), 0);
+        order.getBook().cancel(order.getOrderNumber(), 0);
 
         orders.remove(order.getOrderNumber());
     }
@@ -100,7 +100,7 @@ class MatchingEngine {
         orders.remove(order.getOrderNumber());
     }
 
-    private class EventHandler implements MarketListener {
+    private class EventHandler implements OrderBookListener {
 
         @Override
         public void match(long restingOrderNumber, long incomingOrderNumber, Side incomingSide,

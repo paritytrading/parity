@@ -1,7 +1,7 @@
 package com.paritytrading.parity.match.perf;
 
-import com.paritytrading.parity.match.Market;
-import com.paritytrading.parity.match.MarketListener;
+import com.paritytrading.parity.match.OrderBook;
+import com.paritytrading.parity.match.OrderBookListener;
 import com.paritytrading.parity.match.Side;
 import java.util.concurrent.TimeUnit;
 import org.openjdk.jmh.annotations.Benchmark;
@@ -22,15 +22,15 @@ import org.openjdk.jmh.annotations.Warmup;
 @State(Scope.Benchmark)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @BenchmarkMode(Mode.SampleTime)
-public class MarketBenchmark {
+public class OrderBookBenchmark {
 
-    private Market market;
+    private OrderBook book;
 
     private long nextOrderId;
 
     @Setup(Level.Iteration)
     public void prepare() {
-        market = new Market(new MarketListener() {
+        book = new OrderBook(new OrderBookListener() {
 
             @Override
             public void match(long restingOrderId, long incomingOrderId, Side incomingSide, long price,
@@ -52,15 +52,15 @@ public class MarketBenchmark {
 
     @Benchmark
     public void enter() {
-        market.enter(nextOrderId++, Side.BUY, 100000, 100);
+        book.enter(nextOrderId++, Side.BUY, 100000, 100);
     }
 
     @Benchmark
     public void enterAndCancel() {
         long orderId = nextOrderId++;
 
-        market.enter(orderId, Side.BUY, 100000, 100);
-        market.cancel(orderId, 0);
+        book.enter(orderId, Side.BUY, 100000, 100);
+        book.cancel(orderId, 0);
     }
 
 }
