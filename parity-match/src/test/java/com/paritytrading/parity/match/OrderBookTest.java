@@ -1,6 +1,6 @@
 package com.paritytrading.parity.match;
 
-import static com.paritytrading.parity.match.MarketEvents.*;
+import static com.paritytrading.parity.match.OrderBookEvents.*;
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
 import static org.junit.Assert.*;
@@ -8,21 +8,21 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-public class MarketTest {
+public class OrderBookTest {
 
-    private MarketEvents events;
+    private OrderBookEvents events;
 
-    private Market market;
+    private OrderBook book;
 
     @Before
     public void setUp() {
-        events = new MarketEvents();
-        market = new Market(events);
+        events = new OrderBookEvents();
+        book   = new OrderBook(events);
     }
 
     @Test
     public void bid() {
-        market.enter(1, Side.BUY, 1000, 100);
+        book.enter(1, Side.BUY, 1000, 100);
 
         Event bid = new Add(1, Side.BUY, 1000, 100);
 
@@ -31,7 +31,7 @@ public class MarketTest {
 
     @Test
     public void ask() {
-        market.enter(1, Side.SELL, 1000, 100);
+        book.enter(1, Side.SELL, 1000, 100);
 
         Event ask = new Add(1, Side.SELL, 1000, 100);
 
@@ -40,8 +40,8 @@ public class MarketTest {
 
     @Test
     public void marketBuy() {
-        market.enter(1, Side.SELL, 1000, 100);
-        market.enter(2, Side.BUY,  100);
+        book.enter(1, Side.SELL, 1000, 100);
+        book.enter(2, Side.BUY,  100);
 
         Event ask   = new Add(1, Side.SELL, 1000, 100);
         Event match = new Match(1, 2, Side.BUY, 1000, 100, 0);
@@ -51,8 +51,8 @@ public class MarketTest {
 
     @Test
     public void marketSell() {
-        market.enter(1, Side.BUY,  1000, 100);
-        market.enter(2, Side.SELL, 100);
+        book.enter(1, Side.BUY,  1000, 100);
+        book.enter(2, Side.SELL, 100);
 
         Event bid   = new Add(1, Side.BUY, 1000, 100);
         Event match = new Match(1, 2, Side.SELL, 1000, 100, 0);
@@ -62,9 +62,9 @@ public class MarketTest {
 
     @Test
     public void multiLevelMarketBuy() {
-        market.enter(1, Side.SELL, 1001, 100);
-        market.enter(2, Side.SELL, 1000,  50);
-        market.enter(3, Side.BUY,  100);
+        book.enter(1, Side.SELL, 1001, 100);
+        book.enter(2, Side.SELL, 1000,  50);
+        book.enter(3, Side.BUY,  100);
 
         Event firstAsk  = new Add(1, Side.SELL, 1001, 100);
         Event secondAsk = new Add(2, Side.SELL, 1000,  50);
@@ -78,9 +78,9 @@ public class MarketTest {
 
     @Test
     public void multiLevelMarketSell() {
-        market.enter(1, Side.BUY,   999, 100);
-        market.enter(2, Side.BUY,  1000,  50);
-        market.enter(3, Side.SELL,  100);
+        book.enter(1, Side.BUY,   999, 100);
+        book.enter(2, Side.BUY,  1000,  50);
+        book.enter(3, Side.SELL,  100);
 
         Event firstBid  = new Add(1, Side.BUY,  999, 100);
         Event secondBid = new Add(2, Side.BUY, 1000,  50);
@@ -94,8 +94,8 @@ public class MarketTest {
 
     @Test
     public void partialMarketBuy() {
-        market.enter(1, Side.SELL, 1000, 50);
-        market.enter(2, Side.BUY,  100);
+        book.enter(1, Side.SELL, 1000, 50);
+        book.enter(2, Side.BUY,  100);
 
         Event bid    = new Add(1, Side.SELL, 1000, 50);
         Event match  = new Match(1, 2, Side.BUY, 1000, 50, 0);
@@ -106,8 +106,8 @@ public class MarketTest {
 
     @Test
     public void partialMarketSell() {
-        market.enter(1, Side.BUY,  1000, 50);
-        market.enter(2, Side.SELL, 100);
+        book.enter(1, Side.BUY,  1000, 50);
+        book.enter(2, Side.SELL, 100);
 
         Event bid    = new Add(1, Side.BUY, 1000, 50);
         Event match  = new Match(1, 2, Side.SELL, 1000, 50, 0);
@@ -118,8 +118,8 @@ public class MarketTest {
 
     @Test
     public void limitBuy() {
-        market.enter(1, Side.SELL, 1000, 100);
-        market.enter(2, Side.BUY,  1000, 100);
+        book.enter(1, Side.SELL, 1000, 100);
+        book.enter(2, Side.BUY,  1000, 100);
 
         Event ask   = new Add(1, Side.SELL, 1000, 100);
         Event match = new Match(1, 2, Side.BUY, 1000, 100, 0);
@@ -129,8 +129,8 @@ public class MarketTest {
 
     @Test
     public void limitSell() {
-        market.enter(1, Side.BUY,  1000, 100);
-        market.enter(2, Side.SELL, 1000, 100);
+        book.enter(1, Side.BUY,  1000, 100);
+        book.enter(2, Side.SELL, 1000, 100);
 
         Event bid   = new Add(1, Side.BUY, 1000, 100);
         Event match = new Match(1, 2, Side.SELL, 1000, 100, 0);
@@ -140,10 +140,10 @@ public class MarketTest {
 
     @Test
     public void multiLevelLimitBuy() {
-        market.enter(1, Side.SELL, 1000, 100);
-        market.enter(2, Side.SELL, 1001, 100);
-        market.enter(3, Side.SELL,  999,  50);
-        market.enter(4, Side.BUY,  1000, 100);
+        book.enter(1, Side.SELL, 1000, 100);
+        book.enter(2, Side.SELL, 1001, 100);
+        book.enter(3, Side.SELL,  999,  50);
+        book.enter(4, Side.BUY,  1000, 100);
 
         Event firstAsk  = new Add(1, Side.SELL, 1000, 100);
         Event secondAsk = new Add(2, Side.SELL, 1001, 100);
@@ -158,10 +158,10 @@ public class MarketTest {
 
     @Test
     public void multiLevelLimitSell() {
-        market.enter(1, Side.BUY,  1000, 100);
-        market.enter(2, Side.BUY,   999, 100);
-        market.enter(3, Side.BUY,  1001,  50);
-        market.enter(4, Side.SELL, 1000, 100);
+        book.enter(1, Side.BUY,  1000, 100);
+        book.enter(2, Side.BUY,   999, 100);
+        book.enter(3, Side.BUY,  1001,  50);
+        book.enter(4, Side.SELL, 1000, 100);
 
         Event firstBid  = new Add(1, Side.BUY, 1000, 100);
         Event secondBid = new Add(2, Side.BUY,  999, 100);
@@ -176,8 +176,8 @@ public class MarketTest {
 
     @Test
     public void partialLimitBuy() {
-        market.enter(1, Side.SELL, 1000,  50);
-        market.enter(2, Side.BUY,  1000, 100);
+        book.enter(1, Side.SELL, 1000,  50);
+        book.enter(2, Side.BUY,  1000, 100);
 
         Event ask   = new Add(1, Side.SELL, 1000, 50);
         Event match = new Match(1, 2, Side.BUY, 1000, 50, 0);
@@ -188,8 +188,8 @@ public class MarketTest {
 
     @Test
     public void partialLimitSell() {
-        market.enter(1, Side.BUY,  1000,  50);
-        market.enter(2, Side.SELL, 1000, 100);
+        book.enter(1, Side.BUY,  1000,  50);
+        book.enter(2, Side.SELL, 1000, 100);
 
         Event bid   = new Add(1, Side.BUY, 1000, 50);
         Event match = new Match(1, 2, Side.SELL, 1000, 50, 0);
@@ -200,10 +200,10 @@ public class MarketTest {
 
     @Test
     public void partialBidFill() {
-        market.enter(1, Side.BUY,  1000, 100);
-        market.enter(2, Side.SELL, 1000,  50);
-        market.enter(3, Side.SELL, 1000,  50);
-        market.enter(4, Side.SELL, 1000,  50);
+        book.enter(1, Side.BUY,  1000, 100);
+        book.enter(2, Side.SELL, 1000,  50);
+        book.enter(3, Side.SELL, 1000,  50);
+        book.enter(4, Side.SELL, 1000,  50);
 
         Event bid = new Add(1, Side.BUY, 1000, 100);
 
@@ -217,10 +217,10 @@ public class MarketTest {
 
     @Test
     public void partialAskFill() {
-        market.enter(1, Side.SELL, 1000, 100);
-        market.enter(2, Side.BUY,  1000,  50);
-        market.enter(3, Side.BUY,  1000,  50);
-        market.enter(4, Side.BUY,  1000,  50);
+        book.enter(1, Side.SELL, 1000, 100);
+        book.enter(2, Side.BUY,  1000,  50);
+        book.enter(3, Side.BUY,  1000,  50);
+        book.enter(4, Side.BUY,  1000,  50);
 
         Event ask = new Add(1, Side.SELL, 1000, 100);
 
@@ -234,9 +234,9 @@ public class MarketTest {
 
     @Test
     public void cancel() {
-        market.enter(1, Side.BUY, 1000, 100);
-        market.cancel(1, 0);
-        market.enter(2, Side.SELL, 1000, 100);
+        book.enter(1, Side.BUY, 1000, 100);
+        book.cancel(1, 0);
+        book.enter(2, Side.SELL, 1000, 100);
 
         Event bid    = new Add(1, Side.BUY, 1000, 100);
         Event cancel = new Cancel(1, 100, 0);
@@ -247,9 +247,9 @@ public class MarketTest {
 
     @Test
     public void partialCancel() {
-        market.enter(1, Side.BUY, 1000, 100);
-        market.cancel(1, 75);
-        market.enter(2, Side.SELL, 1000, 100);
+        book.enter(1, Side.BUY, 1000, 100);
+        book.cancel(1, 75);
+        book.enter(2, Side.SELL, 1000, 100);
 
         Event bid    = new Add(1, Side.BUY, 1000, 100);
         Event cancel = new Cancel(1, 25, 75);
@@ -261,11 +261,11 @@ public class MarketTest {
 
     @Test
     public void ineffectiveCancel() {
-        market.enter(1, Side.BUY, 1000, 100);
-        market.cancel(1, 100);
-        market.cancel(1, 150);
-        market.cancel(1, 100);
-        market.enter(2, Side.SELL, 1000, 100);
+        book.enter(1, Side.BUY, 1000, 100);
+        book.cancel(1, 100);
+        book.cancel(1, 150);
+        book.cancel(1, 100);
+        book.enter(2, Side.SELL, 1000, 100);
 
         Event bid   = new Add(1, Side.BUY, 1000, 100);
         Event match = new Match(1, 2, Side.SELL, 1000, 100, 0);
@@ -275,9 +275,9 @@ public class MarketTest {
 
     @Test
     public void unknownOrder() {
-        market.enter(1, Side.BUY, 1000, 100);
-        market.cancel(1, 0);
-        market.cancel(1, 0);
+        book.enter(1, Side.BUY, 1000, 100);
+        book.cancel(1, 0);
+        book.cancel(1, 0);
 
         Event bid    = new Add(1, Side.BUY, 1000, 100);
         Event cancel = new Cancel(1, 100, 0);

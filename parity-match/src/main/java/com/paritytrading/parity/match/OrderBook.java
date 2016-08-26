@@ -5,25 +5,25 @@ import it.unimi.dsi.fastutil.longs.Long2ObjectRBTreeMap;
 import java.util.ArrayList;
 
 /**
- * A matching engine.
+ * An order book.
  */
-public class Market {
+public class OrderBook {
 
     private Long2ObjectRBTreeMap<Level> bids;
     private Long2ObjectRBTreeMap<Level> asks;
 
     private Long2ObjectOpenHashMap<Order> orders;
 
-    private MarketListener listener;
+    private OrderBookListener listener;
 
     private ArrayList<Order> toDelete;
 
     /**
-     * Create a matching engine.
+     * Create an order book.
      *
-     * @param listener a listener for outbound events from the matching engine
+     * @param listener a listener for outbound events from the order book
      */
-    public Market(MarketListener listener) {
+    public OrderBook(OrderBookListener listener) {
         this.bids = new Long2ObjectRBTreeMap<>(BidComparator.INSTANCE);
         this.asks = new Long2ObjectRBTreeMap<>(AskComparator.INSTANCE);
 
@@ -37,7 +37,7 @@ public class Market {
     /**
      * Enter a market order.
      *
-     * <p>The incoming order is matched against resting orders in the order
+     * <p>The incoming order is matched against resting orders in this order
      * book. This operation results in zero or more Match events.</p>
      *
      * <p>If the remaining quantity is not zero after the matching operation,
@@ -85,11 +85,11 @@ public class Market {
     /**
      * Enter a limit order.
      *
-     * <p>The incoming order is first matched against resting orders in the
+     * <p>The incoming order is first matched against resting orders in this
      * order book. This operation results in zero or more Match events.</p>
      *
      * <p>If the remaining quantity is not zero after the matching operation,
-     * the remaining quantity is added to the order book and an Add event is
+     * the remaining quantity is added to this order book and an Add event is
      * triggered.</p>
      *
      * <p>If the order identifier is known, do nothing.</p>
@@ -158,9 +158,9 @@ public class Market {
     }
 
     /**
-     * Cancel a quantity of an order in the order book. The size refers
+     * Cancel a quantity of an order in this order book. The size refers
      * to the new order size. If the new order size is set to zero, the
-     * order is deleted from the order book.
+     * order is deleted from this order book.
      *
      * <p>A Cancel event is triggered.</p>
      *

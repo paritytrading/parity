@@ -36,7 +36,7 @@ class Level {
         return order;
     }
 
-    public long match(long orderId, Side side, long quantity, MarketListener listener,
+    public long match(long orderId, Side side, long quantity, OrderBookListener listener,
             ArrayList<Order> toDelete) {
         for (int i = 0; quantity > 0 && i < orders.size(); i++) {
             Order order = orders.get(i);
