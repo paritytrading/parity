@@ -22,8 +22,6 @@ import java.util.Locale;
  */
 public class TAQWriter implements Closeable, Flushable {
 
-    private static final double PRICE_FACTOR = 10000.0;
-
     private static final String HEADER = "" +
         "Date"        + FIELD_SEPARATOR +
         "Timestamp"   + FIELD_SEPARATOR +
@@ -161,8 +159,8 @@ public class TAQWriter implements Closeable, Flushable {
         sink.flush();
     }
 
-    private void writePrice(long price) {
-        sink.printf(Locale.US, "%4.2f", price / PRICE_FACTOR);
+    private void writePrice(double price) {
+        sink.printf(Locale.US, "%4.2f", price);
     }
 
 }

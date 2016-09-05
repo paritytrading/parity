@@ -1,5 +1,6 @@
 package com.paritytrading.parity.ticker;
 
+import static com.paritytrading.parity.ticker.MarketDataListener.*;
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 
 import com.paritytrading.foundation.ASCII;
@@ -40,12 +41,15 @@ class TAQFormat extends MarketDataListener {
         if (!bbo)
             return;
 
+        long bidPrice = book.getBestBidPrice();
+        long askPrice = book.getBestAskPrice();
+
         quote.timestampMillis = timestampMillis();
         quote.instrument      = instrument(book.getInstrument());
-        quote.bidPrice        = book.getBestBidPrice();
-        quote.bidSize         = book.getBidSize(quote.bidPrice);
-        quote.askPrice        = book.getBestAskPrice();
-        quote.askSize         = book.getAskSize(quote.askPrice);
+        quote.bidPrice        = bidPrice / PRICE_FACTOR;
+        quote.bidSize         = book.getBidSize(bidPrice);
+        quote.askPrice        = askPrice / PRICE_FACTOR;
+        quote.askSize         = book.getAskSize(askPrice);
 
         writer.write(quote);
         writer.flush();

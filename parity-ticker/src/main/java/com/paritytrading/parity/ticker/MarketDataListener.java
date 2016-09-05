@@ -4,6 +4,8 @@ import com.paritytrading.parity.book.MarketListener;
 
 abstract class MarketDataListener implements MarketListener {
 
+    static final double PRICE_FACTOR = 10000.0;
+
     private static final long MILLIS_PER_SEC = 1000;
 
     private static final long NANOS_PER_MILLI = 1_000_000;
