@@ -1,5 +1,7 @@
 package com.paritytrading.parity.ticker;
 
+import static com.paritytrading.parity.ticker.MarketDataListener.*;
+
 import com.paritytrading.foundation.ASCII;
 import com.paritytrading.parity.book.OrderBook;
 import com.paritytrading.parity.book.Side;
@@ -9,8 +11,6 @@ import java.util.List;
 import java.util.Locale;
 
 class DisplayFormat extends MarketDataListener {
-
-    private static final double PRICE_FACTOR = 10000.0;
 
     private static final String HEADER = "" +
         "Timestamp    Inst     Bid Px    Bid Size   Ask Px    Ask Size   Last Px   Last Size\n" +

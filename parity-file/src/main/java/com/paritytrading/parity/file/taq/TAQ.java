@@ -41,7 +41,7 @@ public class TAQ {
         /**
          * The bid price or zero if no bid price is available.
          */
-        public long bidPrice;
+        public double bidPrice;
 
         /**
          * The bid size or zero if no bid size is available.
@@ -51,7 +51,7 @@ public class TAQ {
         /**
          * The ask price or zero if no ask price is available.
          */
-        public long askPrice;
+        public double askPrice;
 
         /**
          * The ask size or zero if no ask size is available.
@@ -82,7 +82,7 @@ public class TAQ {
         /**
          * The trade price.
          */
-        public long price;
+        public double price;
 
         /**
          * The trade size.
