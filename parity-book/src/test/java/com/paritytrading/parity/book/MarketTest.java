@@ -81,7 +81,7 @@ public class MarketTest {
         market.add(INSTRUMENT, 1, Side.BUY,   999, 100);
         market.add(INSTRUMENT, 2, Side.SELL, 1001, 200);
         market.add(INSTRUMENT, 3, Side.SELL, 1002,  50);
-        market.execute(2, 200);
+        assertEquals(0, market.execute(2, 200));
 
         assertEquals(asList(new Level(999, 100, 1002, 50)), levels(book));
 
@@ -100,7 +100,7 @@ public class MarketTest {
         market.add(INSTRUMENT, 1, Side.BUY,   999, 100);
         market.add(INSTRUMENT, 2, Side.SELL, 1001, 200);
         market.add(INSTRUMENT, 3, Side.SELL, 1002,  50);
-        market.execute(2, 200, 1000);
+        assertEquals(0, market.execute(2, 200, 1000));
 
         assertEquals(asList(new Level(999, 100, 1002, 50)), levels(book));
 
@@ -118,7 +118,7 @@ public class MarketTest {
     public void partialExecution() {
         market.add(INSTRUMENT, 1, Side.BUY,   999, 100);
         market.add(INSTRUMENT, 2, Side.SELL, 1001, 200);
-        market.execute(2, 100);
+        assertEquals(100, market.execute(2, 100));
 
         assertEquals(asList(new Level(999, 100, 1001, 100)), levels(book));
 
@@ -136,7 +136,7 @@ public class MarketTest {
         market.add(INSTRUMENT, 1, Side.BUY,   999, 100);
         market.add(INSTRUMENT, 2, Side.SELL, 1001, 200);
         market.add(INSTRUMENT, 3, Side.SELL, 1002,  50);
-        market.cancel(2, 200);
+        assertEquals(0, market.cancel(2, 200));
 
         assertEquals(asList(new Level(999, 100, 1002, 50)), levels(book));
 
@@ -153,7 +153,7 @@ public class MarketTest {
     public void partialCancellation() {
         market.add(INSTRUMENT, 1, Side.BUY,   999, 100);
         market.add(INSTRUMENT, 2, Side.SELL, 1001, 200);
-        market.cancel(2, 100);
+        assertEquals(100, market.cancel(2, 100));
 
         assertEquals(asList(new Level(999, 100, 1001, 100)), levels(book));
 

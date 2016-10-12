@@ -128,13 +128,14 @@ public class Market {
      *
      * @param orderId the order identifier
      * @param quantity the executed quantity
+     * @return the remaining quantity
      */
-    public void execute(long orderId, long quantity) {
+    public long execute(long orderId, long quantity) {
         Order order = orders.get(orderId);
         if (order == null)
-            return;
+            return 0;
 
-        execute(orderId, order, quantity, order.getPrice());
+        return execute(orderId, order, quantity, order.getPrice());
     }
 
     /**
@@ -148,16 +149,17 @@ public class Market {
      * @param orderId the order identifier
      * @param quantity the executed quantity
      * @param price the execution price
+     * @return the remaining quantity
      */
-    public void execute(long orderId, long quantity, long price) {
+    public long execute(long orderId, long quantity, long price) {
         Order order = orders.get(orderId);
         if (order == null)
-            return;
+            return 0;
 
-        execute(orderId, order, quantity, price);
+        return execute(orderId, order, quantity, price);
     }
 
-    private void execute(long orderId, Order order, long quantity, long price) {
+    private long execute(long orderId, Order order, long quantity, long price) {
         OrderBook book = order.getOrderBook();
 
         Side side = order.getSide();
@@ -176,6 +178,8 @@ public class Market {
             order.reduce(executedQuantity);
 
         listener.update(book, true);
+
+        return remainingQuantity - executedQuantity;
     }
 
     /**
@@ -188,11 +192,12 @@ public class Market {
      *
      * @param orderId the order identifier
      * @param quantity the canceled quantity
+     * @return the remaining quantity
      */
-    public void cancel(long orderId, long quantity) {
+    public long cancel(long orderId, long quantity) {
         Order order = orders.get(orderId);
         if (order == null)
-            return;
+            return 0;
 
         OrderBook book = order.getOrderBook();
 
@@ -208,6 +213,8 @@ public class Market {
             order.reduce(canceledQuantity);
 
         listener.update(book, bbo);
+
+        return remainingQuantity - canceledQuantity;
     }
 
     /**
