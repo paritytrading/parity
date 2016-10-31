@@ -15,12 +15,20 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.FieldPosition;
+import java.text.NumberFormat;
 import java.util.Locale;
 
 /**
  * A writer.
  */
 public class TAQWriter implements Closeable, Flushable {
+
+    private static final DecimalFormatSymbols SYMBOLS = DecimalFormatSymbols.getInstance(Locale.US);
+
+    private static final int BUFFER_CAPACITY = 32;
 
     private static final String HEADER = "" +
         "Date"        + FIELD_SEPARATOR +
@@ -34,6 +42,12 @@ public class TAQWriter implements Closeable, Flushable {
         "Trade Price" + FIELD_SEPARATOR +
         "Trade Size"  + FIELD_SEPARATOR +
         "Trade Side"  + RECORD_SEPARATOR;
+
+    private DecimalFormat priceFormat;
+
+    private FieldPosition position;
+
+    private StringBuffer buffer;
 
     private PrintWriter sink;
 
@@ -69,6 +83,12 @@ public class TAQWriter implements Closeable, Flushable {
     }
 
     private TAQWriter(Writer writer) {
+        priceFormat = new DecimalFormat("0.00", SYMBOLS);
+
+        position = new FieldPosition(NumberFormat.INTEGER_FIELD);
+
+        buffer = new StringBuffer(BUFFER_CAPACITY);
+
         sink = new PrintWriter(writer);
 
         sink.print(HEADER);
@@ -160,7 +180,11 @@ public class TAQWriter implements Closeable, Flushable {
     }
 
     private void writePrice(double price) {
-        sink.printf(Locale.US, "%4.2f", price);
+        buffer.setLength(0);
+
+        priceFormat.format(price, buffer, position);
+
+        sink.append(buffer);
     }
 
 }
