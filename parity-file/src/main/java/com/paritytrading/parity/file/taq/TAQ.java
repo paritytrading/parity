@@ -46,7 +46,7 @@ public class TAQ {
         /**
          * The bid size or zero if no bid size is available.
          */
-        public long bidSize;
+        public double bidSize;
 
         /**
          * The ask price or zero if no ask price is available.
@@ -56,7 +56,7 @@ public class TAQ {
         /**
          * The ask size or zero if no ask size is available.
          */
-        public long askSize;
+        public double askSize;
     }
 
     /**
@@ -87,7 +87,7 @@ public class TAQ {
         /**
          * The trade size.
          */
-        public long size;
+        public double size;
 
         /**
          * The side of the resting order or <code>UNKNOWN</code> if the side

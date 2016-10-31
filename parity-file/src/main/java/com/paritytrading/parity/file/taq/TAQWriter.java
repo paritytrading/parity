@@ -44,6 +44,7 @@ public class TAQWriter implements Closeable, Flushable {
         "Trade Side"  + RECORD_SEPARATOR;
 
     private DecimalFormat priceFormat;
+    private DecimalFormat sizeFormat;
 
     private FieldPosition position;
 
@@ -84,6 +85,7 @@ public class TAQWriter implements Closeable, Flushable {
 
     private TAQWriter(Writer writer) {
         priceFormat = new DecimalFormat("0.00", SYMBOLS);
+        sizeFormat  = new DecimalFormat("0", SYMBOLS);
 
         position = new FieldPosition(NumberFormat.INTEGER_FIELD);
 
@@ -118,7 +120,7 @@ public class TAQWriter implements Closeable, Flushable {
         sink.print(FIELD_SEPARATOR);
         writePrice(record.price);
         sink.print(FIELD_SEPARATOR);
-        sink.print(record.size);
+        writeSize(record.size);
         sink.print(FIELD_SEPARATOR);
 
         if (record.side != UNKNOWN)
@@ -148,7 +150,7 @@ public class TAQWriter implements Closeable, Flushable {
         sink.print(FIELD_SEPARATOR);
 
         if (record.bidSize > 0)
-            sink.print(record.bidSize);
+            writeSize(record.bidSize);
 
         sink.print(FIELD_SEPARATOR);
 
@@ -158,7 +160,7 @@ public class TAQWriter implements Closeable, Flushable {
         sink.print(FIELD_SEPARATOR);
 
         if (record.askSize > 0)
-            sink.print(record.askSize);
+            writeSize(record.askSize);
 
         sink.print(FIELD_SEPARATOR);
         // trade price
@@ -183,6 +185,14 @@ public class TAQWriter implements Closeable, Flushable {
         buffer.setLength(0);
 
         priceFormat.format(price, buffer, position);
+
+        sink.append(buffer);
+    }
+
+    private void writeSize(double size) {
+        buffer.setLength(0);
+
+        sizeFormat.format(size, buffer, position);
 
         sink.append(buffer);
     }
