@@ -74,5 +74,6 @@ For more information on Parity:
 License
 -------
 
-Parity is released under the Apache License, Version 2.0. See `LICENSE` for
-details.
+Copyright 2014 Jussi Virtanen and contributors.
+
+Released under the Apache License, Version 2.0. See `LICENSE.txt` for details.
