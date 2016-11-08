@@ -1,7 +1,6 @@
 package com.paritytrading.parity.file.taq;
 
 import static com.paritytrading.parity.file.taq.TAQ.*;
-import static java.nio.charset.StandardCharsets.*;
 
 import com.paritytrading.parity.util.Timestamps;
 import java.io.BufferedOutputStream;
@@ -14,13 +13,20 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
-import java.nio.charset.Charset;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.FieldPosition;
+import java.text.NumberFormat;
 import java.util.Locale;
 
 /**
  * A writer.
  */
 public class TAQWriter implements Closeable, Flushable {
+
+    private static final DecimalFormatSymbols SYMBOLS = DecimalFormatSymbols.getInstance(Locale.US);
+
+    private static final int BUFFER_CAPACITY = 32;
 
     private static final String HEADER = "" +
         "Date"        + FIELD_SEPARATOR +
@@ -35,40 +41,72 @@ public class TAQWriter implements Closeable, Flushable {
         "Trade Size"  + FIELD_SEPARATOR +
         "Trade Side"  + RECORD_SEPARATOR;
 
+    private DecimalFormat priceFormat;
+    private DecimalFormat sizeFormat;
+
+    private FieldPosition position;
+
+    private StringBuffer buffer;
+
     private PrintWriter sink;
 
     /**
-     * Create a writer that writes to the specified file.
+     * Create a writer that writes to the specified file using the default
+     * configuration.
      *
      * @param file a file
      * @throws FileNotFoundException if the file cannot be opened
      */
     public TAQWriter(File file) throws FileNotFoundException {
-        this(new BufferedOutputStream(new FileOutputStream(file)));
+        this(file, TAQConfig.DEFAULTS);
+    }
+
+    /**
+     * Create a writer that writes to the specified file.
+     *
+     * @param file a file
+     * @param config the configuration
+     * @throws FileNotFoundException if the file cannot be opened
+     */
+    public TAQWriter(File file, TAQConfig config) throws FileNotFoundException {
+        this(new BufferedOutputStream(new FileOutputStream(file)), config);
     }
 
     /**
      * Create a writer that writes to the specified output stream using the
-     * default encoding for TAQ, ASCII.
+     * default configuration.
      *
      * @param out an output stream
      */
     public TAQWriter(OutputStream out) {
-        this(out, US_ASCII);
+        this(out, TAQConfig.DEFAULTS);
     }
 
     /**
-     * Create a writer that writes to the specified output stream using the
-     * specified encoding.
+     * Create a writer that writes to the specified output stream.
      *
      * @param out an output stream
-     * @param cs a charset
+     * @param config the configuration
      */
-    public TAQWriter(OutputStream out, Charset cs) {
-        this(new OutputStreamWriter(out, cs));
+    public TAQWriter(OutputStream out, TAQConfig config) {
+        this(new OutputStreamWriter(out, config.getEncoding()), config);
     }
 
-    private TAQWriter(Writer writer) {
+    private TAQWriter(Writer writer, TAQConfig config) {
+        priceFormat = new DecimalFormat("0.00", SYMBOLS);
+
+        priceFormat.setMinimumFractionDigits(config.getPriceFractionDigits());
+        priceFormat.setMaximumFractionDigits(config.getPriceFractionDigits());
+
+        sizeFormat  = new DecimalFormat("0", SYMBOLS);
+
+        sizeFormat.setMinimumFractionDigits(config.getSizeFractionDigits());
+        sizeFormat.setMaximumFractionDigits(config.getSizeFractionDigits());
+
+        position = new FieldPosition(NumberFormat.INTEGER_FIELD);
+
+        buffer = new StringBuffer(BUFFER_CAPACITY);
+
         sink = new PrintWriter(writer);
 
         sink.print(HEADER);
@@ -98,7 +136,7 @@ public class TAQWriter implements Closeable, Flushable {
         sink.print(FIELD_SEPARATOR);
         writePrice(record.price);
         sink.print(FIELD_SEPARATOR);
-        sink.print(record.size);
+        writeSize(record.size);
         sink.print(FIELD_SEPARATOR);
 
         if (record.side != UNKNOWN)
@@ -128,7 +166,7 @@ public class TAQWriter implements Closeable, Flushable {
         sink.print(FIELD_SEPARATOR);
 
         if (record.bidSize > 0)
-            sink.print(record.bidSize);
+            writeSize(record.bidSize);
 
         sink.print(FIELD_SEPARATOR);
 
@@ -138,7 +176,7 @@ public class TAQWriter implements Closeable, Flushable {
         sink.print(FIELD_SEPARATOR);
 
         if (record.askSize > 0)
-            sink.print(record.askSize);
+            writeSize(record.askSize);
 
         sink.print(FIELD_SEPARATOR);
         // trade price
@@ -160,7 +198,19 @@ public class TAQWriter implements Closeable, Flushable {
     }
 
     private void writePrice(double price) {
-        sink.printf(Locale.US, "%4.2f", price);
+        buffer.setLength(0);
+
+        priceFormat.format(price, buffer, position);
+
+        sink.append(buffer);
+    }
+
+    private void writeSize(double size) {
+        buffer.setLength(0);
+
+        sizeFormat.format(size, buffer, position);
+
+        sink.append(buffer);
     }
 
 }

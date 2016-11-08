@@ -7,6 +7,7 @@ import com.paritytrading.foundation.ASCII;
 import com.paritytrading.parity.book.OrderBook;
 import com.paritytrading.parity.book.Side;
 import com.paritytrading.parity.file.taq.TAQ;
+import com.paritytrading.parity.file.taq.TAQConfig;
 import com.paritytrading.parity.file.taq.TAQWriter;
 import it.unimi.dsi.fastutil.longs.Long2ObjectArrayMap;
 import java.nio.charset.Charset;
@@ -32,7 +33,11 @@ class TAQFormat extends MarketDataListener {
         quote.date = date;
         trade.date = date;
 
-        writer = new TAQWriter(System.out, Charset.defaultCharset());
+        TAQConfig config = new TAQConfig.Builder()
+            .setEncoding(Charset.defaultCharset())
+            .build();
+
+        writer = new TAQWriter(System.out, config);
         writer.flush();
     }
 
