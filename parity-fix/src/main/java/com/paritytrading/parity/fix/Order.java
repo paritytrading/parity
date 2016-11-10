@@ -8,6 +8,7 @@ class Order {
 
     private String orderEntryId;
     private long   orderId;
+    private String nextClOrdId;
     private String clOrdId;
     private String origClOrdId;
     private char   ordStatus;
@@ -22,6 +23,7 @@ class Order {
             String symbol, long orderQty) {
         this.orderEntryId = orderEntryId;
         this.orderId      = 0;
+        this.nextClOrdId  = null;
         this.clOrdId      = clOrdId;
         this.origClOrdId  = null;
         this.ordStatus    = OrdStatusValues.New;
@@ -47,6 +49,12 @@ class Order {
 
     public void orderCanceled(long canceledQuantity) {
         orderQty -= canceledQuantity;
+
+        origClOrdId = clOrdId;
+
+        clOrdId = nextClOrdId;
+
+        nextClOrdId = null;
     }
 
     public String getOrderEntryID() {
@@ -61,14 +69,16 @@ class Order {
         return clOrdId;
     }
 
-    public void setClOrdID(String clOrdId) {
-        this.origClOrdId = this.clOrdId;
-
-        this.clOrdId = clOrdId;
-    }
-
     public String getOrigClOrdID() {
         return origClOrdId;
+    }
+
+    public void setNextClOrdID(String nextClOrdId) {
+        this.nextClOrdId = nextClOrdId;
+    }
+
+    public String getNextClOrdID() {
+        return nextClOrdId;
     }
 
     public char getOrdStatus() {
@@ -101,6 +111,10 @@ class Order {
 
     public double getAvgPx() {
         return avgPx;
+    }
+
+    public boolean isInPendingStatus() {
+        return nextClOrdId != null;
     }
 
 }
