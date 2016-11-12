@@ -33,4 +33,4 @@ option is given, it formats the output as [TAQ][] instead.
 License
 -------
 
-Parity Stock Ticker is released under the Apache License, Version 2.0.
+Released under the Apache License, Version 2.0.
