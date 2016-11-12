@@ -19,4 +19,4 @@ Add a Maven dependency to Parity Matching Engine:
 License
 -------
 
-Parity Matching Engine is released under the Apache License, Version 2.0.
+Released under the Apache License, Version 2.0.
