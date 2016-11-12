@@ -22,4 +22,4 @@ option is given, it formats the output as tab-separated values (TSV) instead.
 License
 -------
 
-Parity Trade Reporter is released under the Apache License, Version 2.0.
+Released under the Apache License, Version 2.0.
