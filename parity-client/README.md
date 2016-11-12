@@ -35,4 +35,4 @@ Use the `help` command to see a list of all available commands.
 License
 -------
 
-Parity Terminal Client is released under the Apache License, Version 2.0.
+Released under the Apache License, Version 2.0.
