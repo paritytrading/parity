@@ -16,5 +16,4 @@ Run Parity Matching Engine Performance Test with Java:
 License
 -------
 
-Parity Matching Engine Performance Test is released under the Apache License,
-Version 2.0.
+Released under the Apache License, Version 2.0.
