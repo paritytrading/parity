@@ -31,4 +31,4 @@ clients.
 License
 -------
 
-Parity FIX Gateway is released under Apache License, Version 2.0.
+Released under Apache License, Version 2.0.
