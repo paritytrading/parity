@@ -16,5 +16,4 @@ Run Parity Order Book Performance Test with Java:
 License
 -------
 
-Parity Order Book Performance Test is released under the Apache License,
-Version 2.0.
+Released under the Apache License, Version 2.0.
