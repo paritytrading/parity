@@ -295,12 +295,12 @@ class Session implements Closeable {
 
             Order order = orders.findByClOrdID(origClOrdId);
             if (order == null) {
-                order = orders.findByOrigClOrdID(origClOrdId);
-                if (order != null)
-                    sendOrderCancelReject(order, clOrdId, cxlRejResponseTo,
-                            CxlRejReasonValues.OrderAlreadyInPendingStatus);
-                else
-                    sendOrderCancelReject(clOrdId, origClOrdId, cxlRejResponseTo);
+                sendOrderCancelReject(clOrdId, origClOrdId, cxlRejResponseTo);
+
+                return;
+            } else if (order.isInPendingStatus()) {
+                sendOrderCancelReject(order, clOrdId, cxlRejResponseTo,
+                        CxlRejReasonValues.OrderAlreadyInPendingStatus);
 
                 return;
             }
@@ -322,7 +322,7 @@ class Session implements Closeable {
                 }
             }
 
-            order.setClOrdID(clOrdId);
+            order.setNextClOrdID(clOrdId);
 
             cancelOrder.orderId  = order.getOrderEntryID();
             cancelOrder.quantity = Math.max(orderQty - order.getCumQty(), 0);
@@ -535,8 +535,8 @@ class Session implements Closeable {
         fix.prepare(txMessage, ExecutionReport);
 
         txMessage.addField(OrderID).setInt(order.getOrderID());
-        txMessage.addField(ClOrdID).setString(order.getClOrdID());
-        txMessage.addField(OrigClOrdID).setString(order.getOrigClOrdID());
+        txMessage.addField(ClOrdID).setString(order.getNextClOrdID());
+        txMessage.addField(OrigClOrdID).setString(order.getClOrdID());
         txMessage.addField(ExecID).setString(fix.getCurrentTimestamp());
         txMessage.addField(ExecType).setChar(execType);
         txMessage.addField(OrdStatus).setChar(ordStatus);

@@ -26,17 +26,6 @@ class Orders {
         return null;
     }
 
-    public Order findByOrigClOrdID(String origClOrdId) {
-        for (int i = 0; i < orders.size(); i++) {
-            Order order = orders.get(i);
-
-            if (origClOrdId.equals(order.getOrigClOrdID()))
-                return order;
-        }
-
-        return null;
-    }
-
     public Order findByOrderEntryID(String orderEntryId) {
         for (int i = 0; i < orders.size(); i++) {
             Order order = orders.get(i);
