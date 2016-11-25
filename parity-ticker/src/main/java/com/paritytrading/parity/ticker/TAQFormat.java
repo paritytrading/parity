@@ -64,7 +64,7 @@ class TAQFormat extends MarketDataListener {
     public void trade(OrderBook book, Side side, long price, long size) {
         trade.timestampMillis = timestampMillis();
         trade.instrument      = instrument(book.getInstrument());
-        trade.price           = price;
+        trade.price           = price / PRICE_FACTOR;
         trade.size            = size;
         trade.side            = side(side);
 
