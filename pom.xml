@@ -48,7 +48,7 @@
     <module>applications/fix</module>
     <module>libraries/match</module>
     <module>tests/match-perf-test</module>
-    <module>parity-net</module>
+    <module>libraries/net</module>
     <module>parity-reporter</module>
     <module>parity-system</module>
     <module>parity-ticker</module>

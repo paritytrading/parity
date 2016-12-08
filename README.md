@@ -41,9 +41,9 @@ In addition, Parity contains the following libraries:
   specifications and reference implementations for file formats used by the
   trading system.
 
-- [**Parity Network Protocols**](parity-net) contains protocol specifications
-  and reference implementations for network protocols used by the trading
-  system.
+- [**Parity Network Protocols**](libraries/net) contains protocol
+  specifications and reference implementations for network protocols used by
+  the trading system.
 
 - [**Parity Order Book**](libraries/book) implements high-performance order
   book reconstruction on the JVM.
