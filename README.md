@@ -23,8 +23,8 @@ Parity consists of the following applications:
   that displays the best bids and offers (BBOs) and latest trades in the
   trading system.
 
-- [**Parity Trade Reporter**](parity-reporter) is a simple console application
-  that displays occurred trades in the trading system.
+- [**Parity Trade Reporter**](applications/reporter) is a simple console
+  application that displays occurred trades in the trading system.
 
 - [**Parity FIX Gateway**](applications/fix) adds Financial Information
   Exchange (FIX) interface to the trading system.
