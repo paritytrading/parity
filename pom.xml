@@ -45,7 +45,7 @@
     <module>tests/book-perf-test</module>
     <module>applications/client</module>
     <module>libraries/file</module>
-    <module>parity-fix</module>
+    <module>applications/fix</module>
     <module>parity-match</module>
     <module>parity-match-perf-test</module>
     <module>parity-net</module>

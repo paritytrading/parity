@@ -26,8 +26,8 @@ Parity consists of the following applications:
 - [**Parity Trade Reporter**](parity-reporter) is a simple console application
   that displays occurred trades in the trading system.
 
-- [**Parity FIX Gateway**](parity-fix) adds Financial Information Exchange
-  (FIX) interface to the trading system.
+- [**Parity FIX Gateway**](applications/fix) adds Financial Information
+  Exchange (FIX) interface to the trading system.
 
 - [**Parity Matching Engine Performance Test**](parity-match-perf-test)
   contains microbenchmarks for the matching engine.
