@@ -10,11 +10,11 @@ Usage
 
 Run Parity Stock Ticker with Java:
 
-    java -jar <executable>
+    java -jar parity-ticker.jar
 
 To listen to a live market data feed, pass a configuration file:
 
-    java -jar <executable> [-t] <configuration-file>
+    java -jar parity-ticker.jar [-t] <configuration-file>
 
 When listening to a live market data feed, the stock ticker first replays
 market events that have taken place before it started. Then it proceeds to
@@ -22,7 +22,7 @@ display market events in real time.
 
 To read a historical market data file, pass an input file:
 
-    java -jar <executable> [-t] <input-file> [<instrument> ...]
+    java -jar parity-ticker.jar [-t] <input-file> [<instrument> ...]
 
 By default, the stock ticker formats its output for display. If the `-t`
 option is given, it formats the output as [TAQ][] instead.
