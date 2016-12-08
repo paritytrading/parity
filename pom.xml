@@ -51,7 +51,7 @@
     <module>libraries/net</module>
     <module>applications/reporter</module>
     <module>applications/system</module>
-    <module>parity-ticker</module>
+    <module>applications/ticker</module>
     <module>parity-util</module>
   </modules>
 

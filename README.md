@@ -19,9 +19,9 @@ Parity consists of the following applications:
 - [**Parity Terminal Client**](applications/client) is a simple console
   application for entering orders into the trading system.
 
-- [**Parity Stock Ticker**](parity-ticker) is a simple console application
-  that displays the best bids and offers (BBOs) and latest trades in the
-  trading system.
+- [**Parity Stock Ticker**](applications/ticker) is a simple console
+  application that displays the best bids and offers (BBOs) and latest trades
+  in the trading system.
 
 - [**Parity Trade Reporter**](applications/reporter) is a simple console
   application that displays occurred trades in the trading system.
