@@ -52,7 +52,7 @@
     <module>applications/reporter</module>
     <module>applications/system</module>
     <module>applications/ticker</module>
-    <module>parity-util</module>
+    <module>libraries/util</module>
   </modules>
 
   <dependencyManagement>
