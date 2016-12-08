@@ -41,7 +41,7 @@
   </properties>
 
   <modules>
-    <module>parity-book</module>
+    <module>libraries/book</module>
     <module>parity-book-perf-test</module>
     <module>parity-client</module>
     <module>parity-file</module>
