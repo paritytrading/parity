@@ -7,6 +7,7 @@
     <groupId>com.paritytrading.parity</groupId>
     <artifactId>parity-parent</artifactId>
     <version>0.5.1-SNAPSHOT</version>
+    <relativePath>../../pom.xml</relativePath>
   </parent>
 
   <artifactId>parity-client</artifactId>
