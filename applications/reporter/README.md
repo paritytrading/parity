@@ -10,7 +10,7 @@ Usage
 
 Run Parity Trade Reporter with Java:
 
-    java -jar <executable> [-t] <configuration-file>
+    java -jar parity-reporter.jar [-t] <configuration-file>
 
 After starting, the trade reporter first replays trades that have taken place
 before it started. Then it proceeds to display trades in real time.
