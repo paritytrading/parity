@@ -38,6 +38,7 @@
         <artifactId>maven-shade-plugin</artifactId>
         <configuration>
           <minimizeJar>false</minimizeJar>
+          <outputFile>parity-match-perf-test.jar</outputFile>
           <transformers>
             <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
               <mainClass>org.openjdk.jmh.Main</mainClass>
