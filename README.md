@@ -29,7 +29,7 @@ Parity consists of the following applications:
 - [**Parity FIX Gateway**](applications/fix) adds Financial Information
   Exchange (FIX) interface to the trading system.
 
-- [**Parity Matching Engine Performance Test**](parity-match-perf-test)
+- [**Parity Matching Engine Performance Test**](tests/match-perf-test)
   contains microbenchmarks for the matching engine.
 
 - [**Parity Order Book Performance Test**](tests/book-perf-test) contains
