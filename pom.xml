@@ -166,7 +166,6 @@
           <artifactId>maven-shade-plugin</artifactId>
           <version>2.4.3</version>
           <configuration>
-            <createDependencyReducedPom>false</createDependencyReducedPom>
             <minimizeJar>true</minimizeJar>
           </configuration>
           <executions>
