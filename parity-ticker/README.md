@@ -27,7 +27,7 @@ To read a historical market data file, pass an input file:
 By default, the stock ticker formats its output for display. If the `-t`
 option is given, it formats the output as [TAQ][] instead.
 
-  [TAQ]: ../parity-file/doc/TAQ.md
+  [TAQ]: ../libraries/file/doc/TAQ.md
 
 
 License

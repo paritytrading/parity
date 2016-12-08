@@ -37,8 +37,9 @@ Parity consists of the following applications:
 
 In addition, Parity contains the following libraries:
 
-- [**Parity File Formats**](parity-file) contains file format specifications
-  and reference implementations for file formats used by the trading system.
+- [**Parity File Formats**](libraries/file) contains file format
+  specifications and reference implementations for file formats used by the
+  trading system.
 
 - [**Parity Network Protocols**](parity-net) contains protocol specifications
   and reference implementations for network protocols used by the trading
