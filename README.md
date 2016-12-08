@@ -51,7 +51,7 @@ In addition, Parity contains the following libraries:
 - [**Parity Utilities**](parity-util) contains support functions used by the
   trading system.
 
-- [**Parity Matching Engine**](parity-match) implements a high-performance
+- [**Parity Matching Engine**](libraries/match) implements a high-performance
   matching engine for the JVM.
 
 See the [Wiki][] for additional applications.
