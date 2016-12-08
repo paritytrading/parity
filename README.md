@@ -32,7 +32,7 @@ Parity consists of the following applications:
 - [**Parity Matching Engine Performance Test**](parity-match-perf-test)
   contains microbenchmarks for the matching engine.
 
-- [**Parity Order Book Performance Test**](parity-book-perf-test) contains
+- [**Parity Order Book Performance Test**](tests/book-perf-test) contains
   microbenchmarks for the order book reconstruction.
 
 In addition, Parity contains the following libraries:
