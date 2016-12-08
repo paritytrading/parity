@@ -22,7 +22,7 @@ Usage
 
 Run Parity FIX Gateway with Java:
 
-    java -jar <executable> <configuration-file>
+    java -jar parity-fix.jar <configuration-file>
 
 After starting, the gateway starts listening for FIX sessions initiated by
 clients.
