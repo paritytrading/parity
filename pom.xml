@@ -50,7 +50,7 @@
     <module>tests/match-perf-test</module>
     <module>libraries/net</module>
     <module>applications/reporter</module>
-    <module>parity-system</module>
+    <module>applications/system</module>
     <module>parity-ticker</module>
     <module>parity-util</module>
   </modules>

@@ -13,7 +13,7 @@ Features
 
 Parity consists of the following applications:
 
-- [**Parity Trading System**](parity-system) is a server application for
+- [**Parity Trading System**](applications/system) is a server application for
   running a trading venue.
 
 - [**Parity Terminal Client**](applications/client) is a simple console
