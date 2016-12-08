@@ -10,7 +10,7 @@ Usage
 
 Run Parity Terminal Client with Java:
 
-    java -jar <executable> <configuration-file>
+    java -jar parity-client.jar <configuration-file>
 
 When started, the terminal client displays a command prompt:
 
