@@ -42,17 +42,17 @@
 
   <modules>
     <module>libraries/book</module>
-    <module>tests/book-perf-test</module>
-    <module>applications/client</module>
     <module>libraries/file</module>
-    <module>applications/fix</module>
     <module>libraries/match</module>
-    <module>tests/match-perf-test</module>
     <module>libraries/net</module>
+    <module>libraries/util</module>
+    <module>applications/client</module>
+    <module>applications/fix</module>
     <module>applications/reporter</module>
     <module>applications/system</module>
     <module>applications/ticker</module>
-    <module>libraries/util</module>
+    <module>tests/book-perf-test</module>
+    <module>tests/match-perf-test</module>
   </modules>
 
   <dependencyManagement>
