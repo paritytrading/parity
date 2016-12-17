@@ -57,7 +57,8 @@ class MarketData {
     }
 
     public static MarketData open(String session, NetworkInterface multicastInterface,
-            InetSocketAddress multicastGroup, int requestPort) throws IOException {
+            InetSocketAddress multicastGroup,
+            InetSocketAddress requestAddress) throws IOException {
         DatagramChannel channel = DatagramChannel.open(StandardProtocolFamily.INET);
 
         channel.setOption(StandardSocketOptions.IP_MULTICAST_IF, multicastInterface);
@@ -67,7 +68,7 @@ class MarketData {
 
         DatagramChannel requestChannel = DatagramChannel.open();
 
-        requestChannel.bind(new InetSocketAddress(requestPort));
+        requestChannel.bind(requestAddress);
         requestChannel.configureBlocking(false);
 
         MoldUDP64RequestServer requestTransport = new MoldUDP64RequestServer(requestChannel);

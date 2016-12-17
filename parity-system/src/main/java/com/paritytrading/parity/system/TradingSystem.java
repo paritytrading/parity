@@ -51,10 +51,12 @@ class TradingSystem {
         NetworkInterface multicastInterface = Configs.getNetworkInterface(config, "market-data.multicast-interface");
         InetAddress      multicastGroup     = Configs.getInetAddress(config, "market-data.multicast-group");
         int              multicastPort      = Configs.getPort(config, "market-data.multicast-port");
+        InetAddress      requestAddress     = Configs.getInetAddress(config, "market-data.request-address");
         int              requestPort        = Configs.getPort(config, "market-data.request-port");
 
         return MarketData.open(session, multicastInterface,
-                new InetSocketAddress(multicastGroup, multicastPort), requestPort);
+                new InetSocketAddress(multicastGroup, multicastPort),
+                new InetSocketAddress(requestAddress, requestPort));
     }
 
     private static MarketReporting marketReporting(Config config) throws IOException {
