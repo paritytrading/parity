@@ -12,11 +12,68 @@ Run Parity Trade Reporter with Java:
 
     java -jar parity-reporter.jar [-t] <configuration-file>
 
-After starting, the trade reporter first replays trades that have taken place
-before it started. Then it proceeds to display trades in real time.
+The command line options are as follows:
 
-By default, the trade reporter formats its output for display. If the `-t`
-option is given, it formats the output as tab-separated values (TSV) instead.
+- `-t`: Format the output as tab-separated values (TSV).
+
+The command line arguments are as follows:
+
+- `<configuration-file>`: The configuration file. The configuration file
+  specifies how to connect to the the trading system.
+
+Once started, the application first replays trades that have taken place so
+far. Then it proceeds to display trades in real time.
+
+
+Configuration
+-------------
+
+Parity Trade Reporter uses a configuration file to specify how to connect to
+the trading system. It supports two transport options: NASDAQ MoldUDP64 and
+NASDAQ SoupBinTCP.
+
+The following configuration parameters are required when using the MoldUDP64
+transport:
+
+    trade-report {
+
+        # The IP address or name of the network interface for the MoldUDP64 session.
+        multicast-interface = 127.0.0.1
+
+        # The IP address of the multicast group for the MoldUDP64 session.
+        multicast-group = 224.0.0.1
+
+        # The UDP port for the MoldUDP64 session.
+        multicast-port = 6000
+
+        # The IP address of the MoldUDP64 request server.
+        request-address = 127.0.0.1
+
+        # The UDP port of the MoldUDP64 request server.
+        request-port = 6001
+
+    }
+
+The following configuration parameters are required when using the SoupBinTCP
+transport:
+
+    trade-report {
+
+        # The IP address of the SoupBinTCP server.
+        address = 127.0.0.1
+
+        # The TCP port of the SoupBinTCP server.
+        port = 6000
+
+        # The SoupBinTCP username.
+        username = parity
+
+        # The SoupBinTCP password.
+        password = parity
+
+    }
+
+See the `etc` directory for example configuration files.
 
 
 License
