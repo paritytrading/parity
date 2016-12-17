@@ -64,10 +64,12 @@ class TradingSystem {
         NetworkInterface multicastInterface = Configs.getNetworkInterface(config, "market-data.multicast-interface");
         InetAddress      multicastGroup     = Configs.getInetAddress(config, "market-report.multicast-group");
         int              multicastPort      = Configs.getPort(config, "market-report.multicast-port");
+        InetAddress      requestAddress     = Configs.getInetAddress(config, "market-report.request-address");
         int              requestPort        = Configs.getPort(config, "market-report.request-port");
 
         return MarketReporting.open(session, multicastInterface,
-                new InetSocketAddress(multicastGroup, multicastPort), requestPort);
+                new InetSocketAddress(multicastGroup, multicastPort),
+                new InetSocketAddress(requestAddress, requestPort));
     }
 
     private static OrderEntry orderEntry(Config config, MatchingEngine engine) throws IOException {
