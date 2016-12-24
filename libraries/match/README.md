@@ -9,11 +9,17 @@ Download
 
 Add a Maven dependency to Parity Matching Engine:
 
-    <dependency>
-      <groupId>com.paritytrading.parity</groupId>
-      <artifactId>parity-match</artifactId>
-      <version><!-- latest version --></version>
-    </dependency>
+```xml
+<dependency>
+  <groupId>com.paritytrading.parity</groupId>
+  <artifactId>parity-match</artifactId>
+  <version><!-- latest release --></version>
+</dependency>
+```
+
+See the [latest release][] on GitHub.
+
+  [latest release]: https://github.com/paritytrading/parity/releases/latest
 
 
 License
