@@ -10,14 +10,18 @@ Usage
 
 Run Parity Stock Ticker with Java:
 
-    java -jar parity-ticker.jar
+```
+java -jar parity-ticker.jar
+```
 
 The application can either listen to a live market data feed or to read a
 historical market data file.
 
 To listen to a live market data feed, pass a configuration file:
 
-    java -jar parity-ticker.jar [-t] <configuration-file>
+```
+java -jar parity-ticker.jar [-t] <configuration-file>
+```
 
 The command line options are as follows:
 
@@ -36,7 +40,9 @@ market events in real time.
 
 To read a historical market data file, pass an input file:
 
-    java -jar parity-ticker.jar [-t] <input-file> [<instrument> ...]
+```
+java -jar parity-ticker.jar [-t] <input-file> [<instrument> ...]
+```
 
 The command line options are as follows:
 
@@ -60,49 +66,53 @@ SoupBinTCP.
 The following configuration parameters are required when using the MoldUDP64
 transport:
 
-    market-data {
+```
+market-data {
 
-        # The IP address or name of the network interface for the MoldUDP64 session.
-        multicast-interface = 127.0.0.1
+    # The IP address or name of the network interface for the MoldUDP64 session.
+    multicast-interface = 127.0.0.1
 
-        # The IP address of the multicast group for the MoldUDP64 session.
-        multicast-group = 224.0.0.1
+    # The IP address of the multicast group for the MoldUDP64 session.
+    multicast-group = 224.0.0.1
 
-        # The UDP port for the MoldUDP64 session.
-        multicast-port = 5000
+    # The UDP port for the MoldUDP64 session.
+    multicast-port = 5000
 
-        # The IP address of the MoldUDP64 request server.
-        request-address = 127.0.0.1
+    # The IP address of the MoldUDP64 request server.
+    request-address = 127.0.0.1
 
-        # The UDP port of the MoldUDP64 request server.
-        request-port = 5001
+    # The UDP port of the MoldUDP64 request server.
+    request-port = 5001
 
-    }
+}
 
-    # A list of zero or more instruments.
-    instruments = [ FOO, BAR, BAZ ]
+# A list of zero or more instruments.
+instruments = [ FOO, BAR, BAZ ]
+```
 
 The following configuration parameters are required when using the SoupBinTCP
 transport:
 
-    market-data {
+```
+market-data {
 
-        # The IP address of the SoupBinTCP server.
-        address = 127.0.0.1
+    # The IP address of the SoupBinTCP server.
+    address = 127.0.0.1
 
-        # The TCP port of the SoupBinTCP server.
-        port = 5000
+    # The TCP port of the SoupBinTCP server.
+    port = 5000
 
-        # The SoupBinTCP username.
-        username = parity
+    # The SoupBinTCP username.
+    username = parity
 
-        # The SoupBinTCP password.
-        password = parity
+    # The SoupBinTCP password.
+    password = parity
 
-    }
+}
 
-    # A list of zero or more instruments.
-    instruments = [ FOO, BAR, BAZ ]
+# A list of zero or more instruments.
+instruments = [ FOO, BAR, BAZ ]
+```
 
 See the `etc` directory for example configuration files.
 
