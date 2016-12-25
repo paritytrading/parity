@@ -9,7 +9,9 @@ Usage
 
 Run Parity Trading System with Java:
 
-    java -jar parity-system.jar <configuration-file>
+```
+java -jar parity-system.jar <configuration-file>
+```
 
 The command line arguments are as follows:
 
@@ -29,62 +31,64 @@ makes available to market participants.
 
 The following configuration parameters are required:
 
-    market-data {
+```
+market-data {
 
-        # The market data session name.
-        session = parity
+    # The market data session name.
+    session = parity
 
-        # The IP address or name of the network interface for the market data session.
-        multicast-interface = 127.0.0.1
+    # The IP address or name of the network interface for the market data session.
+    multicast-interface = 127.0.0.1
 
-        # The IP address of the multicast group for the market data session.
-        multicast-group = 224.0.0.1
+    # The IP address of the multicast group for the market data session.
+    multicast-group = 224.0.0.1
 
-        # The UDP port for the market data session.
-        multicast-port = 5000
+    # The UDP port for the market data session.
+    multicast-port = 5000
 
-        # The local IP address for the market data request server.
-        request-address = 0.0.0.0
+    # The local IP address for the market data request server.
+    request-address = 0.0.0.0
 
-        # The local UDP port for the market data request server.
-        request-port = 5001
+    # The local UDP port for the market data request server.
+    request-port = 5001
 
-    }
+}
 
-    market-report {
+market-report {
 
-        # The market reporting session name.
-        session = parity
+    # The market reporting session name.
+    session = parity
 
-        # The IP address or name of the network interface for the market reporting session.
-        multicast-interface = 127.0.0.1
+    # The IP address or name of the network interface for the market reporting session.
+    multicast-interface = 127.0.0.1
 
-        # The IP address of the multicast group for the market reporting session.
-        multicast-group = 224.0.0.1
+    # The IP address of the multicast group for the market reporting session.
+    multicast-group = 224.0.0.1
 
-        # The UDP port for the market reporting session.
-        multicast-port = 6000
+    # The UDP port for the market reporting session.
+    multicast-port = 6000
 
-        # The local IP address for the market reporting request server.
-        request-address = 0.0.0.0
+    # The local IP address for the market reporting request server.
+    request-address = 0.0.0.0
 
-        # The local UDP port for the market reporting request server.
-        request-port = 6001
+    # The local UDP port for the market reporting request server.
+    request-port = 6001
 
-    }
+}
 
-    order-entry {
+order-entry {
 
-        # The local IP address for the order entry server.
-        address = 0.0.0.0
+    # The local IP address for the order entry server.
+    address = 0.0.0.0
 
-        # The local TCP port for the order entry server.
-        port = 4000
+    # The local TCP port for the order entry server.
+    port = 4000
 
-    }
+}
 
-    # A list of zero or more instruments.
-    instruments = [ FOO, BAR, BAZ ]
+# A list of zero or more instruments.
+instruments = [ FOO, BAR, BAZ ]
+```
 
 See the `etc` directory for an example configuration file.
 
