@@ -30,7 +30,7 @@ public class POE {
     public static final byte BROKEN_TRADE_REASON_CONSENT     = 'C';
     public static final byte BROKEN_TRADE_REASON_SUPERVISORY = 'S';
 
-    private static final byte ORDER_ID_LENGTH = 16;
+    public static final byte ORDER_ID_LENGTH = 16;
 
     /**
      * A message.

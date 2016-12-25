@@ -1,6 +1,7 @@
 package com.paritytrading.parity.fix;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 class Orders {
@@ -26,22 +27,22 @@ class Orders {
         return null;
     }
 
-    public Order findByOrderEntryID(String orderEntryId) {
+    public Order findByOrderEntryID(byte[] orderEntryId) {
         for (int i = 0; i < orders.size(); i++) {
             Order order = orders.get(i);
 
-            if (orderEntryId.equals(order.getOrderEntryID()))
+            if (Arrays.equals(orderEntryId, order.getOrderEntryID()))
                 return order;
         }
 
         return null;
     }
 
-    public void removeByOrderEntryID(String orderEntryId) {
+    public void removeByOrderEntryID(byte[] orderEntryId) {
         for (int i = 0; i < orders.size(); i++) {
             Order order = orders.get(i);
 
-            if (orderEntryId.equals(order.getOrderEntryID())) {
+            if (Arrays.equals(orderEntryId, order.getOrderEntryID())) {
                 orders.remove(i);
                 break;
             }
