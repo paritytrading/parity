@@ -36,14 +36,16 @@ class EnterCommand implements Command {
     }
 
     private void execute(TerminalClient client, long quantity, long instrument, long price) throws IOException {
-        message.orderId    = client.getOrderIdGenerator().next();
+        String orderId = client.getOrderIdGenerator().next();
+
+        ASCII.putLeft(message.orderId, orderId);
         message.quantity   = quantity;
         message.instrument = instrument;
         message.price      = price;
 
         client.getOrderEntry().send(message);
 
-        client.printf("\nOrder ID\n----------------\n%s\n\n", message.orderId);
+        client.printf("\nOrder ID\n----------------\n%s\n\n", orderId);
     }
 
     @Override

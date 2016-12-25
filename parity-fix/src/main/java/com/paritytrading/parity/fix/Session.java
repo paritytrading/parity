@@ -172,7 +172,7 @@ class Session implements Closeable {
 
             String orderEntryId = orderEntryIds.next();
 
-            enterOrder.orderId = orderEntryId;
+            ASCII.putLeft(enterOrder.orderId, orderEntryId);
 
             String clOrdId = clOrdIdValue.asString();
 
@@ -244,7 +244,7 @@ class Session implements Closeable {
 
             enterOrder.price = (long)(price * 100.0) * 100;
 
-            orders.add(new Order(enterOrder.orderId, clOrdId, account, side, symbol, orderQty));
+            orders.add(new Order(orderEntryId, clOrdId, account, side, symbol, orderQty));
 
             send(enterOrder);
         }
@@ -324,7 +324,7 @@ class Session implements Closeable {
 
             order.setNextClOrdID(clOrdId);
 
-            cancelOrder.orderId  = order.getOrderEntryID();
+            ASCII.putLeft(cancelOrder.orderId, order.getOrderEntryID());
             cancelOrder.quantity = Math.max(orderQty - order.getCumQty(), 0);
 
             send(cancelOrder);
@@ -589,7 +589,7 @@ class Session implements Closeable {
 
         @Override
         public void orderAccepted(POE.OrderAccepted message) throws IOException {
-            Order order = orders.findByOrderEntryID(message.orderId);
+            Order order = orders.findByOrderEntryID(ASCII.get(message.orderId));
             if (order == null)
                 return;
 
@@ -600,18 +600,22 @@ class Session implements Closeable {
 
         @Override
         public void orderRejected(POE.OrderRejected message) throws IOException {
-            Order order = orders.findByOrderEntryID(message.orderId);
+            String orderEntryId = ASCII.get(message.orderId);
+
+            Order order = orders.findByOrderEntryID(orderEntryId);
             if (order == null)
                 return;
 
             sendOrderRejected(order, OrdRejReasonValues.UnknownSymbol);
 
-            orders.removeByOrderEntryID(message.orderId);
+            orders.removeByOrderEntryID(orderEntryId);
         }
 
         @Override
         public void orderExecuted(POE.OrderExecuted message) throws IOException {
-            Order order = orders.findByOrderEntryID(message.orderId);
+            String orderEntryId = ASCII.get(message.orderId);
+
+            Order order = orders.findByOrderEntryID(orderEntryId);
             if (order == null)
                 return;
 
@@ -623,12 +627,14 @@ class Session implements Closeable {
             sendOrderExecuted(order, lastQty, lastPx);
 
             if (order.getLeavesQty() == 0)
-                orders.removeByOrderEntryID(message.orderId);
+                orders.removeByOrderEntryID(orderEntryId);
         }
 
         @Override
         public void orderCanceled(POE.OrderCanceled message) throws IOException {
-            Order order = orders.findByOrderEntryID(message.orderId);
+            String orderEntryId = ASCII.get(message.orderId);
+
+            Order order = orders.findByOrderEntryID(orderEntryId);
             if (order == null)
                 return;
 
@@ -637,7 +643,7 @@ class Session implements Closeable {
             sendOrderCanceled(order);
 
             if (order.getLeavesQty() == 0)
-                orders.removeByOrderEntryID(message.orderId);
+                orders.removeByOrderEntryID(orderEntryId);
         }
 
         @Override

@@ -1,7 +1,6 @@
 package com.paritytrading.parity.net.poe;
 
 import static com.paritytrading.foundation.ByteBuffers.*;
-import static com.paritytrading.parity.net.poe.ByteBuffers.*;
 
 import com.paritytrading.parity.net.ProtocolMessage;
 import java.nio.ByteBuffer;
@@ -52,15 +51,22 @@ public class POE {
      * An Enter Order message.
      */
     public static class EnterOrder implements InboundMessage {
-        public String orderId;
+        public byte[] orderId;
         public byte   side;
         public long   instrument;
         public long   quantity;
         public long   price;
 
+        /**
+         * Create an instance.
+         */
+        public EnterOrder() {
+            orderId = new byte[ORDER_ID_LENGTH];
+        }
+
         @Override
         public void get(ByteBuffer buffer) {
-            orderId    = getString(buffer, ORDER_ID_LENGTH);
+            buffer.get(orderId);
             side       = buffer.get();
             instrument = buffer.getLong();
             quantity   = getUnsignedInt(buffer);
@@ -70,7 +76,7 @@ public class POE {
         @Override
         public void put(ByteBuffer buffer) {
             buffer.put(MESSAGE_TYPE_ENTER_ORDER);
-            putString(buffer, orderId, ORDER_ID_LENGTH);
+            buffer.put(orderId);
             buffer.put(side);
             buffer.putLong(instrument);
             putUnsignedInt(buffer, quantity);
@@ -82,19 +88,26 @@ public class POE {
      * A Cancel Order message.
      */
     public static class CancelOrder implements InboundMessage {
-        public String orderId;
+        public byte[] orderId;
         public long   quantity;
+
+        /**
+         * Create an instance.
+         */
+        public CancelOrder() {
+            orderId = new byte[ORDER_ID_LENGTH];
+        }
 
         @Override
         public void get(ByteBuffer buffer) {
-            orderId  = getString(buffer, ORDER_ID_LENGTH);
+            buffer.get(orderId);
             quantity = getUnsignedInt(buffer);
         }
 
         @Override
         public void put(ByteBuffer buffer) {
             buffer.put(MESSAGE_TYPE_CANCEL_ORDER);
-            putString(buffer, orderId, ORDER_ID_LENGTH);
+            buffer.put(orderId);
             putUnsignedInt(buffer, quantity);
         }
     }
@@ -116,17 +129,24 @@ public class POE {
      */
     public static class OrderAccepted implements OutboundMessage {
         public long   timestamp;
-        public String orderId;
+        public byte[] orderId;
         public byte   side;
         public long   instrument;
         public long   quantity;
         public long   price;
         public long   orderNumber;
 
+        /**
+         * Create an instance.
+         */
+        public OrderAccepted() {
+            orderId = new byte[ORDER_ID_LENGTH];
+        }
+
         @Override
         public void get(ByteBuffer buffer) {
             timestamp   = buffer.getLong();
-            orderId     = getString(buffer, ORDER_ID_LENGTH);
+            buffer.get(orderId);
             side        = buffer.get();
             instrument  = buffer.getLong();
             quantity    = getUnsignedInt(buffer);
@@ -138,7 +158,7 @@ public class POE {
         public void put(ByteBuffer buffer) {
             buffer.put(MESSAGE_TYPE_ORDER_ACCEPTED);
             buffer.putLong(timestamp);
-            putString(buffer, orderId, ORDER_ID_LENGTH);
+            buffer.put(orderId);
             buffer.put(side);
             buffer.putLong(instrument);
             putUnsignedInt(buffer, quantity);
@@ -152,13 +172,20 @@ public class POE {
      */
     public static class OrderRejected implements OutboundMessage {
         public long   timestamp;
-        public String orderId;
+        public byte[] orderId;
         public byte   reason;
+
+        /**
+         * Create an instance.
+         */
+        public OrderRejected() {
+            orderId = new byte[ORDER_ID_LENGTH];
+        }
 
         @Override
         public void get(ByteBuffer buffer) {
             timestamp = buffer.getLong();
-            orderId   = getString(buffer, ORDER_ID_LENGTH);
+            buffer.get(orderId);
             reason    = buffer.get();
         }
 
@@ -166,7 +193,7 @@ public class POE {
         public void put(ByteBuffer buffer) {
             buffer.put(MESSAGE_TYPE_ORDER_REJECTED);
             buffer.putLong(timestamp);
-            putString(buffer, orderId, ORDER_ID_LENGTH);
+            buffer.put(orderId);
             buffer.put(reason);
         }
     }
@@ -176,16 +203,23 @@ public class POE {
      */
     public static class OrderExecuted implements OutboundMessage {
         public long   timestamp;
-        public String orderId;
+        public byte[] orderId;
         public long   quantity;
         public long   price;
         public byte   liquidityFlag;
         public long   matchNumber;
 
+        /**
+         * Create an instance.
+         */
+        public OrderExecuted() {
+            orderId = new byte[ORDER_ID_LENGTH];
+        }
+
         @Override
         public void get(ByteBuffer buffer) {
             timestamp     = buffer.getLong();
-            orderId       = getString(buffer, ORDER_ID_LENGTH);
+            buffer.get(orderId);
             quantity      = getUnsignedInt(buffer);
             price         = getUnsignedInt(buffer);
             liquidityFlag = buffer.get();
@@ -196,7 +230,7 @@ public class POE {
         public void put(ByteBuffer buffer) {
             buffer.put(MESSAGE_TYPE_ORDER_EXECUTED);
             buffer.putLong(timestamp);
-            putString(buffer, orderId, ORDER_ID_LENGTH);
+            buffer.put(orderId);
             putUnsignedInt(buffer, quantity);
             putUnsignedInt(buffer, price);
             buffer.put(liquidityFlag);
@@ -209,14 +243,21 @@ public class POE {
      */
     public static class OrderCanceled implements OutboundMessage {
         public long   timestamp;
-        public String orderId;
+        public byte[] orderId;
         public long   canceledQuantity;
         public byte   reason;
+
+        /**
+         * Create an instance.
+         */
+        public OrderCanceled() {
+            orderId = new byte[ORDER_ID_LENGTH];
+        }
 
         @Override
         public void get(ByteBuffer buffer) {
             timestamp        = buffer.getLong();
-            orderId          = getString(buffer, ORDER_ID_LENGTH);
+            buffer.get(orderId);
             canceledQuantity = getUnsignedInt(buffer);
             reason           = buffer.get();
         }
@@ -225,7 +266,7 @@ public class POE {
         public void put(ByteBuffer buffer) {
             buffer.put(MESSAGE_TYPE_ORDER_CANCELED);
             buffer.putLong(timestamp);
-            putString(buffer, orderId, ORDER_ID_LENGTH);
+            buffer.put(orderId);
             putUnsignedInt(buffer, canceledQuantity);
             buffer.put(reason);
         }
@@ -236,14 +277,21 @@ public class POE {
      */
     public static class BrokenTrade implements OutboundMessage {
         public long   timestamp;
-        public String orderId;
+        public byte[] orderId;
         public long   matchNumber;
         public byte   reason;
+
+        /**
+         * Create an instance.
+         */
+        public BrokenTrade() {
+            orderId = new byte[ORDER_ID_LENGTH];
+        }
 
         @Override
         public void get(ByteBuffer buffer) {
             timestamp   = buffer.getLong();
-            orderId     = getString(buffer, ORDER_ID_LENGTH);
+            buffer.get(orderId);
             matchNumber = getUnsignedInt(buffer);
             reason      = buffer.get();
         }
@@ -252,7 +300,7 @@ public class POE {
         public void put(ByteBuffer buffer) {
             buffer.put(MESSAGE_TYPE_BROKEN_TRADE);
             buffer.putLong(timestamp);
-            putString(buffer, orderId, ORDER_ID_LENGTH);
+            buffer.put(orderId);
             putUnsignedInt(buffer, matchNumber);
             buffer.put(reason);
         }

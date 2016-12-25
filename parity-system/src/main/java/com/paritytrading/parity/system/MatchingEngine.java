@@ -49,7 +49,7 @@ class MatchingEngine {
         this.nextMatchNumber = 1;
     }
 
-    public void enterOrder(POE.EnterOrder message, Session session) {
+    public void enterOrder(POE.EnterOrder message, String orderId, Session session) {
         OrderBook book = books.get(message.instrument);
         if (book == null) {
             session.orderRejected(message, POE.ORDER_REJECT_REASON_UNKNOWN_INSTRUMENT);
@@ -58,11 +58,11 @@ class MatchingEngine {
 
         long orderNumber = nextOrderNumber++;
 
-        handling = new Order(message.orderId, orderNumber, session, book);
+        handling = new Order(orderId, orderNumber, session, book);
 
         instrument = message.instrument;
 
-        session.orderAccepted(message, handling);
+        session.orderAccepted(message, orderId, handling);
 
         marketReporting.order(session.getUsername(), orderNumber, pmr(message.side),
                 instrument, message.quantity, message.price);
