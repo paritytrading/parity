@@ -61,6 +61,16 @@ Parity contains the following test applications:
   contains microbenchmarks for the matching engine.
 
 
+Build
+-----
+
+Build Parity with Maven:
+
+```
+mvn package
+```
+
+
 Links
 -----
 
