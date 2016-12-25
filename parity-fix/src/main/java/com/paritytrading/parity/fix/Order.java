@@ -2,11 +2,12 @@ package com.paritytrading.parity.fix;
 
 import static com.paritytrading.philadelphia.fix44.FIX44Enumerations.*;
 
+import com.paritytrading.foundation.ASCII;
 import com.paritytrading.parity.net.poe.POE;
 
 class Order {
 
-    private String orderEntryId;
+    private byte[] orderEntryId;
     private long   orderId;
     private String nextClOrdId;
     private String clOrdId;
@@ -21,7 +22,7 @@ class Order {
 
     public Order(String orderEntryId, String clOrdId, String account, char side,
             String symbol, long orderQty) {
-        this.orderEntryId = orderEntryId;
+        this.orderEntryId = new byte[POE.ORDER_ID_LENGTH];
         this.orderId      = 0;
         this.nextClOrdId  = null;
         this.clOrdId      = clOrdId;
@@ -33,6 +34,8 @@ class Order {
         this.orderQty     = orderQty;
         this.cumQty       = 0;
         this.avgPx        = 0.0;
+
+        ASCII.putLeft(this.orderEntryId, orderEntryId);
     }
 
     public void orderAccepted(long orderNumber) {
@@ -57,7 +60,7 @@ class Order {
         nextClOrdId = null;
     }
 
-    public String getOrderEntryID() {
+    public byte[] getOrderEntryID() {
         return orderEntryId;
     }
 
