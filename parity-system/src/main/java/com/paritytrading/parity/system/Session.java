@@ -1,6 +1,7 @@
 package com.paritytrading.parity.system;
 
-import com.paritytrading.foundation.ASCII;
+import static it.unimi.dsi.fastutil.bytes.ByteArrays.HASH_STRATEGY;
+
 import com.paritytrading.foundation.ByteArrays;
 import com.paritytrading.nassau.soupbintcp.SoupBinTCP;
 import com.paritytrading.nassau.soupbintcp.SoupBinTCPServer;
@@ -8,12 +9,12 @@ import com.paritytrading.nassau.soupbintcp.SoupBinTCPServerStatusListener;
 import com.paritytrading.parity.net.poe.POE;
 import com.paritytrading.parity.net.poe.POEServerListener;
 import com.paritytrading.parity.net.poe.POEServerParser;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenCustomHashMap;
+import it.unimi.dsi.fastutil.objects.ObjectOpenCustomHashSet;
 import java.io.Closeable;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
-import java.util.HashMap;
-import java.util.HashSet;
 
 class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerListener {
 
@@ -30,9 +31,9 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
 
     private SoupBinTCPServer transport;
 
-    private HashMap<String, Order> orders;
+    private Object2ObjectOpenCustomHashMap<byte[], Order> orders;
 
-    private HashSet<String> orderIds;
+    private ObjectOpenCustomHashSet<byte[]> orderIds;
 
     private MatchingEngine engine;
 
@@ -44,8 +45,8 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
         this.transport = new SoupBinTCPServer(channel, POE.MAX_INBOUND_MESSAGE_LENGTH,
                 new POEServerParser(this), this);
 
-        this.orders   = new HashMap<>();
-        this.orderIds = new HashSet<>();
+        this.orders   = new Object2ObjectOpenCustomHashMap<>(HASH_STRATEGY);
+        this.orderIds = new ObjectOpenCustomHashSet<>(HASH_STRATEGY);
 
         this.engine = engine;
 
@@ -111,12 +112,10 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
             return;
         }
 
-        String orderId = ASCII.get(message.orderId);
-
-        if (orderIds.contains(orderId))
+        if (orderIds.contains(message.orderId))
             return;
 
-        engine.enterOrder(message, orderId, this);
+        engine.enterOrder(message, this);
     }
 
     @Override
@@ -126,7 +125,7 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
             return;
         }
 
-        Order order = orders.get(ASCII.get(message.orderId));
+        Order order = orders.get(message.orderId);
         if (order == null)
             return;
 
@@ -134,14 +133,14 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
     }
 
     public void track(Order order) {
-        orders.put(order.getOrderId(), order);
+        orders.put(order.getOrderId().clone(), order);
     }
 
     public void release(Order order) {
         orders.remove(order.getOrderId());
     }
 
-    public void orderAccepted(POE.EnterOrder message, String orderId, Order order) {
+    public void orderAccepted(POE.EnterOrder message, Order order) {
         orderAccepted.timestamp   = timestamp();
         System.arraycopy(message.orderId, 0, orderAccepted.orderId, 0, orderAccepted.orderId.length);
         orderAccepted.side        = message.side;
@@ -152,7 +151,7 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
 
         send(orderAccepted);
 
-        orderIds.add(orderId);
+        orderIds.add(message.orderId.clone());
     }
 
     public void orderRejected(POE.EnterOrder message, byte reason) {
@@ -166,7 +165,7 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
     public void orderExecuted(long price, long quantity, byte liquidityFlag,
             long matchNumber, Order order) {
         orderExecuted.timestamp     = timestamp();
-        ASCII.putLeft(orderExecuted.orderId, order.getOrderId());
+        System.arraycopy(order.getOrderId(), 0, orderExecuted.orderId, 0, orderExecuted.orderId.length);
         orderExecuted.quantity      = quantity;
         orderExecuted.price         = price;
         orderExecuted.liquidityFlag = liquidityFlag;
@@ -177,7 +176,7 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
 
     public void orderCanceled(long canceledQuantity, byte reason, Order order) {
         orderCanceled.timestamp        = timestamp();
-        ASCII.putLeft(orderCanceled.orderId, order.getOrderId());
+        System.arraycopy(order.getOrderId(), 0, orderCanceled.orderId, 0, orderCanceled.orderId.length);
         orderCanceled.canceledQuantity = canceledQuantity;
         orderCanceled.reason           = reason;
 
