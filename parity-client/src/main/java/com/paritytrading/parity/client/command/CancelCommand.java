@@ -1,5 +1,6 @@
 package com.paritytrading.parity.client.command;
 
+import com.paritytrading.foundation.ASCII;
 import com.paritytrading.parity.client.TerminalClient;
 import com.paritytrading.parity.net.poe.POE;
 import java.io.IOException;
@@ -29,7 +30,7 @@ class CancelCommand implements Command {
     }
 
     private void execute(TerminalClient client, String orderId) throws IOException {
-        message.orderId  = orderId;
+        ASCII.putLeft(message.orderId, orderId);
         message.quantity = 0;
 
         client.getOrderEntry().send(message);

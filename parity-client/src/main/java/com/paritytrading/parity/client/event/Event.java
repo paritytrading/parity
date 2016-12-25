@@ -1,5 +1,6 @@
 package com.paritytrading.parity.client.event;
 
+import com.paritytrading.foundation.ASCII;
 import com.paritytrading.parity.net.poe.POE;
 
 public interface Event {
@@ -17,7 +18,7 @@ public interface Event {
 
         public OrderAccepted(POE.OrderAccepted message) {
             this.timestamp   = message.timestamp;
-            this.orderId     = message.orderId;
+            this.orderId     = ASCII.get(message.orderId);
             this.side        = message.side;
             this.instrument  = message.instrument;
             this.quantity    = message.quantity;
@@ -38,7 +39,7 @@ public interface Event {
 
         public OrderRejected(POE.OrderRejected message) {
             this.timestamp = message.timestamp;
-            this.orderId   = message.orderId;
+            this.orderId   = ASCII.get(message.orderId);
             this.reason    = message.reason;
         }
 
@@ -58,7 +59,7 @@ public interface Event {
 
         public OrderExecuted(POE.OrderExecuted message) {
             this.timestamp     = message.timestamp;
-            this.orderId       = message.orderId;
+            this.orderId       = ASCII.get(message.orderId);
             this.quantity      = message.quantity;
             this.price         = message.price;
             this.liquidityFlag = message.liquidityFlag;
@@ -79,7 +80,7 @@ public interface Event {
 
         public OrderCanceled(POE.OrderCanceled message) {
             this.timestamp        = message.timestamp;
-            this.orderId          = message.orderId;
+            this.orderId          = ASCII.get(message.orderId);
             this.canceledQuantity = message.canceledQuantity;
             this.reason           = message.reason;
         }
@@ -98,7 +99,7 @@ public interface Event {
 
         public BrokenTrade(POE.BrokenTrade message) {
             this.timestamp   = message.timestamp;
-            this.orderId     = message.orderId;
+            this.orderId     = ASCII.get(message.orderId);
             this.matchNumber = message.matchNumber;
             this.reason      = message.reason;
         }
