@@ -2,7 +2,7 @@ CHANGELOG.md
 LICENSE.txt
 README.md
 applications/client/README.md
-applications/client/etc/devel.conf
+applications/client/etc/example.conf
 applications/client/parity-client.jar
 applications/fix/README.md
 applications/fix/doc/FIX.md
