@@ -13,7 +13,7 @@ applications/reporter/etc/example-tcp.conf
 applications/reporter/etc/example-udp.conf
 applications/reporter/parity-reporter.jar
 applications/system/README.md
-applications/system/etc/devel.conf
+applications/system/etc/example.conf
 applications/system/parity-system.jar
 applications/ticker/README.md
 applications/ticker/etc/devel-tcp.conf
