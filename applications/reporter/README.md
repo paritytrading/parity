@@ -10,7 +10,9 @@ Usage
 
 Run Parity Trade Reporter with Java:
 
-    java -jar parity-reporter.jar [-t] <configuration-file>
+```
+java -jar parity-reporter.jar [-t] <configuration-file>
+```
 
 The command line options are as follows:
 
@@ -35,43 +37,47 @@ NASDAQ SoupBinTCP.
 The following configuration parameters are required when using the MoldUDP64
 transport:
 
-    trade-report {
+```
+trade-report {
 
-        # The IP address or name of the network interface for the MoldUDP64 session.
-        multicast-interface = 127.0.0.1
+    # The IP address or name of the network interface for the MoldUDP64 session.
+    multicast-interface = 127.0.0.1
 
-        # The IP address of the multicast group for the MoldUDP64 session.
-        multicast-group = 224.0.0.1
+    # The IP address of the multicast group for the MoldUDP64 session.
+    multicast-group = 224.0.0.1
 
-        # The UDP port for the MoldUDP64 session.
-        multicast-port = 6000
+    # The UDP port for the MoldUDP64 session.
+    multicast-port = 6000
 
-        # The IP address of the MoldUDP64 request server.
-        request-address = 127.0.0.1
+    # The IP address of the MoldUDP64 request server.
+    request-address = 127.0.0.1
 
-        # The UDP port of the MoldUDP64 request server.
-        request-port = 6001
+    # The UDP port of the MoldUDP64 request server.
+    request-port = 6001
 
-    }
+}
+```
 
 The following configuration parameters are required when using the SoupBinTCP
 transport:
 
-    trade-report {
+```
+trade-report {
 
-        # The IP address of the SoupBinTCP server.
-        address = 127.0.0.1
+    # The IP address of the SoupBinTCP server.
+    address = 127.0.0.1
 
-        # The TCP port of the SoupBinTCP server.
-        port = 6000
+    # The TCP port of the SoupBinTCP server.
+    port = 6000
 
-        # The SoupBinTCP username.
-        username = parity
+    # The SoupBinTCP username.
+    username = parity
 
-        # The SoupBinTCP password.
-        password = parity
+    # The SoupBinTCP password.
+    password = parity
 
-    }
+}
+```
 
 See the `etc` directory for example configuration files.
 
