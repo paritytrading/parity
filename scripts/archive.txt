@@ -16,8 +16,8 @@ applications/system/README.md
 applications/system/etc/example.conf
 applications/system/parity-system.jar
 applications/ticker/README.md
-applications/ticker/etc/devel-tcp.conf
-applications/ticker/etc/devel-udp.conf
+applications/ticker/etc/example-tcp.conf
+applications/ticker/etc/example-udp.conf
 applications/ticker/parity-ticker.jar
 libraries/book/README.md
 libraries/file/README.md
