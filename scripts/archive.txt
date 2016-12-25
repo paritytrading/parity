@@ -6,7 +6,7 @@ applications/client/etc/example.conf
 applications/client/parity-client.jar
 applications/fix/README.md
 applications/fix/doc/FIX.md
-applications/fix/etc/devel.conf
+applications/fix/etc/example.conf
 applications/fix/parity-fix.jar
 applications/reporter/README.md
 applications/reporter/etc/devel-tcp.conf
