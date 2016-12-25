@@ -10,7 +10,9 @@ Usage
 
 Run Parity Matching Engine Performance Test with Java:
 
-    java -jar parity-match-perf-test.jar
+```
+java -jar parity-match-perf-test.jar
+```
 
 
 License
