@@ -9,8 +9,8 @@ applications/fix/doc/FIX.md
 applications/fix/etc/example.conf
 applications/fix/parity-fix.jar
 applications/reporter/README.md
-applications/reporter/etc/devel-tcp.conf
-applications/reporter/etc/devel-udp.conf
+applications/reporter/etc/example-tcp.conf
+applications/reporter/etc/example-udp.conf
 applications/reporter/parity-reporter.jar
 applications/system/README.md
 applications/system/etc/devel.conf
