@@ -10,7 +10,9 @@ Usage
 
 Run Parity Order Book Performance Test with Java:
 
-    java -jar parity-book-perf-test.jar
+```
+java -jar parity-book-perf-test.jar
+```
 
 
 License
