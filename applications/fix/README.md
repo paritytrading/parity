@@ -13,6 +13,14 @@ Parity FIX Gateway specifies and implements the following protocols:
 - [**FIX**](doc/FIX.md): an alternative order entry protocol
 
 
+Download
+--------
+
+Download the [latest release][] from GitHub.
+
+  [latest release]: https://github.com/paritytrading/parity/releases/latest
+
+
 Usage
 -----
 
