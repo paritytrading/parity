@@ -5,6 +5,14 @@ Parity Terminal Client is a simple console application for entering orders
 into Parity Trading System.
 
 
+Download
+--------
+
+Download the [latest release][] from GitHub.
+
+  [latest release]: https://github.com/paritytrading/parity/releases/latest
+
+
 Usage
 -----
 
