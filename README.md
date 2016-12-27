@@ -8,6 +8,14 @@ or research market microstructure.
 Parity requires Java Runtime Environment (JRE) 8 or newer.
 
 
+Download
+--------
+
+See the [latest release][] on GitHub.
+
+  [latest release]: https://github.com/paritytrading/parity/releases/latest
+
+
 Modules
 -------
 
