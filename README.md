@@ -35,7 +35,7 @@ Parity contains the following applications:
   in the trading system.
 
 - [**Parity Trade Reporter**](applications/reporter) is a simple console
-  application that displays occurred trades in the trading system.
+  application that displays all occurred trades in the trading system.
 
 See the [Wiki][] for additional applications.
 
