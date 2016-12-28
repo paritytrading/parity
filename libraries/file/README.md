@@ -1,8 +1,8 @@
 Parity File Formats
 ===================
 
-Parity File Formats contains file format specifications and reference
-implementations for file formats used by Parity Trading System.
+Parity File Formats specifies and implements file formats used by the trading
+system.
 
 
 Features

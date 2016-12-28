@@ -50,9 +50,8 @@ Parity contains the following libraries:
   specifications and reference implementations for network protocols used by
   the trading system.
 
-- [**Parity File Formats**](libraries/file) contains file format
-  specifications and reference implementations for file formats used by the
-  trading system.
+- [**Parity File Formats**](libraries/file) specifies and implements file
+  formats used by the trading system.
 
 - [**Parity Matching Engine**](libraries/match) implements a high-performance
   matching engine for the JVM.
