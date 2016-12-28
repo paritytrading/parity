@@ -1,7 +1,7 @@
 Parity Matching Engine
 ======================
 
-Parity Matching Engine is a high-performance matching engine for the JVM.
+Parity Matching Engine is the matching engine used by the trading system.
 
 
 Download
