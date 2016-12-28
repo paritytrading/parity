@@ -2,7 +2,7 @@ Parity Stock Ticker
 ===================
 
 Parity Stock Ticker is a simple console application that displays the best
-bids and offers (BBOs) and latest trades in Parity Trading System.
+prices and latest trades in the trading system.
 
 
 Download

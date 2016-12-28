@@ -31,8 +31,8 @@ Parity contains the following applications:
   application for entering orders into the trading system.
 
 - [**Parity Stock Ticker**](applications/ticker) is a simple console
-  application that displays the best bids and offers (BBOs) and latest trades
-  in the trading system.
+  application that displays the best prices and latest trades in the trading
+  system.
 
 - [**Parity Trade Reporter**](applications/reporter) is a simple console
   application that displays all occurred trades in the trading system.
