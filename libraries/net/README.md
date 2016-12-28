@@ -1,8 +1,8 @@
 Parity Network Protocols
 ========================
 
-Parity Network Protocols contains protocol specifications and reference
-implementations for network protocols used by Parity Trading System.
+Parity Network Protocols specifies and implements network protocols used by
+the trading system.
 
 
 Features
