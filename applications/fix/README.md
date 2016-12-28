@@ -1,8 +1,8 @@
 Parity FIX Gateway
 ==================
 
-Parity FIX Gateway adds a Financial Information Exchange (FIX) interface to
-Parity Trading System.
+Parity FIX Gateway is a server application that adds Financial Information
+Exchange (FIX) support to the trading system.
 
 
 Protocols

@@ -24,8 +24,8 @@ Parity contains the following applications:
 - [**Parity Trading System**](applications/system) is a server application for
   running a trading venue.
 
-- [**Parity FIX Gateway**](applications/fix) adds Financial Information
-  Exchange (FIX) interface to the trading system.
+- [**Parity FIX Gateway**](applications/fix) is a server application that adds
+  Financial Information Exchange (FIX) support to the trading system.
 
 - [**Parity Terminal Client**](applications/client) is a simple console
   application for entering orders into the trading system.
