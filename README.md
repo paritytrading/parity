@@ -21,21 +21,21 @@ Modules
 
 Parity contains the following applications:
 
-- [**Parity Terminal Client**](applications/client) is a simple console
-  application for entering orders into the trading system.
+- [**Parity Trading System**](applications/system) is a server application for
+  running a trading venue.
 
 - [**Parity FIX Gateway**](applications/fix) adds Financial Information
   Exchange (FIX) interface to the trading system.
 
-- [**Parity Trade Reporter**](applications/reporter) is a simple console
-  application that displays occurred trades in the trading system.
-
-- [**Parity Trading System**](applications/system) is a server application for
-  running a trading venue.
+- [**Parity Terminal Client**](applications/client) is a simple console
+  application for entering orders into the trading system.
 
 - [**Parity Stock Ticker**](applications/ticker) is a simple console
   application that displays the best bids and offers (BBOs) and latest trades
   in the trading system.
+
+- [**Parity Trade Reporter**](applications/reporter) is a simple console
+  application that displays occurred trades in the trading system.
 
 See the [Wiki][] for additional applications.
 
