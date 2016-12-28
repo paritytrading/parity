@@ -1,7 +1,7 @@
 Parity Utilities
 ================
 
-Parity Utilities contains support functions used by Parity Trading System.
+Parity Utilities contains support functions used by the trading system.
 
 
 Download
