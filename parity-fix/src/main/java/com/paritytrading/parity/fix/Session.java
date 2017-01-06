@@ -323,6 +323,7 @@ class Session implements Closeable {
             }
 
             order.setNextClOrdID(clOrdId);
+            order.setCxlRejResponseTo(cxlRejResponseTo);
 
             System.arraycopy(order.getOrderEntryID(), 0, cancelOrder.orderId, 0, cancelOrder.orderId.length);
             cancelOrder.quantity = Math.max(orderQty - order.getCumQty(), 0);
@@ -434,6 +435,19 @@ class Session implements Closeable {
         txMessage.addField(OrdStatus).setChar(OrdStatusValues.Rejected);
         txMessage.addField(CxlRejResponseTo).setChar(cxlRejResponseTo);
         txMessage.addField(CxlRejReason).setInt(cxlRejReason);
+
+        fix.send(txMessage);
+    }
+
+    private void sendOrderCancelReject(Order order) throws IOException {
+        fix.prepare(txMessage, OrderCancelReject);
+
+        txMessage.addField(OrderID).setInt(order.getOrderID());
+        txMessage.addField(ClOrdID).setString(order.getNextClOrdID());
+        txMessage.addField(OrigClOrdID).setString(order.getClOrdID());
+        txMessage.addField(OrdStatus).setChar(OrdStatusValues.Filled);
+        txMessage.addField(CxlRejResponseTo).setChar(order.getCxlRejResponseTo());
+        txMessage.addField(CxlRejReason).setInt(CxlRejReasonValues.TooLateToCancel);
 
         fix.send(txMessage);
     }
@@ -622,8 +636,12 @@ class Session implements Closeable {
 
             sendOrderExecuted(order, lastQty, lastPx);
 
-            if (order.getLeavesQty() == 0)
+            if (order.getLeavesQty() == 0) {
                 orders.removeByOrderEntryID(message.orderId);
+
+                if (order.isInPendingStatus())
+                    sendOrderCancelReject(order);
+            }
         }
 
         @Override
