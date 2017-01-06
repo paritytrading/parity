@@ -19,21 +19,23 @@ class Order {
     private long   orderQty;
     private long   cumQty;
     private double avgPx;
+    private char   cxlRejResponseTo;
 
     public Order(String orderEntryId, String clOrdId, String account, char side,
             String symbol, long orderQty) {
-        this.orderEntryId = new byte[POE.ORDER_ID_LENGTH];
-        this.orderId      = 0;
-        this.nextClOrdId  = null;
-        this.clOrdId      = clOrdId;
-        this.origClOrdId  = null;
-        this.ordStatus    = OrdStatusValues.New;
-        this.account      = null;
-        this.side         = side;
-        this.symbol       = symbol;
-        this.orderQty     = orderQty;
-        this.cumQty       = 0;
-        this.avgPx        = 0.0;
+        this.orderEntryId     = new byte[POE.ORDER_ID_LENGTH];
+        this.orderId          = 0;
+        this.nextClOrdId      = null;
+        this.clOrdId          = clOrdId;
+        this.origClOrdId      = null;
+        this.ordStatus        = OrdStatusValues.New;
+        this.account          = null;
+        this.side             = side;
+        this.symbol           = symbol;
+        this.orderQty         = orderQty;
+        this.cumQty           = 0;
+        this.avgPx            = 0.0;
+        this.cxlRejResponseTo = CxlRejResponseToValues.OrderCancelRequest;
 
         ASCII.putLeft(this.orderEntryId, orderEntryId);
     }
@@ -114,6 +116,14 @@ class Order {
 
     public double getAvgPx() {
         return avgPx;
+    }
+
+    public void setCxlRejResponseTo(char cxlRejResponseTo) {
+        this.cxlRejResponseTo = cxlRejResponseTo;
+    }
+
+    public char getCxlRejResponseTo() {
+        return cxlRejResponseTo;
     }
 
     public boolean isInPendingStatus() {
