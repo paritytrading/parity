@@ -333,6 +333,7 @@ The reasons for order cancel rejection are enumerated below.
 
 CxlRejReason(102) | Description
 ------------------|----------------------------------------------------------
+0                 | Too late to cancel
 1                 | Unknown order
 3                 | Order already in Pending Cancel or Pending Replace status
 6                 | Duplicate ClOrdID(11)
