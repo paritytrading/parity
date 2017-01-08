@@ -14,7 +14,7 @@ class FIXGateway {
 
     public static void main(String[] args) {
         if (args.length != 1)
-            usage("fix-gateway <configuration-file>");
+            usage("parity-fix <configuration-file>");
 
         try {
             main(config(args[0]));
