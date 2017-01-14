@@ -64,10 +64,10 @@ class MatchingEngine {
 
         session.orderAccepted(message, handling);
 
-        marketReporting.order(session.getUsername(), orderNumber, pmr(message.side),
+        marketReporting.order(session.getUsername(), orderNumber, message.side,
                 instrument, message.quantity, message.price);
 
-        book.enter(orderNumber, poe(message.side), message.price, message.quantity);
+        book.enter(orderNumber, side(message.side), message.price, message.quantity);
     }
 
     public void cancelOrder(POE.CancelOrder message, Order order) {
@@ -137,7 +137,7 @@ class MatchingEngine {
 
         @Override
         public void add(long orderNumber, Side side, long price, long size) {
-            marketData.orderAdded(orderNumber, pmd(side), instrument, size, price);
+            marketData.orderAdded(orderNumber, side(side), instrument, size, price);
 
             track(handling);
         }
@@ -161,37 +161,12 @@ class MatchingEngine {
 
     }
 
-    private Side poe(byte side) {
-        switch (side) {
-        case POE.BUY:
-            return Side.BUY;
-        case POE.SELL:
-            return Side.SELL;
-        }
-
-        return null;
+    private Side side(byte side) {
+        return side == POE.BUY ? Side.BUY : Side.SELL;
     }
 
-    private byte pmd(Side side) {
-        switch (side) {
-        case BUY:
-            return PMD.BUY;
-        case SELL:
-            return PMD.SELL;
-        }
-
-        return 0;
-    }
-
-    private byte pmr(byte side) {
-        switch (side) {
-        case POE.BUY:
-            return PMR.BUY;
-        case POE.SELL:
-            return PMR.SELL;
-        }
-
-        return 0;
+    private byte side(Side side) {
+        return side == Side.BUY ? PMD.BUY : PMD.SELL;
     }
 
 }
