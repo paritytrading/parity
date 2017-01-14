@@ -84,14 +84,7 @@ class TAQFormat extends MarketDataListener {
     }
 
     private char side(Side side) {
-        switch (side) {
-        case BUY:
-            return TAQ.BUY;
-        case SELL:
-            return TAQ.SELL;
-        }
-
-        return 0;
+        return side == Side.BUY ? TAQ.BUY : TAQ.SELL;
     }
 
 }
