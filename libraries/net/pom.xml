@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.paritytrading.parity</groupId>
+    <artifactId>parity-parent</artifactId>
+    <version>0.5.1-SNAPSHOT</version>
+    <relativePath>../../pom.xml</relativePath>
+  </parent>
+
+  <artifactId>parity-net</artifactId>
+
+  <name>Parity Network Protocols</name>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.paritytrading.foundation</groupId>
+      <artifactId>foundation</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.paritytrading.nassau</groupId>
+      <artifactId>nassau-core</artifactId>
+    </dependency>
+  </dependencies>
+
+</project>

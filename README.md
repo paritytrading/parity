@@ -8,54 +8,73 @@ or research market microstructure.
 Parity requires Java Runtime Environment (JRE) 8 or newer.
 
 
-Features
+Download
 --------
 
-Parity consists of the following applications:
+See the [latest release][] on GitHub.
 
-- [**Parity Trading System**](parity-system) is a server application for
-  running a trading venue.
+  [latest release]: https://github.com/paritytrading/parity/releases/latest
 
-- [**Parity Terminal Client**](parity-client) is a simple console application
-  for entering orders into the trading system.
 
-- [**Parity Stock Ticker**](parity-ticker) is a simple console application
-  that displays the best bids and offers (BBOs) and latest trades in the
-  trading system.
+Modules
+-------
 
-- [**Parity Trade Reporter**](parity-reporter) is a simple console application
-  that displays occurred trades in the trading system.
+Parity contains the following applications:
 
-- [**Parity FIX Gateway**](parity-fix) adds Financial Information Exchange
-  (FIX) interface to the trading system.
+- [**Parity Trading System**](applications/system) is a server application for
+  running a financial exchange.
 
-- [**Parity Matching Engine Performance Test**](parity-match-perf-test)
-  contains microbenchmarks for the matching engine.
+- [**Parity FIX Gateway**](applications/fix) is a server application that adds
+  Financial Information Exchange (FIX) support to the trading system.
 
-- [**Parity Order Book Performance Test**](parity-book-perf-test) contains
-  microbenchmarks for the order book reconstruction.
+- [**Parity Terminal Client**](applications/client) is a simple console
+  application for entering orders into the trading system.
 
-In addition, Parity contains the following libraries:
-
-- [**Parity File Formats**](parity-file) contains file format specifications
-  and reference implementations for file formats used by the trading system.
-
-- [**Parity Network Protocols**](parity-net) contains protocol specifications
-  and reference implementations for network protocols used by the trading
+- [**Parity Stock Ticker**](applications/ticker) is a simple console
+  application that displays the best prices and latest trades in the trading
   system.
 
-- [**Parity Order Book**](parity-book) implements high-performance order book
-  reconstruction on the JVM.
-
-- [**Parity Utilities**](parity-util) contains support functions used by the
-  trading system.
-
-- [**Parity Matching Engine**](parity-match) implements a high-performance
-  matching engine for the JVM.
+- [**Parity Trade Reporter**](applications/reporter) is a simple console
+  application that displays all occurred trades in the trading system.
 
 See the [Wiki][] for additional applications.
 
   [Wiki]: https://github.com/paritytrading/parity/wiki
+
+Parity contains the following libraries:
+
+- [**Parity Order Book**](libraries/book) implements high-performance order
+  book reconstruction on the JVM.
+
+- [**Parity Network Protocols**](libraries/net) specifies and implements
+  network protocols used by the trading system.
+
+- [**Parity File Formats**](libraries/file) specifies and implements file
+  formats used by the trading system.
+
+- [**Parity Matching Engine**](libraries/match) is the matching engine used by
+  the trading system.
+
+- [**Parity Utilities**](libraries/util) contains support functions used by
+  the trading system.
+
+Parity contains the following test applications:
+
+- [**Parity Order Book Performance Test**](tests/book-perf-test) contains
+  microbenchmarks for the order book reconstruction.
+
+- [**Parity Matching Engine Performance Test**](tests/match-perf-test)
+  contains microbenchmarks for the matching engine.
+
+
+Build
+-----
+
+Build Parity with Maven:
+
+```
+mvn package
+```
 
 
 Links

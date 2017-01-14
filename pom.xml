@@ -41,18 +41,18 @@
   </properties>
 
   <modules>
-    <module>parity-book</module>
-    <module>parity-book-perf-test</module>
-    <module>parity-client</module>
-    <module>parity-file</module>
-    <module>parity-fix</module>
-    <module>parity-match</module>
-    <module>parity-match-perf-test</module>
-    <module>parity-net</module>
-    <module>parity-reporter</module>
-    <module>parity-system</module>
-    <module>parity-ticker</module>
-    <module>parity-util</module>
+    <module>libraries/book</module>
+    <module>libraries/file</module>
+    <module>libraries/match</module>
+    <module>libraries/net</module>
+    <module>libraries/util</module>
+    <module>applications/client</module>
+    <module>applications/fix</module>
+    <module>applications/reporter</module>
+    <module>applications/system</module>
+    <module>applications/ticker</module>
+    <module>tests/book-perf-test</module>
+    <module>tests/match-perf-test</module>
   </modules>
 
   <dependencyManagement>
@@ -145,11 +145,8 @@
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-jar-plugin</artifactId>
-          <version>2.6</version>
-          <configuration>
-            <forceCreation>true</forceCreation> <!-- MSHADE-126 -->
-          </configuration>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.8.2</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -166,7 +163,6 @@
           <artifactId>maven-shade-plugin</artifactId>
           <version>2.4.3</version>
           <configuration>
-            <createDependencyReducedPom>false</createDependencyReducedPom>
             <minimizeJar>true</minimizeJar>
           </configuration>
           <executions>
