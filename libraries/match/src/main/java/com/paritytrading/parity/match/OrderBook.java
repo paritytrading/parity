@@ -53,14 +53,7 @@ public class OrderBook {
         if (orders.containsKey(orderId))
             return;
 
-        switch (side) {
-        case BUY:
-            match(orderId, side, asks, size);
-            break;
-        case SELL:
-            match(orderId, side, bids, size);
-            break;
-        }
+        match(orderId, side, side == Side.BUY ? asks : bids, size);
     }
 
     private void match(long orderId, Side side, Long2ObjectRBTreeMap<Level> levels, long size) {
@@ -103,14 +96,10 @@ public class OrderBook {
         if (orders.containsKey(orderId))
             return;
 
-        switch (side) {
-        case BUY:
+        if (side == Side.BUY)
             buy(orderId, price, size);
-            break;
-        case SELL:
+        else
             sell(orderId, price, size);
-            break;
-        }
     }
 
     private void buy(long orderId, long price, long size) {
