@@ -118,14 +118,7 @@ public class OrderBook {
     }
 
     private Long2LongRBTreeMap getLevels(Side side) {
-        switch (side) {
-        case BUY:
-            return bids;
-        case SELL:
-            return asks;
-        }
-
-        return null;
+        return side == Side.BUY ? bids : asks;
     }
 
 }
