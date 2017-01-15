@@ -2,6 +2,7 @@ package com.paritytrading.parity.match;
 
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectRBTreeMap;
+import it.unimi.dsi.fastutil.longs.LongComparators;
 import java.util.ArrayList;
 
 /**
@@ -24,8 +25,8 @@ public class OrderBook {
      * @param listener a listener for outbound events from the order book
      */
     public OrderBook(OrderBookListener listener) {
-        this.bids = new Long2ObjectRBTreeMap<>(BidComparator.INSTANCE);
-        this.asks = new Long2ObjectRBTreeMap<>(AskComparator.INSTANCE);
+        this.bids = new Long2ObjectRBTreeMap<>(LongComparators.OPPOSITE_COMPARATOR);
+        this.asks = new Long2ObjectRBTreeMap<>(LongComparators.NATURAL_COMPARATOR);
 
         this.orders = new Long2ObjectOpenHashMap<>();
 
