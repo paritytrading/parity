@@ -1,6 +1,7 @@
 package com.paritytrading.parity.book;
 
 import it.unimi.dsi.fastutil.longs.Long2LongRBTreeMap;
+import it.unimi.dsi.fastutil.longs.LongComparators;
 import it.unimi.dsi.fastutil.longs.LongSortedSet;
 
 /**
@@ -16,8 +17,8 @@ public class OrderBook {
     OrderBook(long instrument) {
         this.instrument = instrument;
 
-        this.bids = new Long2LongRBTreeMap(BidComparator.INSTANCE);
-        this.asks = new Long2LongRBTreeMap(AskComparator.INSTANCE);
+        this.bids = new Long2LongRBTreeMap(LongComparators.OPPOSITE_COMPARATOR);
+        this.asks = new Long2LongRBTreeMap(LongComparators.NATURAL_COMPARATOR);
     }
 
     /**
