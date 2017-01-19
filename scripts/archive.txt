@@ -12,6 +12,7 @@ applications/reporter/README.md
 applications/reporter/etc/example-tcp.conf
 applications/reporter/etc/example-udp.conf
 applications/reporter/parity-reporter.jar
+applications/reporter/scripts/portfolio.py
 applications/system/README.md
 applications/system/etc/example.conf
 applications/system/parity-system.jar
