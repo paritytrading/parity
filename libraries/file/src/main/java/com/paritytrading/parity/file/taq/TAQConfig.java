@@ -89,9 +89,9 @@ public class TAQConfig {
         }
 
         /**
-         * Set the character set.
+         * Set the encoding.
          *
-         * @param cs the character set
+         * @param encoding the encoding
          * @return this instance
          */
         public Builder setEncoding(Charset encoding) {
