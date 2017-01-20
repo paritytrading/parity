@@ -2,6 +2,35 @@ Release Notes
 =============
 
 
+0.6.0 (2017-01-20)
+------------------
+
+- Make FIX acceptor address configurable in Parity FIX Gateway
+- Make order entry server address configurable in Parity Trading System
+- Provide two example configuration files for Parity Trade Reporter
+- Remove Parity Top of Book
+- Add Parity Order Book
+- Update example configuration files
+- Improve Parity Matching engine performance
+- Add configuration for TAQ file format in Parity File Formats
+- Simplify Parity Stock Ticker usage
+- Fix pending cancel status in Parity FIX Gateway
+- Make market data request server address configurable in Parity Trading
+  System
+- Make market reporting request server address configurable in Parity Trading
+  System
+- Remove Nassau dependency from Parity Utilities
+- Remove Config dependency from Parity Utilities
+- Improve Parity Network Protocols performance
+- Improve Parity FIX Gateway performance
+- Improve Parity Trading System performance
+- Upgrade to fastutil 7.0.13
+- Improve project structure
+- Improve documentation
+- Add portfolio script for Parity Trade Reporter
+- Upgrade to Nassau 0.13.0
+
+
 0.5.0 (2016-07-04)
 ------------------
 
