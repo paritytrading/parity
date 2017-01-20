@@ -11,7 +11,7 @@
 
   <groupId>com.paritytrading.parity</groupId>
   <artifactId>parity-parent</artifactId>
-  <version>0.6.0</version>
+  <version>0.6.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>Parity (Parent)</name>
@@ -29,7 +29,7 @@
     <connection>scm:git:git@github.com:paritytrading/parity.git</connection>
     <developerConnection>scm:git:git@github.com:paritytrading/parity.git</developerConnection>
     <url>https://github.com/paritytrading/parity</url>
-    <tag>0.6.0</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <properties>
