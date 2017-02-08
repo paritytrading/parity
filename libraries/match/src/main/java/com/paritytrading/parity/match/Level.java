@@ -36,8 +36,9 @@ class Level {
         return order;
     }
 
-    public long match(long orderId, Side side, long quantity, OrderBookListener listener,
-            ArrayList<Order> toDelete) {
+    public long match(long orderId, Side side, long quantity, OrderBookListener listener) {
+        int toDelete = 0;
+
         for (int i = 0; quantity > 0 && i < orders.size(); i++) {
             Order order = orders.get(i);
 
@@ -50,7 +51,7 @@ class Level {
 
                 quantity = 0;
             } else {
-                toDelete.add(order);
+                toDelete++;
 
                 listener.match(order.getId(), orderId, side, price, orderQuantity, 0);
 
@@ -58,12 +59,8 @@ class Level {
             }
         }
 
-        if (!toDelete.isEmpty()) {
-            for (int i = 0; i < toDelete.size(); i++)
-                orders.remove(toDelete.get(i));
-
-            toDelete.clear();
-        }
+        for (int i = 0; i < toDelete; i++)
+            orders.remove(0);
 
         return quantity;
     }

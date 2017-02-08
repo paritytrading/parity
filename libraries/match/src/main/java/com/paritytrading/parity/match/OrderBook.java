@@ -17,8 +17,6 @@ public class OrderBook {
 
     private OrderBookListener listener;
 
-    private ArrayList<Order> toDelete;
-
     /**
      * Create an order book.
      *
@@ -31,8 +29,6 @@ public class OrderBook {
         this.orders = new Long2ObjectOpenHashMap<>();
 
         this.listener = listener;
-
-        this.toDelete = new ArrayList<>();
     }
 
     /**
@@ -63,8 +59,7 @@ public class OrderBook {
         Level bestLevel = getBestLevel(levels);
 
         while (remainingQuantity > 0 && bestLevel != null) {
-            remainingQuantity = bestLevel.match(orderId, side, remainingQuantity,
-                    listener, toDelete);
+            remainingQuantity = bestLevel.match(orderId, side, remainingQuantity, listener);
 
             if (bestLevel.isEmpty())
                 levels.remove(bestLevel.getPrice());
@@ -109,8 +104,7 @@ public class OrderBook {
         Level bestLevel = getBestLevel(asks);
 
         while (remainingQuantity > 0 && bestLevel != null && bestLevel.getPrice() <= price) {
-            remainingQuantity = bestLevel.match(orderId, Side.BUY, remainingQuantity,
-                    listener, toDelete);
+            remainingQuantity = bestLevel.match(orderId, Side.BUY, remainingQuantity, listener);
 
             if (bestLevel.isEmpty())
                 asks.remove(bestLevel.getPrice());
@@ -131,8 +125,7 @@ public class OrderBook {
         Level bestLevel = getBestLevel(bids);
 
         while (remainingQuantity > 0 && bestLevel != null && bestLevel.getPrice() >= price) {
-            remainingQuantity = bestLevel.match(orderId, Side.SELL, remainingQuantity,
-                    listener, toDelete);
+            remainingQuantity = bestLevel.match(orderId, Side.SELL, remainingQuantity, listener);
 
             if (bestLevel.isEmpty())
                 bids.remove(bestLevel.getPrice());
