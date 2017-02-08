@@ -37,10 +37,8 @@ class Level {
     }
 
     public long match(long orderId, Side side, long quantity, OrderBookListener listener) {
-        int toDelete = 0;
-
-        for (int i = 0; quantity > 0 && i < orders.size(); i++) {
-            Order order = orders.get(i);
+        while (quantity > 0 && !orders.isEmpty()) {
+            Order order = orders.get(0);
 
             long orderQuantity = order.getRemainingQuantity();
 
@@ -51,16 +49,13 @@ class Level {
 
                 quantity = 0;
             } else {
-                toDelete++;
+                orders.remove(0);
 
                 listener.match(order.getId(), orderId, side, price, orderQuantity, 0);
 
                 quantity -= orderQuantity;
             }
         }
-
-        for (int i = 0; i < toDelete; i++)
-            orders.remove(0);
 
         return quantity;
     }
