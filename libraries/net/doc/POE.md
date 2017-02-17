@@ -119,6 +119,7 @@ The reasons for a rejection are enumerated below.
 Reason | Description
 -------|-------------------
 `I`    | Unknown instrument
+`Q`    | Invalid quantity
 
 
 ### Order Executed

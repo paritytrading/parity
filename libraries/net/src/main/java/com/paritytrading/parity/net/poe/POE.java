@@ -20,6 +20,7 @@ public class POE {
     public static final byte SELL = 'S';
 
     public static final byte ORDER_REJECT_REASON_UNKNOWN_INSTRUMENT = 'I';
+    public static final byte ORDER_REJECT_REASON_INVALID_QUANTITY   = 'Q';
 
     public static final byte LIQUIDITY_FLAG_ADDED_LIQUIDITY   = 'A';
     public static final byte LIQUIDITY_FLAG_REMOVED_LIQUIDITY = 'R';
