@@ -20,6 +20,8 @@ public class Error {
         switch (reason) {
         case POE.ORDER_REJECT_REASON_UNKNOWN_INSTRUMENT:
             return "Unknown instrument";
+        case POE.ORDER_REJECT_REASON_INVALID_QUANTITY:
+            return "Invalid quantity";
         default:
             return "<unknown>";
         }

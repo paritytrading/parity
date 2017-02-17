@@ -618,7 +618,17 @@ class Session implements Closeable {
             if (order == null)
                 return;
 
-            sendOrderRejected(order, OrdRejReasonValues.UnknownSymbol);
+            switch (message.reason) {
+            case POE.ORDER_REJECT_REASON_UNKNOWN_INSTRUMENT:
+                sendOrderRejected(order, OrdRejReasonValues.UnknownSymbol);
+                break;
+            case POE.ORDER_REJECT_REASON_INVALID_QUANTITY:
+                sendOrderRejected(order, OrdRejReasonValues.IncorrectQuantity);
+                break;
+            default:
+                sendOrderRejected(order, OrdRejReasonValues.Other);
+                break;
+            }
 
             orders.removeByOrderEntryID(message.orderId);
         }
