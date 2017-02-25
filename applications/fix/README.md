@@ -1,28 +1,21 @@
-Parity FIX Gateway
-==================
+# Parity FIX Gateway
 
 Parity FIX Gateway is a server application that adds Financial Information
 Exchange (FIX) support to the trading system.
 
-
-Protocols
----------
+## Protocols
 
 Parity FIX Gateway specifies and implements the following protocols:
 
 - [**FIX**](doc/FIX.md): an alternative order entry protocol
 
-
-Download
---------
+## Download
 
 Download the [latest release][] from GitHub.
 
   [latest release]: https://github.com/paritytrading/parity/releases/latest
 
-
-Usage
------
+## Usage
 
 Run Parity FIX Gateway with Java:
 
@@ -38,9 +31,7 @@ The command line arguments are as follows:
 Once started, the application starts listening for FIX connections initiated
 by market participants.
 
-
-Configuration
--------------
+## Configuration
 
 Parity FIX Gateway uses a configuration file to specify how to connect to the
 trading system and accept FIX connections.
@@ -74,8 +65,6 @@ order-entry {
 
 See the `etc` directory for an example configuration file.
 
-
-License
--------
+## License
 
 Released under Apache License, Version 2.0.

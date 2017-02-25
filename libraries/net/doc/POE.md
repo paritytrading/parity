@@ -1,12 +1,9 @@
-POE
-===
+# POE
 
 POE is Parity's native order entry protocol. With it market participants can
 enter orders, cancel them and receive status updates on them.
 
-
-Architecture
-------------
+## Architecture
 
 POE consists of logical messages passed between a client application and a
 trading system. Each message type has a fixed message length.
@@ -23,9 +20,7 @@ POE uses NASDAQ SoupBinTCP 3.00 as the underlying transport protocol. The
 protocol provides authentication and keep-alive as well as the aforementioned
 message sequencing mechanism.
 
-
-Data Types
-----------
+## Data Types
 
 Number fields are encoded as unsigned integers in network byte order.
 
@@ -38,12 +33,9 @@ and a four-digit fractional part.
 Timestamps are represented as nanoseconds since the midnight of the day on
 which the trading session started.
 
-
-Inbound Messages
-----------------
+## Inbound Messages
 
 Inbound messages are sent by the client application to the trading system.
-
 
 ### Enter Order
 
@@ -65,7 +57,6 @@ Side | Description
 `B`  | Buy
 `S`  | Sell
 
-
 ### Cancel Order
 
 Cancel an order. The quantity refers to the new order size. To cancel an order
@@ -77,12 +68,9 @@ Message Type |      1 | Text   | `X`
 Order ID     |     16 | Text   |
 Quantity     |      4 | Number |
 
-
-Outbound Messages
------------------
+## Outbound Messages
 
 Outbound messages are sent by the trading system to the client application.
-
 
 ### Order Accepted
 
@@ -100,7 +88,6 @@ Instrument   |      8 | Text   |
 Quantity     |      4 | Number |
 Price        |      4 | Number |
 Order Number |      8 | Number |
-
 
 ### Order Rejected
 
@@ -120,7 +107,6 @@ Reason | Description
 -------|-------------------
 `I`    | Unknown instrument
 `Q`    | Invalid quantity
-
 
 ### Order Executed
 
@@ -144,7 +130,6 @@ Liquidity Flag | Description
 `A`            | Added liquidity
 `R`            | Removed liquidity
 
-
 ### Order Canceled
 
 An Order Canceled message indicates that an order has been canceled in part or
@@ -165,7 +150,6 @@ Reason | Description
 `R`    | Request
 `S`    | Supervisory
 
-
 ### Broken Trade
 
 A Broken Trade message indicates that a trade has been rendered void.
@@ -185,8 +169,6 @@ Reason | Description
 `C`    | Consent
 `S`    | Supervisory
 
-
-History
--------
+## History
 
 - **Version 1.** Initial version.

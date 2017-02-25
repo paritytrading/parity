@@ -1,11 +1,8 @@
-Parity Matching Engine
-======================
+# Parity Matching Engine
 
 Parity Matching Engine is the matching engine used by the trading system.
 
-
-Download
---------
+## Download
 
 Add a Maven dependency to Parity Matching Engine:
 
@@ -21,8 +18,6 @@ See the [latest release][] on GitHub.
 
   [latest release]: https://github.com/paritytrading/parity/releases/latest
 
-
-License
--------
+## License
 
 Released under the Apache License, Version 2.0.

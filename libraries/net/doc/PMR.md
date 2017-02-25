@@ -1,11 +1,8 @@
-PMR
-===
+# PMR
 
 PMR is Parity's native market reporting protocol.
 
-
-Architecture
-------------
+## Architecture
 
 PMR consists of logical, sequenced messages sent by the trading system to
 a client application.
@@ -13,9 +10,7 @@ a client application.
 PMR uses NASDAQ MoldUDP64 1.00 as the underlying transport protocol. It
 implements ordered, reliable IP multicast.
 
-
-Data Types
-----------
+## Data Types
 
 Number fields are encoded as unsigned integers in network byte order.
 
@@ -28,12 +23,9 @@ and a four-digit fractional part.
 Timestamps are represented as nanoseconds since the midnight of the day on
 which the trading session started.
 
-
-Messages
---------
+## Messages
 
 All messages are sent by the trading system to the client application.
-
 
 ### Order
 
@@ -57,7 +49,6 @@ Side | Description
 `B`  | Buy
 `S`  | Sell
 
-
 ### Cancel
 
 A Cancel message indicates that an order has been canceled in part of fully.
@@ -69,7 +60,6 @@ Timestamp         |      8 | Number |
 Username          |      8 | Text   |
 Order Number      |      8 | Number |
 Canceled Quantity |      4 | Number |
-
 
 ### Trade
 
@@ -90,8 +80,6 @@ Buy Order Number  |      8 | Number |
 Seller            |      8 | Text   |
 Sell Order Number |      8 | Number |
 
-
-History
--------
+## History
 
 - **Version 1.** Initial version.

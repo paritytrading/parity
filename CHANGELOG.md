@@ -1,9 +1,6 @@
-Release Notes
-=============
+# Release Notes
 
-
-0.6.0 (2017-01-20)
-------------------
+## 0.6.0 (2017-01-20)
 
 - Make FIX acceptor address configurable in Parity FIX Gateway
 - Make order entry server address configurable in Parity Trading System
@@ -30,9 +27,7 @@ Release Notes
 - Add portfolio script for Parity Trade Reporter
 - Upgrade to Nassau 0.13.0
 
-
-0.5.0 (2016-07-04)
-------------------
+## 0.5.0 (2016-07-04)
 
 - Upgrade to Philadelphia 0.4.0
 - Fix order cancellation in Parity FIX Gateway
@@ -45,9 +40,7 @@ Release Notes
 - Add Parity Top of Book Performance Test
 - Upgrade to Foundation 0.2.0
 
-
-0.4.0 (2016-04-24)
-------------------
+## 0.4.0 (2016-04-24)
 
 - Add FIX protocol
 - Add Parity FIX Gateway
@@ -57,9 +50,7 @@ Release Notes
 - Add support for order modification to Parity Top of Book
 - Move to `com.paritytrading` namespace
 
-
-0.3.0 (2015-12-25)
-------------------
+## 0.3.0 (2015-12-25)
 
 - Improve network protocol performance
 - Upgrade to Nassau 0.6.0
@@ -72,9 +63,7 @@ Release Notes
 - Improve market data configuration in Parity Trading System
 - Improve market reporting configuration in Parity Trading System
 
-
-0.2.0 (2015-06-07)
-------------------
+## 0.2.0 (2015-06-07)
 
 - Upgrade to Java 8
 - Add PMR protocol
@@ -90,8 +79,6 @@ Release Notes
 - Improve API documentation for Parity Network Protocols
 - Improve API documentation for Parity Top Of Book
 
-
-0.1.0 (2015-01-06)
-------------------
+## 0.1.0 (2015-01-06)
 
 - Initial release

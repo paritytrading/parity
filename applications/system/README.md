@@ -1,20 +1,15 @@
-Parity Trading System
-=====================
+# Parity Trading System
 
 Parity Trading System is a server application for running a financial
 exchange.
 
-
-Download
---------
+## Download
 
 Download the [latest release][] from GitHub.
 
   [latest release]: https://github.com/paritytrading/parity/releases/latest
 
-
-Usage
------
+## Usage
 
 Run Parity Trading System with Java:
 
@@ -31,9 +26,7 @@ Once started, the application starts listening for order entry sessions
 initiated by market participants and publishing market data and market
 reports.
 
-
-Configuration
--------------
+## Configuration
 
 Parity Trading System uses a configuration file to specify the services it
 makes available to market participants.
@@ -101,8 +94,6 @@ instruments = [ FOO, BAR, BAZ ]
 
 See the `etc` directory for an example configuration file.
 
-
-License
--------
+## License
 
 Released under the Apache License, Version 2.0.

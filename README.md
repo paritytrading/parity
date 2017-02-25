@@ -1,5 +1,4 @@
-Parity
-======
+# Parity
 
 Parity is an open source software platform for trading venues. It can be
 used to run a financial marketplace, develop algorithmic trading agents,
@@ -7,17 +6,13 @@ or research market microstructure.
 
 Parity requires Java Runtime Environment (JRE) 8 or newer.
 
-
-Download
---------
+## Download
 
 See the [latest release][] on GitHub.
 
   [latest release]: https://github.com/paritytrading/parity/releases/latest
 
-
-Modules
--------
+## Modules
 
 Parity contains the following applications:
 
@@ -66,9 +61,7 @@ Parity contains the following test applications:
 - [**Parity Matching Engine Performance Test**](tests/match-perf-test)
   contains microbenchmarks for the matching engine.
 
-
-Build
------
+## Build
 
 Build Parity with Maven:
 
@@ -76,9 +69,7 @@ Build Parity with Maven:
 mvn package
 ```
 
-
-Links
------
+## Links
 
 For more information on Parity:
 
@@ -89,9 +80,7 @@ For more information on Parity:
 - Join [paritytrading/chat](https://gitter.im/paritytrading/chat) on Gitter
   for discussions
 
-
-License
--------
+## License
 
 Copyright 2014 Jussi Virtanen and contributors.
 

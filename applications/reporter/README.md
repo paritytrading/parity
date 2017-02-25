@@ -1,20 +1,15 @@
-Parity Trade Reporter
-=====================
+# Parity Trade Reporter
 
 Parity Trade Reporter is a simple console application that displays all
 occurred trades in the trading system.
 
-
-Download
---------
+## Download
 
 Download the [latest release][] from GitHub.
 
   [latest release]: https://github.com/paritytrading/parity/releases/latest
 
-
-Usage
------
+## Usage
 
 Run Parity Trade Reporter with Java:
 
@@ -34,9 +29,7 @@ The command line arguments are as follows:
 Once started, the application first replays trades that have taken place so
 far. Then it proceeds to display trades in real time.
 
-
-Configuration
--------------
+## Configuration
 
 Parity Trade Reporter uses a configuration file to specify how to connect to
 the trading system. It supports two transport options: NASDAQ MoldUDP64 and
@@ -89,8 +82,6 @@ trade-report {
 
 See the `etc` directory for example configuration files.
 
-
-License
--------
+## License
 
 Released under the Apache License, Version 2.0.

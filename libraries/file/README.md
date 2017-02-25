@@ -1,21 +1,16 @@
-Parity File Formats
-===================
+# Parity File Formats
 
 Parity File Formats specifies and implements file formats used by the trading
 system.
 
-
-Features
---------
+## Features
 
 Parity File Formats specifies and implements the following formats:
 
 - [**TAQ**](doc/TAQ.md): a historical market data file format that consists of
   the best bids and offers (BBOs) and trades.
 
-
-Download
---------
+## Download
 
 Add a Maven dependency to Parity File Formats:
 
@@ -31,8 +26,6 @@ See the [latest release][] on GitHub.
 
   [latest release]: https://github.com/paritytrading/parity/releases/latest
 
-
-License
--------
+## License
 
 Released under the Apache License, Version 2.0.

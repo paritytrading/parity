@@ -1,12 +1,9 @@
-Parity Order Book
-=================
+# Parity Order Book
 
 Parity Order Book implements high-performance order book reconstruction on the
 JVM.
 
-
-Download
---------
+## Download
 
 Add a Maven dependency to Parity Order Book:
 
@@ -22,8 +19,6 @@ See the [latest release][] on GitHub.
 
   [latest release]: https://github.com/paritytrading/parity/releases/latest
 
-
-License
--------
+## License
 
 Released under the Apache License, Version 2.0.

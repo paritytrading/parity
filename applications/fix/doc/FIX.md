@@ -1,22 +1,16 @@
-FIX
-===
+# FIX
 
 FIX is an alternative order entry protocol for Parity.
 
-
-Architecture
-------------
+## Architecture
 
 FIX is based on the Financial Information Exchange (FIX) protocol version
 FIX 4.4. It is terminated at a FIX gateway, which is located between the
 client application and the trading system.
 
-
-Common Definitions
-------------------
+## Common Definitions
 
 These definitions apply to both inbound and outbound messages.
-
 
 ### Fields
 
@@ -27,7 +21,6 @@ messages.
 ClOrdID(11) has a maximum length of 16 characters.
 
 Price(44) has two decimal places.
-
 
 ### Message Header
 
@@ -46,7 +39,6 @@ PossResend(97)       |   N   | When needed
 SendingTime(52)      |   Y   |
 OrigSendingTime(122) |   N   | When needed
 
-
 ### Message Trailer
 
 All messages end with the message trailer.
@@ -54,7 +46,6 @@ All messages end with the message trailer.
 Tag          | Req'd | Description
 -------------|-------|------------
 CheckSum(10) |   Y   |
-
 
 ### Administrative Messages
 
@@ -67,12 +58,9 @@ administrative messages:
   - Reject
   - Sequence Reset
 
-
-Inbound Messages
-----------------
+## Inbound Messages
 
 Inbound messages are sent by the client application to the FIX gateway.
-
 
 ### Initiate Session
 
@@ -87,7 +75,6 @@ Username(553)     |   Y   |
 Password(554)     |   Y   |
 _Message Trailer_ |   Y   |
 
-
 ### Terminate Session
 
 Terminate a session with a Logout message.
@@ -96,7 +83,6 @@ Tag               | Req'd | Description
 ------------------|-------|-------------------------
 _Message Header_  |   Y   | MsgType(35) = 5 (Logout)
 _Message Trailer_ |   Y   |
-
 
 ### Enter Order
 
@@ -122,7 +108,6 @@ Side(54) | Description
 1        | Buy
 2        | Sell
 
-
 ### Cancel Order Partially
 
 Cancel an order partially with an Order Cancel/Replace Request message.
@@ -139,7 +124,6 @@ OrderQty(38)      |   Y   |
 OrdType(40)       |   Y   | Must match the original order
 _Message Trailer_ |   Y   |
 
-
 ### Cancel Order Fully
 
 Cancel an order fully with an Order Cancel Request message.
@@ -154,12 +138,9 @@ Side(54)          |   Y   | Must match the original order
 TransactTime(60)  |   Y   |
 _Message Trailer_ |   Y   |
 
-
-Outbound Messages
------------------
+## Outbound Messages
 
 Outbound messages are sent by the FIX gateway to the client application.
-
 
 ### Order Accepted
 
@@ -182,7 +163,6 @@ LeavesQty(151)    |   Y   |
 CumQty(14)        |   Y   |
 AvgPx(6)          |   Y   |
 _Message Trailer_ |   Y   |
-
 
 ### Order Rejected
 
@@ -216,7 +196,6 @@ OrdRejReason(103) | Description
 6                 | Duplicate order
 13                | Incorrect quantity
 
-
 ### Order Executed
 
 An order execution is indicated with an Execution Report message with
@@ -240,7 +219,6 @@ LeavesQty(151)    |   Y   |
 CumQty(14)        |   Y   |
 AvgPx(6)          |   Y   |
 _Message Trailer_ |   Y   |
-
 
 ### Order Cancel Acknowledgement
 
@@ -273,7 +251,6 @@ ExecType(150) | Description
 6             | Pending cancel
 E             | Pending replace
 
-
 ### Order Canceled
 
 An order cancellation is indicated with an Execution Report message with
@@ -303,7 +280,6 @@ ExecType(150) | Description
 --------------|------------
 4             | Canceled
 5             | Replaced
-
 
 ### Order Cancel Rejected
 
@@ -338,8 +314,6 @@ CxlRejReason(102) | Description
 3                 | Order already in Pending Cancel or Pending Replace status
 6                 | Duplicate ClOrdID(11)
 
-
-History
--------
+## History
 
 - **Version 1.** Initial version.

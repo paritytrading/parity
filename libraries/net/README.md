@@ -1,12 +1,9 @@
-Parity Network Protocols
-========================
+# Parity Network Protocols
 
 Parity Network Protocols specifies and implements network protocols used by
 the trading system.
 
-
-Features
---------
+## Features
 
 Parity Network Protocols specifies and implements the following protocols:
 
@@ -24,9 +21,7 @@ support.
 
   [Nassau]: https://github.com/paritytrading/nassau
 
-
-Download
---------
+## Download
 
 Add a Maven dependency to Parity Network Protocols:
 
@@ -42,8 +37,6 @@ See the [latest release][] on GitHub.
 
   [latest release]: https://github.com/paritytrading/parity/releases/latest
 
-
-License
--------
+## License
 
 Released under the Apache License, Version 2.0.

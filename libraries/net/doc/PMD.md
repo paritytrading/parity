@@ -1,12 +1,9 @@
-PMD
-===
+# PMD
 
 PMD is Parity's native market data protocol. With it market participants can
 maintain a view of the state of the market.
 
-
-Architecture
-------------
+## Architecture
 
 PMD consists of logical, sequenced messages sent by the trading system to the
 client application.
@@ -14,9 +11,7 @@ client application.
 PMD uses NASDAQ MoldUDP64 1.00 as the underlying transport protocol. It
 implements ordered, reliable IP multicast.
 
-
-Data Types
-----------
+## Data Types
 
 Number fields are encoded as unsigned integers in network byte order.
 
@@ -29,12 +24,9 @@ and a four-digit fractional part.
 Timestamps are represented as nanoseconds since the beginning of the current
 second.
 
-
-Messages
---------
+## Messages
 
 All messages are sent by the trading system to the client application.
-
 
 ### Version
 
@@ -46,7 +38,6 @@ Name         | Length | Type   | Notes
 Message Type |      1 | Text   | `V`
 Version      |      4 | Number | 1
 
-
 ### Seconds
 
 A Seconds message indicates the number of seconds since the midnight of the
@@ -57,7 +48,6 @@ Name         | Length | Type   | Notes
 -------------|--------|--------|------
 Message Type |      1 | Text   | `S`
 Second       |      4 | Number |
-
 
 ### Order Added
 
@@ -81,7 +71,6 @@ Side | Description
 `B`  | Buy
 `S`  | Sell
 
-
 ### Order Executed
 
 An Order Executed message indicates that an order has been executed in part
@@ -95,7 +84,6 @@ Order Number |      8 | Number |
 Quantity     |      4 | Number |
 Match Number |      4 | Number |
 
-
 ### Order Canceled
 
 An Order Canceled message indicates that an order has been canceled in part
@@ -108,7 +96,6 @@ Timestamp         |      4 | Number |
 Order Number      |      8 | Number |
 Canceled Quantity |      4 | Number |
 
-
 ### Order Deleted
 
 An Order Deleted message indicates that an order has been canceled fully.
@@ -118,7 +105,6 @@ Name         | Length | Type   | Notes
 Message Type |      1 | Text   | `D`
 Timestamp    |      4 | Number |
 Order Number |      8 | Number |
-
 
 ### Broken Trade
 
@@ -130,8 +116,6 @@ Message Type |      1 | Text   | `B`
 Timestamp    |      4 | Number |
 Match Number |      4 | Number |
 
-
-History
--------
+## History
 
 - **Version 1.** Initial version.

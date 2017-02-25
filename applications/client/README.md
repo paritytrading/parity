@@ -1,20 +1,15 @@
-Parity Terminal Client
-======================
+# Parity Terminal Client
 
 Parity Terminal Client is a simple console application for entering orders
 into the trading system.
 
-
-Download
---------
+## Download
 
 Download the [latest release][] from GitHub.
 
   [latest release]: https://github.com/paritytrading/parity/releases/latest
 
-
-Usage
------
+## Usage
 
 Run Parity Terminal Client with Java:
 
@@ -52,9 +47,7 @@ order will remain open. To list the open orders, use the `orders` command:
 
 Use the `help` command to see a list of all available commands.
 
-
-Configuration
--------------
+## Configuration
 
 Parity Terminal Client uses a configuration file to specify how to connect to
 the trading system.
@@ -81,8 +74,6 @@ order-entry {
 
 See the `etc` directory for an example configuration file.
 
-
-License
--------
+## License
 
 Released under the Apache License, Version 2.0.

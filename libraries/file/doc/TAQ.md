@@ -1,12 +1,9 @@
-TAQ
-===
+# TAQ
 
 TAQ is one of Parity's historical market data file formats. It consists of the
 best bids and offers (BBOs) and trades.
 
-
-Architecture
-------------
+## Architecture
 
 TAQ uses the tab-separated values (TSV) file format with ASCII encoding.
 
@@ -15,9 +12,7 @@ record consist of a fixed number of fields. One field, Record Type, specifies
 which fields are present in a record. Fields that are not present in a record
 are empty.
 
-
-Data Types
-----------
+## Data Types
 
 Dates are represented as `YYYY-MM-DD` (ISO 8601).
 
@@ -26,9 +21,7 @@ Timestamps are represented as `HH:MM:SS.SSS` (ISO 8601).
 Prices and sizes are represented either as integers or as decimal numbers
 using decimal point.
 
-
-Records
--------
+## Records
 
 A record consists of the fields enumerated below.
 
@@ -53,8 +46,6 @@ Record Type | Description
 `Q`         | Quote
 `T`         | Trade
 
-
-History
--------
+## History
 
 - **Version 1.** Initial version.

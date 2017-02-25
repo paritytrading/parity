@@ -1,12 +1,9 @@
-Parity Order Book Performance Test
-==================================
+# Parity Order Book Performance Test
 
 Parity Order Book Performance Test contains microbenchmarks for Parity Order
 Book.
 
-
-Usage
------
+## Usage
 
 Run Parity Order Book Performance Test with Java:
 
@@ -14,8 +11,6 @@ Run Parity Order Book Performance Test with Java:
 java -jar parity-book-perf-test.jar
 ```
 
-
-License
--------
+## License
 
 Released under the Apache License, Version 2.0.

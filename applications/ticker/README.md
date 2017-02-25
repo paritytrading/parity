@@ -1,20 +1,15 @@
-Parity Stock Ticker
-===================
+# Parity Stock Ticker
 
 Parity Stock Ticker is a simple console application that displays the best
 prices and latest trades in the trading system.
 
-
-Download
---------
+## Download
 
 Download the [latest release][] from GitHub.
 
   [latest release]: https://github.com/paritytrading/parity/releases/latest
 
-
-Usage
------
+## Usage
 
 Run Parity Stock Ticker with Java:
 
@@ -63,9 +58,7 @@ The command line arguments are as follows:
 
 - `[<instrument> ...]`: Zero or more instruments.
 
-
-Configuration
--------------
+## Configuration
 
 Parity Stock Ticker uses a configuration file to specify how to connect to the
 trading system. It supports two transport options: NASDAQ MoldUDP64 and NASDAQ
@@ -124,8 +117,6 @@ instruments = [ FOO, BAR, BAZ ]
 
 See the `etc` directory for example configuration files.
 
-
-License
--------
+## License
 
 Released under the Apache License, Version 2.0.
