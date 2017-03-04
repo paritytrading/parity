@@ -53,7 +53,7 @@ class MarketData {
         this.messages = new MoldUDP64DefaultMessageStore();
 
         this.packet = new MoldUDP64DownstreamPacket();
-        this.buffer = ByteBuffer.allocate(1024);
+        this.buffer = ByteBuffer.allocateDirect(1024);
     }
 
     public static MarketData open(String session, NetworkInterface multicastInterface,

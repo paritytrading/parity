@@ -27,7 +27,7 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
     private static POE.OrderExecuted orderExecuted = new POE.OrderExecuted();
     private static POE.OrderCanceled orderCanceled = new POE.OrderCanceled();
 
-    private static ByteBuffer buffer = ByteBuffer.allocate(POE.MAX_OUTBOUND_MESSAGE_LENGTH);
+    private static ByteBuffer buffer = ByteBuffer.allocateDirect(POE.MAX_OUTBOUND_MESSAGE_LENGTH);
 
     private SoupBinTCPServer transport;
 

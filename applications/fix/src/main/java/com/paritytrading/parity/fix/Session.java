@@ -38,7 +38,7 @@ class Session implements Closeable {
 
     private static FIXMessage txMessage = new FIXMessage(64, 64);
 
-    private static ByteBuffer txBuffer = ByteBuffer.allocate(POE.MAX_INBOUND_MESSAGE_LENGTH);
+    private static ByteBuffer txBuffer = ByteBuffer.allocateDirect(POE.MAX_INBOUND_MESSAGE_LENGTH);
 
     private OrderIDGenerator orderEntryIds;
 
