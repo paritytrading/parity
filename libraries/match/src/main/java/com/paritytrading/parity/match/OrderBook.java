@@ -3,7 +3,6 @@ package com.paritytrading.parity.match;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectRBTreeMap;
 import it.unimi.dsi.fastutil.longs.LongComparators;
-import java.util.ArrayList;
 
 /**
  * An order book.
