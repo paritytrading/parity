@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "scripts": {
+    "test": "mocha"
+  },
+  "devDependencies": {
+    "mocha": "^3",
+    "parity-poe": "0.2.0",
+    "soupbintcp": "0.1.2"
+  }
+}
