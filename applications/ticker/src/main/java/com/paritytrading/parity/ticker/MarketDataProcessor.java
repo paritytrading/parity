@@ -61,15 +61,8 @@ class MarketDataProcessor implements PMDListener {
     public void brokenTrade(PMD.BrokenTrade message) {
     }
 
-    private Side side(byte value) {
-        switch (value) {
-        case PMD.BUY:
-            return Side.BUY;
-        case PMD.SELL:
-            return Side.SELL;
-        }
-
-        return null;
+    private Side side(byte side) {
+        return side == PMD.BUY ? Side.BUY : Side.SELL;
     }
 
 }
