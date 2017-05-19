@@ -622,6 +622,9 @@ class Session implements Closeable {
             case POE.ORDER_REJECT_REASON_UNKNOWN_INSTRUMENT:
                 sendOrderRejected(order, OrdRejReasonValues.UnknownSymbol);
                 break;
+            case POE.ORDER_REJECT_REASON_INVALID_PRICE:
+                sendOrderRejected(order, OrdRejReasonValues.Other);
+                break;
             case POE.ORDER_REJECT_REASON_INVALID_QUANTITY:
                 sendOrderRejected(order, OrdRejReasonValues.IncorrectQuantity);
                 break;

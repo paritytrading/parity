@@ -13,6 +13,8 @@ import java.util.List;
 
 class MatchingEngine {
 
+    private static final long MIN_PRICE_VARIATION = 100;
+
     private enum CancelReason {
         REQUEST,
         SYSTEM,
@@ -53,6 +55,11 @@ class MatchingEngine {
         OrderBook book = books.get(message.instrument);
         if (book == null) {
             session.orderRejected(message, POE.ORDER_REJECT_REASON_UNKNOWN_INSTRUMENT);
+            return;
+        }
+
+        if (message.price % MIN_PRICE_VARIATION != 0) {
+            session.orderRejected(message, POE.ORDER_REJECT_REASON_INVALID_PRICE);
             return;
         }
 
