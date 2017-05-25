@@ -49,7 +49,7 @@ public class Market {
      * Find an order.
      *
      * @param orderId the order identifier
-     * @return the order or <code>null</code> if the order identifier is unknown
+     * @return the order or {@code null} if the order identifier is unknown
      */
     public Order find(long orderId) {
         return orders.get(orderId);
