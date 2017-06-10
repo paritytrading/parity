@@ -80,6 +80,8 @@ For more information on Parity:
 
 ## License
 
-Copyright 2014 Jussi Virtanen and contributors.
+Copyright 2014 Jussi Virtanen and [contributors][].
+
+  [contributors]: https://github.com/paritytrading/parity/graphs/contributors
 
 Released under the Apache License, Version 2.0. See `LICENSE.txt` for details.
