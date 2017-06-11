@@ -49,7 +49,7 @@ market-data {
     multicast-port = 5000
 
     # The local IP address for the market data request server.
-    request-address = 0.0.0.0
+    request-address = 127.0.0.1
 
     # The local UDP port for the market data request server.
     request-port = 5001
@@ -71,7 +71,7 @@ market-report {
     multicast-port = 6000
 
     # The local IP address for the market reporting request server.
-    request-address = 0.0.0.0
+    request-address = 127.0.0.1
 
     # The local UDP port for the market reporting request server.
     request-port = 6001
@@ -81,7 +81,7 @@ market-report {
 order-entry {
 
     # The local IP address for the order entry server.
-    address = 0.0.0.0
+    address = 127.0.0.1
 
     # The local TCP port for the order entry server.
     port = 4000
