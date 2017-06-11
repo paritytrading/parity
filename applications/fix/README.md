@@ -42,7 +42,7 @@ The following configuration parameters are required:
 fix {
 
     # The local IP address for the FIX acceptor.
-    address = 0.0.0.0
+    address = 127.0.0.1
 
     # The local TCP port for the FIX acceptor.
     port = 4010
