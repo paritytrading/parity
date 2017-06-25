@@ -31,47 +31,7 @@ public class OrderBook {
     }
 
     /**
-     * Enter a market order.
-     *
-     * <p>The incoming order is matched against resting orders in this order
-     * book. This operation results in zero or more Match events.</p>
-     *
-     * <p>If the remaining quantity is not zero after the matching operation,
-     * a Cancel event is triggered for the remaining quantity.</p>
-     *
-     * <p>If the order identifier is known, do nothing.</p>
-     *
-     * @param orderId the order identifier
-     * @param side the side
-     * @param size the size
-     */
-    public void enter(long orderId, Side side, long size) {
-        if (orders.containsKey(orderId))
-            return;
-
-        match(orderId, side, side == Side.BUY ? asks : bids, size);
-    }
-
-    private void match(long orderId, Side side, Long2ObjectRBTreeMap<Level> levels, long size) {
-        long remainingQuantity = size;
-
-        Level bestLevel = getBestLevel(levels);
-
-        while (remainingQuantity > 0 && bestLevel != null) {
-            remainingQuantity = bestLevel.match(orderId, side, remainingQuantity, listener);
-
-            if (bestLevel.isEmpty())
-                levels.remove(bestLevel.getPrice());
-
-            bestLevel = getBestLevel(levels);
-        }
-
-        if (remainingQuantity > 0)
-            listener.cancel(orderId, remainingQuantity, 0);
-    }
-
-    /**
-     * Enter a limit order.
+     * Enter an order to this order book.
      *
      * <p>The incoming order is first matched against resting orders in this
      * order book. This operation results in zero or more Match events.</p>

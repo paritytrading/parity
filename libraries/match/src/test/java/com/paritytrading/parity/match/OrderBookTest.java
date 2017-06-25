@@ -39,85 +39,7 @@ public class OrderBookTest {
     }
 
     @Test
-    public void marketBuy() {
-        book.enter(1, Side.SELL, 1000, 100);
-        book.enter(2, Side.BUY,  100);
-
-        Event ask   = new Add(1, Side.SELL, 1000, 100);
-        Event match = new Match(1, 2, Side.BUY, 1000, 100, 0);
-
-        assertEquals(asList(ask, match), events.collect());
-    }
-
-    @Test
-    public void marketSell() {
-        book.enter(1, Side.BUY,  1000, 100);
-        book.enter(2, Side.SELL, 100);
-
-        Event bid   = new Add(1, Side.BUY, 1000, 100);
-        Event match = new Match(1, 2, Side.SELL, 1000, 100, 0);
-
-        assertEquals(asList(bid, match), events.collect());
-    }
-
-    @Test
-    public void multiLevelMarketBuy() {
-        book.enter(1, Side.SELL, 1001, 100);
-        book.enter(2, Side.SELL, 1000,  50);
-        book.enter(3, Side.BUY,  100);
-
-        Event firstAsk  = new Add(1, Side.SELL, 1001, 100);
-        Event secondAsk = new Add(2, Side.SELL, 1000,  50);
-
-        Event firstMatch  = new Match(2, 3, Side.BUY, 1000, 50,  0);
-        Event secondMatch = new Match(1, 3, Side.BUY, 1001, 50, 50);
-
-        assertEquals(asList(firstAsk, secondAsk, firstMatch, secondMatch),
-                events.collect());
-    }
-
-    @Test
-    public void multiLevelMarketSell() {
-        book.enter(1, Side.BUY,   999, 100);
-        book.enter(2, Side.BUY,  1000,  50);
-        book.enter(3, Side.SELL,  100);
-
-        Event firstBid  = new Add(1, Side.BUY,  999, 100);
-        Event secondBid = new Add(2, Side.BUY, 1000,  50);
-
-        Event firstMatch  = new Match(2, 3, Side.SELL, 1000, 50,  0);
-        Event secondMatch = new Match(1, 3, Side.SELL,  999, 50, 50);
-
-        assertEquals(asList(firstBid, secondBid, firstMatch, secondMatch),
-                events.collect());
-    }
-
-    @Test
-    public void partialMarketBuy() {
-        book.enter(1, Side.SELL, 1000, 50);
-        book.enter(2, Side.BUY,  100);
-
-        Event bid    = new Add(1, Side.SELL, 1000, 50);
-        Event match  = new Match(1, 2, Side.BUY, 1000, 50, 0);
-        Event cancel = new Cancel(2, 50, 0);
-
-        assertEquals(asList(bid, match, cancel), events.collect());
-    }
-
-    @Test
-    public void partialMarketSell() {
-        book.enter(1, Side.BUY,  1000, 50);
-        book.enter(2, Side.SELL, 100);
-
-        Event bid    = new Add(1, Side.BUY, 1000, 50);
-        Event match  = new Match(1, 2, Side.SELL, 1000, 50, 0);
-        Event cancel = new Cancel(2, 50, 0);
-
-        assertEquals(asList(bid, match, cancel), events.collect());
-    }
-
-    @Test
-    public void limitBuy() {
+    public void buy() {
         book.enter(1, Side.SELL, 1000, 100);
         book.enter(2, Side.BUY,  1000, 100);
 
@@ -128,7 +50,7 @@ public class OrderBookTest {
     }
 
     @Test
-    public void limitSell() {
+    public void sell() {
         book.enter(1, Side.BUY,  1000, 100);
         book.enter(2, Side.SELL, 1000, 100);
 
@@ -139,7 +61,7 @@ public class OrderBookTest {
     }
 
     @Test
-    public void multiLevelLimitBuy() {
+    public void multiLevelBuy() {
         book.enter(1, Side.SELL, 1000, 100);
         book.enter(2, Side.SELL, 1001, 100);
         book.enter(3, Side.SELL,  999,  50);
@@ -157,7 +79,7 @@ public class OrderBookTest {
     }
 
     @Test
-    public void multiLevelLimitSell() {
+    public void multiLevelSell() {
         book.enter(1, Side.BUY,  1000, 100);
         book.enter(2, Side.BUY,   999, 100);
         book.enter(3, Side.BUY,  1001,  50);
@@ -175,7 +97,7 @@ public class OrderBookTest {
     }
 
     @Test
-    public void partialLimitBuy() {
+    public void partialBuy() {
         book.enter(1, Side.SELL, 1000,  50);
         book.enter(2, Side.BUY,  1000, 100);
 
@@ -187,7 +109,7 @@ public class OrderBookTest {
     }
 
     @Test
-    public void partialLimitSell() {
+    public void partialSell() {
         book.enter(1, Side.BUY,  1000,  50);
         book.enter(2, Side.SELL, 1000, 100);
 
