@@ -9,8 +9,8 @@ import it.unimi.dsi.fastutil.longs.LongComparators;
  */
 public class OrderBook {
 
-    private Long2ObjectRBTreeMap<Level> bids;
-    private Long2ObjectRBTreeMap<Level> asks;
+    private Long2ObjectRBTreeMap<PriceLevel> bids;
+    private Long2ObjectRBTreeMap<PriceLevel> asks;
 
     private Long2ObjectOpenHashMap<Order> orders;
 
@@ -60,7 +60,7 @@ public class OrderBook {
     private void buy(long orderId, long price, long size) {
         long remainingQuantity = size;
 
-        Level bestLevel = getBestLevel(asks);
+        PriceLevel bestLevel = getBestLevel(asks);
 
         while (remainingQuantity > 0 && bestLevel != null && bestLevel.getPrice() <= price) {
             remainingQuantity = bestLevel.match(orderId, Side.BUY, remainingQuantity, listener);
@@ -81,7 +81,7 @@ public class OrderBook {
     private void sell(long orderId, long price, long size) {
         long remainingQuantity = size;
 
-        Level bestLevel = getBestLevel(bids);
+        PriceLevel bestLevel = getBestLevel(bids);
 
         while (remainingQuantity > 0 && bestLevel != null && bestLevel.getPrice() >= price) {
             remainingQuantity = bestLevel.match(orderId, Side.SELL, remainingQuantity, listener);
@@ -132,17 +132,17 @@ public class OrderBook {
         listener.cancel(orderId, remainingQuantity - size, size);
     }
 
-    private Level getBestLevel(Long2ObjectRBTreeMap<Level> levels) {
+    private PriceLevel getBestLevel(Long2ObjectRBTreeMap<PriceLevel> levels) {
         if (levels.isEmpty())
             return null;
 
         return levels.get(levels.firstLongKey());
     }
 
-    private Order add(Long2ObjectRBTreeMap<Level> levels, long orderId, Side side, long price, long size) {
-        Level level = levels.get(price);
+    private Order add(Long2ObjectRBTreeMap<PriceLevel> levels, long orderId, Side side, long price, long size) {
+        PriceLevel level = levels.get(price);
         if (level == null) {
-            level = new Level(side, price);
+            level = new PriceLevel(side, price);
             levels.put(price, level);
         }
 
@@ -150,7 +150,7 @@ public class OrderBook {
     }
 
     private void delete(Order order) {
-        Level level = order.getLevel();
+        PriceLevel level = order.getLevel();
 
         level.delete(order);
 
@@ -158,7 +158,7 @@ public class OrderBook {
             delete(level);
     }
 
-    private void delete(Level level) {
+    private void delete(PriceLevel level) {
         switch (level.getSide()) {
         case BUY:
             bids.remove(level.getPrice());

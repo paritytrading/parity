@@ -2,13 +2,13 @@ package com.paritytrading.parity.match;
 
 class Order {
 
-    private Level level;
+    private PriceLevel level;
 
     private long id;
 
     private long remainingQuantity;
 
-    public Order(Level level, long id, long size) {
+    public Order(PriceLevel level, long id, long size) {
         this.level = level;
 
         this.id = id;
@@ -16,7 +16,7 @@ class Order {
         this.remainingQuantity = size;
     }
 
-    public Level getLevel() {
+    public PriceLevel getLevel() {
         return level;
     }
 

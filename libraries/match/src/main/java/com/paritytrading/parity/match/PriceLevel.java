@@ -2,7 +2,7 @@ package com.paritytrading.parity.match;
 
 import java.util.ArrayList;
 
-class Level {
+class PriceLevel {
 
     private Side side;
 
@@ -10,7 +10,7 @@ class Level {
 
     private ArrayList<Order> orders;
 
-    public Level(Side side, long price) {
+    public PriceLevel(Side side, long price) {
         this.side   = side;
         this.price  = price;
         this.orders = new ArrayList<>();
