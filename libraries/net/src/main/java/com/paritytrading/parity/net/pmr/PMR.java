@@ -70,8 +70,8 @@ public class PMR {
             orderNumber = buffer.getLong();
             side        = buffer.get();
             instrument  = buffer.getLong();
-            quantity    = getUnsignedInt(buffer);
-            price       = getUnsignedInt(buffer);
+            quantity    = buffer.getLong();
+            price       = buffer.getLong();
         }
 
         @Override
@@ -82,8 +82,8 @@ public class PMR {
             buffer.putLong(orderNumber);
             buffer.put(side);
             buffer.putLong(instrument);
-            putUnsignedInt(buffer, quantity);
-            putUnsignedInt(buffer, price);
+            buffer.putLong(quantity);
+            buffer.putLong(price);
         }
     }
 
@@ -120,7 +120,7 @@ public class PMR {
         public void get(ByteBuffer buffer) {
             timestamp        = buffer.getLong();
             orderNumber      = buffer.getLong();
-            canceledQuantity = getUnsignedInt(buffer);
+            canceledQuantity = buffer.getLong();
         }
 
         @Override
@@ -128,7 +128,7 @@ public class PMR {
             buffer.put(MESSAGE_TYPE_ORDER_CANCELED);
             buffer.putLong(timestamp);
             buffer.putLong(orderNumber);
-            putUnsignedInt(buffer, canceledQuantity);
+            buffer.putLong(canceledQuantity);
         }
     }
 
@@ -147,7 +147,7 @@ public class PMR {
             timestamp           = buffer.getLong();
             restingOrderNumber  = buffer.getLong();
             incomingOrderNumber = buffer.getLong();
-            quantity            = getUnsignedInt(buffer);
+            quantity            = buffer.getLong();
             matchNumber         = getUnsignedInt(buffer);
         }
 
@@ -157,7 +157,7 @@ public class PMR {
             buffer.putLong(timestamp);
             buffer.putLong(restingOrderNumber);
             buffer.putLong(incomingOrderNumber);
-            putUnsignedInt(buffer, quantity);
+            buffer.putLong(quantity);
             putUnsignedInt(buffer, matchNumber);
         }
     }
