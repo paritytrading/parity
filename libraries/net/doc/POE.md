@@ -47,8 +47,8 @@ Message Type |      1 | Text   | `E`
 Order ID     |     16 | Text   |
 Side         |      1 | Text   | See below
 Instrument   |      8 | Text   |
-Quantity     |      4 | Number |
-Price        |      4 | Number |
+Quantity     |      8 | Number |
+Price        |      8 | Number |
 
 The sides are enumerated below.
 
@@ -66,7 +66,7 @@ Name         | Length | Type   | Notes
 -------------|--------|--------|------
 Message Type |      1 | Text   | `X`
 Order ID     |     16 | Text   |
-Quantity     |      4 | Number |
+Quantity     |      8 | Number |
 
 ## Outbound Messages
 
@@ -85,8 +85,8 @@ Timestamp    |      8 | Number |
 Order ID     |     16 | Text   |
 Side         |      1 | Text   |
 Instrument   |      8 | Text   |
-Quantity     |      4 | Number |
-Price        |      4 | Number |
+Quantity     |      8 | Number |
+Price        |      8 | Number |
 Order Number |      8 | Number |
 
 ### Order Rejected
@@ -119,8 +119,8 @@ Name           | Length | Type   | Notes
 Message Type   |      1 | Text   | `E`
 Timestamp      |      8 | Number |
 Order ID       |     16 | Text   |
-Quantity       |      4 | Number |
-Price          |      4 | Number |
+Quantity       |      8 | Number |
+Price          |      8 | Number |
 Liquidity Flag |      1 | Text   |
 Match Number   |      4 | Number |
 
@@ -141,7 +141,7 @@ Name              | Length | Type   | Notes
 Message Type      |      1 | Text   | `X`
 Timestamp         |      8 | Number |
 Order ID          |     16 | Text   |
-Canceled Quantity |      4 | Number |
+Canceled Quantity |      8 | Number |
 Reason            |      1 | Text   | See below
 
 The reasons for a cancellation are enumerated below.
