@@ -13,8 +13,8 @@ public class POE {
     private POE() {
     }
 
-    public static final int MAX_INBOUND_MESSAGE_LENGTH  = 34;
-    public static final int MAX_OUTBOUND_MESSAGE_LENGTH = 50;
+    public static final int MAX_INBOUND_MESSAGE_LENGTH  = 42;
+    public static final int MAX_OUTBOUND_MESSAGE_LENGTH = 58;
 
     public static final byte BUY  = 'B';
     public static final byte SELL = 'S';
@@ -68,8 +68,8 @@ public class POE {
             buffer.get(orderId);
             side       = buffer.get();
             instrument = buffer.getLong();
-            quantity   = getUnsignedInt(buffer);
-            price      = getUnsignedInt(buffer);
+            quantity   = buffer.getLong();
+            price      = buffer.getLong();
         }
 
         @Override
@@ -78,8 +78,8 @@ public class POE {
             buffer.put(orderId);
             buffer.put(side);
             buffer.putLong(instrument);
-            putUnsignedInt(buffer, quantity);
-            putUnsignedInt(buffer, price);
+            buffer.putLong(quantity);
+            buffer.putLong(price);
         }
     }
 
@@ -100,14 +100,14 @@ public class POE {
         @Override
         public void get(ByteBuffer buffer) {
             buffer.get(orderId);
-            quantity = getUnsignedInt(buffer);
+            quantity = buffer.getLong();
         }
 
         @Override
         public void put(ByteBuffer buffer) {
             buffer.put(MESSAGE_TYPE_CANCEL_ORDER);
             buffer.put(orderId);
-            putUnsignedInt(buffer, quantity);
+            buffer.putLong(quantity);
         }
     }
 
@@ -148,8 +148,8 @@ public class POE {
             buffer.get(orderId);
             side        = buffer.get();
             instrument  = buffer.getLong();
-            quantity    = getUnsignedInt(buffer);
-            price       = getUnsignedInt(buffer);
+            quantity    = buffer.getLong();
+            price       = buffer.getLong();
             orderNumber = buffer.getLong();
         }
 
@@ -160,8 +160,8 @@ public class POE {
             buffer.put(orderId);
             buffer.put(side);
             buffer.putLong(instrument);
-            putUnsignedInt(buffer, quantity);
-            putUnsignedInt(buffer, price);
+            buffer.putLong(quantity);
+            buffer.putLong(price);
             buffer.putLong(orderNumber);
         }
     }
@@ -219,8 +219,8 @@ public class POE {
         public void get(ByteBuffer buffer) {
             timestamp     = buffer.getLong();
             buffer.get(orderId);
-            quantity      = getUnsignedInt(buffer);
-            price         = getUnsignedInt(buffer);
+            quantity      = buffer.getLong();
+            price         = buffer.getLong();
             liquidityFlag = buffer.get();
             matchNumber   = getUnsignedInt(buffer);
         }
@@ -230,8 +230,8 @@ public class POE {
             buffer.put(MESSAGE_TYPE_ORDER_EXECUTED);
             buffer.putLong(timestamp);
             buffer.put(orderId);
-            putUnsignedInt(buffer, quantity);
-            putUnsignedInt(buffer, price);
+            buffer.putLong(quantity);
+            buffer.putLong(price);
             buffer.put(liquidityFlag);
             putUnsignedInt(buffer, matchNumber);
         }
@@ -257,7 +257,7 @@ public class POE {
         public void get(ByteBuffer buffer) {
             timestamp        = buffer.getLong();
             buffer.get(orderId);
-            canceledQuantity = getUnsignedInt(buffer);
+            canceledQuantity = buffer.getLong();
             reason           = buffer.get();
         }
 
@@ -266,7 +266,7 @@ public class POE {
             buffer.put(MESSAGE_TYPE_ORDER_CANCELED);
             buffer.putLong(timestamp);
             buffer.put(orderId);
-            putUnsignedInt(buffer, canceledQuantity);
+            buffer.putLong(canceledQuantity);
             buffer.put(reason);
         }
     }
