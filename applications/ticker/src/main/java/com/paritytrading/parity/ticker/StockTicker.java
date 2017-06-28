@@ -28,18 +28,10 @@ class StockTicker {
         if (args.length < 1)
             usage();
 
-        boolean taq = false;
-
-        int i = 0;
-
-        if (args[0].equals("-t")) {
-            taq = true;
-
-            i++;
-        }
+        boolean taq = args[0].equals("-t");
 
         try {
-            main(taq, copyOfRange(args, i, args.length));
+            main(taq, taq ? copyOfRange(args, 1, args.length) : args);
         } catch (ConfigException | FileNotFoundException e) {
             error(e);
         } catch (IOException e) {
