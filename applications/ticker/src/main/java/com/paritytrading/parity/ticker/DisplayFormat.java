@@ -16,7 +16,7 @@ class DisplayFormat extends MarketDataListener {
         "Timestamp    Inst     Bid Px    Bid Size   Ask Px    Ask Size   Last Px   Last Size\n" +
         "------------ -------- --------- ---------- --------- ---------- --------- ----------";
 
-    private static final String MISSING = String.format("%9s %10s", "-", "-");
+    private static final String MISSING = String.format("%9s %10s ", "-", "-");
 
     private Long2ObjectArrayMap<Trade> trades;
 
@@ -52,19 +52,19 @@ class DisplayFormat extends MarketDataListener {
         if (bidSize != 0)
             printf("%9.2f %10d ", bidPrice / PRICE_FACTOR, bidSize);
         else
-            printf("%s ", MISSING);
+            print(MISSING);
 
         if (askSize != 0)
             printf("%9.2f %10d ", askPrice / PRICE_FACTOR, askSize);
         else
-            printf("%s ", MISSING);
+            print(MISSING);
 
         Trade trade = trades.get(instrument);
 
         if (trade.size != 0)
             printf("%9.2f %10d\n", trade.price / PRICE_FACTOR, trade.size);
         else
-            printf("%s\n", MISSING);
+            println(MISSING);
     }
 
     @Override
@@ -77,6 +77,14 @@ class DisplayFormat extends MarketDataListener {
 
     private void printf(String format, Object... args) {
         System.out.printf(Locale.US, format, args);
+    }
+
+    private void print(String x) {
+        System.out.print(x);
+    }
+
+    private void println(String x) {
+        System.out.println(x);
     }
 
     private static class Trade {
