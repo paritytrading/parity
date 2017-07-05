@@ -44,9 +44,4 @@ public class Trades extends DefaultEventVisitor {
         trades.put(event.matchNumber, new Trade(order, event));
     }
 
-    @Override
-    public void visit(Event.BrokenTrade event) {
-        trades.removeAll(event.matchNumber);
-    }
-
 }

@@ -29,9 +29,6 @@ public class POE {
     public static final byte ORDER_CANCEL_REASON_REQUEST     = 'R';
     public static final byte ORDER_CANCEL_REASON_SUPERVISORY = 'S';
 
-    public static final byte BROKEN_TRADE_REASON_CONSENT     = 'C';
-    public static final byte BROKEN_TRADE_REASON_SUPERVISORY = 'S';
-
     public static final byte ORDER_ID_LENGTH = 16;
 
     /**
@@ -124,7 +121,7 @@ public class POE {
     static final byte MESSAGE_TYPE_ORDER_REJECTED = 'R';
     static final byte MESSAGE_TYPE_ORDER_EXECUTED = 'E';
     static final byte MESSAGE_TYPE_ORDER_CANCELED = 'X';
-    static final byte MESSAGE_TYPE_BROKEN_TRADE   = 'B';
+
 
     /**
      * An Order Accepted message.
@@ -270,40 +267,6 @@ public class POE {
             buffer.putLong(timestamp);
             buffer.put(orderId);
             putUnsignedInt(buffer, canceledQuantity);
-            buffer.put(reason);
-        }
-    }
-
-    /**
-     * A Broken Trade message.
-     */
-    public static class BrokenTrade implements OutboundMessage {
-        public long   timestamp;
-        public byte[] orderId;
-        public long   matchNumber;
-        public byte   reason;
-
-        /**
-         * Create an instance.
-         */
-        public BrokenTrade() {
-            orderId = new byte[ORDER_ID_LENGTH];
-        }
-
-        @Override
-        public void get(ByteBuffer buffer) {
-            timestamp   = buffer.getLong();
-            buffer.get(orderId);
-            matchNumber = getUnsignedInt(buffer);
-            reason      = buffer.get();
-        }
-
-        @Override
-        public void put(ByteBuffer buffer) {
-            buffer.put(MESSAGE_TYPE_BROKEN_TRADE);
-            buffer.putLong(timestamp);
-            buffer.put(orderId);
-            putUnsignedInt(buffer, matchNumber);
             buffer.put(reason);
         }
     }

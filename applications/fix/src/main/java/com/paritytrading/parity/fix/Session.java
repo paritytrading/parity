@@ -672,10 +672,6 @@ class Session implements Closeable {
         }
 
         @Override
-        public void brokenTrade(POE.BrokenTrade message) {
-        }
-
-        @Override
         public void heartbeatTimeout(SoupBinTCPClient session) throws IOException {
             fix.sendLogout("Trading system not available");
         }

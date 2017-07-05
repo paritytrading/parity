@@ -10,6 +10,4 @@ public interface EventVisitor {
 
     void visit(Event.OrderCanceled event);
 
-    void visit(Event.BrokenTrade event);
-
 }

@@ -38,11 +38,6 @@ public class Events implements POEClientListener {
         add(new Event.OrderCanceled(message));
     }
 
-    @Override
-    public void brokenTrade(POE.BrokenTrade message) {
-        add(new Event.BrokenTrade(message));
-    }
-
     private void add(Event event) {
         events = events.newWith(event);
     }

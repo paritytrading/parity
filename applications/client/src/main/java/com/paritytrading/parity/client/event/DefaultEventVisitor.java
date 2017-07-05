@@ -18,8 +18,4 @@ class DefaultEventVisitor implements EventVisitor {
     public void visit(Event.OrderCanceled event) {
     }
 
-    @Override
-    public void visit(Event.BrokenTrade event) {
-    }
-
 }

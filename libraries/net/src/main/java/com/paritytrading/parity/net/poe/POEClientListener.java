@@ -41,12 +41,4 @@ public interface POEClientListener {
      */
     void orderCanceled(OrderCanceled message) throws IOException;
 
-    /**
-     * Receive a Broken Trade message.
-     *
-     * @param message the message
-     * @throws IOException if an I/O error occurs
-     */
-    void brokenTrade(BrokenTrade message) throws IOException;
-
 }
