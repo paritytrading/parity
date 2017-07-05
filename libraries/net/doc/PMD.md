@@ -106,16 +106,6 @@ Message Type |      1 | Text   | `D`
 Timestamp    |      4 | Number |
 Order Number |      8 | Number |
 
-### Broken Trade
-
-A Broken Trade message indicates that a trade has been rendered void.
-
-Name         | Length | Type   | Notes
--------------|--------|--------|------
-Message Type |      1 | Text   | `B`
-Timestamp    |      4 | Number |
-Match Number |      4 | Number |
-
 ## History
 
 - **Version 1.** Initial version.
