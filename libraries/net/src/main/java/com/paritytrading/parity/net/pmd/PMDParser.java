@@ -17,7 +17,6 @@ public class PMDParser implements MessageListener {
     private OrderExecuted orderExecuted;
     private OrderCanceled orderCanceled;
     private OrderDeleted  orderDeleted;
-    private BrokenTrade   brokenTrade;
 
     private PMDListener listener;
 
@@ -33,7 +32,6 @@ public class PMDParser implements MessageListener {
         this.orderExecuted = new OrderExecuted();
         this.orderCanceled = new OrderCanceled();
         this.orderDeleted  = new OrderDeleted();
-        this.brokenTrade   = new BrokenTrade();
 
         this.listener = listener;
     }
@@ -66,10 +64,6 @@ public class PMDParser implements MessageListener {
         case MESSAGE_TYPE_ORDER_DELETED:
             orderDeleted.get(buffer);
             listener.orderDeleted(orderDeleted);
-            break;
-        case MESSAGE_TYPE_BROKEN_TRADE:
-            brokenTrade.get(buffer);
-            listener.brokenTrade(brokenTrade);
             break;
         default:
             throw new PMDException("Unknown message type: " + (char)messageType);

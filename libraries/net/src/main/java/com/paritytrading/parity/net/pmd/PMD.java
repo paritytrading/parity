@@ -24,7 +24,6 @@ public class PMD {
     static final byte MESSAGE_TYPE_ORDER_EXECUTED = 'E';
     static final byte MESSAGE_TYPE_ORDER_CANCELED = 'X';
     static final byte MESSAGE_TYPE_ORDER_DELETED  = 'D';
-    static final byte MESSAGE_TYPE_BROKEN_TRADE   = 'B';
 
     /**
      * A message.
@@ -170,27 +169,6 @@ public class PMD {
             buffer.put(MESSAGE_TYPE_ORDER_DELETED);
             putUnsignedInt(buffer, timestamp);
             buffer.putLong(orderNumber);
-        }
-    }
-
-    /**
-     * A Broken Trade message.
-     */
-    public static class BrokenTrade implements Message {
-        public long timestamp;
-        public long matchNumber;
-
-        @Override
-        public void get(ByteBuffer buffer) {
-            timestamp   = getUnsignedInt(buffer);
-            matchNumber = getUnsignedInt(buffer);
-        }
-
-        @Override
-        public void put(ByteBuffer buffer) {
-            buffer.put(MESSAGE_TYPE_BROKEN_TRADE);
-            putUnsignedInt(buffer, timestamp);
-            putUnsignedInt(buffer, matchNumber);
         }
     }
 
