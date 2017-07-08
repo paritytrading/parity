@@ -15,7 +15,6 @@ public class POEClientParser implements MessageListener {
     private OrderRejected orderRejected;
     private OrderExecuted orderExecuted;
     private OrderCanceled orderCanceled;
-    private BrokenTrade   brokenTrade;
 
     private POEClientListener listener;
 
@@ -29,7 +28,6 @@ public class POEClientParser implements MessageListener {
         this.orderRejected = new OrderRejected();
         this.orderExecuted = new OrderExecuted();
         this.orderCanceled = new OrderCanceled();
-        this.brokenTrade   = new BrokenTrade();
 
         this.listener = listener;
     }
@@ -54,10 +52,6 @@ public class POEClientParser implements MessageListener {
         case MESSAGE_TYPE_ORDER_CANCELED:
             orderCanceled.get(buffer);
             listener.orderCanceled(orderCanceled);
-            break;
-        case MESSAGE_TYPE_BROKEN_TRADE:
-            brokenTrade.get(buffer);
-            listener.brokenTrade(brokenTrade);
             break;
         default:
             throw new POEException("Unknown message type: " + (char)messageType);

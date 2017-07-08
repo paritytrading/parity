@@ -57,10 +57,6 @@ class MarketDataProcessor implements PMDListener {
         market.delete(message.orderNumber);
     }
 
-    @Override
-    public void brokenTrade(PMD.BrokenTrade message) {
-    }
-
     private Side side(byte side) {
         return side == PMD.BUY ? Side.BUY : Side.SELL;
     }

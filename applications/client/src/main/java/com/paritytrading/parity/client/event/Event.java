@@ -91,23 +91,4 @@ public interface Event {
         }
     }
 
-    class BrokenTrade implements Event {
-        public final long   timestamp;
-        public final String orderId;
-        public final long   matchNumber;
-        public final byte   reason;
-
-        public BrokenTrade(POE.BrokenTrade message) {
-            this.timestamp   = message.timestamp;
-            this.orderId     = ASCII.get(message.orderId);
-            this.matchNumber = message.matchNumber;
-            this.reason      = message.reason;
-        }
-
-        @Override
-        public void accept(EventVisitor visitor) {
-            visitor.visit(this);
-        }
-    }
-
 }

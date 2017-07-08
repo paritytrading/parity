@@ -151,25 +151,6 @@ Reason | Description
 `R`    | Request
 `S`    | Supervisory
 
-### Broken Trade
-
-A Broken Trade message indicates that a trade has been rendered void.
-
-Name         | Length | Type   | Notes
--------------|--------|--------|----------
-Message Type |      1 | Text   | `B`
-Timestamp    |      8 | Number |
-Order ID     |     16 | Text   |
-Match Number |      4 | Number |
-Reason       |      1 | Text   | See below
-
-The reasons for a break are enumerated below.
-
-Reason | Description
--------|------------
-`C`    | Consent
-`S`    | Supervisory
-
 ## History
 
 - **Version 1.** Initial version.
