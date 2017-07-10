@@ -3,11 +3,16 @@ package com.paritytrading.parity.file.taq;
 import static java.nio.charset.StandardCharsets.US_ASCII;
 
 import java.nio.charset.Charset;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 /**
  * A configuration.
  */
 public class TAQConfig {
+
+    private static final DecimalFormatSymbols SYMBOLS = DecimalFormatSymbols.getInstance(Locale.US);
 
     /**
      * The default configuration.
@@ -16,23 +21,14 @@ public class TAQConfig {
 
     private Charset encoding;
 
-    private int priceFractionDigits;
-    private int sizeFractionDigits;
+    private DecimalFormat priceFormat;
+    private DecimalFormat sizeFormat;
 
-    /**
-     * Create a new configuration.
-     *
-     * @param encoding the encoding
-     * @param priceFractionDigits the number of digits in the fractional part
-     *   of a price
-     * @param sizeFractionDigits the number of digits in the fractional part
-     *   of a size
-     */
-    public TAQConfig(Charset encoding, int priceFractionDigits, int sizeFractionDigits) {
+    private TAQConfig(Charset encoding, DecimalFormat priceFormat, DecimalFormat sizeFormat) {
         this.encoding = encoding;
 
-        this.priceFractionDigits = priceFractionDigits;
-        this.sizeFractionDigits  = sizeFractionDigits;
+        this.priceFormat = priceFormat;
+        this.sizeFormat  = sizeFormat;
     }
 
     /**
@@ -45,21 +41,21 @@ public class TAQConfig {
     }
 
     /**
-     * Get the number of digits in the fractional part of a price.
+     * Get the price format.
      *
-     * @return the number of digits in the fractional part of a size
+     * @return the price format
      */
-    public int getPriceFractionDigits() {
-        return priceFractionDigits;
+    public DecimalFormat getPriceFormat() {
+        return priceFormat;
     }
 
     /**
-     * Get the number of digits in the fractional part of a size.
+     * Get the size format.
      *
-     * @return the number of digits in the fractional part of a size
+     * @return the size format
      */
-    public int getSizeFractionDigits() {
-        return sizeFractionDigits;
+    public DecimalFormat getSizeFormat() {
+        return sizeFormat;
     }
 
     /**
@@ -75,8 +71,8 @@ public class TAQConfig {
 
         private Charset encoding;
 
-        private int priceFractionDigits;
-        private int sizeFractionDigits;
+        private DecimalFormat priceFormat;
+        private DecimalFormat sizeFormat;
 
         /**
          * Create a configuration builder.
@@ -84,8 +80,11 @@ public class TAQConfig {
         public Builder() {
             encoding = US_ASCII;
 
-            priceFractionDigits = 2;
-            sizeFractionDigits  = 0;
+            priceFormat = newFormat();
+            sizeFormat  = newFormat();
+
+            setFractionDigits(priceFormat, 2);
+            setFractionDigits(sizeFormat,  0);
         }
 
         /**
@@ -103,12 +102,12 @@ public class TAQConfig {
         /**
          * Set the number of digits in the fractional part of a price.
          *
-         * @param priceFractionDigits the number of digits in the fractional
-         *     part of a price
+         * @param fractionDigits the number of digits in the fractional part
+         *     of a price
          * @return this instance
          */
-        public Builder setPriceFractionDigits(int priceFractionDigits) {
-            this.priceFractionDigits = priceFractionDigits;
+        public Builder setPriceFractionDigits(int fractionDigits) {
+            setFractionDigits(priceFormat, fractionDigits);
 
             return this;
         }
@@ -116,12 +115,12 @@ public class TAQConfig {
         /**
          * Set the number of digits in the fractional part of a size.
          *
-         * @param sizeFractionDigits the number of digits in the fractional
-         *     part of a size
+         * @param fractionDigits the number of digits in the fractional part
+         *     of a size
          * @return this instance
          */
-        public Builder setSizeFractionDigits(int sizeFractionDigits) {
-            this.sizeFractionDigits = sizeFractionDigits;
+        public Builder setSizeFractionDigits(int fractionDigits) {
+            setFractionDigits(sizeFormat, fractionDigits);
 
             return this;
         }
@@ -132,9 +131,18 @@ public class TAQConfig {
          * @return the configuration
          */
         public TAQConfig build() {
-            return new TAQConfig(encoding, priceFractionDigits, sizeFractionDigits);
+            return new TAQConfig(encoding, priceFormat, sizeFormat);
         }
 
+    }
+
+    private static DecimalFormat newFormat() {
+        return new DecimalFormat("0", SYMBOLS);
+    }
+
+    private static void setFractionDigits(DecimalFormat format, int fractionDigits) {
+        format.setMinimumFractionDigits(fractionDigits);
+        format.setMaximumFractionDigits(fractionDigits);
     }
 
 }
