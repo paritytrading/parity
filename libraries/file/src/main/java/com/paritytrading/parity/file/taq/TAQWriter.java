@@ -121,9 +121,9 @@ public class TAQWriter implements Closeable, Flushable {
         sink.print(FIELD_SEPARATOR);
         // ask size
         sink.print(FIELD_SEPARATOR);
-        writePrice(record.price);
+        writePrice(record.instrument, record.price);
         sink.print(FIELD_SEPARATOR);
-        writeSize(record.size);
+        writeSize(record.instrument, record.size);
         sink.print(FIELD_SEPARATOR);
 
         if (record.side != UNKNOWN)
@@ -148,22 +148,22 @@ public class TAQWriter implements Closeable, Flushable {
         sink.print(FIELD_SEPARATOR);
 
         if (record.bidSize > 0)
-            writePrice(record.bidPrice);
+            writePrice(record.instrument, record.bidPrice);
 
         sink.print(FIELD_SEPARATOR);
 
         if (record.bidSize > 0)
-            writeSize(record.bidSize);
+            writeSize(record.instrument, record.bidSize);
 
         sink.print(FIELD_SEPARATOR);
 
         if (record.askSize > 0)
-            writePrice(record.askPrice);
+            writePrice(record.instrument, record.askPrice);
 
         sink.print(FIELD_SEPARATOR);
 
         if (record.askSize > 0)
-            writeSize(record.askSize);
+            writeSize(record.instrument, record.askSize);
 
         sink.print(FIELD_SEPARATOR);
         // trade price
@@ -184,18 +184,18 @@ public class TAQWriter implements Closeable, Flushable {
         sink.flush();
     }
 
-    private void writePrice(double price) {
+    private void writePrice(String instrument, double price) {
         buffer.setLength(0);
 
-        config.getPriceFormat().format(price, buffer, position);
+        config.getPriceFormat(instrument).format(price, buffer, position);
 
         sink.append(buffer);
     }
 
-    private void writeSize(double size) {
+    private void writeSize(String instrument, double size) {
         buffer.setLength(0);
 
-        config.getSizeFormat().format(size, buffer, position);
+        config.getSizeFormat(instrument).format(size, buffer, position);
 
         sink.append(buffer);
     }

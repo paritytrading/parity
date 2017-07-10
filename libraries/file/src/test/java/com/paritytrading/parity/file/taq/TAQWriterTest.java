@@ -67,7 +67,8 @@ public class TAQWriterTest {
 	ByteArrayOutputStream out = new ByteArrayOutputStream();
 
 	TAQConfig config = new TAQConfig.Builder()
-	    .setPriceFractionDigits(6)
+	    .setPriceFractionDigits("FOO", 6)
+	    .setPriceFractionDigits("BAR", 2)
 	    .setSizeFractionDigits(8)
 	    .build();
 

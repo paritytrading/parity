@@ -5,7 +5,9 @@ import static java.nio.charset.StandardCharsets.US_ASCII;
 import java.nio.charset.Charset;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * A configuration.
@@ -21,14 +23,22 @@ public class TAQConfig {
 
     private Charset encoding;
 
-    private DecimalFormat priceFormat;
-    private DecimalFormat sizeFormat;
+    private Map<String, DecimalFormat> priceFormats;
+    private Map<String, DecimalFormat> sizeFormats;
 
-    private TAQConfig(Charset encoding, DecimalFormat priceFormat, DecimalFormat sizeFormat) {
+    private DecimalFormat defaultPriceFormat;
+    private DecimalFormat defaultSizeFormat;
+
+    private TAQConfig(Charset encoding, Map<String, DecimalFormat> priceFormats,
+            Map<String, DecimalFormat> sizeFormats, DecimalFormat defaultPriceFormat,
+            DecimalFormat defaultSizeFormat) {
         this.encoding = encoding;
 
-        this.priceFormat = priceFormat;
-        this.sizeFormat  = sizeFormat;
+        this.priceFormats = priceFormats;
+        this.sizeFormats  = sizeFormats;
+
+        this.defaultPriceFormat = defaultPriceFormat;
+        this.defaultSizeFormat  = defaultSizeFormat;
     }
 
     /**
@@ -43,19 +53,21 @@ public class TAQConfig {
     /**
      * Get the price format.
      *
+     * @param instrument the instrument
      * @return the price format
      */
-    public DecimalFormat getPriceFormat() {
-        return priceFormat;
+    public DecimalFormat getPriceFormat(String instrument) {
+        return priceFormats.getOrDefault(instrument, defaultPriceFormat);
     }
 
     /**
      * Get the size format.
      *
+     * @param instrument the instrument
      * @return the size format
      */
-    public DecimalFormat getSizeFormat() {
-        return sizeFormat;
+    public DecimalFormat getSizeFormat(String instrument) {
+        return sizeFormats.getOrDefault(instrument, defaultSizeFormat);
     }
 
     /**
@@ -63,16 +75,19 @@ public class TAQConfig {
      *
      * <ul>
      *   <li>the encoding: US-ASCII</li>
-     *   <li>the number of digits in the fractional part of a price: 2</li>
-     *   <li>the number of digits in the fractional part of a size: 0</li>
+     *   <li>the default number of digits in the fractional part of a price: 2</li>
+     *   <li>the default number of digits in the fractional part of a size: 0</li>
      * </ul>
      */
     public static class Builder {
 
         private Charset encoding;
 
-        private DecimalFormat priceFormat;
-        private DecimalFormat sizeFormat;
+        private Map<String, DecimalFormat> priceFormats;
+        private Map<String, DecimalFormat> sizeFormats;
+
+        private DecimalFormat defaultPriceFormat;
+        private DecimalFormat defaultSizeFormat;
 
         /**
          * Create a configuration builder.
@@ -80,11 +95,14 @@ public class TAQConfig {
         public Builder() {
             encoding = US_ASCII;
 
-            priceFormat = newFormat();
-            sizeFormat  = newFormat();
+            priceFormats = new HashMap<>();
+            sizeFormats  = new HashMap<>();
 
-            setFractionDigits(priceFormat, 2);
-            setFractionDigits(sizeFormat,  0);
+            defaultPriceFormat = newFormat();
+            defaultSizeFormat  = newFormat();
+
+            setFractionDigits(defaultPriceFormat, 2);
+            setFractionDigits(defaultSizeFormat,  0);
         }
 
         /**
@@ -102,12 +120,13 @@ public class TAQConfig {
         /**
          * Set the number of digits in the fractional part of a price.
          *
+         * @param instrument the instrument
          * @param fractionDigits the number of digits in the fractional part
          *     of a price
          * @return this instance
          */
-        public Builder setPriceFractionDigits(int fractionDigits) {
-            setFractionDigits(priceFormat, fractionDigits);
+        public Builder setPriceFractionDigits(String instrument, int fractionDigits) {
+            setFractionDigits(getFormat(priceFormats, instrument), fractionDigits);
 
             return this;
         }
@@ -115,12 +134,39 @@ public class TAQConfig {
         /**
          * Set the number of digits in the fractional part of a size.
          *
+         * @param instrument the instrument
          * @param fractionDigits the number of digits in the fractional part
          *     of a size
          * @return this instance
          */
+        public Builder setSizeFractionDigits(String instrument, int fractionDigits) {
+            setFractionDigits(getFormat(sizeFormats, instrument), fractionDigits);
+
+            return this;
+        }
+
+        /**
+         * Set the default number of digits in the fractional part of a price.
+         *
+         * @param fractionDigits the default number of digits in the
+         *     fractional part of a price
+         * @return this instance
+         */
+        public Builder setPriceFractionDigits(int fractionDigits) {
+            setFractionDigits(defaultPriceFormat, fractionDigits);
+
+            return this;
+        }
+
+        /**
+         * Set the default number of digits in the fractional part of a size.
+         *
+         * @param fractionDigits the default number of digits in the
+         *     fractional part of a size
+         * @return this instance
+         */
         public Builder setSizeFractionDigits(int fractionDigits) {
-            setFractionDigits(sizeFormat, fractionDigits);
+            setFractionDigits(defaultSizeFormat, fractionDigits);
 
             return this;
         }
@@ -131,13 +177,25 @@ public class TAQConfig {
          * @return the configuration
          */
         public TAQConfig build() {
-            return new TAQConfig(encoding, priceFormat, sizeFormat);
+            return new TAQConfig(encoding, priceFormats, sizeFormats,
+                    defaultPriceFormat, defaultSizeFormat);
         }
 
     }
 
     private static DecimalFormat newFormat() {
         return new DecimalFormat("0", SYMBOLS);
+    }
+
+    private static DecimalFormat getFormat(Map<String, DecimalFormat> formats, String instrument) {
+        DecimalFormat format = formats.get(instrument);
+        if (format == null) {
+            format = newFormat();
+
+            formats.put(instrument, format);
+        }
+
+        return format;
     }
 
     private static void setFractionDigits(DecimalFormat format, int fractionDigits) {
