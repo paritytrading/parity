@@ -19,7 +19,7 @@ abstract class MarketReportListener implements PMRListener {
     }
 
     @Override
-    public void order(PMR.Order message) {
+    public void orderEntered(PMR.OrderEntered message) {
     }
 
     @Override

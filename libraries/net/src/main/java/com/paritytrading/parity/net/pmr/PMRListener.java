@@ -18,12 +18,12 @@ public interface PMRListener {
     void version(Version message) throws IOException;
 
     /**
-     * Receive an Order message.
+     * Receive an Order Entered message.
      *
      * @param message the message
      * @throws IOException if an I/O error occurs
      */
-    void order(Order message) throws IOException;
+    void orderEntered(OrderEntered message) throws IOException;
 
     /**
      * Receive a Cancel message.

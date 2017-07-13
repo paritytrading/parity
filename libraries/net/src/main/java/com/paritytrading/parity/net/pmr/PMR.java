@@ -18,10 +18,10 @@ public class PMR {
      */
     public static final long VERSION = 1;
 
-    static final byte MESSAGE_TYPE_VERSION = 'V';
-    static final byte MESSAGE_TYPE_ORDER   = 'O';
-    static final byte MESSAGE_TYPE_CANCEL  = 'X';
-    static final byte MESSAGE_TYPE_TRADE   = 'T';
+    static final byte MESSAGE_TYPE_VERSION       = 'V';
+    static final byte MESSAGE_TYPE_ORDER_ENTERED = 'E';
+    static final byte MESSAGE_TYPE_CANCEL        = 'X';
+    static final byte MESSAGE_TYPE_TRADE         = 'T';
 
     public static final byte BUY  = 'B';
     public static final byte SELL = 'S';
@@ -51,9 +51,9 @@ public class PMR {
     }
 
     /**
-     * An Order message.
+     * An Order Entered message.
      */
-    public static class Order implements Message {
+    public static class OrderEntered implements Message {
         public long timestamp;
         public long username;
         public long orderNumber;
@@ -75,7 +75,7 @@ public class PMR {
 
         @Override
         public void put(ByteBuffer buffer) {
-            buffer.put(MESSAGE_TYPE_ORDER);
+            buffer.put(MESSAGE_TYPE_ORDER_ENTERED);
             buffer.putLong(timestamp);
             buffer.putLong(username);
             buffer.putLong(orderNumber);

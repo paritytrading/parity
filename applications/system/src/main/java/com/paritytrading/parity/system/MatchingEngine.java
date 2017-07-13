@@ -76,7 +76,7 @@ class MatchingEngine {
 
         session.orderAccepted(message, handling);
 
-        marketReporting.order(session.getUsername(), orderNumber, message.side,
+        marketReporting.orderEntered(session.getUsername(), orderNumber, message.side,
                 instrument, message.quantity, message.price);
 
         book.enter(orderNumber, side(message.side), message.price, message.quantity);
