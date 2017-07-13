@@ -37,13 +37,14 @@ Name         | Length | Type   | Notes
 Message Type |      1 | Text   | `V`
 Version      |      4 | Number | 1
 
-### Order
+### Order Entered
 
-An Order message indicates that an order has been entered.
+An Order Entered message indicates that an order has been entered. The order
+number is the trading system's identifier for the order.
 
 Name         | Length | Type   | Notes
 -------------|--------|--------|----------
-Message Type |      1 | Text   | `O`
+Message Type |      1 | Text   | `E`
 Timestamp    |      8 | Number |
 Username     |      8 | Text   |
 Order Number |      8 | Number |
