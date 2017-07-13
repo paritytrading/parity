@@ -10,6 +10,14 @@ import java.io.IOException;
 public interface PMRListener {
 
     /**
+     * Receive a Version message.
+     *
+     * @param message the message
+     * @throws IOException if an I/O error occurs
+     */
+    void version(Version message) throws IOException;
+
+    /**
      * Receive an Order message.
      *
      * @param message the message

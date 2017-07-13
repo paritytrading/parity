@@ -17,9 +17,10 @@ import java.nio.channels.DatagramChannel;
 
 class MarketReporting {
 
-    private PMR.Order  order;
-    private PMR.Cancel cancel;
-    private PMR.Trade  trade;
+    private PMR.Version version;
+    private PMR.Order   order;
+    private PMR.Cancel  cancel;
+    private PMR.Trade   trade;
 
     private MoldUDP64Server transport;
 
@@ -32,9 +33,10 @@ class MarketReporting {
     private ByteBuffer buffer;
 
     private MarketReporting(MoldUDP64Server transport, MoldUDP64RequestServer requestTransport) {
-        this.order  = new PMR.Order();
-        this.cancel = new PMR.Cancel();
-        this.trade  = new PMR.Trade();
+        this.version = new PMR.Version();
+        this.order   = new PMR.Order();
+        this.cancel  = new PMR.Cancel();
+        this.trade   = new PMR.Trade();
 
         this.transport = transport;
 
@@ -80,6 +82,12 @@ class MarketReporting {
         } catch (IOException e) {
             fatal(e);
         }
+    }
+
+    public void version() {
+        version.version = PMR.VERSION;
+
+        send(version);
     }
 
     public void order(long username, long orderNumber, byte side, long instrument, long quantity, long price) {

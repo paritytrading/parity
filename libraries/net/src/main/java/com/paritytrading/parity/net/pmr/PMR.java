@@ -13,9 +13,15 @@ public class PMR {
     private PMR() {
     }
 
-    static final byte MESSAGE_TYPE_ORDER  = 'O';
-    static final byte MESSAGE_TYPE_CANCEL = 'X';
-    static final byte MESSAGE_TYPE_TRADE  = 'T';
+    /**
+     * The protocol version.
+     */
+    public static final long VERSION = 1;
+
+    static final byte MESSAGE_TYPE_VERSION = 'V';
+    static final byte MESSAGE_TYPE_ORDER   = 'O';
+    static final byte MESSAGE_TYPE_CANCEL  = 'X';
+    static final byte MESSAGE_TYPE_TRADE   = 'T';
 
     public static final byte BUY  = 'B';
     public static final byte SELL = 'S';
@@ -24,6 +30,24 @@ public class PMR {
      * A message.
      */
     public interface Message extends ProtocolMessage {
+    }
+
+    /**
+     * A Version message.
+     */
+    public static class Version implements Message {
+        public long version;
+
+        @Override
+        public void get(ByteBuffer buffer) {
+            version = getUnsignedInt(buffer);
+        }
+
+        @Override
+        public void put(ByteBuffer buffer) {
+            buffer.put(MESSAGE_TYPE_VERSION);
+            putUnsignedInt(buffer, version);
+        }
     }
 
     /**
