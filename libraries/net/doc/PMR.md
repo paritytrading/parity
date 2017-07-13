@@ -27,6 +27,16 @@ which the trading session started.
 
 All messages are sent by the trading system to the client application.
 
+### Version
+
+A Version message indicates the protocol version. The trading system sends a
+Version message as the first message in a trading session.
+
+Name         | Length | Type   | Notes
+-------------|--------|--------|------
+Message Type |      1 | Text   | `V`
+Version      |      4 | Number | 1
+
 ### Order
 
 An Order message indicates that an order has been entered.
