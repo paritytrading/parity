@@ -85,16 +85,6 @@ Timestamp         |      8 | Number |
 Order Number      |      8 | Number |
 Canceled Quantity |      4 | Number |
 
-### Order Deleted
-
-An Order Deleted message indicates that an order has been canceled fully.
-
-Name         | Length | Type   | Notes
--------------|--------|--------|------
-Message Type |      1 | Text   | `D`
-Timestamp    |      8 | Number |
-Order Number |      8 | Number |
-
 ## History
 
 - **Version 1.** Initial version.
