@@ -21,8 +21,8 @@ the space character.
 Prices have decimal fixed-point representation with a six-digit integral part
 and a four-digit fractional part.
 
-Timestamps are represented as nanoseconds since the beginning of the current
-second.
+Timestamps are represented as nanoseconds since the midnight of the day on
+which the trading session started.
 
 ## Messages
 
@@ -38,17 +38,6 @@ Name         | Length | Type   | Notes
 Message Type |      1 | Text   | `V`
 Version      |      4 | Number | 1
 
-### Seconds
-
-A Seconds message indicates the number of seconds since the midnight of the
-day on which the trading session started. The trading system sends a Seconds
-message for every second on which it sends at least one other message.
-
-Name         | Length | Type   | Notes
--------------|--------|--------|------
-Message Type |      1 | Text   | `S`
-Second       |      4 | Number |
-
 ### Order Added
 
 An Order Added message indicates that an order has been added to the order
@@ -57,7 +46,7 @@ book. The order number is the trading system's identifier for the order.
 Name         | Length | Type   | Notes
 -------------|--------|--------|----------
 Message Type |      1 | Text   | `A`
-Timestamp    |      4 | Number |
+Timestamp    |      8 | Number |
 Order Number |      8 | Number |
 Side         |      1 | Text   | See below
 Instrument   |      8 | Text   |
@@ -79,7 +68,7 @@ or fully. The match number is the trading system's identifier for the trade.
 Name         | Length | Type   | Notes
 -------------|--------|--------|------
 Message Type |      1 | Text   | `E`
-Timestamp    |      4 | Number |
+Timestamp    |      8 | Number |
 Order Number |      8 | Number |
 Quantity     |      4 | Number |
 Match Number |      4 | Number |
@@ -92,7 +81,7 @@ or fully.
 Name              | Length | Type   | Notes
 ------------------|--------|--------|------
 Message Type      |      1 | Text   | `X`
-Timestamp         |      4 | Number |
+Timestamp         |      8 | Number |
 Order Number      |      8 | Number |
 Canceled Quantity |      4 | Number |
 
@@ -103,7 +92,7 @@ An Order Deleted message indicates that an order has been canceled fully.
 Name         | Length | Type   | Notes
 -------------|--------|--------|------
 Message Type |      1 | Text   | `D`
-Timestamp    |      4 | Number |
+Timestamp    |      8 | Number |
 Order Number |      8 | Number |
 
 ## History
