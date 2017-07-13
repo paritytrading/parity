@@ -18,14 +18,6 @@ public interface PMDListener {
     void version(Version message) throws IOException;
 
     /**
-     * Receive a Seconds message.
-     *
-     * @param message the message
-     * @throws IOException if an I/O error occurs
-     */
-    void seconds(Seconds message) throws IOException;
-
-    /**
      * Receive an Order Added message.
      *
      * @param message the message

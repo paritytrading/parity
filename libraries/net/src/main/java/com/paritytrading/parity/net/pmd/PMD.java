@@ -19,7 +19,6 @@ public class PMD {
     public static final byte SELL = 'S';
 
     static final byte MESSAGE_TYPE_VERSION        = 'V';
-    static final byte MESSAGE_TYPE_SECONDS        = 'S';
     static final byte MESSAGE_TYPE_ORDER_ADDED    = 'A';
     static final byte MESSAGE_TYPE_ORDER_EXECUTED = 'E';
     static final byte MESSAGE_TYPE_ORDER_CANCELED = 'X';
@@ -50,24 +49,6 @@ public class PMD {
     }
 
     /**
-     * A Seconds message.
-     */
-    public static class Seconds implements Message {
-        public long second;
-
-        @Override
-        public void get(ByteBuffer buffer) {
-            second = getUnsignedInt(buffer);
-        }
-
-        @Override
-        public void put(ByteBuffer buffer) {
-            buffer.put(MESSAGE_TYPE_SECONDS);
-            putUnsignedInt(buffer, second);
-        }
-    }
-
-    /**
      * An Order Added message.
      */
     public static class OrderAdded implements Message {
@@ -80,7 +61,7 @@ public class PMD {
 
         @Override
         public void get(ByteBuffer buffer) {
-            timestamp   = getUnsignedInt(buffer);
+            timestamp   = buffer.getLong();
             orderNumber = buffer.getLong();
             side        = buffer.get();
             instrument  = buffer.getLong();
@@ -91,7 +72,7 @@ public class PMD {
         @Override
         public void put(ByteBuffer buffer) {
             buffer.put(MESSAGE_TYPE_ORDER_ADDED);
-            putUnsignedInt(buffer, timestamp);
+            buffer.putLong(timestamp);
             buffer.putLong(orderNumber);
             buffer.put(side);
             buffer.putLong(instrument);
@@ -111,7 +92,7 @@ public class PMD {
 
         @Override
         public void get(ByteBuffer buffer) {
-            timestamp   = getUnsignedInt(buffer);
+            timestamp   = buffer.getLong();
             orderNumber = buffer.getLong();
             quantity    = getUnsignedInt(buffer);
             matchNumber = getUnsignedInt(buffer);
@@ -120,7 +101,7 @@ public class PMD {
         @Override
         public void put(ByteBuffer buffer) {
             buffer.put(MESSAGE_TYPE_ORDER_EXECUTED);
-            putUnsignedInt(buffer, timestamp);
+            buffer.putLong(timestamp);
             buffer.putLong(orderNumber);
             putUnsignedInt(buffer, quantity);
             putUnsignedInt(buffer, matchNumber);
@@ -137,7 +118,7 @@ public class PMD {
 
         @Override
         public void get(ByteBuffer buffer) {
-            timestamp        = getUnsignedInt(buffer);
+            timestamp        = buffer.getLong();
             orderNumber      = buffer.getLong();
             canceledQuantity = getUnsignedInt(buffer);
         }
@@ -145,7 +126,7 @@ public class PMD {
         @Override
         public void put(ByteBuffer buffer) {
             buffer.put(MESSAGE_TYPE_ORDER_CANCELED);
-            putUnsignedInt(buffer, timestamp);
+            buffer.putLong(timestamp);
             buffer.putLong(orderNumber);
             putUnsignedInt(buffer, canceledQuantity);
         }
@@ -160,14 +141,14 @@ public class PMD {
 
         @Override
         public void get(ByteBuffer buffer) {
-            timestamp   = getUnsignedInt(buffer);
+            timestamp   = buffer.getLong();
             orderNumber = buffer.getLong();
         }
 
         @Override
         public void put(ByteBuffer buffer) {
             buffer.put(MESSAGE_TYPE_ORDER_DELETED);
-            putUnsignedInt(buffer, timestamp);
+            buffer.putLong(timestamp);
             buffer.putLong(orderNumber);
         }
     }

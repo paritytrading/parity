@@ -25,11 +25,6 @@ class MarketDataProcessor implements PMDListener {
     }
 
     @Override
-    public void seconds(PMD.Seconds message) {
-        listener.seconds(message.second);
-    }
-
-    @Override
     public void orderAdded(PMD.OrderAdded message) {
         listener.timestamp(message.timestamp);
 
