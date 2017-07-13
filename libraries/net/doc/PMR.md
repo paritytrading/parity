@@ -51,7 +51,7 @@ Side | Description
 
 ### Cancel
 
-A Cancel message indicates that an order has been canceled in part of fully.
+A Cancel message indicates that an order has been canceled in part or fully.
 
 Name              | Length | Type   | Notes
 ------------------|--------|--------|------
