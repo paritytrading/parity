@@ -164,7 +164,7 @@ class MatchingEngine {
             } else {
                 marketData.orderDeleted(orderNumber);
 
-                if (remainingQuantity == 0 && cancelReason == CancelReason.REQUEST)
+                if (cancelReason == CancelReason.REQUEST)
                     release(handling);
             }
 
