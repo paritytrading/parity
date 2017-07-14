@@ -45,13 +45,6 @@ class MarketDataProcessor implements PMDListener {
         market.cancel(message.orderNumber, message.canceledQuantity);
     }
 
-    @Override
-    public void orderDeleted(PMD.OrderDeleted message) {
-        listener.timestamp(message.timestamp);
-
-        market.delete(message.orderNumber);
-    }
-
     private Side side(byte side) {
         return side == PMD.BUY ? Side.BUY : Side.SELL;
     }

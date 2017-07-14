@@ -22,7 +22,6 @@ public class PMD {
     static final byte MESSAGE_TYPE_ORDER_ADDED    = 'A';
     static final byte MESSAGE_TYPE_ORDER_EXECUTED = 'E';
     static final byte MESSAGE_TYPE_ORDER_CANCELED = 'X';
-    static final byte MESSAGE_TYPE_ORDER_DELETED  = 'D';
 
     /**
      * A message.
@@ -129,27 +128,6 @@ public class PMD {
             buffer.putLong(timestamp);
             buffer.putLong(orderNumber);
             putUnsignedInt(buffer, canceledQuantity);
-        }
-    }
-
-    /**
-     * An Order Deleted message.
-     */
-    public static class OrderDeleted implements Message {
-        public long timestamp;
-        public long orderNumber;
-
-        @Override
-        public void get(ByteBuffer buffer) {
-            timestamp   = buffer.getLong();
-            orderNumber = buffer.getLong();
-        }
-
-        @Override
-        public void put(ByteBuffer buffer) {
-            buffer.put(MESSAGE_TYPE_ORDER_DELETED);
-            buffer.putLong(timestamp);
-            buffer.putLong(orderNumber);
         }
     }
 

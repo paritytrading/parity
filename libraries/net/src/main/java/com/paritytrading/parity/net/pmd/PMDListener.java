@@ -41,12 +41,4 @@ public interface PMDListener {
      */
     void orderCanceled(OrderCanceled message) throws IOException;
 
-    /**
-     * Receive an Order Deleted message.
-     *
-     * @param message the message
-     * @throws IOException if an I/O error occurs
-     */
-    void orderDeleted(OrderDeleted message) throws IOException;
-
 }

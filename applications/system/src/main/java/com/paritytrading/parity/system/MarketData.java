@@ -21,7 +21,6 @@ class MarketData {
     private PMD.OrderAdded    orderAdded;
     private PMD.OrderExecuted orderExecuted;
     private PMD.OrderCanceled orderCanceled;
-    private PMD.OrderDeleted  orderDeleted;
 
     private MoldUDP64Server transport;
 
@@ -38,7 +37,6 @@ class MarketData {
         this.orderAdded    = new PMD.OrderAdded();
         this.orderExecuted = new PMD.OrderExecuted();
         this.orderCanceled = new PMD.OrderCanceled();
-        this.orderDeleted  = new PMD.OrderDeleted();
 
         this.transport = transport;
 
@@ -118,13 +116,6 @@ class MarketData {
         orderCanceled.canceledQuantity = canceledQuantity;
 
         send(orderCanceled);
-    }
-
-    public void orderDeleted(long orderNumber) {
-        orderDeleted.timestamp   = timestamp();
-        orderDeleted.orderNumber = orderNumber;
-
-        send(orderDeleted);
     }
 
     private long timestamp() {
