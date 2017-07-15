@@ -71,15 +71,15 @@ Message Type |      1 | Text   | `A`
 Timestamp    |      8 | Number |
 Order Number |      8 | Number |
 
-### Cancel
+### Order Canceled
 
-A Cancel message indicates that an order has been canceled in part or fully.
+An Order Canceled message indicates that an order has been canceled in part or
+fully.
 
 Name              | Length | Type   | Notes
 ------------------|--------|--------|------
 Message Type      |      1 | Text   | `X`
 Timestamp         |      8 | Number |
-Username          |      8 | Text   |
 Order Number      |      8 | Number |
 Canceled Quantity |      4 | Number |
 
