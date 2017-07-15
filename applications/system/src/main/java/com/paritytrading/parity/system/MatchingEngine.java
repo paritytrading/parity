@@ -131,17 +131,7 @@ class MatchingEngine {
 
             marketData.orderExecuted(restingOrderNumber, executedQuantity, matchNumber);
 
-            long restingUsername  = resting.getSession().getUsername();
-            long incomingUsername = handling.getSession().getUsername();
-
-            long buyer  = incomingSide == Side.BUY  ? incomingUsername : restingUsername;
-            long seller = incomingSide == Side.SELL ? incomingUsername : restingUsername;
-
-            long buyOrderNumber  = incomingSide == Side.BUY  ? incomingOrderNumber : restingOrderNumber;
-            long sellOrderNumber = incomingSide == Side.SELL ? incomingOrderNumber : restingOrderNumber;
-
-            marketReporting.trade(matchNumber, instrument, executedQuantity, price, buyer, buyOrderNumber,
-                    seller, sellOrderNumber);
+            marketReporting.trade(restingOrderNumber, incomingOrderNumber, executedQuantity, matchNumber);
 
             if (remainingQuantity == 0)
                 release(resting);

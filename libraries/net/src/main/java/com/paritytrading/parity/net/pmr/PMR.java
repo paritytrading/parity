@@ -137,40 +137,28 @@ public class PMR {
      */
     public static class Trade implements Message {
         public long timestamp;
-        public long matchNumber;
-        public long instrument;
+        public long restingOrderNumber;
+        public long incomingOrderNumber;
         public long quantity;
-        public long price;
-        public long buyer;
-        public long buyOrderNumber;
-        public long seller;
-        public long sellOrderNumber;
+        public long matchNumber;
 
         @Override
         public void get(ByteBuffer buffer) {
-            timestamp       = buffer.getLong();
-            matchNumber     = getUnsignedInt(buffer);
-            instrument      = buffer.getLong();
-            quantity        = getUnsignedInt(buffer);
-            price           = getUnsignedInt(buffer);
-            buyer           = buffer.getLong();
-            buyOrderNumber  = buffer.getLong();
-            seller          = buffer.getLong();
-            sellOrderNumber = buffer.getLong();
+            timestamp           = buffer.getLong();
+            restingOrderNumber  = buffer.getLong();
+            incomingOrderNumber = buffer.getLong();
+            quantity            = getUnsignedInt(buffer);
+            matchNumber         = getUnsignedInt(buffer);
         }
 
         @Override
         public void put(ByteBuffer buffer) {
             buffer.put(MESSAGE_TYPE_TRADE);
             buffer.putLong(timestamp);
-            putUnsignedInt(buffer, matchNumber);
-            buffer.putLong(instrument);
+            buffer.putLong(restingOrderNumber);
+            buffer.putLong(incomingOrderNumber);
             putUnsignedInt(buffer, quantity);
-            putUnsignedInt(buffer, price);
-            buffer.putLong(buyer);
-            buffer.putLong(buyOrderNumber);
-            buffer.putLong(seller);
-            buffer.putLong(sellOrderNumber);
+            putUnsignedInt(buffer, matchNumber);
         }
     }
 

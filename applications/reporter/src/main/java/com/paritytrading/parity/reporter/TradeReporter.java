@@ -42,7 +42,7 @@ class TradeReporter {
     }
 
     private static void main(Config config, boolean tsv) throws IOException {
-        MessageListener listener = new PMRParser(tsv ? new TSVFormat() : new DisplayFormat());
+        MessageListener listener = new PMRParser(new TradeProcessor(tsv ? new TSVFormat() : new DisplayFormat()));
 
         if (config.hasPath("trade-report.multicast-interface")) {
             NetworkInterface multicastInterface = Configs.getNetworkInterface(config, "trade-report.multicast-interface");

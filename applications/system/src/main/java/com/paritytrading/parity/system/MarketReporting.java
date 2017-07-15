@@ -119,17 +119,13 @@ class MarketReporting {
         send(orderCanceled);
     }
 
-    public void trade(long matchNumber, long instrument, long quantity, long price, long buyer,
-            long buyOrderNumber, long seller, long sellOrderNumber) {
-        trade.timestamp       = timestamp();
-        trade.matchNumber     = matchNumber;
-        trade.instrument      = instrument;
-        trade.quantity        = quantity;
-        trade.price           = price;
-        trade.buyer           = buyer;
-        trade.buyOrderNumber  = buyOrderNumber;
-        trade.seller          = seller;
-        trade.sellOrderNumber = sellOrderNumber;
+    public void trade(long restingOrderNumber, long incomingOrderNumber,
+            long quantity, long matchNumber) {
+        trade.timestamp           = timestamp();
+        trade.restingOrderNumber  = restingOrderNumber;
+        trade.incomingOrderNumber = incomingOrderNumber;
+        trade.quantity            = quantity;
+        trade.matchNumber         = matchNumber;
 
         send(trade);
     }
