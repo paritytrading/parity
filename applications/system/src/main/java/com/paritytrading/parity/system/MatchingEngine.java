@@ -151,6 +151,8 @@ class MatchingEngine {
         public void add(long orderNumber, Side side, long price, long size) {
             marketData.orderAdded(orderNumber, side(side), instrument, size, price);
 
+            marketReporting.orderAdded(orderNumber);
+
             track(handling);
         }
 

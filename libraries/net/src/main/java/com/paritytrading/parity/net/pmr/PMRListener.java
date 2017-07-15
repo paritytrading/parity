@@ -26,6 +26,14 @@ public interface PMRListener {
     void orderEntered(OrderEntered message) throws IOException;
 
     /**
+     * Receive an Order Added message.
+     *
+     * @param message the message
+     * @throws IOException if an I/O error occurs
+     */
+    void orderAdded(OrderAdded message) throws IOException;
+
+    /**
      * Receive a Cancel message.
      *
      * @param message the message

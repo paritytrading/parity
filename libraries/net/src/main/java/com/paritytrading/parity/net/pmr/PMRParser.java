@@ -13,6 +13,7 @@ public class PMRParser implements MessageListener {
 
     private Version      version;
     private OrderEntered orderEntered;
+    private OrderAdded   orderAdded;
     private Cancel       cancel;
     private Trade        trade;
 
@@ -26,6 +27,7 @@ public class PMRParser implements MessageListener {
     public PMRParser(PMRListener listener) {
         this.version      = new Version();
         this.orderEntered = new OrderEntered();
+        this.orderAdded   = new OrderAdded();
         this.cancel       = new Cancel();
         this.trade        = new Trade();
 
@@ -44,6 +46,10 @@ public class PMRParser implements MessageListener {
         case MESSAGE_TYPE_ORDER_ENTERED:
             orderEntered.get(buffer);
             listener.orderEntered(orderEntered);
+            break;
+        case MESSAGE_TYPE_ORDER_ADDED:
+            orderAdded.get(buffer);
+            listener.orderAdded(orderAdded);
             break;
         case MESSAGE_TYPE_CANCEL:
             cancel.get(buffer);

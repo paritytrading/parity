@@ -20,6 +20,7 @@ public class PMR {
 
     static final byte MESSAGE_TYPE_VERSION       = 'V';
     static final byte MESSAGE_TYPE_ORDER_ENTERED = 'E';
+    static final byte MESSAGE_TYPE_ORDER_ADDED   = 'A';
     static final byte MESSAGE_TYPE_CANCEL        = 'X';
     static final byte MESSAGE_TYPE_TRADE         = 'T';
 
@@ -83,6 +84,27 @@ public class PMR {
             buffer.putLong(instrument);
             putUnsignedInt(buffer, quantity);
             putUnsignedInt(buffer, price);
+        }
+    }
+
+    /**
+     * An Order Added message.
+     */
+    public static class OrderAdded implements Message {
+        public long timestamp;
+        public long orderNumber;
+
+        @Override
+        public void get(ByteBuffer buffer) {
+            timestamp   = buffer.getLong();
+            orderNumber = buffer.getLong();
+        }
+
+        @Override
+        public void put(ByteBuffer buffer) {
+            buffer.put(MESSAGE_TYPE_ORDER_ADDED);
+            buffer.putLong(timestamp);
+            buffer.putLong(orderNumber);
         }
     }
 

@@ -19,6 +19,7 @@ class MarketReporting {
 
     private PMR.Version      version;
     private PMR.OrderEntered orderEntered;
+    private PMR.OrderAdded   orderAdded;
     private PMR.Cancel       cancel;
     private PMR.Trade        trade;
 
@@ -35,6 +36,7 @@ class MarketReporting {
     private MarketReporting(MoldUDP64Server transport, MoldUDP64RequestServer requestTransport) {
         this.version      = new PMR.Version();
         this.orderEntered = new PMR.OrderEntered();
+        this.orderAdded   = new PMR.OrderAdded();
         this.cancel       = new PMR.Cancel();
         this.trade        = new PMR.Trade();
 
@@ -100,6 +102,13 @@ class MarketReporting {
         orderEntered.price       = price;
 
         send(orderEntered);
+    }
+
+    public void orderAdded(long orderNumber) {
+        orderAdded.timestamp   = timestamp();
+        orderAdded.orderNumber = orderNumber;
+
+        send(orderAdded);
     }
 
     public void cancel(long username, long orderNumber, long canceledQuantity) {
