@@ -85,22 +85,17 @@ Canceled Quantity |      4 | Number |
 
 ### Trade
 
-A Trade message indicates that a trade has taken place. The match number and
-the order numbers are the trading system's identifiers for the trade and the
-executed orders, respectively.
+A Trade message indicates that a trade has taken place. The match number is
+the trading system's identifier for the trade.
 
-Name              | Length | Type   | Notes
-------------------|--------|--------|------
-Message Type      |      1 | Text   | `T`
-Timestamp         |      8 | Number |
-Match Number      |      4 | Number |
-Instrument        |      8 | Text   |
-Quantity          |      4 | Number |
-Price             |      4 | Number |
-Buyer             |      8 | Text   |
-Buy Order Number  |      8 | Number |
-Seller            |      8 | Text   |
-Sell Order Number |      8 | Number |
+Name                  | Length | Type   | Notes
+----------------------|--------|--------|------
+Message Type          |      1 | Text   | `T`
+Timestamp             |      8 | Number |
+Resting Order Number  |      8 | Number |
+Incoming Order Number |      8 | Number |
+Quantity              |      4 | Number |
+Match Number          |      4 | Number |
 
 ## History
 
