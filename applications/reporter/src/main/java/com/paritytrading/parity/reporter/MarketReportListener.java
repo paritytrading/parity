@@ -27,7 +27,7 @@ abstract class MarketReportListener implements PMRListener {
     }
 
     @Override
-    public void cancel(PMR.Cancel message) {
+    public void orderCanceled(PMR.OrderCanceled message) {
     }
 
     protected void printf(String format, Object... args) {

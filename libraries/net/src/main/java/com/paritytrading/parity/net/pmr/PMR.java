@@ -18,11 +18,11 @@ public class PMR {
      */
     public static final long VERSION = 1;
 
-    static final byte MESSAGE_TYPE_VERSION       = 'V';
-    static final byte MESSAGE_TYPE_ORDER_ENTERED = 'E';
-    static final byte MESSAGE_TYPE_ORDER_ADDED   = 'A';
-    static final byte MESSAGE_TYPE_CANCEL        = 'X';
-    static final byte MESSAGE_TYPE_TRADE         = 'T';
+    static final byte MESSAGE_TYPE_VERSION        = 'V';
+    static final byte MESSAGE_TYPE_ORDER_ENTERED  = 'E';
+    static final byte MESSAGE_TYPE_ORDER_ADDED    = 'A';
+    static final byte MESSAGE_TYPE_ORDER_CANCELED = 'X';
+    static final byte MESSAGE_TYPE_TRADE          = 'T';
 
     public static final byte BUY  = 'B';
     public static final byte SELL = 'S';
@@ -109,27 +109,24 @@ public class PMR {
     }
 
     /**
-     * A Cancel message.
+     * An Order Canceled message.
      */
-    public static class Cancel implements Message {
+    public static class OrderCanceled implements Message {
         public long timestamp;
-        public long username;
         public long orderNumber;
         public long canceledQuantity;
 
         @Override
         public void get(ByteBuffer buffer) {
             timestamp        = buffer.getLong();
-            username         = buffer.getLong();
             orderNumber      = buffer.getLong();
             canceledQuantity = getUnsignedInt(buffer);
         }
 
         @Override
         public void put(ByteBuffer buffer) {
-            buffer.put(MESSAGE_TYPE_CANCEL);
+            buffer.put(MESSAGE_TYPE_ORDER_CANCELED);
             buffer.putLong(timestamp);
-            buffer.putLong(username);
             buffer.putLong(orderNumber);
             putUnsignedInt(buffer, canceledQuantity);
         }

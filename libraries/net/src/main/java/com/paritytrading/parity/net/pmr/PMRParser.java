@@ -11,11 +11,11 @@ import java.nio.ByteBuffer;
  */
 public class PMRParser implements MessageListener {
 
-    private Version      version;
-    private OrderEntered orderEntered;
-    private OrderAdded   orderAdded;
-    private Cancel       cancel;
-    private Trade        trade;
+    private Version       version;
+    private OrderEntered  orderEntered;
+    private OrderAdded    orderAdded;
+    private OrderCanceled orderCanceled;
+    private Trade         trade;
 
     private PMRListener listener;
 
@@ -25,11 +25,11 @@ public class PMRParser implements MessageListener {
      * @param listener the message listener
      */
     public PMRParser(PMRListener listener) {
-        this.version      = new Version();
-        this.orderEntered = new OrderEntered();
-        this.orderAdded   = new OrderAdded();
-        this.cancel       = new Cancel();
-        this.trade        = new Trade();
+        this.version       = new Version();
+        this.orderEntered  = new OrderEntered();
+        this.orderAdded    = new OrderAdded();
+        this.orderCanceled = new OrderCanceled();
+        this.trade         = new Trade();
 
         this.listener = listener;
     }
@@ -51,9 +51,9 @@ public class PMRParser implements MessageListener {
             orderAdded.get(buffer);
             listener.orderAdded(orderAdded);
             break;
-        case MESSAGE_TYPE_CANCEL:
-            cancel.get(buffer);
-            listener.cancel(cancel);
+        case MESSAGE_TYPE_ORDER_CANCELED:
+            orderCanceled.get(buffer);
+            listener.orderCanceled(orderCanceled);
             break;
         case MESSAGE_TYPE_TRADE:
             trade.get(buffer);

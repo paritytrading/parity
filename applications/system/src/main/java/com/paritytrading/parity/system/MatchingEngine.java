@@ -166,7 +166,7 @@ class MatchingEngine {
             if (remainingQuantity == 0 && cancelReason == CancelReason.REQUEST)
                 release(handling);
 
-            marketReporting.cancel(handling.getSession().getUsername(), orderNumber, canceledQuantity);
+            marketReporting.orderCanceled(orderNumber, canceledQuantity);
         }
 
     }
