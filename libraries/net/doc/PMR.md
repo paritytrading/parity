@@ -60,6 +60,17 @@ Side | Description
 `B`  | Buy
 `S`  | Sell
 
+### Order Added
+
+An Order Added message indicates that an order has been added to the order
+book.
+
+Name         | Length | Type   | Notes
+-------------|--------|--------|------
+Message Type |      1 | Text   | `A`
+Timestamp    |      8 | Number |
+Order Number |      8 | Number |
+
 ### Cancel
 
 A Cancel message indicates that an order has been canceled in part or fully.
