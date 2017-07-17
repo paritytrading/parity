@@ -12,11 +12,9 @@ import java.nio.ByteBuffer;
 public class PMDParser implements MessageListener {
 
     private Version       version;
-    private Seconds       seconds;
     private OrderAdded    orderAdded;
     private OrderExecuted orderExecuted;
     private OrderCanceled orderCanceled;
-    private OrderDeleted  orderDeleted;
 
     private PMDListener listener;
 
@@ -27,11 +25,9 @@ public class PMDParser implements MessageListener {
      */
     public PMDParser(PMDListener listener) {
         this.version       = new Version();
-        this.seconds       = new Seconds();
         this.orderAdded    = new OrderAdded();
         this.orderExecuted = new OrderExecuted();
         this.orderCanceled = new OrderCanceled();
-        this.orderDeleted  = new OrderDeleted();
 
         this.listener = listener;
     }
@@ -45,10 +41,6 @@ public class PMDParser implements MessageListener {
             version.get(buffer);
             listener.version(version);
             break;
-        case MESSAGE_TYPE_SECONDS:
-            seconds.get(buffer);
-            listener.seconds(seconds);
-            break;
         case MESSAGE_TYPE_ORDER_ADDED:
             orderAdded.get(buffer);
             listener.orderAdded(orderAdded);
@@ -60,10 +52,6 @@ public class PMDParser implements MessageListener {
         case MESSAGE_TYPE_ORDER_CANCELED:
             orderCanceled.get(buffer);
             listener.orderCanceled(orderCanceled);
-            break;
-        case MESSAGE_TYPE_ORDER_DELETED:
-            orderDeleted.get(buffer);
-            listener.orderDeleted(orderDeleted);
             break;
         default:
             throw new PMDException("Unknown message type: " + (char)messageType);

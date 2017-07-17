@@ -25,11 +25,6 @@ class MarketDataProcessor implements PMDListener {
     }
 
     @Override
-    public void seconds(PMD.Seconds message) {
-        listener.seconds(message.second);
-    }
-
-    @Override
     public void orderAdded(PMD.OrderAdded message) {
         listener.timestamp(message.timestamp);
 
@@ -48,13 +43,6 @@ class MarketDataProcessor implements PMDListener {
         listener.timestamp(message.timestamp);
 
         market.cancel(message.orderNumber, message.canceledQuantity);
-    }
-
-    @Override
-    public void orderDeleted(PMD.OrderDeleted message) {
-        listener.timestamp(message.timestamp);
-
-        market.delete(message.orderNumber);
     }
 
     private Side side(byte side) {

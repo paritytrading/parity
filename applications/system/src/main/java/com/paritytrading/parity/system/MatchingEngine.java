@@ -159,14 +159,10 @@ class MatchingEngine {
             if (cancelReason == CancelReason.REQUEST)
                 handling.getSession().orderCanceled(canceledQuantity, POE.ORDER_CANCEL_REASON_REQUEST, handling);
 
-            if (remainingQuantity > 0) {
-                marketData.orderCanceled(orderNumber, canceledQuantity);
-            } else {
-                marketData.orderDeleted(orderNumber);
+            marketData.orderCanceled(orderNumber, canceledQuantity);
 
-                if (cancelReason == CancelReason.REQUEST)
-                    release(handling);
-            }
+            if (remainingQuantity == 0 && cancelReason == CancelReason.REQUEST)
+                release(handling);
 
             marketReporting.cancel(handling.getSession().getUsername(), orderNumber, canceledQuantity);
         }
