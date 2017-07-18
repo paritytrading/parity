@@ -129,7 +129,7 @@ class MatchingEngine {
             handling.getSession().orderExecuted(price, executedQuantity, POE.LIQUIDITY_FLAG_REMOVED_LIQUIDITY,
                     matchNumber, handling);
 
-            marketData.orderExecuted(resting.getOrderNumber(), executedQuantity, matchNumber);
+            marketData.orderExecuted(restingOrderNumber, executedQuantity, matchNumber);
 
             long restingUsername  = resting.getSession().getUsername();
             long incomingUsername = handling.getSession().getUsername();
