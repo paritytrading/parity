@@ -50,8 +50,8 @@ Timestamp    |      8 | Number |
 Order Number |      8 | Number |
 Side         |      1 | Text   | See below
 Instrument   |      8 | Text   |
-Quantity     |      4 | Number |
-Price        |      4 | Number |
+Quantity     |      8 | Number |
+Price        |      8 | Number |
 
 The sides are enumerated below.
 
@@ -70,7 +70,7 @@ Name         | Length | Type   | Notes
 Message Type |      1 | Text   | `E`
 Timestamp    |      8 | Number |
 Order Number |      8 | Number |
-Quantity     |      4 | Number |
+Quantity     |      8 | Number |
 Match Number |      4 | Number |
 
 ### Order Canceled
@@ -83,7 +83,7 @@ Name              | Length | Type   | Notes
 Message Type      |      1 | Text   | `X`
 Timestamp         |      8 | Number |
 Order Number      |      8 | Number |
-Canceled Quantity |      4 | Number |
+Canceled Quantity |      8 | Number |
 
 ## History
 

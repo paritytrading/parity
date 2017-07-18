@@ -64,8 +64,8 @@ public class PMD {
             orderNumber = buffer.getLong();
             side        = buffer.get();
             instrument  = buffer.getLong();
-            quantity    = getUnsignedInt(buffer);
-            price       = getUnsignedInt(buffer);
+            quantity    = buffer.getLong();
+            price       = buffer.getLong();
         }
 
         @Override
@@ -75,8 +75,8 @@ public class PMD {
             buffer.putLong(orderNumber);
             buffer.put(side);
             buffer.putLong(instrument);
-            putUnsignedInt(buffer, quantity);
-            putUnsignedInt(buffer, price);
+            buffer.putLong(quantity);
+            buffer.putLong(price);
         }
     }
 
@@ -93,7 +93,7 @@ public class PMD {
         public void get(ByteBuffer buffer) {
             timestamp   = buffer.getLong();
             orderNumber = buffer.getLong();
-            quantity    = getUnsignedInt(buffer);
+            quantity    = buffer.getLong();
             matchNumber = getUnsignedInt(buffer);
         }
 
@@ -102,7 +102,7 @@ public class PMD {
             buffer.put(MESSAGE_TYPE_ORDER_EXECUTED);
             buffer.putLong(timestamp);
             buffer.putLong(orderNumber);
-            putUnsignedInt(buffer, quantity);
+            buffer.putLong(quantity);
             putUnsignedInt(buffer, matchNumber);
         }
     }
@@ -119,7 +119,7 @@ public class PMD {
         public void get(ByteBuffer buffer) {
             timestamp        = buffer.getLong();
             orderNumber      = buffer.getLong();
-            canceledQuantity = getUnsignedInt(buffer);
+            canceledQuantity = buffer.getLong();
         }
 
         @Override
@@ -127,7 +127,7 @@ public class PMD {
             buffer.put(MESSAGE_TYPE_ORDER_CANCELED);
             buffer.putLong(timestamp);
             buffer.putLong(orderNumber);
-            putUnsignedInt(buffer, canceledQuantity);
+            buffer.putLong(canceledQuantity);
         }
     }
 
