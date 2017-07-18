@@ -58,7 +58,7 @@ class MatchingEngine {
             return;
         }
 
-        if (message.price % MIN_PRICE_VARIATION != 0) {
+        if (message.price % MIN_PRICE_VARIATION != 0 || message.price < 0) {
             session.orderRejected(message, POE.ORDER_REJECT_REASON_INVALID_PRICE);
             return;
         }
