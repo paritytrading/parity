@@ -63,7 +63,7 @@ class MatchingEngine {
             return;
         }
 
-        if (message.quantity == 0) {
+        if (message.quantity <= 0) {
             session.orderRejected(message, POE.ORDER_REJECT_REASON_INVALID_QUANTITY);
             return;
         }
