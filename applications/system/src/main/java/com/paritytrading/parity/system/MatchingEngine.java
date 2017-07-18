@@ -153,10 +153,10 @@ class MatchingEngine {
 
             marketData.orderCanceled(orderNumber, canceledQuantity);
 
+            marketReporting.orderCanceled(orderNumber, canceledQuantity);
+
             if (remainingQuantity == 0 && cancelReason == CancelReason.REQUEST)
                 release(handling);
-
-            marketReporting.orderCanceled(orderNumber, canceledQuantity);
         }
 
     }
