@@ -42,6 +42,7 @@ class TradingSystem {
         OrderEntry orderEntry = orderEntry(config, engine);
 
         marketData.version();
+        marketReporting.version();
 
         new Events(marketData, marketReporting, orderEntry).run();
     }

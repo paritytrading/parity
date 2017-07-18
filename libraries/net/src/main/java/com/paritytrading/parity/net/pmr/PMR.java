@@ -13,9 +13,16 @@ public class PMR {
     private PMR() {
     }
 
-    static final byte MESSAGE_TYPE_ORDER  = 'O';
-    static final byte MESSAGE_TYPE_CANCEL = 'X';
-    static final byte MESSAGE_TYPE_TRADE  = 'T';
+    /**
+     * The protocol version.
+     */
+    public static final long VERSION = 1;
+
+    static final byte MESSAGE_TYPE_VERSION        = 'V';
+    static final byte MESSAGE_TYPE_ORDER_ENTERED  = 'E';
+    static final byte MESSAGE_TYPE_ORDER_ADDED    = 'A';
+    static final byte MESSAGE_TYPE_ORDER_CANCELED = 'X';
+    static final byte MESSAGE_TYPE_TRADE          = 'T';
 
     public static final byte BUY  = 'B';
     public static final byte SELL = 'S';
@@ -27,9 +34,27 @@ public class PMR {
     }
 
     /**
-     * An Order message.
+     * A Version message.
      */
-    public static class Order implements Message {
+    public static class Version implements Message {
+        public long version;
+
+        @Override
+        public void get(ByteBuffer buffer) {
+            version = getUnsignedInt(buffer);
+        }
+
+        @Override
+        public void put(ByteBuffer buffer) {
+            buffer.put(MESSAGE_TYPE_VERSION);
+            putUnsignedInt(buffer, version);
+        }
+    }
+
+    /**
+     * An Order Entered message.
+     */
+    public static class OrderEntered implements Message {
         public long timestamp;
         public long username;
         public long orderNumber;
@@ -51,7 +76,7 @@ public class PMR {
 
         @Override
         public void put(ByteBuffer buffer) {
-            buffer.put(MESSAGE_TYPE_ORDER);
+            buffer.put(MESSAGE_TYPE_ORDER_ENTERED);
             buffer.putLong(timestamp);
             buffer.putLong(username);
             buffer.putLong(orderNumber);
@@ -63,27 +88,45 @@ public class PMR {
     }
 
     /**
-     * A Cancel message.
+     * An Order Added message.
      */
-    public static class Cancel implements Message {
+    public static class OrderAdded implements Message {
         public long timestamp;
-        public long username;
+        public long orderNumber;
+
+        @Override
+        public void get(ByteBuffer buffer) {
+            timestamp   = buffer.getLong();
+            orderNumber = buffer.getLong();
+        }
+
+        @Override
+        public void put(ByteBuffer buffer) {
+            buffer.put(MESSAGE_TYPE_ORDER_ADDED);
+            buffer.putLong(timestamp);
+            buffer.putLong(orderNumber);
+        }
+    }
+
+    /**
+     * An Order Canceled message.
+     */
+    public static class OrderCanceled implements Message {
+        public long timestamp;
         public long orderNumber;
         public long canceledQuantity;
 
         @Override
         public void get(ByteBuffer buffer) {
             timestamp        = buffer.getLong();
-            username         = buffer.getLong();
             orderNumber      = buffer.getLong();
             canceledQuantity = getUnsignedInt(buffer);
         }
 
         @Override
         public void put(ByteBuffer buffer) {
-            buffer.put(MESSAGE_TYPE_CANCEL);
+            buffer.put(MESSAGE_TYPE_ORDER_CANCELED);
             buffer.putLong(timestamp);
-            buffer.putLong(username);
             buffer.putLong(orderNumber);
             putUnsignedInt(buffer, canceledQuantity);
         }
@@ -94,40 +137,28 @@ public class PMR {
      */
     public static class Trade implements Message {
         public long timestamp;
-        public long matchNumber;
-        public long instrument;
+        public long restingOrderNumber;
+        public long incomingOrderNumber;
         public long quantity;
-        public long price;
-        public long buyer;
-        public long buyOrderNumber;
-        public long seller;
-        public long sellOrderNumber;
+        public long matchNumber;
 
         @Override
         public void get(ByteBuffer buffer) {
-            timestamp       = buffer.getLong();
-            matchNumber     = getUnsignedInt(buffer);
-            instrument      = buffer.getLong();
-            quantity        = getUnsignedInt(buffer);
-            price           = getUnsignedInt(buffer);
-            buyer           = buffer.getLong();
-            buyOrderNumber  = buffer.getLong();
-            seller          = buffer.getLong();
-            sellOrderNumber = buffer.getLong();
+            timestamp           = buffer.getLong();
+            restingOrderNumber  = buffer.getLong();
+            incomingOrderNumber = buffer.getLong();
+            quantity            = getUnsignedInt(buffer);
+            matchNumber         = getUnsignedInt(buffer);
         }
 
         @Override
         public void put(ByteBuffer buffer) {
             buffer.put(MESSAGE_TYPE_TRADE);
             buffer.putLong(timestamp);
-            putUnsignedInt(buffer, matchNumber);
-            buffer.putLong(instrument);
+            buffer.putLong(restingOrderNumber);
+            buffer.putLong(incomingOrderNumber);
             putUnsignedInt(buffer, quantity);
-            putUnsignedInt(buffer, price);
-            buffer.putLong(buyer);
-            buffer.putLong(buyOrderNumber);
-            buffer.putLong(seller);
-            buffer.putLong(sellOrderNumber);
+            putUnsignedInt(buffer, matchNumber);
         }
     }
 

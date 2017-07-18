@@ -76,7 +76,7 @@ class MatchingEngine {
 
         session.orderAccepted(message, handling);
 
-        marketReporting.order(session.getUsername(), orderNumber, message.side,
+        marketReporting.orderEntered(session.getUsername(), orderNumber, message.side,
                 instrument, message.quantity, message.price);
 
         book.enter(orderNumber, side(message.side), message.price, message.quantity);
@@ -131,17 +131,7 @@ class MatchingEngine {
 
             marketData.orderExecuted(restingOrderNumber, executedQuantity, matchNumber);
 
-            long restingUsername  = resting.getSession().getUsername();
-            long incomingUsername = handling.getSession().getUsername();
-
-            long buyer  = incomingSide == Side.BUY  ? incomingUsername : restingUsername;
-            long seller = incomingSide == Side.SELL ? incomingUsername : restingUsername;
-
-            long buyOrderNumber  = incomingSide == Side.BUY  ? incomingOrderNumber : restingOrderNumber;
-            long sellOrderNumber = incomingSide == Side.SELL ? incomingOrderNumber : restingOrderNumber;
-
-            marketReporting.trade(matchNumber, instrument, executedQuantity, price, buyer, buyOrderNumber,
-                    seller, sellOrderNumber);
+            marketReporting.trade(restingOrderNumber, incomingOrderNumber, executedQuantity, matchNumber);
 
             if (remainingQuantity == 0)
                 release(resting);
@@ -150,6 +140,8 @@ class MatchingEngine {
         @Override
         public void add(long orderNumber, Side side, long price, long size) {
             marketData.orderAdded(orderNumber, side(side), instrument, size, price);
+
+            marketReporting.orderAdded(orderNumber);
 
             track(handling);
         }
@@ -164,7 +156,7 @@ class MatchingEngine {
             if (remainingQuantity == 0 && cancelReason == CancelReason.REQUEST)
                 release(handling);
 
-            marketReporting.cancel(handling.getSession().getUsername(), orderNumber, canceledQuantity);
+            marketReporting.orderCanceled(orderNumber, canceledQuantity);
         }
 
     }

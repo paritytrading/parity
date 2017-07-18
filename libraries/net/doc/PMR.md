@@ -27,13 +27,24 @@ which the trading session started.
 
 All messages are sent by the trading system to the client application.
 
-### Order
+### Version
 
-An Order message indicates that an order has been entered.
+A Version message indicates the protocol version. The trading system sends a
+Version message as the first message in a trading session.
+
+Name         | Length | Type   | Notes
+-------------|--------|--------|------
+Message Type |      1 | Text   | `V`
+Version      |      4 | Number | 1
+
+### Order Entered
+
+An Order Entered message indicates that an order has been entered. The order
+number is the trading system's identifier for the order.
 
 Name         | Length | Type   | Notes
 -------------|--------|--------|----------
-Message Type |      1 | Text   | `O`
+Message Type |      1 | Text   | `E`
 Timestamp    |      8 | Number |
 Username     |      8 | Text   |
 Order Number |      8 | Number |
@@ -49,36 +60,42 @@ Side | Description
 `B`  | Buy
 `S`  | Sell
 
-### Cancel
+### Order Added
 
-A Cancel message indicates that an order has been canceled in part or fully.
+An Order Added message indicates that an order has been added to the order
+book.
+
+Name         | Length | Type   | Notes
+-------------|--------|--------|------
+Message Type |      1 | Text   | `A`
+Timestamp    |      8 | Number |
+Order Number |      8 | Number |
+
+### Order Canceled
+
+An Order Canceled message indicates that an order has been canceled in part or
+fully.
 
 Name              | Length | Type   | Notes
 ------------------|--------|--------|------
 Message Type      |      1 | Text   | `X`
 Timestamp         |      8 | Number |
-Username          |      8 | Text   |
 Order Number      |      8 | Number |
 Canceled Quantity |      4 | Number |
 
 ### Trade
 
-A Trade message indicates that a trade has taken place. The match number and
-the order numbers are the trading system's identifiers for the trade and the
-executed orders, respectively.
+A Trade message indicates that a trade has taken place. The match number is
+the trading system's identifier for the trade.
 
-Name              | Length | Type   | Notes
-------------------|--------|--------|------
-Message Type      |      1 | Text   | `T`
-Timestamp         |      8 | Number |
-Match Number      |      4 | Number |
-Instrument        |      8 | Text   |
-Quantity          |      4 | Number |
-Price             |      4 | Number |
-Buyer             |      8 | Text   |
-Buy Order Number  |      8 | Number |
-Seller            |      8 | Text   |
-Sell Order Number |      8 | Number |
+Name                  | Length | Type   | Notes
+----------------------|--------|--------|------
+Message Type          |      1 | Text   | `T`
+Timestamp             |      8 | Number |
+Resting Order Number  |      8 | Number |
+Incoming Order Number |      8 | Number |
+Quantity              |      4 | Number |
+Match Number          |      4 | Number |
 
 ## History
 

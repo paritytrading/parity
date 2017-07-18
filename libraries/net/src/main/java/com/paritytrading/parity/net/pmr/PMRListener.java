@@ -10,20 +10,36 @@ import java.io.IOException;
 public interface PMRListener {
 
     /**
-     * Receive an Order message.
+     * Receive a Version message.
      *
      * @param message the message
      * @throws IOException if an I/O error occurs
      */
-    void order(Order message) throws IOException;
+    void version(Version message) throws IOException;
 
     /**
-     * Receive a Cancel message.
+     * Receive an Order Entered message.
      *
      * @param message the message
      * @throws IOException if an I/O error occurs
      */
-    void cancel(Cancel message) throws IOException;
+    void orderEntered(OrderEntered message) throws IOException;
+
+    /**
+     * Receive an Order Added message.
+     *
+     * @param message the message
+     * @throws IOException if an I/O error occurs
+     */
+    void orderAdded(OrderAdded message) throws IOException;
+
+    /**
+     * Receive an Order Canceled message.
+     *
+     * @param message the message
+     * @throws IOException if an I/O error occurs
+     */
+    void orderCanceled(OrderCanceled message) throws IOException;
 
     /**
      * Receive a Trade message.

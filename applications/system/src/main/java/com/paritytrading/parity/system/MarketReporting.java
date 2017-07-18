@@ -17,9 +17,11 @@ import java.nio.channels.DatagramChannel;
 
 class MarketReporting {
 
-    private PMR.Order  order;
-    private PMR.Cancel cancel;
-    private PMR.Trade  trade;
+    private PMR.Version       version;
+    private PMR.OrderEntered  orderEntered;
+    private PMR.OrderAdded    orderAdded;
+    private PMR.OrderCanceled orderCanceled;
+    private PMR.Trade         trade;
 
     private MoldUDP64Server transport;
 
@@ -32,9 +34,11 @@ class MarketReporting {
     private ByteBuffer buffer;
 
     private MarketReporting(MoldUDP64Server transport, MoldUDP64RequestServer requestTransport) {
-        this.order  = new PMR.Order();
-        this.cancel = new PMR.Cancel();
-        this.trade  = new PMR.Trade();
+        this.version       = new PMR.Version();
+        this.orderEntered  = new PMR.OrderEntered();
+        this.orderAdded    = new PMR.OrderAdded();
+        this.orderCanceled = new PMR.OrderCanceled();
+        this.trade         = new PMR.Trade();
 
         this.transport = transport;
 
@@ -82,38 +86,46 @@ class MarketReporting {
         }
     }
 
-    public void order(long username, long orderNumber, byte side, long instrument, long quantity, long price) {
-        order.timestamp   = timestamp();
-        order.username    = username;
-        order.orderNumber = orderNumber;
-        order.side        = side;
-        order.instrument  = instrument;
-        order.quantity    = quantity;
-        order.price       = price;
+    public void version() {
+        version.version = PMR.VERSION;
 
-        send(order);
+        send(version);
     }
 
-    public void cancel(long username, long orderNumber, long canceledQuantity) {
-        cancel.timestamp        = timestamp();
-        cancel.username         = username;
-        cancel.orderNumber      = orderNumber;
-        cancel.canceledQuantity = canceledQuantity;
+    public void orderEntered(long username, long orderNumber, byte side, long instrument, long quantity, long price) {
+        orderEntered.timestamp   = timestamp();
+        orderEntered.username    = username;
+        orderEntered.orderNumber = orderNumber;
+        orderEntered.side        = side;
+        orderEntered.instrument  = instrument;
+        orderEntered.quantity    = quantity;
+        orderEntered.price       = price;
 
-        send(cancel);
+        send(orderEntered);
     }
 
-    public void trade(long matchNumber, long instrument, long quantity, long price, long buyer,
-            long buyOrderNumber, long seller, long sellOrderNumber) {
-        trade.timestamp       = timestamp();
-        trade.matchNumber     = matchNumber;
-        trade.instrument      = instrument;
-        trade.quantity        = quantity;
-        trade.price           = price;
-        trade.buyer           = buyer;
-        trade.buyOrderNumber  = buyOrderNumber;
-        trade.seller          = seller;
-        trade.sellOrderNumber = sellOrderNumber;
+    public void orderAdded(long orderNumber) {
+        orderAdded.timestamp   = timestamp();
+        orderAdded.orderNumber = orderNumber;
+
+        send(orderAdded);
+    }
+
+    public void orderCanceled(long orderNumber, long canceledQuantity) {
+        orderCanceled.timestamp        = timestamp();
+        orderCanceled.orderNumber      = orderNumber;
+        orderCanceled.canceledQuantity = canceledQuantity;
+
+        send(orderCanceled);
+    }
+
+    public void trade(long restingOrderNumber, long incomingOrderNumber,
+            long quantity, long matchNumber) {
+        trade.timestamp           = timestamp();
+        trade.restingOrderNumber  = restingOrderNumber;
+        trade.incomingOrderNumber = incomingOrderNumber;
+        trade.quantity            = quantity;
+        trade.matchNumber         = matchNumber;
 
         send(trade);
     }
