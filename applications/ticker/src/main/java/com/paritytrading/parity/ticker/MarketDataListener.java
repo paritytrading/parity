@@ -6,8 +6,6 @@ abstract class MarketDataListener implements MarketListener {
 
     static final double PRICE_FACTOR = 100.0;
 
-    private long second;
-
     private long timestamp;
 
     public void timestamp(long timestamp) {
