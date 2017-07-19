@@ -242,7 +242,7 @@ class Session implements Closeable {
                 return;
             }
 
-            enterOrder.price = (long)(price * 100.0) * 100;
+            enterOrder.price = (long)(price * 100.0);
 
             orders.add(new Order(orderEntryId, clOrdId, account, side, symbol, orderQty));
 
@@ -643,7 +643,7 @@ class Session implements Closeable {
                 return;
 
             long   lastQty = message.quantity;
-            double lastPx  = message.price / 10000.0;
+            double lastPx  = message.price / 100.0;
 
             order.orderExecuted(lastQty, lastPx);
 

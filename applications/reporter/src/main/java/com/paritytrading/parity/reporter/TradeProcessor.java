@@ -68,7 +68,7 @@ class TradeProcessor implements PMRListener {
         trade.matchNumber     = message.matchNumber;
         trade.instrument      = ASCII.unpackLong(resting.instrument).trim();
         trade.quantity        = message.quantity;
-        trade.price           = resting.price / 10000.0;
+        trade.price           = resting.price / 100.0;
         trade.buyer           = ASCII.unpackLong(buy.username).trim();
         trade.buyOrderNumber  = buyOrderNumber;
         trade.seller          = ASCII.unpackLong(sell.username).trim();

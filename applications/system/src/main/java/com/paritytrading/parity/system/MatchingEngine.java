@@ -13,8 +13,6 @@ import java.util.List;
 
 class MatchingEngine {
 
-    private static final long MIN_PRICE_VARIATION = 100;
-
     private enum CancelReason {
         REQUEST,
         SYSTEM,
@@ -58,7 +56,7 @@ class MatchingEngine {
             return;
         }
 
-        if (message.price % MIN_PRICE_VARIATION != 0 || message.price < 0) {
+        if (message.price < 0) {
             session.orderRejected(message, POE.ORDER_REJECT_REASON_INVALID_PRICE);
             return;
         }
