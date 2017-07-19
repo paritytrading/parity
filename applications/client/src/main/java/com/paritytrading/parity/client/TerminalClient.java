@@ -27,7 +27,7 @@ public class TerminalClient implements Closeable {
 
     public static final Locale LOCALE = Locale.US;
 
-    public static final double PRICE_FACTOR = 10000.0;
+    public static final double PRICE_FACTOR = 100.0;
 
     public static final long NANOS_PER_MILLI = 1_000_000;
 
