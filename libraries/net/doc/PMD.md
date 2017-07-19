@@ -18,8 +18,9 @@ Number fields are encoded as unsigned integers in network byte order.
 Text fields are encoded as ASCII, left-justified and padded on the right with
 the space character.
 
-Prices have decimal fixed-point representation with a six-digit integral part
-and a four-digit fractional part.
+Prices are represented in terms of the minimum price increment.
+
+Quantities are represented in terms of the minimum quantity increment.
 
 Timestamps are represented as nanoseconds since the midnight of the day on
 which the trading session started.
