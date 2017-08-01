@@ -24,7 +24,7 @@ class EnterCommand implements Command {
         try {
             long quantity   = arguments.nextInt();
             long instrument = ASCII.packLong(arguments.next());
-            long price      = (int)(arguments.nextDouble() * PRICE_FACTOR);
+            long price      = (long)(arguments.nextDouble() * PRICE_FACTOR);
 
             if (arguments.hasNext())
                 throw new CommandException();
