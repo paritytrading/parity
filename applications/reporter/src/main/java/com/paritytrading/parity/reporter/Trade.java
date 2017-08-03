@@ -6,7 +6,7 @@ class Trade {
     public long   matchNumber;
     public String instrument;
     public long   quantity;
-    public double price;
+    public long   price;
     public String buyer;
     public long   buyOrderNumber;
     public String seller;

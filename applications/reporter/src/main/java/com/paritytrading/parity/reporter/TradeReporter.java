@@ -6,6 +6,7 @@ import com.paritytrading.nassau.MessageListener;
 import com.paritytrading.nassau.util.MoldUDP64;
 import com.paritytrading.nassau.util.SoupBinTCP;
 import com.paritytrading.parity.net.pmr.PMRParser;
+import com.paritytrading.parity.util.Instruments;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigException;
 import java.io.FileNotFoundException;
@@ -42,7 +43,10 @@ class TradeReporter {
     }
 
     private static void main(Config config, boolean tsv) throws IOException {
-        MessageListener listener = new PMRParser(new TradeProcessor(tsv ? new TSVFormat() : new DisplayFormat()));
+        Instruments instruments = Instruments.fromConfig(config, "instruments");
+
+        MessageListener listener = new PMRParser(new TradeProcessor(tsv ?
+                    new TSVFormat(instruments) : new DisplayFormat(instruments)));
 
         if (config.hasPath("trade-report.multicast-interface")) {
             NetworkInterface multicastInterface = Configs.getNetworkInterface(config, "trade-report.multicast-interface");
