@@ -2,6 +2,7 @@ package com.paritytrading.parity.fix;
 
 import static org.jvirtanen.util.Applications.*;
 
+import com.paritytrading.parity.util.Instruments;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigException;
 import java.io.FileNotFoundException;
@@ -44,7 +45,10 @@ class FIXGateway {
         int         port         = Configs.getPort(config, "fix.port");
         String      senderCompId = config.getString("fix.sender-comp-id");
 
-        return FIXAcceptor.open(orderEntry, new InetSocketAddress(address, port), senderCompId);
+        Instruments instruments = Instruments.fromConfig(config, "instruments");
+
+        return FIXAcceptor.open(orderEntry, new InetSocketAddress(address, port),
+                senderCompId, instruments);
     }
 
 }
