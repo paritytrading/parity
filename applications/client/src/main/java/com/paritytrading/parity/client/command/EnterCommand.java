@@ -5,6 +5,8 @@ import static com.paritytrading.parity.client.TerminalClient.*;
 import com.paritytrading.foundation.ASCII;
 import com.paritytrading.parity.client.TerminalClient;
 import com.paritytrading.parity.net.poe.POE;
+import com.paritytrading.parity.util.Instrument;
+import com.paritytrading.parity.util.Instruments;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -22,14 +24,18 @@ class EnterCommand implements Command {
     @Override
     public void execute(TerminalClient client, Scanner arguments) throws CommandException, IOException {
         try {
-            long quantity   = arguments.nextInt();
-            long instrument = ASCII.packLong(arguments.next());
-            long price      = (long)(arguments.nextDouble() * PRICE_FACTOR);
+            double quantity   = arguments.nextDouble();
+            long   instrument = ASCII.packLong(arguments.next());
+            double price      = arguments.nextDouble();
 
             if (arguments.hasNext())
                 throw new CommandException();
 
-            execute(client, quantity, instrument, price);
+            Instrument config = client.getInstruments().get(instrument);
+            if (config == null)
+                throw new CommandException();
+
+            execute(client, (long)(quantity * config.getSizeFactor()), instrument, (long)(price * config.getPriceFactor()));
         } catch (NoSuchElementException e) {
             throw new CommandException();
         }

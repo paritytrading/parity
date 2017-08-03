@@ -8,6 +8,7 @@ import com.paritytrading.parity.client.command.Command;
 import com.paritytrading.parity.client.command.CommandException;
 import com.paritytrading.parity.client.command.Commands;
 import com.paritytrading.parity.client.event.Events;
+import com.paritytrading.parity.util.Instruments;
 import com.paritytrading.parity.util.OrderIDGenerator;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigException;
@@ -27,26 +28,28 @@ public class TerminalClient implements Closeable {
 
     public static final Locale LOCALE = Locale.US;
 
-    public static final double PRICE_FACTOR = 100.0;
-
     public static final long NANOS_PER_MILLI = 1_000_000;
 
     private Events events;
 
     private OrderEntry orderEntry;
 
+    private Instruments instruments;
+
     private OrderIDGenerator orderIdGenerator;
 
     private boolean closed;
 
-    private TerminalClient(Events events, OrderEntry orderEntry) {
-        this.events     = events;
-        this.orderEntry = orderEntry;
+    private TerminalClient(Events events, OrderEntry orderEntry, Instruments instruments) {
+        this.events      = events;
+        this.orderEntry  = orderEntry;
+        this.instruments = instruments;
 
         this.orderIdGenerator = new OrderIDGenerator();
     }
 
-    public static TerminalClient open(InetSocketAddress address, String username, String password) throws IOException {
+    public static TerminalClient open(InetSocketAddress address, String username,
+            String password, Instruments instruments) throws IOException {
         Events events = new Events();
 
         OrderEntry orderEntry = OrderEntry.open(address, events);
@@ -60,11 +63,15 @@ public class TerminalClient implements Closeable {
 
         orderEntry.getTransport().login(loginRequest);
 
-        return new TerminalClient(events, orderEntry);
+        return new TerminalClient(events, orderEntry, instruments);
     }
 
     public OrderEntry getOrderEntry() {
         return orderEntry;
+    }
+
+    public Instruments getInstruments() {
+        return instruments;
     }
 
     public OrderIDGenerator getOrderIdGenerator() {
@@ -145,8 +152,10 @@ public class TerminalClient implements Closeable {
         String      orderEntryUsername = config.getString("order-entry.username");
         String      orderEntryPassword = config.getString("order-entry.password");
 
+        Instruments instruments = Instruments.fromConfig(config, "instruments");
+
         TerminalClient.open(new InetSocketAddress(orderEntryAddress, orderEntryPort),
-                orderEntryUsername, orderEntryPassword).run();
+                orderEntryUsername, orderEntryPassword, instruments).run();
     }
 
 }

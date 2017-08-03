@@ -70,6 +70,26 @@ order-entry {
     password = parity
 
 }
+
+instruments {
+
+    # The number of digits in the integer part of a price.
+    price-integer-digits = 4
+
+    # The number of digits in the integer part of a size.
+    size-integer-digits = 4
+
+    FOO {
+
+        # The number of digits in the fractional part of a price.
+        price-fraction-digits = 2
+
+        # The number of digits in the fractional part of a size.
+        size-fraction-digits = 0
+
+    }
+
+}
 ```
 
 See the `etc` directory for an example configuration file.

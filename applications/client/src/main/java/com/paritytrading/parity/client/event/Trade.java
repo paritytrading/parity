@@ -3,13 +3,11 @@ package com.paritytrading.parity.client.event;
 import static com.paritytrading.parity.client.TerminalClient.*;
 
 import com.paritytrading.foundation.ASCII;
+import com.paritytrading.parity.util.Instrument;
+import com.paritytrading.parity.util.Instruments;
 import com.paritytrading.parity.util.Timestamps;
 
 public class Trade {
-
-    public static final String HEADER = "" +
-            "Timestamp    Order ID         S Inst     Quantity   Price\n" +
-            "------------ ---------------- - -------- ---------- ---------";
 
     private long  timestamp;
     private Order order;
@@ -27,10 +25,18 @@ public class Trade {
         return timestamp;
     }
 
-    public String format() {
-        return String.format(LOCALE, "%12s %16s %c %8s %10d %9.2f",
+    public String format(Instruments instruments) {
+        Instrument config = instruments.get(order.getInstrument());
+
+        String priceFormat = config.getPriceFormat();
+        String sizeFormat  = config.getSizeFormat();
+
+        String format = "%12s %16s %c %8s " + sizeFormat + " " + priceFormat;
+
+        return String.format(LOCALE, format,
                 Timestamps.format(timestamp / NANOS_PER_MILLI), order.getOrderId(), order.getSide(),
-                ASCII.unpackLong(order.getInstrument()), quantity, price / PRICE_FACTOR);
+                ASCII.unpackLong(order.getInstrument()), quantity / config.getSizeFactor(),
+                price / config.getPriceFactor());
     }
 
 }
