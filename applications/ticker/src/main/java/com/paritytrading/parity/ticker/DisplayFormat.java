@@ -5,33 +5,54 @@ import static com.paritytrading.parity.ticker.MarketDataListener.*;
 import com.paritytrading.foundation.ASCII;
 import com.paritytrading.parity.book.OrderBook;
 import com.paritytrading.parity.book.Side;
+import com.paritytrading.parity.util.Instrument;
+import com.paritytrading.parity.util.Instruments;
+import com.paritytrading.parity.util.TableHeader;
 import com.paritytrading.parity.util.Timestamps;
 import it.unimi.dsi.fastutil.longs.Long2ObjectArrayMap;
-import java.util.List;
 import java.util.Locale;
 
 class DisplayFormat extends MarketDataListener {
 
-    private static final String HEADER = "" +
-        "Timestamp    Inst     Bid Px    Bid Size   Ask Px    Ask Size   Last Px   Last Size\n" +
-        "------------ -------- --------- ---------- --------- ---------- --------- ----------";
-
-    private static final String MISSING = String.format("%9s %10s ", "-", "-");
+    private Instruments instruments;
 
     private Long2ObjectArrayMap<Trade> trades;
 
-    private long second;
     private long timestamp;
 
     private int counter;
 
-    public DisplayFormat(List<String> instruments) {
-        trades = new Long2ObjectArrayMap<>();
+    private String placeholder;
 
-        for (String instrument : instruments)
-            trades.put(ASCII.packLong(instrument), new Trade());
+    public DisplayFormat(Instruments instruments) {
+        this.instruments = instruments;
 
-        printf("\n%s\n", HEADER);
+        this.trades = new Long2ObjectArrayMap<>();
+
+        for (Instrument instrument : instruments)
+            trades.put(instrument.asLong(), new Trade());
+
+        int priceWidth = instruments.getPriceWidth();
+        int sizeWidth  = instruments.getSizeWidth();
+
+        TableHeader header = new TableHeader();
+
+        header.add("Timestamp",        12);
+        header.add("Inst",              8);
+        header.add("Bid Px",   priceWidth);
+        header.add("Bid Size",  sizeWidth);
+        header.add("Ask Px",   priceWidth);
+        header.add("Ask Size",  sizeWidth);
+        header.add("Last Px",  priceWidth);
+        header.add("Last Size", sizeWidth);
+
+        printf("\n");
+        printf(header.format());
+
+        String pricePlaceholder = instruments.getPricePlaceholder();
+        String sizePlaceholder  = instruments.getSizePlaceholder();
+
+        this.placeholder = String.format("%s %s ", pricePlaceholder, sizePlaceholder);
     }
 
     @Override
@@ -39,7 +60,7 @@ class DisplayFormat extends MarketDataListener {
         if (!bbo)
             return;
 
-        long instrument = book.getInstrument();
+        Instrument instrument = instruments.get(book.getInstrument());
 
         long bidPrice = book.getBestBidPrice();
         long bidSize  = book.getBidSize(bidPrice);
@@ -47,24 +68,45 @@ class DisplayFormat extends MarketDataListener {
         long askPrice = book.getBestAskPrice();
         long askSize  = book.getAskSize(askPrice);
 
-        printf("%12s %8s ", Timestamps.format(timestampMillis()), ASCII.unpackLong(instrument));
+        String priceFormat = instrument.getPriceFormat();
+        String sizeFormat  = instrument.getSizeFormat();
 
-        if (bidSize != 0)
-            printf("%9.2f %10d ", bidPrice / PRICE_FACTOR, bidSize);
-        else
-            print(MISSING);
+        double priceFactor = instrument.getPriceFactor();
+        double sizeFactor  = instrument.getSizeFactor();
 
-        if (askSize != 0)
-            printf("%9.2f %10d ", askPrice / PRICE_FACTOR, askSize);
-        else
-            print(MISSING);
+        printf("%12s %-8s ", Timestamps.format(timestampMillis()), instrument.asString());
 
-        Trade trade = trades.get(instrument);
+        if (bidSize != 0) {
+            printf(priceFormat, bidPrice / priceFactor);
+            print(" ");
+            printf(sizeFormat, bidSize / sizeFactor);
+            print(" ");
+        }
+        else {
+            printf(placeholder);
+        }
 
-        if (trade.size != 0)
-            printf("%9.2f %10d\n", trade.price / PRICE_FACTOR, trade.size);
-        else
-            println(MISSING);
+        if (askSize != 0) {
+            printf(priceFormat, askPrice / priceFactor);
+            print(" ");
+            printf(sizeFormat, askSize / sizeFactor);
+            print(" ");
+        }
+        else {
+            printf(placeholder);
+        }
+
+        Trade trade = trades.get(instrument.asLong());
+
+        if (trade.size != 0) {
+            printf(priceFormat, trade.price / priceFactor);
+            print(" ");
+            printf(sizeFormat, trade.size / sizeFactor);
+            print("\n");
+        }
+        else {
+            println(placeholder);
+        }
     }
 
     @Override

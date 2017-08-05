@@ -9,35 +9,43 @@ import com.paritytrading.parity.book.Side;
 import com.paritytrading.parity.file.taq.TAQ;
 import com.paritytrading.parity.file.taq.TAQConfig;
 import com.paritytrading.parity.file.taq.TAQWriter;
-import it.unimi.dsi.fastutil.longs.Long2ObjectArrayMap;
+import com.paritytrading.parity.util.Instrument;
+import com.paritytrading.parity.util.Instruments;
 import java.nio.charset.Charset;
 import java.time.LocalDate;
 
 class TAQFormat extends MarketDataListener {
 
-    private Long2ObjectArrayMap<String> instruments;
+    private Instruments instruments;
 
     private TAQ.Quote quote;
     private TAQ.Trade trade;
 
     private TAQWriter writer;
 
-    public TAQFormat() {
-        instruments = new Long2ObjectArrayMap<>();
+    public TAQFormat(Instruments instruments) {
+        this.instruments = instruments;
 
-        quote = new TAQ.Quote();
-        trade = new TAQ.Trade();
+        this.quote = new TAQ.Quote();
+        this.trade = new TAQ.Trade();
 
         String date = ISO_LOCAL_DATE.format(LocalDate.now());
 
         quote.date = date;
         trade.date = date;
 
-        TAQConfig config = new TAQConfig.Builder()
-            .setEncoding(Charset.defaultCharset())
-            .build();
+        TAQConfig.Builder builder = new TAQConfig.Builder()
+            .setEncoding(Charset.defaultCharset());
 
-        writer = new TAQWriter(System.out, config);
+        for (Instrument instrument : instruments) {
+            int priceFractionDigits = instrument.getPriceFractionDigits();
+            int sizeFractionDigits  = instrument.getSizeFractionDigits();
+
+            builder.setPriceFractionDigits(instrument.asString(), priceFractionDigits);
+            builder.setSizeFractionDigits(instrument.asString(),  sizeFractionDigits);
+        }
+
+        writer = new TAQWriter(System.out, builder.build());
         writer.flush();
     }
 
@@ -46,15 +54,20 @@ class TAQFormat extends MarketDataListener {
         if (!bbo)
             return;
 
+        Instrument instrument = instruments.get(book.getInstrument());
+
+        double priceFactor = instrument.getPriceFactor();
+        double sizeFactor  = instrument.getSizeFactor();
+
         long bidPrice = book.getBestBidPrice();
         long askPrice = book.getBestAskPrice();
 
         quote.timestampMillis = timestampMillis();
-        quote.instrument      = instrument(book.getInstrument());
-        quote.bidPrice        = bidPrice / PRICE_FACTOR;
-        quote.bidSize         = book.getBidSize(bidPrice);
-        quote.askPrice        = askPrice / PRICE_FACTOR;
-        quote.askSize         = book.getAskSize(askPrice);
+        quote.instrument      = instrument.asString();
+        quote.bidPrice        = bidPrice / priceFactor;
+        quote.bidSize         = book.getBidSize(bidPrice) / sizeFactor;
+        quote.askPrice        = askPrice / priceFactor;
+        quote.askSize         = book.getAskSize(askPrice) / sizeFactor;
 
         writer.write(quote);
         writer.flush();
@@ -62,25 +75,16 @@ class TAQFormat extends MarketDataListener {
 
     @Override
     public void trade(OrderBook book, Side side, long price, long size) {
+        Instrument instrument = instruments.get(book.getInstrument());
+
         trade.timestampMillis = timestampMillis();
-        trade.instrument      = instrument(book.getInstrument());
-        trade.price           = price / PRICE_FACTOR;
-        trade.size            = size;
+        trade.instrument      = instrument.asString();
+        trade.price           = price / instrument.getPriceFactor();
+        trade.size            = size  / instrument.getSizeFactor();
         trade.side            = side(side);
 
         writer.write(trade);
         writer.flush();
-    }
-
-    private String instrument(long instrument) {
-        String cached = instruments.get(instrument);
-        if (cached == null) {
-            cached = ASCII.unpackLong(instrument).trim();
-
-            instruments.put(instrument, cached);
-        }
-
-        return cached;
     }
 
     private char side(Side side) {
