@@ -33,13 +33,14 @@ You can interact with the application by entering commands into the command
 prompt. For example, to enter a buy order, use the `buy` command:
 
 ```
-> buy 100 FOO 10.00
+> buy 100 AAPL 150.00
 ```
 
-The command enters a buy order of 100 units of the instrument FOO at the limit
-price of 10.00 into the trading system. Assuming that FOO can be traded on the
-trading system and that there is no matching sell order in the order book, the
-order will remain open. To list the open orders, use the `orders` command:
+The command enters a buy order of 100 units of the instrument AAPL at the
+limit price of 150.00 into the trading system. Assuming that AAPL can be
+traded on the trading system and that there is no matching sell order in
+the order book, the order will remain open. To list the open orders, use
+the `orders` command:
 
 ```
 > orders
@@ -79,7 +80,7 @@ instruments {
     # The number of digits in the integer part of a size.
     size-integer-digits = 4
 
-    FOO {
+    AAPL {
 
         # The number of digits in the fractional part of a price.
         price-fraction-digits = 2

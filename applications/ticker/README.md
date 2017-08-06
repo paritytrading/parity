@@ -101,7 +101,7 @@ instruments {
     # The number of digits in the integer part of a size.
     size-integer-digits = 4
 
-    FOO {
+    AAPL {
 
         # The number of digits in the fractional part of a price.
         price-fraction-digits = 2

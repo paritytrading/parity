@@ -64,7 +64,7 @@ order-entry {
 
 instruments {
 
-    FOO {
+    AAPL {
 
         # The number of digits in the fractional part of a price.
         price-fraction-digits = 2
