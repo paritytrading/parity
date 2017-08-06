@@ -89,7 +89,7 @@ order-entry {
 }
 
 # A list of zero or more instruments.
-instruments = [ AAPL, ETH-BTC, BAZ ]
+instruments = [ AAPL, ETH-BTC, EUR-USD ]
 ```
 
 See the `etc` directory for an example configuration file.
