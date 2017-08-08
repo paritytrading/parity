@@ -121,13 +121,13 @@ class MatchingEngine {
 
             long matchNumber = nextMatchNumber++;
 
+            marketData.orderExecuted(restingOrderNumber, executedQuantity, matchNumber);
+
             resting.getSession().orderExecuted(price, executedQuantity, POE.LIQUIDITY_FLAG_ADDED_LIQUIDITY,
                     matchNumber, resting);
 
             handling.getSession().orderExecuted(price, executedQuantity, POE.LIQUIDITY_FLAG_REMOVED_LIQUIDITY,
                     matchNumber, handling);
-
-            marketData.orderExecuted(restingOrderNumber, executedQuantity, matchNumber);
 
             marketReporting.trade(restingOrderNumber, incomingOrderNumber, executedQuantity, matchNumber);
 
@@ -146,10 +146,10 @@ class MatchingEngine {
 
         @Override
         public void cancel(long orderNumber, long canceledQuantity, long remainingQuantity) {
+            marketData.orderCanceled(orderNumber, canceledQuantity);
+
             if (cancelReason == CancelReason.REQUEST)
                 handling.getSession().orderCanceled(canceledQuantity, POE.ORDER_CANCEL_REASON_REQUEST, handling);
-
-            marketData.orderCanceled(orderNumber, canceledQuantity);
 
             marketReporting.orderCanceled(orderNumber, canceledQuantity);
 
