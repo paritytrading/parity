@@ -61,6 +61,20 @@ order-entry {
     port = 4000
 
 }
+
+instruments {
+
+    AAPL {
+
+        # The number of digits in the fractional part of a price.
+        price-fraction-digits = 2
+
+        # The number of digits in the fractional part of a size.
+        size-fraction-digits = 0
+
+    }
+
+}
 ```
 
 See the `etc` directory for an example configuration file.

@@ -10,6 +10,8 @@ import com.paritytrading.nassau.soupbintcp.SoupBinTCPClient;
 import com.paritytrading.nassau.soupbintcp.SoupBinTCPClientStatusListener;
 import com.paritytrading.parity.net.poe.POE;
 import com.paritytrading.parity.net.poe.POEClientListener;
+import com.paritytrading.parity.util.Instrument;
+import com.paritytrading.parity.util.Instruments;
 import com.paritytrading.parity.util.OrderIDGenerator;
 import com.paritytrading.philadelphia.FIXConfig;
 import com.paritytrading.philadelphia.FIXField;
@@ -48,8 +50,10 @@ class Session implements Closeable {
 
     private SoupBinTCPClient orderEntry;
 
+    private Instruments instruments;
+
     public Session(OrderEntryFactory orderEntry, SocketChannel fix,
-            FIXConfig config) throws IOException {
+            FIXConfig config, Instruments instruments) throws IOException {
         this.orderEntryIds = new OrderIDGenerator();
 
         this.orders = new Orders();
@@ -61,6 +65,8 @@ class Session implements Closeable {
         FIXListener fixListener = new FIXListener();
 
         this.fix = new FIXSession(fix, config, fixListener, fixListener);
+
+        this.instruments = instruments;
     }
 
     @Override
@@ -204,22 +210,29 @@ class Session implements Closeable {
                 return;
             }
 
-            long orderQty = 0;
+            double orderQty = 0.0;
 
             try {
-                orderQty = orderQtyValue.asInt();
+                orderQty = orderQtyValue.asFloat();
             } catch (FIXValueFormatException e) {
-                incorrectDataFormatForValue(message, "Expected 'int' in OrderQty(38)");
+                incorrectDataFormatForValue(message, "Expected 'float' in OrderQty(38)");
                 return;
             }
 
-            if (orderQty < 0) {
+            if (orderQty < 0.0) {
                 sendOrderRejected(clOrdId, OrdRejReasonValues.IncorrectQuantity, account,
                         symbol, side, orderQty);
                 return;
             }
 
-            enterOrder.quantity = orderQty;
+            Instrument config = instruments.get(enterOrder.instrument);
+            if (config == null) {
+                sendOrderRejected(clOrdId, OrdRejReasonValues.UnknownSymbol, account,
+                        symbol, side, orderQty);
+                return;
+            }
+
+            enterOrder.quantity = (long)(orderQty * config.getSizeFactor());
 
             double price = 0.0;
 
@@ -242,7 +255,7 @@ class Session implements Closeable {
                 return;
             }
 
-            enterOrder.price = (long)(price * 100.0);
+            enterOrder.price = (long)(price * config.getPriceFactor());
 
             orders.add(new Order(orderEntryId, clOrdId, account, side, symbol, orderQty));
 
@@ -311,22 +324,26 @@ class Session implements Closeable {
                 return;
             }
 
-            long orderQty = 0;
+            double orderQty = 0.0;
 
             if (msgType == OrderCancelReplaceRequest) {
                 try {
-                    orderQty = orderQtyValue.asInt();
+                    orderQty = orderQtyValue.asFloat();
                 } catch (FIXValueFormatException e) {
-                    incorrectDataFormatForValue(message, "Expected 'int' in OrderQty(38)");
+                    incorrectDataFormatForValue(message, "Expected 'float' in OrderQty(38)");
                     return;
                 }
             }
+
+            double qty = Math.max(orderQty - order.getCumQty(), 0);
+
+            Instrument config = instruments.get(order.getSymbol());
 
             order.setNextClOrdID(clOrdId);
             order.setCxlRejResponseTo(cxlRejResponseTo);
 
             System.arraycopy(order.getOrderEntryID(), 0, cancelOrder.orderId, 0, cancelOrder.orderId.length);
-            cancelOrder.quantity = Math.max(orderQty - order.getCumQty(), 0);
+            cancelOrder.quantity = (long)(qty * config.getSizeFactor());
 
             send(cancelOrder);
 
@@ -455,6 +472,13 @@ class Session implements Closeable {
     private void sendOrderAccepted(Order order) throws IOException {
         fix.prepare(txMessage, ExecutionReport);
 
+        String symbol = order.getSymbol();
+
+        Instrument config = instruments.get(symbol);
+
+        int priceFractionDigits = config.getPriceFractionDigits();
+        int sizeFractionDigits  = config.getSizeFractionDigits();
+
         txMessage.addField(OrderID).setInt(order.getOrderID());
         txMessage.addField(ClOrdID).setString(order.getClOrdID());
         txMessage.addField(ExecID).setString(fix.getCurrentTimestamp());
@@ -464,18 +488,25 @@ class Session implements Closeable {
         if (order.getAccount() != null)
             txMessage.addField(Account).setString(order.getAccount());
 
-        txMessage.addField(Symbol).setString(order.getSymbol());
+        txMessage.addField(Symbol).setString(symbol);
         txMessage.addField(Side).setChar(order.getSide());
-        txMessage.addField(OrderQty).setInt(order.getOrderQty());
-        txMessage.addField(LeavesQty).setInt(order.getLeavesQty());
-        txMessage.addField(CumQty).setInt(order.getCumQty());
-        txMessage.addField(AvgPx).setFloat(order.getAvgPx(), 2);
+        txMessage.addField(OrderQty).setFloat(order.getOrderQty(), sizeFractionDigits);
+        txMessage.addField(LeavesQty).setFloat(order.getLeavesQty(), sizeFractionDigits);
+        txMessage.addField(CumQty).setFloat(order.getCumQty(), sizeFractionDigits);
+        txMessage.addField(AvgPx).setFloat(order.getAvgPx(), priceFractionDigits);
 
         fix.send(txMessage);
     }
 
     private void sendOrderRejected(Order order, int ordRejReason) throws IOException {
         fix.prepare(txMessage, ExecutionReport);
+
+        String symbol = order.getSymbol();
+
+        Instrument config = instruments.get(symbol);
+
+        int priceFractionDigits = config.getPriceFractionDigits();
+        int sizeFractionDigits  = config.getSizeFractionDigits();
 
         txMessage.addField(OrderID).setInt(order.getOrderID());
         txMessage.addField(ClOrdID).setString(order.getClOrdID());
@@ -487,19 +518,29 @@ class Session implements Closeable {
         if (order.getAccount() != null)
             txMessage.addField(Account).setString(order.getAccount());
 
-        txMessage.addField(Symbol).setString(order.getSymbol());
+        txMessage.addField(Symbol).setString(symbol);
         txMessage.addField(Side).setChar(order.getSide());
-        txMessage.addField(OrderQty).setInt(order.getOrderQty());
-        txMessage.addField(LeavesQty).setInt(0);
-        txMessage.addField(CumQty).setInt(order.getCumQty());
-        txMessage.addField(AvgPx).setFloat(order.getAvgPx(), 2);
+        txMessage.addField(OrderQty).setFloat(order.getOrderQty(), sizeFractionDigits);
+        txMessage.addField(LeavesQty).setFloat(0.0, sizeFractionDigits);
+        txMessage.addField(CumQty).setFloat(order.getCumQty(), sizeFractionDigits);
+        txMessage.addField(AvgPx).setFloat(order.getAvgPx(), priceFractionDigits);
 
         fix.send(txMessage);
     }
 
     private void sendOrderRejected(String clOrdId, int ordRejReason,
-            String account, String symbol, char side, long orderQty) throws IOException {
+            String account, String symbol, char side, double orderQty) throws IOException {
         fix.prepare(txMessage, ExecutionReport);
+
+        Instrument config = instruments.get(symbol);
+
+        int priceFractionDigits = 0;
+        int sizeFractionDigits  = 0;
+
+        if (config != null) {
+            priceFractionDigits = config.getPriceFractionDigits();
+            sizeFractionDigits  = config.getSizeFractionDigits();
+        }
 
         txMessage.addField(OrderID).setString(UNKNOWN_ORDER_ID);
         txMessage.addField(ClOrdID).setString(clOrdId);
@@ -513,16 +554,23 @@ class Session implements Closeable {
 
         txMessage.addField(Symbol).setString(symbol);
         txMessage.addField(Side).setChar(side);
-        txMessage.addField(OrderQty).setInt(orderQty);
-        txMessage.addField(LeavesQty).setInt(0);
-        txMessage.addField(CumQty).setInt(0);
-        txMessage.addField(AvgPx).setFloat(0.00, 2);
+        txMessage.addField(OrderQty).setFloat(orderQty, sizeFractionDigits);
+        txMessage.addField(LeavesQty).setFloat(0.0, sizeFractionDigits);
+        txMessage.addField(CumQty).setFloat(0.0, sizeFractionDigits);
+        txMessage.addField(AvgPx).setFloat(0.0, priceFractionDigits);
 
         fix.send(txMessage);
     }
 
-    private void sendOrderExecuted(Order order, long lastQty, double lastPx) throws IOException {
+    private void sendOrderExecuted(Order order, double lastQty, double lastPx) throws IOException {
         fix.prepare(txMessage, ExecutionReport);
+
+        String symbol = order.getSymbol();
+
+        Instrument config = instruments.get(symbol);
+
+        int priceFractionDigits = config.getPriceFractionDigits();
+        int sizeFractionDigits  = config.getSizeFractionDigits();
 
         txMessage.addField(OrderID).setInt(order.getOrderID());
         txMessage.addField(ClOrdID).setString(order.getClOrdID());
@@ -533,20 +581,27 @@ class Session implements Closeable {
         if (order.getAccount() != null)
             txMessage.addField(Account).setString(order.getAccount());
 
-        txMessage.addField(Symbol).setString(order.getSymbol());
+        txMessage.addField(Symbol).setString(symbol);
         txMessage.addField(Side).setChar(order.getSide());
-        txMessage.addField(OrderQty).setInt(order.getOrderQty());
-        txMessage.addField(LastQty).setInt(lastQty);
-        txMessage.addField(LastPx).setFloat(lastPx, 2);
-        txMessage.addField(LeavesQty).setInt(order.getLeavesQty());
-        txMessage.addField(CumQty).setInt(order.getCumQty());
-        txMessage.addField(AvgPx).setFloat(order.getAvgPx(), 2);
+        txMessage.addField(OrderQty).setFloat(order.getOrderQty(), sizeFractionDigits);
+        txMessage.addField(LastQty).setFloat(lastQty, sizeFractionDigits);
+        txMessage.addField(LastPx).setFloat(lastPx, priceFractionDigits);
+        txMessage.addField(LeavesQty).setFloat(order.getLeavesQty(), sizeFractionDigits);
+        txMessage.addField(CumQty).setFloat(order.getCumQty(), sizeFractionDigits);
+        txMessage.addField(AvgPx).setFloat(order.getAvgPx(), priceFractionDigits);
 
         fix.send(txMessage);
     }
 
     private void sendOrderCancelAcknowledgement(Order order, char execType, char ordStatus) throws IOException {
         fix.prepare(txMessage, ExecutionReport);
+
+        String symbol = order.getSymbol();
+
+        Instrument config = instruments.get(symbol);
+
+        int priceFractionDigits = config.getPriceFractionDigits();
+        int sizeFractionDigits  = config.getSizeFractionDigits();
 
         txMessage.addField(OrderID).setInt(order.getOrderID());
         txMessage.addField(ClOrdID).setString(order.getNextClOrdID());
@@ -558,18 +613,25 @@ class Session implements Closeable {
         if (order.getAccount() != null)
             txMessage.addField(Account).setString(order.getAccount());
 
-        txMessage.addField(Symbol).setString(order.getSymbol());
+        txMessage.addField(Symbol).setString(symbol);
         txMessage.addField(Side).setChar(order.getSide());
-        txMessage.addField(OrderQty).setInt(order.getOrderQty());
-        txMessage.addField(LeavesQty).setInt(order.getLeavesQty());
-        txMessage.addField(CumQty).setInt(order.getCumQty());
-        txMessage.addField(AvgPx).setFloat(order.getAvgPx(), 2);
+        txMessage.addField(OrderQty).setFloat(order.getOrderQty(), sizeFractionDigits);
+        txMessage.addField(LeavesQty).setFloat(order.getLeavesQty(), sizeFractionDigits);
+        txMessage.addField(CumQty).setFloat(order.getCumQty(), sizeFractionDigits);
+        txMessage.addField(AvgPx).setFloat(order.getAvgPx(), priceFractionDigits);
 
         fix.send(txMessage);
     }
 
     private void sendOrderCanceled(Order order) throws IOException {
         fix.prepare(txMessage, ExecutionReport);
+
+        String symbol = order.getSymbol();
+
+        Instrument config = instruments.get(symbol);
+
+        int priceFractionDigits = config.getPriceFractionDigits();
+        int sizeFractionDigits  = config.getSizeFractionDigits();
 
         char execType  = ExecTypeValues.Canceled;
         char ordStatus = OrdStatusValues.Canceled;
@@ -589,12 +651,12 @@ class Session implements Closeable {
         if (order.getAccount() != null)
             txMessage.addField(Account).setString(order.getAccount());
 
-        txMessage.addField(Symbol).setString(order.getSymbol());
+        txMessage.addField(Symbol).setString(symbol);
         txMessage.addField(Side).setChar(order.getSide());
-        txMessage.addField(OrderQty).setInt(order.getOrderQty());
-        txMessage.addField(LeavesQty).setInt(order.getLeavesQty());
-        txMessage.addField(CumQty).setInt(order.getCumQty());
-        txMessage.addField(AvgPx).setFloat(order.getAvgPx(), 2);
+        txMessage.addField(OrderQty).setFloat(order.getOrderQty(), sizeFractionDigits);
+        txMessage.addField(LeavesQty).setFloat(order.getLeavesQty(), sizeFractionDigits);
+        txMessage.addField(CumQty).setFloat(order.getCumQty(), sizeFractionDigits);
+        txMessage.addField(AvgPx).setFloat(order.getAvgPx(), priceFractionDigits);
 
         fix.send(txMessage);
     }
@@ -642,8 +704,10 @@ class Session implements Closeable {
             if (order == null)
                 return;
 
-            long   lastQty = message.quantity;
-            double lastPx  = message.price / 100.0;
+            Instrument config = instruments.get(order.getSymbol());
+
+            double lastQty = message.quantity / config.getSizeFactor();
+            double lastPx  = message.price    / config.getPriceFactor();
 
             order.orderExecuted(lastQty, lastPx);
 
@@ -663,7 +727,9 @@ class Session implements Closeable {
             if (order == null)
                 return;
 
-            order.orderCanceled(message.canceledQuantity);
+            Instrument config = instruments.get(order.getSymbol());
+
+            order.orderCanceled(message.canceledQuantity / config.getSizeFactor());
 
             sendOrderCanceled(order);
 

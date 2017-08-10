@@ -16,13 +16,13 @@ class Order {
     private String account;
     private char   side;
     private String symbol;
-    private long   orderQty;
-    private long   cumQty;
+    private double orderQty;
+    private double cumQty;
     private double avgPx;
     private char   cxlRejResponseTo;
 
     public Order(String orderEntryId, String clOrdId, String account, char side,
-            String symbol, long orderQty) {
+            String symbol, double orderQty) {
         this.orderEntryId     = new byte[POE.ORDER_ID_LENGTH];
         this.orderId          = 0;
         this.nextClOrdId      = null;
@@ -44,7 +44,7 @@ class Order {
         orderId = orderNumber;
     }
 
-    public void orderExecuted(long quantity, double price) {
+    public void orderExecuted(double quantity, double price) {
         avgPx = (cumQty * avgPx + quantity * price) / (cumQty + quantity);
 
         cumQty += quantity;
@@ -52,7 +52,7 @@ class Order {
         ordStatus = getLeavesQty() == 0 ? OrdStatusValues.Filled : OrdStatusValues.PartiallyFilled;
     }
 
-    public void orderCanceled(long canceledQuantity) {
+    public void orderCanceled(double canceledQuantity) {
         orderQty -= canceledQuantity;
 
         origClOrdId = clOrdId;
@@ -102,15 +102,15 @@ class Order {
         return symbol;
     }
 
-    public long getOrderQty() {
+    public double getOrderQty() {
         return orderQty;
     }
 
-    public long getCumQty() {
+    public double getCumQty() {
         return cumQty;
     }
 
-    public long getLeavesQty() {
+    public double getLeavesQty() {
         return orderQty - cumQty;
     }
 

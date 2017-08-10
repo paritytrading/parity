@@ -11,6 +11,8 @@ import com.paritytrading.nassau.util.MoldUDP64;
 import com.paritytrading.nassau.util.SoupBinTCP;
 import com.paritytrading.parity.book.Market;
 import com.paritytrading.parity.net.pmd.PMDParser;
+import com.paritytrading.parity.util.Instrument;
+import com.paritytrading.parity.util.Instruments;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigException;
 import java.io.File;
@@ -40,25 +42,28 @@ class StockTicker {
     }
 
     private static void main(boolean taq, String[] args) throws IOException {
-        if (args.length < 1)
-            usage();
-
-        try {
+        switch (args.length) {
+        case 1:
             listen(taq, config(args[0]));
-        } catch (ConfigException.Parse e) {
-            read(taq, new File(args[0]), asList(copyOfRange(args, 1, args.length)));
+            return;
+        case 2:
+            read(taq, config(args[0]), new File(args[1]));
+            return;
+        default:
+            usage();
+            return;
         }
     }
 
     private static void listen(boolean taq, Config config) throws IOException {
-        List<String> instruments = config.getStringList("instruments");
+        Instruments instruments = Instruments.fromConfig(config, "instruments");
 
-        MarketDataListener listener = taq ? new TAQFormat() : new DisplayFormat(instruments);
+        MarketDataListener listener = taq ? new TAQFormat(instruments) : new DisplayFormat(instruments);
 
         Market market = new Market(listener);
 
-        for (String instrument : instruments)
-            market.open(ASCII.packLong(instrument));
+        for (Instrument instrument : instruments)
+            market.open(instrument.asLong());
 
         MarketDataProcessor processor = new MarketDataProcessor(market, listener);
 
@@ -85,13 +90,15 @@ class StockTicker {
         }
     }
 
-    private static void read(boolean taq, File file, List<String> instruments) throws IOException {
-        MarketDataListener listener = taq ? new TAQFormat() : new DisplayFormat(instruments);
+    private static void read(boolean taq, Config config, File file) throws IOException {
+        Instruments instruments = Instruments.fromConfig(config, "instruments");
+
+        MarketDataListener listener = taq ? new TAQFormat(instruments) : new DisplayFormat(instruments);
 
         Market market = new Market(listener);
 
-        for (String instrument : instruments)
-            market.open(ASCII.packLong(instrument));
+        for (Instrument instrument : instruments)
+            market.open(instrument.asLong());
 
         MarketDataProcessor processor = new MarketDataProcessor(market, listener);
 
@@ -99,8 +106,7 @@ class StockTicker {
     }
 
     private static void usage() {
-        System.err.println("Usage: parity-ticker [-t] <configuration-file>");
-        System.err.println("       parity-ticker [-t] <input-file> [<instrument> ...]");
+        System.err.println("Usage: parity-ticker [-t] <configuration-file> [<input-file>]");
         System.exit(2);
     }
 

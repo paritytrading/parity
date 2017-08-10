@@ -24,16 +24,16 @@ The command line options are as follows:
 The command line arguments are as follows:
 
 - `<configuration-file>`: The configuration file. The configuration file
-  specifies how to connect to the the trading system.
+  specifies how to display instruments and connect to the the trading system.
 
 Once started, the application first replays trades that have taken place so
 far. Then it proceeds to display trades in real time.
 
 ## Configuration
 
-Parity Trade Reporter uses a configuration file to specify how to connect to
-the trading system. It supports two transport options: NASDAQ MoldUDP64 and
-NASDAQ SoupBinTCP.
+Parity Trade Reporter uses a configuration file to specify how to display
+instruments and connect to the trading system. The application supports two
+transport options: NASDAQ MoldUDP64 and NASDAQ SoupBinTCP.
 
 The following configuration parameters are required when using the MoldUDP64
 transport:
@@ -76,6 +76,30 @@ trade-report {
 
     # The SoupBinTCP password.
     password = parity
+
+}
+```
+
+The following configuration parameters are required always:
+
+```
+instruments {
+
+    # The number of digits in the integer part of a price.
+    price-integer-digits = 4
+
+    # The number of digits in the integer part of a size.
+    size-integer-digits = 4
+
+    AAPL {
+
+        # The number of digits in the fractional part of a price.
+        price-fraction-digits = 2
+
+        # The number of digits in the fractional part of a size.
+        size-fraction-digits = 0
+
+    }
 
 }
 ```

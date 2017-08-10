@@ -20,8 +20,6 @@ messages.
 
 ClOrdID(11) has a maximum length of 16 characters.
 
-Price(44) has two decimal places.
-
 ### Message Header
 
 All messages start with the message header.

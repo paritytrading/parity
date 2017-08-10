@@ -31,14 +31,14 @@ send 35=A|98=0|108=30|553=foo|554=bar
 #
 #   MsgType(35)      = D
 #   ClOrdID(11)      = 1
-#   Symbol(55)       = FOO
+#   Symbol(55)       = AAPL
 #   Side(54)         = 1 (Buy)
 #   TransactTime(60) = <skipped>
 #   OrderQty(38)     = 100
 #   OrdType(40)      = 2 (Limit)
-#   Price(44)        = 10.00
+#   Price(44)        = 150.00
 #
-send 35=D|11=1|55=FOO|54=1|38=100|40=2|44=10.00
+send 35=D|11=1|55=AAPL|54=1|38=100|40=2|44=150.00
 
 #
 # Expect: Execution Report
@@ -49,14 +49,14 @@ send 35=D|11=1|55=FOO|54=1|38=100|40=2|44=10.00
 #   ExecID(17)     = <generated>
 #   ExecType(150)  = 0 (New)
 #   OrdStatus(39)  = 0 (New)
-#   Symbol(55)     = FOO
+#   Symbol(55)     = AAPL
 #   Side(54)       = 1 (Buy)
 #   OrderQty(38)   = 100
 #   LeavesQty(151) = 100
 #   CumQty(14)     = 0
 #   AvgPx(6)       = 0.00
 #
-# 35=8|37=...|11=1|17=...|150=0|39=0|55=FOO|54=1|38=100|151=100|14=0|6=0.00
+# 35=8|37=...|11=1|17=...|150=0|39=0|55=AAPL|54=1|38=100|151=100|14=0|6=0.00
 #
 
 #
@@ -82,14 +82,14 @@ send 35=G|11=2|41=1|54=1|38=50|40=2
 #   ExecID(17)      = <generated>
 #   ExecType(150)   = E (Pending replace)
 #   OrdStatus(39)   = E (Pending replace)
-#   Symbol(55)      = FOO
+#   Symbol(55)      = AAPL
 #   Side(54)        = 1 (Buy)
 #   OrderQty(38)    = 100
 #   LeavesQty(151)  = 100
 #   CumQty(14)      = 0
 #   AvgPx(6)        = 0.00
 #
-# 35=8|37=...|11=2|41=1|17=...|150=E|39=E|55=FOO|38=100|151=100|14=0|6=0.00
+# 35=8|37=...|11=2|41=1|17=...|150=E|39=E|55=AAPL|38=100|151=100|14=0|6=0.00
 #
 
 #
@@ -102,14 +102,14 @@ send 35=G|11=2|41=1|54=1|38=50|40=2
 #   ExecID(17)      = <generated>
 #   ExecType(150)   = 5 (Replace)
 #   OrdStatus(39)   = 0 (New)
-#   Symbol(55)      = FOO
+#   Symbol(55)      = AAPL
 #   Side(54)        = 1 (Buy)
 #   OrderQty(38)    = 50
 #   LeavesQty(151)  = 50
 #   CumQty(14)      = 0
 #   AvgPx(6)        = 0.00
 #
-# 35=8|37=...|11=2|41=1|17=...|150=4|39=4|55=FOO|38=50|151=50|14=0|6=0.00
+# 35=8|37=...|11=2|41=1|17=...|150=4|39=4|55=AAPL|38=50|151=50|14=0|6=0.00
 #
 
 #
@@ -133,14 +133,14 @@ send 35=F|11=3|41=2|54=1
 #   ExecID(17)      = <generated>
 #   ExecType(150)   = 6 (Pending cancel)
 #   OrdStatus(39)   = 6 (Pending cancel)
-#   Symbol(55)      = FOO
+#   Symbol(55)      = AAPL
 #   Side(54)        = 1 (Buy)
 #   OrderQty(38)    = 50
 #   LeavesQty(151)  = 50
 #   CumQty(14)      = 0
 #   AvgPx(6)        = 0.00
 #
-# 35=8|37=...|11=3|41=2|17=...|150=6|39=6|55=FOO|38=50|151=50|14=0|6=0.00
+# 35=8|37=...|11=3|41=2|17=...|150=6|39=6|55=AAPL|38=50|151=50|14=0|6=0.00
 #
 
 #
@@ -153,14 +153,14 @@ send 35=F|11=3|41=2|54=1
 #   ExecID(17)      = <generated>
 #   ExecType(150)   = 4 (Canceled)
 #   OrdStatus(39)   = 4 (Canceled)
-#   Symbol(55)      = FOO
+#   Symbol(55)      = AAPL
 #   Side(54)        = 1 (Buy)
 #   OrderQty(38)    = 50
 #   LeavesQty(151)  = 0
 #   CumQty(14)      = 0
 #   AvgPx(6)        = 0.00
 #
-# 35=8|37=...|11=3|41=2|17=...|150=4|39=4|55=FOO|38=50|151=0|14=0|6=0.00
+# 35=8|37=...|11=3|41=2|17=...|150=4|39=4|55=AAPL|38=50|151=0|14=0|6=0.00
 #
 
 #

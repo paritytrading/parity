@@ -14,17 +14,11 @@ Download the [latest release][] from GitHub.
 Run Parity Stock Ticker with Java:
 
 ```
-java -jar parity-ticker.jar
+java -jar parity-ticker.jar [-t] <configuration-file> [<input-file>]
 ```
 
 The application can either listen to a live market data feed or to read a
 historical market data file.
-
-To listen to a live market data feed, pass a configuration file:
-
-```
-java -jar parity-ticker.jar [-t] <configuration-file>
-```
 
 The command line options are as follows:
 
@@ -35,37 +29,24 @@ The command line options are as follows:
 The command line arguments are as follows:
 
 - `<configuration-file>`: The configuration file. The configuration file
-  specifies how to connect to the trading system.
+  specifies how to display instruments. When listening to live market data,
+  it also specifies how to connect to the trading system.
+
+- `<input-file>`: The input file. The application reads market events from
+  the input file in the NASDAQ BinaryFILE format.
 
 When listening to a live market data feed, the application first replays
 market events that have taken place so far. Then it proceeds to display
 market events in real time.
 
-To read a historical market data file, pass an input file:
-
-```
-java -jar parity-ticker.jar [-t] <input-file> [<instrument> ...]
-```
-
-The command line options are as follows:
-
-- `-t`: Format the output as [TAQ][].
-
-The command line arguments are as follows:
-
-- `<input-file>`: The input file. The application reads market events from
-  the input file in the NASDAQ BinaryFILE format.
-
-- `[<instrument> ...]`: Zero or more instruments.
-
 ## Configuration
 
-Parity Stock Ticker uses a configuration file to specify how to connect to the
-trading system. It supports two transport options: NASDAQ MoldUDP64 and NASDAQ
-SoupBinTCP.
+Parity Stock Ticker uses a configuration file to specify how to display
+instruments and connect to the trading system. The application supports two
+transport options: NASDAQ MoldUDP64 and NASDAQ SoupBinTCP.
 
-The following configuration parameters are required when using the MoldUDP64
-transport:
+The following configuration parameters are required when connecting to the
+trading system using the MoldUDP64 transport:
 
 ```
 market-data {
@@ -86,13 +67,10 @@ market-data {
     request-port = 5001
 
 }
-
-# A list of zero or more instruments.
-instruments = [ FOO, BAR, BAZ ]
 ```
 
-The following configuration parameters are required when using the SoupBinTCP
-transport:
+The following configuration parameters are required when connecting to the
+trading system using the SoupBinTCP transport:
 
 ```
 market-data {
@@ -110,9 +88,30 @@ market-data {
     password = parity
 
 }
+```
 
-# A list of zero or more instruments.
-instruments = [ FOO, BAR, BAZ ]
+The following configuration parameters are required always:
+
+```
+instruments {
+
+    # The number of digits in the integer part of a price.
+    price-integer-digits = 4
+
+    # The number of digits in the integer part of a size.
+    size-integer-digits = 4
+
+    AAPL {
+
+        # The number of digits in the fractional part of a price.
+        price-fraction-digits = 2
+
+        # The number of digits in the fractional part of a size.
+        size-fraction-digits = 0
+
+    }
+
+}
 ```
 
 See the `etc` directory for example configuration files.
