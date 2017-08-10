@@ -78,7 +78,7 @@ instruments {
     price-integer-digits = 4
 
     # The number of digits in the integer part of a size.
-    size-integer-digits = 4
+    size-integer-digits = 7
 
     AAPL {
 
