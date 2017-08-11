@@ -83,7 +83,7 @@ class DisplayFormat extends MarketDataListener {
             print(" ");
         }
         else {
-            printf(placeholder);
+            print(placeholder);
         }
 
         if (askSize != 0) {
@@ -93,7 +93,7 @@ class DisplayFormat extends MarketDataListener {
             print(" ");
         }
         else {
-            printf(placeholder);
+            print(placeholder);
         }
 
         Trade trade = trades.get(instrument.asLong());
