@@ -8,7 +8,7 @@
 - Remove Parity Top of Book
 - Add Parity Order Book
 - Update example configuration files
-- Improve Parity Matching engine performance
+- Improve Parity Matching Engine performance
 - Add configuration for TAQ file format in Parity File Formats
 - Simplify Parity Stock Ticker usage
 - Fix pending cancel status in Parity FIX Gateway
