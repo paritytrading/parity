@@ -45,8 +45,8 @@ public class Instruments implements Iterable<Instrument> {
         this.maxPriceFractionDigits = maxPriceFractionDigits;
         this.maxSizeFractionDigits  = maxSizeFractionDigits;
 
-        this.priceWidth = priceIntegerDigits + 1 + maxPriceFractionDigits;
-        this.sizeWidth  = sizeIntegerDigits  + 1 + maxSizeFractionDigits;
+        this.priceWidth = priceIntegerDigits + (maxPriceFractionDigits > 0 ? 1 : 0) + maxPriceFractionDigits;
+        this.sizeWidth  = sizeIntegerDigits  + (maxSizeFractionDigits  > 0 ? 1 : 0) + maxSizeFractionDigits;
 
         this.pricePlaceholder = placeholder(priceIntegerDigits, maxPriceFractionDigits);
         this.sizePlaceholder  = placeholder(sizeIntegerDigits,  maxSizeFractionDigits);
