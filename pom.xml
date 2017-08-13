@@ -38,6 +38,7 @@
     <jmh.version>1.19</jmh.version>
     <eclipse.collections.version>8.0.0</eclipse.collections.version>
     <nassau.version>0.13.0</nassau.version>
+    <philadelphia.version>0.6.0</philadelphia.version>
   </properties>
 
   <modules>
@@ -74,8 +75,13 @@
       </dependency>
       <dependency>
         <groupId>com.paritytrading.philadelphia</groupId>
-        <artifactId>philadelphia</artifactId>
-        <version>0.5.0</version>
+        <artifactId>philadelphia-core</artifactId>
+        <version>${philadelphia.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.paritytrading.philadelphia</groupId>
+        <artifactId>philadelphia-fix44</artifactId>
+        <version>${philadelphia.version}</version>
       </dependency>
       <dependency>
         <groupId>com.typesafe</groupId>
