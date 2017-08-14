@@ -12,7 +12,6 @@ import com.paritytrading.parity.net.poe.POE;
 import com.paritytrading.parity.net.poe.POEClientListener;
 import com.paritytrading.parity.util.Instrument;
 import com.paritytrading.parity.util.Instruments;
-import com.paritytrading.parity.util.OrderIDGenerator;
 import com.paritytrading.philadelphia.FIXConfig;
 import com.paritytrading.philadelphia.FIXField;
 import com.paritytrading.philadelphia.FIXMessage;
@@ -42,7 +41,7 @@ class Session implements Closeable {
 
     private static ByteBuffer txBuffer = ByteBuffer.allocateDirect(POE.MAX_INBOUND_MESSAGE_LENGTH);
 
-    private OrderIDGenerator orderEntryIds;
+    private long nextOrderEntryId;
 
     private Orders orders;
 
@@ -54,7 +53,7 @@ class Session implements Closeable {
 
     public Session(OrderEntryFactory orderEntry, SocketChannel fix,
             FIXConfig config, Instruments instruments) throws IOException {
-        this.orderEntryIds = new OrderIDGenerator();
+        this.nextOrderEntryId = 1;
 
         this.orders = new Orders();
 
@@ -176,9 +175,9 @@ class Session implements Closeable {
                 return;
             }
 
-            String orderEntryId = orderEntryIds.next();
+            long orderEntryId = nextOrderEntryId++;
 
-            ASCII.putLeft(enterOrder.orderId, orderEntryId);
+            ASCII.putLongLeft(enterOrder.orderId, orderEntryId);
 
             String clOrdId = clOrdIdValue.asString();
 
@@ -342,7 +341,7 @@ class Session implements Closeable {
             order.setNextClOrdID(clOrdId);
             order.setCxlRejResponseTo(cxlRejResponseTo);
 
-            System.arraycopy(order.getOrderEntryID(), 0, cancelOrder.orderId, 0, cancelOrder.orderId.length);
+            ASCII.putLongLeft(cancelOrder.orderId, order.getOrderEntryID());
             cancelOrder.quantity = (long)(qty * config.getSizeFactor());
 
             send(cancelOrder);
@@ -657,7 +656,9 @@ class Session implements Closeable {
 
         @Override
         public void orderAccepted(POE.OrderAccepted message) throws IOException {
-            Order order = orders.findByOrderEntryID(message.orderId);
+            long orderEntryId = ASCII.getLong(message.orderId);
+
+            Order order = orders.findByOrderEntryID(orderEntryId);
             if (order == null)
                 return;
 
@@ -668,7 +669,9 @@ class Session implements Closeable {
 
         @Override
         public void orderRejected(POE.OrderRejected message) throws IOException {
-            Order order = orders.findByOrderEntryID(message.orderId);
+            long orderEntryId = ASCII.getLong(message.orderId);
+
+            Order order = orders.findByOrderEntryID(orderEntryId);
             if (order == null)
                 return;
 
@@ -687,12 +690,14 @@ class Session implements Closeable {
                 break;
             }
 
-            orders.removeByOrderEntryID(message.orderId);
+            orders.removeByOrderEntryID(orderEntryId);
         }
 
         @Override
         public void orderExecuted(POE.OrderExecuted message) throws IOException {
-            Order order = orders.findByOrderEntryID(message.orderId);
+            long orderEntryId = ASCII.getLong(message.orderId);
+
+            Order order = orders.findByOrderEntryID(orderEntryId);
             if (order == null)
                 return;
 
@@ -706,7 +711,7 @@ class Session implements Closeable {
             sendOrderExecuted(order, lastQty, lastPx, config);
 
             if (order.getLeavesQty() == 0) {
-                orders.removeByOrderEntryID(message.orderId);
+                orders.removeByOrderEntryID(orderEntryId);
 
                 if (order.isInPendingStatus())
                     sendOrderCancelReject(order);
@@ -715,7 +720,9 @@ class Session implements Closeable {
 
         @Override
         public void orderCanceled(POE.OrderCanceled message) throws IOException {
-            Order order = orders.findByOrderEntryID(message.orderId);
+            long orderEntryId = ASCII.getLong(message.orderId);
+
+            Order order = orders.findByOrderEntryID(orderEntryId);
             if (order == null)
                 return;
 
@@ -726,7 +733,7 @@ class Session implements Closeable {
             sendOrderCanceled(order, config);
 
             if (order.getLeavesQty() == 0)
-                orders.removeByOrderEntryID(message.orderId);
+                orders.removeByOrderEntryID(orderEntryId);
         }
 
         @Override

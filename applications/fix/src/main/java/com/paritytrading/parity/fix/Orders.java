@@ -27,22 +27,22 @@ class Orders {
         return null;
     }
 
-    public Order findByOrderEntryID(byte[] orderEntryId) {
+    public Order findByOrderEntryID(long orderEntryId) {
         for (int i = 0; i < orders.size(); i++) {
             Order order = orders.get(i);
 
-            if (Arrays.equals(orderEntryId, order.getOrderEntryID()))
+            if (orderEntryId == order.getOrderEntryID())
                 return order;
         }
 
         return null;
     }
 
-    public void removeByOrderEntryID(byte[] orderEntryId) {
+    public void removeByOrderEntryID(long orderEntryId) {
         for (int i = 0; i < orders.size(); i++) {
             Order order = orders.get(i);
 
-            if (Arrays.equals(orderEntryId, order.getOrderEntryID())) {
+            if (orderEntryId == order.getOrderEntryID()) {
                 orders.remove(i);
                 break;
             }

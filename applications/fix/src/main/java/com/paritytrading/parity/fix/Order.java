@@ -7,7 +7,7 @@ import com.paritytrading.parity.net.poe.POE;
 
 class Order {
 
-    private byte[] orderEntryId;
+    private long   orderEntryId;
     private long   orderId;
     private String nextClOrdId;
     private String clOrdId;
@@ -21,9 +21,9 @@ class Order {
     private double avgPx;
     private char   cxlRejResponseTo;
 
-    public Order(String orderEntryId, String clOrdId, String account, char side,
+    public Order(long orderEntryId, String clOrdId, String account, char side,
             String symbol, double orderQty) {
-        this.orderEntryId     = new byte[POE.ORDER_ID_LENGTH];
+        this.orderEntryId     = orderEntryId;
         this.orderId          = 0;
         this.nextClOrdId      = null;
         this.clOrdId          = clOrdId;
@@ -36,8 +36,6 @@ class Order {
         this.cumQty           = 0;
         this.avgPx            = 0.0;
         this.cxlRejResponseTo = CxlRejResponseToValues.OrderCancelRequest;
-
-        ASCII.putLeft(this.orderEntryId, orderEntryId);
     }
 
     public void orderAccepted(long orderNumber) {
@@ -62,7 +60,7 @@ class Order {
         nextClOrdId = null;
     }
 
-    public byte[] getOrderEntryID() {
+    public long getOrderEntryID() {
         return orderEntryId;
     }
 
