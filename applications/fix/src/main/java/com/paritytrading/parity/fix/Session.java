@@ -562,12 +562,8 @@ class Session implements Closeable {
         fix.send(txMessage);
     }
 
-    private void sendOrderExecuted(Order order, double lastQty, double lastPx) throws IOException {
+    private void sendOrderExecuted(Order order, double lastQty, double lastPx, Instrument config) throws IOException {
         fix.prepare(txMessage, ExecutionReport);
-
-        String symbol = order.getSymbol();
-
-        Instrument config = instruments.get(symbol);
 
         int priceFractionDigits = config.getPriceFractionDigits();
         int sizeFractionDigits  = config.getSizeFractionDigits();
@@ -581,7 +577,7 @@ class Session implements Closeable {
         if (order.getAccount() != null)
             txMessage.addField(Account).setString(order.getAccount());
 
-        txMessage.addField(Symbol).setString(symbol);
+        txMessage.addField(Symbol).setString(order.getSymbol());
         txMessage.addField(Side).setChar(order.getSide());
         txMessage.addField(OrderQty).setFloat(order.getOrderQty(), sizeFractionDigits);
         txMessage.addField(LastQty).setFloat(lastQty, sizeFractionDigits);
@@ -623,12 +619,8 @@ class Session implements Closeable {
         fix.send(txMessage);
     }
 
-    private void sendOrderCanceled(Order order) throws IOException {
+    private void sendOrderCanceled(Order order, Instrument config) throws IOException {
         fix.prepare(txMessage, ExecutionReport);
-
-        String symbol = order.getSymbol();
-
-        Instrument config = instruments.get(symbol);
 
         int priceFractionDigits = config.getPriceFractionDigits();
         int sizeFractionDigits  = config.getSizeFractionDigits();
@@ -651,7 +643,7 @@ class Session implements Closeable {
         if (order.getAccount() != null)
             txMessage.addField(Account).setString(order.getAccount());
 
-        txMessage.addField(Symbol).setString(symbol);
+        txMessage.addField(Symbol).setString(order.getSymbol());
         txMessage.addField(Side).setChar(order.getSide());
         txMessage.addField(OrderQty).setFloat(order.getOrderQty(), sizeFractionDigits);
         txMessage.addField(LeavesQty).setFloat(order.getLeavesQty(), sizeFractionDigits);
@@ -711,7 +703,7 @@ class Session implements Closeable {
 
             order.orderExecuted(lastQty, lastPx);
 
-            sendOrderExecuted(order, lastQty, lastPx);
+            sendOrderExecuted(order, lastQty, lastPx, config);
 
             if (order.getLeavesQty() == 0) {
                 orders.removeByOrderEntryID(message.orderId);
@@ -731,7 +723,7 @@ class Session implements Closeable {
 
             order.orderCanceled(message.canceledQuantity / config.getSizeFactor());
 
-            sendOrderCanceled(order);
+            sendOrderCanceled(order, config);
 
             if (order.getLeavesQty() == 0)
                 orders.removeByOrderEntryID(message.orderId);
