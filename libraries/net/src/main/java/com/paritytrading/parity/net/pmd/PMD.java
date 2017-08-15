@@ -13,7 +13,7 @@ public class PMD {
     private PMD() {
     }
 
-    public static final long VERSION = 1;
+    public static final long VERSION = 2;
 
     public static final byte BUY  = 'B';
     public static final byte SELL = 'S';
