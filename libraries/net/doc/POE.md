@@ -154,4 +154,10 @@ Reason | Description
 
 ## History
 
+- **Version 2.** This version contains the following changes:
+  - Remove the Broken Trade message
+  - Represent prices using the minimum price increment
+  - Represent quantities using the minimum quantity increment
+  - Represent prices using 8 bytes
+  - Represent sizes using 8 bytes
 - **Version 1.** Initial version.
