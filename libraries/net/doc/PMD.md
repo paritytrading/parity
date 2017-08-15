@@ -37,7 +37,7 @@ Version message as the first message in a trading session.
 Name         | Length | Type   | Notes
 -------------|--------|--------|------
 Message Type |      1 | Text   | `V`
-Version      |      4 | Number | 1
+Version      |      4 | Number | 2
 
 ### Order Added
 
@@ -88,4 +88,13 @@ Canceled Quantity |      8 | Number |
 
 ## History
 
+- **Version 2.** This version contains the following changes:
+  - Remove the Seconds message
+  - Remove the Order Deleted message
+  - Remove the Broken Trade message
+  - Represent prices using the minimum price increment
+  - Represent quantities using the minimum quantity increment
+  - Represent prices using 8 bytes
+  - Represent quantities using 8 bytes
+  - Represent timestamps using 8 bytes
 - **Version 1.** Initial version.
