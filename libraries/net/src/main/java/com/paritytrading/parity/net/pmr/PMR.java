@@ -16,7 +16,7 @@ public class PMR {
     /**
      * The protocol version.
      */
-    public static final long VERSION = 1;
+    public static final long VERSION = 2;
 
     static final byte MESSAGE_TYPE_VERSION        = 'V';
     static final byte MESSAGE_TYPE_ORDER_ENTERED  = 'E';
