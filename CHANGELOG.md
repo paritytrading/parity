@@ -1,5 +1,42 @@
 # Release Notes
 
+## 0.7.0 (2017-08-23)
+
+- Improve Parity Matching Engine performance
+- Check quantity on order entry in Parity Trading System
+- Use direct byte buffer
+- Check price on order entry in Parity Trading System
+- Upgrade to fastutil 8.1.0
+- Remove market order support from Parity Matching Engine
+- Remove Broken Trade message from POE protocol
+- Remove Broken Trade message from PMD protocol
+- Make price and size configurable per instrument in Parity File Formats
+- Remove Seconds message from PMD protocol
+- Remove Order Deleted message from PMD protocol
+- Add Version message to PMR protocol
+- Rename Order message to Order Entered message in PMR protocol
+- Add Order Added message to PMR protocol
+- Rename Cancel message to Order Canceled message in PMR protocol
+- Clean up Trade message in PMR protocol
+- Update price and quantity to 64 bits in POE protocol
+- Update price and quantity to 64 bits in PMD protocol
+- Update price and quantity to 64 bits in PMR protocol
+- Update price and quantity representation in POE protocol
+- Update price and quantity representation in PMD protocol
+- Update price and quantity representation in PMR protocol
+- Handle market data before order entry in Parity Trading System
+- Make price and size format configurable in Parity Terminal Client
+- Make price and size format configurable in Parity FIX Gateway
+- Make price and size format configurable in Parity Trade Reporter
+- Make price and size format configurable in Parity Stock Ticker
+- Replace FOO with AAPL in example configuration files
+- Replace BAR with ETH-BTC in example configuration files
+- Replace BAZ with EUR-USD in example configuration files
+- Improve FIX gateway performance
+- Update POE protocol to version 2
+- Update PMD protocol to version 2
+- Update PMR protocol to version 2
+
 ## 0.6.0 (2017-01-20)
 
 - Make FIX acceptor address configurable in Parity FIX Gateway
