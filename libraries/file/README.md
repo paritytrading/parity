@@ -10,6 +10,10 @@ Parity File Formats specifies and implements the following formats:
 - [**TAQ**](doc/TAQ.md): a historical market data file format that consists of
   the best bids and offers (BBOs) and trades.
 
+## Dependencies
+
+Parity File Formats does not depend on other libraries.
+
 ## Download
 
 Add a Maven dependency to Parity File Formats:
