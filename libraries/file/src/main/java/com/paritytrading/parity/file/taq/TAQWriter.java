@@ -2,7 +2,6 @@ package com.paritytrading.parity.file.taq;
 
 import static com.paritytrading.parity.file.taq.TAQ.*;
 
-import com.paritytrading.parity.util.Timestamps;
 import java.io.BufferedOutputStream;
 import java.io.Closeable;
 import java.io.File;
@@ -16,11 +15,15 @@ import java.io.Writer;
 import java.text.DecimalFormat;
 import java.text.FieldPosition;
 import java.text.NumberFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * A writer.
  */
 public class TAQWriter implements Closeable, Flushable {
+
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
 
     private static final int BUFFER_CAPACITY = 32;
 
@@ -107,7 +110,7 @@ public class TAQWriter implements Closeable, Flushable {
     public void write(Trade record) {
         sink.print(record.date);
         sink.print(FIELD_SEPARATOR);
-        sink.print(Timestamps.format(record.timestampMillis));
+        writeTimestamp(record.timestampMillis);
         sink.print(FIELD_SEPARATOR);
         sink.print(record.instrument);
         sink.print(FIELD_SEPARATOR);
@@ -140,7 +143,7 @@ public class TAQWriter implements Closeable, Flushable {
     public void write(Quote record) {
         sink.print(record.date);
         sink.print(FIELD_SEPARATOR);
-        sink.print(Timestamps.format(record.timestampMillis));
+        writeTimestamp(record.timestampMillis);
         sink.print(FIELD_SEPARATOR);
         sink.print(record.instrument);
         sink.print(FIELD_SEPARATOR);
@@ -182,6 +185,10 @@ public class TAQWriter implements Closeable, Flushable {
     @Override
     public void flush() {
         sink.flush();
+    }
+
+    private void writeTimestamp(long timestampMillis) {
+        FORMATTER.formatTo(LocalTime.ofNanoOfDay(timestampMillis % (24 * 60 * 60 * 1000) * 1_000_000), sink);
     }
 
     private void writePrice(String instrument, double price) {
