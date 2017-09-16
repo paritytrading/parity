@@ -3,6 +3,12 @@
 Parity Order Book implements high-performance order book reconstruction on the
 JVM.
 
+## Dependencies
+
+Parity Order Book depends on the following libraries:
+
+- fastutil 8.1.0
+
 ## Download
 
 Add a Maven dependency to Parity Order Book:
