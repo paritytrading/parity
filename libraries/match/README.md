@@ -2,6 +2,12 @@
 
 Parity Matching Engine is the matching engine used by the trading system.
 
+## Dependencies
+
+Parity Matching Engine depends on the following libraries:
+
+- fastutil 8.1.0
+
 ## Download
 
 Add a Maven dependency to Parity Matching Engine:
