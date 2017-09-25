@@ -186,7 +186,7 @@ public class Market {
      * Cancel a quantity of an order in an order book. If the remaining
      * quantity reaches zero, the order is deleted from the order book.
      *
-     * <p>An update event is triggered if the top of the book changes.</p>
+     * <p>An update event is triggered.</p>
      *
      * <p>If the order identifier is unknown, do nothing.</p>
      *
@@ -220,7 +220,7 @@ public class Market {
     /**
      * Delete an order from an order book.
      *
-     * <p>An update event is triggered if the top of the book changes.</p>
+     * <p>An update event is triggered.</p>
      *
      * <p>If the order identifier is unknown, do nothing.</p>
      *
