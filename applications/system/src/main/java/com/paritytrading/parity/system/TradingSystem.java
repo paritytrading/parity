@@ -62,7 +62,7 @@ class TradingSystem {
 
     private static MarketReporting marketReporting(Config config) throws IOException {
         String           session            = config.getString("market-report.session");
-        NetworkInterface multicastInterface = Configs.getNetworkInterface(config, "market-data.multicast-interface");
+        NetworkInterface multicastInterface = Configs.getNetworkInterface(config, "market-report.multicast-interface");
         InetAddress      multicastGroup     = Configs.getInetAddress(config, "market-report.multicast-group");
         int              multicastPort      = Configs.getPort(config, "market-report.multicast-port");
         InetAddress      requestAddress     = Configs.getInetAddress(config, "market-report.request-address");
