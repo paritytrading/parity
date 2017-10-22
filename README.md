@@ -47,7 +47,7 @@ Parity contains the following libraries:
 - [**Parity File Formats**](libraries/file) specifies and implements file
   formats used by the trading system.
 
-- [**Parity Matching Engine**](libraries/match) implements the matching
+- [**Parity Matching Algorithm**](libraries/match) implements the matching
   algorithm used by the trading system.
 
 - [**Parity Utilities**](libraries/util) contains support functions used by
@@ -58,8 +58,8 @@ Parity contains the following test applications:
 - [**Parity Order Book Performance Test**](tests/book-perf-test) contains
   microbenchmarks for the order book reconstruction.
 
-- [**Parity Matching Engine Performance Test**](tests/match-perf-test)
-  contains microbenchmarks for the matching engine.
+- [**Parity Matching Algorithm Performance Test**](tests/match-perf-test)
+  contains microbenchmarks for the matching algorithm.
 
 ## Build
 

@@ -12,7 +12,7 @@
 
   <artifactId>parity-match-perf-test</artifactId>
 
-  <name>Parity Matching Engine Performance Test</name>
+  <name>Parity Matching Algorithm Performance Test</name>
 
   <dependencies>
     <dependency>
