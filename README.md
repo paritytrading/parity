@@ -47,8 +47,8 @@ Parity contains the following libraries:
 - [**Parity File Formats**](libraries/file) specifies and implements file
   formats used by the trading system.
 
-- [**Parity Matching Engine**](libraries/match) is the matching engine used by
-  the trading system.
+- [**Parity Matching Engine**](libraries/match) implements the matching
+  algorithm used by the trading system.
 
 - [**Parity Utilities**](libraries/util) contains support functions used by
   the trading system.

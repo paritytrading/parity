@@ -1,6 +1,7 @@
 # Parity Matching Engine
 
-Parity Matching Engine is the matching engine used by the trading system.
+Parity Matching Engine implements the matching algorithm used by the trading
+system.
 
 ## Dependencies
 
