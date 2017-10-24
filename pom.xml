@@ -48,9 +48,9 @@
     <module>libraries/net</module>
     <module>libraries/util</module>
     <module>applications/client</module>
+    <module>applications/engine</module>
     <module>applications/fix</module>
     <module>applications/reporter</module>
-    <module>applications/system</module>
     <module>applications/ticker</module>
     <module>tests/book-perf-test</module>
     <module>tests/match-perf-test</module>
@@ -197,7 +197,7 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
-          <excludePackageNames>com.paritytrading.parity.client:com.paritytrading.parity.fix:com.paritytrading.parity.reporter:com.paritytrading.parity.system:com.paritytrading.parity.ticker:*.perf</excludePackageNames>
+          <excludePackageNames>com.paritytrading.parity.client:com.paritytrading.parity.engine:com.paritytrading.parity.fix:com.paritytrading.parity.reporter:com.paritytrading.parity.ticker:*.perf</excludePackageNames>
           <links>
             <link>http://api.paritytrading.com/nassau/latest/</link>
             <link>http://fastutil.di.unimi.it/docs/</link>

@@ -1,4 +1,4 @@
-package com.paritytrading.parity.system;
+package com.paritytrading.parity.engine;
 
 import static it.unimi.dsi.fastutil.bytes.ByteArrays.HASH_STRATEGY;
 
@@ -196,7 +196,7 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
     }
 
     private long timestamp() {
-        return (System.currentTimeMillis() - TradingSystem.EPOCH_MILLIS) * 1_000_000;
+        return (System.currentTimeMillis() - MatchingEngine.EPOCH_MILLIS) * 1_000_000;
     }
 
 }
