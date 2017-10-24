@@ -10,21 +10,21 @@ class OrderEntry {
 
     private ServerSocketChannel serverChannel;
 
-    private MatchingEngine engine;
+    private OrderBooks books;
 
-    private OrderEntry(ServerSocketChannel serverChannel, MatchingEngine engine) {
+    private OrderEntry(ServerSocketChannel serverChannel, OrderBooks books) {
         this.serverChannel = serverChannel;
 
-        this.engine = engine;
+        this.books = books;
     }
 
-    public static OrderEntry open(InetSocketAddress address, MatchingEngine engine) throws IOException {
+    public static OrderEntry open(InetSocketAddress address, OrderBooks books) throws IOException {
         ServerSocketChannel serverChannel = ServerSocketChannel.open();
 
         serverChannel.bind(address);
         serverChannel.configureBlocking(false);
 
-        return new OrderEntry(serverChannel, engine);
+        return new OrderEntry(serverChannel, books);
     }
 
     public ServerSocketChannel getChannel() {
@@ -39,7 +39,7 @@ class OrderEntry {
         channel.setOption(StandardSocketOptions.TCP_NODELAY, true);
         channel.configureBlocking(false);
 
-        return new Session(channel, engine);
+        return new Session(channel, books);
     }
 
 }

@@ -11,7 +11,7 @@ import it.unimi.dsi.fastutil.longs.Long2ObjectArrayMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import java.util.List;
 
-class MatchingEngine {
+class OrderBooks {
 
     private enum CancelReason {
         REQUEST,
@@ -33,7 +33,7 @@ class MatchingEngine {
 
     private CancelReason cancelReason;
 
-    public MatchingEngine(List<String> instruments, MarketData marketData, MarketReporting marketReporting) {
+    public OrderBooks(List<String> instruments, MarketData marketData, MarketReporting marketReporting) {
         this.books  = new Long2ObjectArrayMap<>();
         this.orders = new Long2ObjectOpenHashMap<>();
 
