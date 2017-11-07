@@ -1,17 +1,17 @@
-# Parity Matching Engine
+# Parity Matching Algorithm
 
-Parity Matching Engine implements the matching algorithm used by the trading
-system.
+Parity Matching Algorithm implements the matching algorithm used by the
+trading system.
 
 ## Dependencies
 
-Parity Matching Engine depends on the following libraries:
+Parity Matching Algorithm depends on the following libraries:
 
 - fastutil 8.1.0
 
 ## Download
 
-Add a Maven dependency to Parity Matching Engine:
+Add a Maven dependency to Parity Matching Algorithm:
 
 ```xml
 <dependency>

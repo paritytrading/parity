@@ -12,7 +12,7 @@
 
   <artifactId>parity-match</artifactId>
 
-  <name>Parity Matching Engine</name>
+  <name>Parity Matching Algorithm</name>
 
   <dependencies>
     <dependency>

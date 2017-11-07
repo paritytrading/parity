@@ -1,11 +1,11 @@
-# Parity Matching Engine Performance Test
+# Parity Matching Algorithm Performance Test
 
-Parity Matching Engine Performance Test contains microbenchmarks for Parity
-Matching Engine.
+Parity Matching Algorithm Performance Test contains microbenchmarks for Parity
+Matching Algorithm.
 
 ## Usage
 
-Run Parity Matching Engine Performance Test with Java:
+Run Parity Matching Algorithm Performance Test with Java:
 
 ```
 java -jar parity-match-perf-test.jar

@@ -1,4 +1,4 @@
-package com.paritytrading.parity.system;
+package com.paritytrading.parity.engine;
 
 import static org.jvirtanen.util.Applications.*;
 
@@ -14,14 +14,14 @@ import java.time.ZoneId;
 import java.util.List;
 import org.jvirtanen.config.Configs;
 
-class TradingSystem {
+class MatchingEngine {
 
     public static final long EPOCH_MILLIS = LocalDate.now().atStartOfDay(ZoneId.systemDefault())
         .toInstant().toEpochMilli();
 
     public static void main(String[] args) throws IOException {
         if (args.length != 1)
-            usage("parity-system <configuration-file>");
+            usage("parity-engine <configuration-file>");
 
         try {
             main(config(args[0]));
@@ -37,9 +37,9 @@ class TradingSystem {
 
         List<String> instruments = config.getStringList("instruments");
 
-        MatchingEngine engine = new MatchingEngine(instruments, marketData, marketReporting);
+        OrderBooks books = new OrderBooks(instruments, marketData, marketReporting);
 
-        OrderEntry orderEntry = orderEntry(config, engine);
+        OrderEntry orderEntry = orderEntry(config, books);
 
         marketData.version();
         marketReporting.version();
@@ -73,11 +73,11 @@ class TradingSystem {
                 new InetSocketAddress(requestAddress, requestPort));
     }
 
-    private static OrderEntry orderEntry(Config config, MatchingEngine engine) throws IOException {
+    private static OrderEntry orderEntry(Config config, OrderBooks books) throws IOException {
         InetAddress address = Configs.getInetAddress(config, "order-entry.address");
         int         port    = Configs.getPort(config, "order-entry.port");
 
-        return OrderEntry.open(new InetSocketAddress(address, port), engine);
+        return OrderEntry.open(new InetSocketAddress(address, port), books);
     }
 
 }

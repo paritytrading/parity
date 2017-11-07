@@ -1,4 +1,4 @@
-package com.paritytrading.parity.system;
+package com.paritytrading.parity.engine;
 
 import static it.unimi.dsi.fastutil.bytes.ByteArrays.HASH_STRATEGY;
 
@@ -35,20 +35,20 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
 
     private ObjectOpenCustomHashSet<byte[]> orderIds;
 
-    private MatchingEngine engine;
+    private OrderBooks books;
 
     private boolean terminated;
 
     private long username;
 
-    public Session(SocketChannel channel, MatchingEngine engine) {
+    public Session(SocketChannel channel, OrderBooks books) {
         this.transport = new SoupBinTCPServer(channel, POE.MAX_INBOUND_MESSAGE_LENGTH,
                 new POEServerParser(this), this);
 
         this.orders   = new Object2ObjectOpenCustomHashMap<>(HASH_STRATEGY);
         this.orderIds = new ObjectOpenCustomHashSet<>(HASH_STRATEGY);
 
-        this.engine = engine;
+        this.books = books;
 
         this.terminated = false;
     }
@@ -68,7 +68,7 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
     @Override
     public void close() {
         for (Order order : orders.values())
-            engine.cancel(order);
+            books.cancel(order);
 
         try {
             transport.close();
@@ -115,7 +115,7 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
         if (orderIds.contains(message.orderId))
             return;
 
-        engine.enterOrder(message, this);
+        books.enterOrder(message, this);
     }
 
     @Override
@@ -129,7 +129,7 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
         if (order == null)
             return;
 
-        engine.cancelOrder(message, order);
+        books.cancelOrder(message, order);
     }
 
     public void track(Order order) {
@@ -196,7 +196,7 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
     }
 
     private long timestamp() {
-        return (System.currentTimeMillis() - TradingSystem.EPOCH_MILLIS) * 1_000_000;
+        return (System.currentTimeMillis() - MatchingEngine.EPOCH_MILLIS) * 1_000_000;
     }
 
 }
