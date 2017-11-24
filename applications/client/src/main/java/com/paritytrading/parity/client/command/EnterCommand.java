@@ -6,7 +6,6 @@ import com.paritytrading.foundation.ASCII;
 import com.paritytrading.parity.client.TerminalClient;
 import com.paritytrading.parity.net.poe.POE;
 import com.paritytrading.parity.util.Instrument;
-import com.paritytrading.parity.util.Instruments;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
