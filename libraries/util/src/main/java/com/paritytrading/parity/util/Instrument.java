@@ -5,7 +5,6 @@ import static com.paritytrading.parity.util.Strings.*;
 
 import com.paritytrading.foundation.ASCII;
 import com.typesafe.config.Config;
-import java.util.Arrays;
 
 /**
  * An instrument configuration.
