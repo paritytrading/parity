@@ -4,7 +4,6 @@ import static java.util.Arrays.*;
 import static java.util.Comparator.*;
 import static org.jvirtanen.util.Applications.*;
 
-import com.paritytrading.foundation.ASCII;
 import com.paritytrading.nassau.MessageListener;
 import com.paritytrading.nassau.util.BinaryFILE;
 import com.paritytrading.nassau.util.MoldUDP64;
@@ -21,7 +20,6 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.NetworkInterface;
-import java.util.List;
 import org.jvirtanen.config.Configs;
 
 class StockTicker {

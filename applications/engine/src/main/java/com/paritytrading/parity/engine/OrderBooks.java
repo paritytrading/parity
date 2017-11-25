@@ -5,7 +5,6 @@ import com.paritytrading.parity.match.OrderBook;
 import com.paritytrading.parity.match.OrderBookListener;
 import com.paritytrading.parity.match.Side;
 import com.paritytrading.parity.net.pmd.PMD;
-import com.paritytrading.parity.net.pmr.PMR;
 import com.paritytrading.parity.net.poe.POE;
 import it.unimi.dsi.fastutil.longs.Long2ObjectArrayMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;

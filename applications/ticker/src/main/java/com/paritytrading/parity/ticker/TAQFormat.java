@@ -3,7 +3,6 @@ package com.paritytrading.parity.ticker;
 import static com.paritytrading.parity.ticker.MarketDataListener.*;
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 
-import com.paritytrading.foundation.ASCII;
 import com.paritytrading.parity.book.OrderBook;
 import com.paritytrading.parity.book.Side;
 import com.paritytrading.parity.file.taq.TAQ;

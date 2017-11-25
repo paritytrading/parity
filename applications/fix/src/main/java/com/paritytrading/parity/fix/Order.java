@@ -2,9 +2,6 @@ package com.paritytrading.parity.fix;
 
 import static com.paritytrading.philadelphia.fix44.FIX44Enumerations.*;
 
-import com.paritytrading.foundation.ASCII;
-import com.paritytrading.parity.net.poe.POE;
-
 class Order {
 
     private long   orderEntryId;
