@@ -34,7 +34,7 @@ class EnterCommand implements Command {
             if (config == null)
                 throw new CommandException();
 
-            execute(client, (long)(quantity * config.getSizeFactor()), instrument, (long)(price * config.getPriceFactor()));
+            execute(client, (long)(quantity * config.getSizeFactor()), instrument, Math.round(price * config.getPriceFactor()));
         } catch (NoSuchElementException e) {
             throw new CommandException();
         }
