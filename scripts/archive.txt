@@ -4,9 +4,6 @@ README.md
 applications/client/README.md
 applications/client/etc/example.conf
 applications/client/parity-client.jar
-applications/engine/README.md
-applications/engine/etc/example.conf
-applications/engine/parity-engine.jar
 applications/fix/README.md
 applications/fix/doc/FIX.md
 applications/fix/etc/example.conf
@@ -16,6 +13,9 @@ applications/reporter/etc/example-tcp.conf
 applications/reporter/etc/example-udp.conf
 applications/reporter/parity-reporter.jar
 applications/reporter/scripts/portfolio.py
+applications/system/README.md
+applications/system/etc/example.conf
+applications/system/parity-system.jar
 applications/ticker/README.md
 applications/ticker/etc/example-tcp.conf
 applications/ticker/etc/example-udp.conf

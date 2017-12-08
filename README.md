@@ -16,8 +16,8 @@ See the [latest release][] on GitHub.
 
 Parity contains the following applications:
 
-- [**Parity Matching Engine**](applications/engine) is a server application
-  that implements the matching engine for the trading system.
+- [**Parity Trading System**](applications/system) is a server application for
+  running a financial exchange.
 
 - [**Parity FIX Gateway**](applications/fix) is a server application that adds
   Financial Information Exchange (FIX) support to the trading system.

@@ -1,4 +1,4 @@
-package com.paritytrading.parity.engine;
+package com.paritytrading.parity.system;
 
 import com.paritytrading.parity.match.OrderBook;
 

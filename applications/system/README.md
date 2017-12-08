@@ -1,7 +1,7 @@
-# Parity Matching Engine
+# Parity Trading System
 
-Parity Matching Engine is a server application that implements the matching
-engine for the trading system.
+Parity Trading System is a server application for running a financial
+exchange.
 
 ## Download
 
@@ -11,10 +11,10 @@ Download the [latest release][] from GitHub.
 
 ## Usage
 
-Run Parity Matching Engine with Java:
+Run Parity Trading System with Java:
 
 ```
-java -jar parity-engine.jar <configuration-file>
+java -jar parity-system.jar <configuration-file>
 ```
 
 The command line arguments are as follows:
@@ -28,7 +28,7 @@ reports.
 
 ## Configuration
 
-Parity Matching Engine uses a configuration file to specify the services it
+Parity Trading System uses a configuration file to specify the services it
 makes available to market participants.
 
 The following configuration parameters are required:

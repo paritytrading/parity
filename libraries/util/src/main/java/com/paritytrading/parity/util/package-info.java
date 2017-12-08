@@ -1,4 +1,4 @@
 /**
- * Parity Utilities contain support functions used by the trading system.
+ * Parity Utilities contain support functions used by Parity Trading System.
  */
 package com.paritytrading.parity.util;

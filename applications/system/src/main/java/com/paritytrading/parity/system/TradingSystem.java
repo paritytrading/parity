@@ -1,4 +1,4 @@
-package com.paritytrading.parity.engine;
+package com.paritytrading.parity.system;
 
 import static org.jvirtanen.util.Applications.*;
 
@@ -14,14 +14,14 @@ import java.time.ZoneId;
 import java.util.List;
 import org.jvirtanen.config.Configs;
 
-class MatchingEngine {
+class TradingSystem {
 
     public static final long EPOCH_MILLIS = LocalDate.now().atStartOfDay(ZoneId.systemDefault())
         .toInstant().toEpochMilli();
 
     public static void main(String[] args) throws IOException {
         if (args.length != 1)
-            usage("parity-engine <configuration-file>");
+            usage("parity-system <configuration-file>");
 
         try {
             main(config(args[0]));

@@ -1,4 +1,4 @@
-package com.paritytrading.parity.engine;
+package com.paritytrading.parity.system;
 
 import static org.jvirtanen.util.Applications.*;
 
@@ -6,7 +6,7 @@ import com.paritytrading.nassau.moldudp64.MoldUDP64DefaultMessageStore;
 import com.paritytrading.nassau.moldudp64.MoldUDP64DownstreamPacket;
 import com.paritytrading.nassau.moldudp64.MoldUDP64RequestServer;
 import com.paritytrading.nassau.moldudp64.MoldUDP64Server;
-import com.paritytrading.parity.net.pmr.PMR;
+import com.paritytrading.parity.net.pmd.PMD;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.NetworkInterface;
@@ -15,13 +15,12 @@ import java.net.StandardSocketOptions;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 
-class MarketReporting {
+class MarketData {
 
-    private PMR.Version       version;
-    private PMR.OrderEntered  orderEntered;
-    private PMR.OrderAdded    orderAdded;
-    private PMR.OrderCanceled orderCanceled;
-    private PMR.Trade         trade;
+    private PMD.Version       version;
+    private PMD.OrderAdded    orderAdded;
+    private PMD.OrderExecuted orderExecuted;
+    private PMD.OrderCanceled orderCanceled;
 
     private MoldUDP64Server transport;
 
@@ -33,12 +32,11 @@ class MarketReporting {
 
     private ByteBuffer buffer;
 
-    private MarketReporting(MoldUDP64Server transport, MoldUDP64RequestServer requestTransport) {
-        this.version       = new PMR.Version();
-        this.orderEntered  = new PMR.OrderEntered();
-        this.orderAdded    = new PMR.OrderAdded();
-        this.orderCanceled = new PMR.OrderCanceled();
-        this.trade         = new PMR.Trade();
+    private MarketData(MoldUDP64Server transport, MoldUDP64RequestServer requestTransport) {
+        this.version       = new PMD.Version();
+        this.orderAdded    = new PMD.OrderAdded();
+        this.orderExecuted = new PMD.OrderExecuted();
+        this.orderCanceled = new PMD.OrderCanceled();
 
         this.transport = transport;
 
@@ -50,7 +48,7 @@ class MarketReporting {
         this.buffer = ByteBuffer.allocateDirect(1024);
     }
 
-    public static MarketReporting open(String session, NetworkInterface multicastInterface,
+    public static MarketData open(String session, NetworkInterface multicastInterface,
             InetSocketAddress multicastGroup,
             InetSocketAddress requestAddress) throws IOException {
         DatagramChannel channel = DatagramChannel.open(StandardProtocolFamily.INET);
@@ -67,7 +65,7 @@ class MarketReporting {
 
         MoldUDP64RequestServer requestTransport = new MoldUDP64RequestServer(requestChannel);
 
-        return new MarketReporting(transport, requestTransport);
+        return new MarketData(transport, requestTransport);
     }
 
     public MoldUDP64Server getTransport() {
@@ -87,28 +85,29 @@ class MarketReporting {
     }
 
     public void version() {
-        version.version = PMR.VERSION;
+        version.version = PMD.VERSION;
 
         send(version);
     }
 
-    public void orderEntered(long username, long orderNumber, byte side, long instrument, long quantity, long price) {
-        orderEntered.timestamp   = timestamp();
-        orderEntered.username    = username;
-        orderEntered.orderNumber = orderNumber;
-        orderEntered.side        = side;
-        orderEntered.instrument  = instrument;
-        orderEntered.quantity    = quantity;
-        orderEntered.price       = price;
-
-        send(orderEntered);
-    }
-
-    public void orderAdded(long orderNumber) {
+    public void orderAdded(long orderNumber, byte side, long instrument, long quantity, long price) {
         orderAdded.timestamp   = timestamp();
         orderAdded.orderNumber = orderNumber;
+        orderAdded.side        = side;
+        orderAdded.instrument  = instrument;
+        orderAdded.quantity    = quantity;
+        orderAdded.price       = price;
 
         send(orderAdded);
+    }
+
+    public void orderExecuted(long orderNumber, long quantity, long matchNumber) {
+        orderExecuted.timestamp   = timestamp();
+        orderExecuted.orderNumber = orderNumber;
+        orderExecuted.quantity    = quantity;
+        orderExecuted.matchNumber = matchNumber;
+
+        send(orderExecuted);
     }
 
     public void orderCanceled(long orderNumber, long canceledQuantity) {
@@ -119,18 +118,11 @@ class MarketReporting {
         send(orderCanceled);
     }
 
-    public void trade(long restingOrderNumber, long incomingOrderNumber,
-            long quantity, long matchNumber) {
-        trade.timestamp           = timestamp();
-        trade.restingOrderNumber  = restingOrderNumber;
-        trade.incomingOrderNumber = incomingOrderNumber;
-        trade.quantity            = quantity;
-        trade.matchNumber         = matchNumber;
-
-        send(trade);
+    private long timestamp() {
+        return (System.currentTimeMillis() - TradingSystem.EPOCH_MILLIS) * 1_000_000;
     }
 
-    private void send(PMR.Message message) {
+    private void send(PMD.Message message) {
         buffer.clear();
         message.put(buffer);
         buffer.flip();
@@ -148,10 +140,6 @@ class MarketReporting {
         } catch (IOException e) {
             fatal(e);
         }
-    }
-
-    private long timestamp() {
-        return (System.currentTimeMillis() - MatchingEngine.EPOCH_MILLIS) * 1_000_000;
     }
 
 }
