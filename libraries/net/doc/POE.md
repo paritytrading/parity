@@ -159,5 +159,5 @@ Reason | Description
   - Represent prices using the minimum price increment
   - Represent quantities using the minimum quantity increment
   - Represent prices using 8 bytes
-  - Represent sizes using 8 bytes
+  - Represent quantities using 8 bytes
 - **Version 1.** Initial version.
