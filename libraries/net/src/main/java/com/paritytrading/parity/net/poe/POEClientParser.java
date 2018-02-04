@@ -34,28 +34,46 @@ public class POEClientParser implements MessageListener {
 
     @Override
     public void message(ByteBuffer buffer) throws IOException {
+        int length = buffer.remaining();
+
         byte messageType = buffer.get();
 
         switch (messageType) {
         case MESSAGE_TYPE_ORDER_ACCEPTED:
+            if (length < MESSAGE_LENGTH_ORDER_ACCEPTED)
+                malformedMessage(messageType);
+
             orderAccepted.get(buffer);
             listener.orderAccepted(orderAccepted);
             break;
         case MESSAGE_TYPE_ORDER_REJECTED:
+            if (length < MESSAGE_LENGTH_ORDER_REJECTED)
+                malformedMessage(messageType);
+
             orderRejected.get(buffer);
             listener.orderRejected(orderRejected);
             break;
         case MESSAGE_TYPE_ORDER_EXECUTED:
+            if (length < MESSAGE_LENGTH_ORDER_EXECUTED)
+                malformedMessage(messageType);
+
             orderExecuted.get(buffer);
             listener.orderExecuted(orderExecuted);
             break;
         case MESSAGE_TYPE_ORDER_CANCELED:
+            if (length < MESSAGE_LENGTH_ORDER_CANCELED)
+                malformedMessage(messageType);
+
             orderCanceled.get(buffer);
             listener.orderCanceled(orderCanceled);
             break;
         default:
             throw new POEException("Unknown message type: " + (char)messageType);
         }
+    }
+
+    private void malformedMessage(byte messageType) throws IOException {
+        throw new POEException("Malformed message: " + (char)messageType);
     }
 
 }
