@@ -23,6 +23,11 @@ public class PMD {
     static final byte MESSAGE_TYPE_ORDER_EXECUTED = 'E';
     static final byte MESSAGE_TYPE_ORDER_CANCELED = 'X';
 
+    static final int MESSAGE_LENGTH_VERSION        =  5;
+    static final int MESSAGE_LENGTH_ORDER_ADDED    = 42;
+    static final int MESSAGE_LENGTH_ORDER_EXECUTED = 29;
+    static final int MESSAGE_LENGTH_ORDER_CANCELED = 25;
+
     /**
      * A message.
      */
