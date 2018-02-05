@@ -24,6 +24,12 @@ public class PMR {
     static final byte MESSAGE_TYPE_ORDER_CANCELED = 'X';
     static final byte MESSAGE_TYPE_TRADE          = 'T';
 
+    static final int MESSAGE_LENGTH_VERSION        =  5;
+    static final int MESSAGE_LENGTH_ORDER_ENTERED  = 50;
+    static final int MESSAGE_LENGTH_ORDER_ADDED    = 17;
+    static final int MESSAGE_LENGTH_ORDER_CANCELED = 25;
+    static final int MESSAGE_LENGTH_TRADE          = 37;
+
     public static final byte BUY  = 'B';
     public static final byte SELL = 'S';
 

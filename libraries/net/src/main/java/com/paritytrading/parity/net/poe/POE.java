@@ -46,6 +46,9 @@ public class POE {
     static final byte MESSAGE_TYPE_ENTER_ORDER  = 'E';
     static final byte MESSAGE_TYPE_CANCEL_ORDER = 'X';
 
+    static final int MESSAGE_LENGTH_ENTER_ORDER  = 42;
+    static final int MESSAGE_LENGTH_CANCEL_ORDER = 25;
+
     /**
      * An Enter Order message.
      */
@@ -122,6 +125,10 @@ public class POE {
     static final byte MESSAGE_TYPE_ORDER_EXECUTED = 'E';
     static final byte MESSAGE_TYPE_ORDER_CANCELED = 'X';
 
+    static final int MESSAGE_LENGTH_ORDER_ACCEPTED = 58;
+    static final int MESSAGE_LENGTH_ORDER_REJECTED = 26;
+    static final int MESSAGE_LENGTH_ORDER_EXECUTED = 46;
+    static final int MESSAGE_LENGTH_ORDER_CANCELED = 34;
 
     /**
      * An Order Accepted message.

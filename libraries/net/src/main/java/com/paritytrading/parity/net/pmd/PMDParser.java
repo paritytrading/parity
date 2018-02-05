@@ -34,28 +34,46 @@ public class PMDParser implements MessageListener {
 
     @Override
     public void message(ByteBuffer buffer) throws IOException {
+        int length = buffer.remaining();
+
         byte messageType = buffer.get();
 
         switch (messageType) {
         case MESSAGE_TYPE_VERSION:
+            if (length < MESSAGE_LENGTH_VERSION)
+                malformedMessage(messageType);
+
             version.get(buffer);
             listener.version(version);
             break;
         case MESSAGE_TYPE_ORDER_ADDED:
+            if (length < MESSAGE_LENGTH_ORDER_ADDED)
+                malformedMessage(messageType);
+
             orderAdded.get(buffer);
             listener.orderAdded(orderAdded);
             break;
         case MESSAGE_TYPE_ORDER_EXECUTED:
+            if (length < MESSAGE_LENGTH_ORDER_EXECUTED)
+                malformedMessage(messageType);
+
             orderExecuted.get(buffer);
             listener.orderExecuted(orderExecuted);
             break;
         case MESSAGE_TYPE_ORDER_CANCELED:
+            if (length < MESSAGE_LENGTH_ORDER_CANCELED)
+                malformedMessage(messageType);
+
             orderCanceled.get(buffer);
             listener.orderCanceled(orderCanceled);
             break;
         default:
             throw new PMDException("Unknown message type: " + (char)messageType);
         }
+    }
+
+    private void malformedMessage(byte messageType) throws IOException {
+        throw new PMDException("Malformed message: " + (char)messageType);
     }
 
 }
