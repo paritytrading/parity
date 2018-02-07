@@ -34,15 +34,7 @@ public class Market {
      * @return the order book
      */
     public OrderBook open(long instrument) {
-        OrderBook book = books.get(instrument);
-        if (book != null)
-            return book;
-
-        book = new OrderBook(instrument);
-
-        books.put(instrument, book);
-
-        return book;
+        return books.computeIfAbsent(instrument, (key) -> new OrderBook(key));
     }
 
     /**
