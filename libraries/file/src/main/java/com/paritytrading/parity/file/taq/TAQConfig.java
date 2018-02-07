@@ -188,14 +188,7 @@ public class TAQConfig {
     }
 
     private static DecimalFormat getFormat(Map<String, DecimalFormat> formats, String instrument) {
-        DecimalFormat format = formats.get(instrument);
-        if (format == null) {
-            format = newFormat();
-
-            formats.put(instrument, format);
-        }
-
-        return format;
+        return formats.computeIfAbsent(instrument, (key) -> newFormat());
     }
 
     private static void setFractionDigits(DecimalFormat format, int fractionDigits) {
