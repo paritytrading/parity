@@ -1,8 +1,12 @@
 #
-# These are Philadelphia Terminal Client commands for testing Parity FIX
+# This is a Philadelphia Terminal Client script for testing Parity FIX
 # Gateway. For more information on Philadelphia Terminal Client, see:
 #
 #   https://github.com/paritytrading/philadelphia
+#
+# Run this script as follows:
+#
+#   java -jar philadelphia-client.jar test.conf test.txt
 #
 
 #
@@ -15,6 +19,7 @@
 #   Password(554)     = bar
 #
 send 35=A|98=0|108=30|553=foo|554=bar
+sleep 100
 
 #
 # Expect: Logon
@@ -25,6 +30,7 @@ send 35=A|98=0|108=30|553=foo|554=bar
 #
 # 35=A|98=0|108=30
 #
+messages -1
 
 #
 # Send: New Order Single
@@ -39,6 +45,7 @@ send 35=A|98=0|108=30|553=foo|554=bar
 #   Price(44)        = 150.00
 #
 send 35=D|11=1|55=AAPL|54=1|38=100|40=2|44=150.00
+sleep 100
 
 #
 # Expect: Execution Report
@@ -58,6 +65,7 @@ send 35=D|11=1|55=AAPL|54=1|38=100|40=2|44=150.00
 #
 # 35=8|37=...|11=1|17=...|150=0|39=0|55=AAPL|54=1|38=100|151=100|14=0|6=0.00
 #
+messages -1
 
 #
 # Send: Order Cancel/Replace Request
@@ -71,6 +79,7 @@ send 35=D|11=1|55=AAPL|54=1|38=100|40=2|44=150.00
 #   OrdType(40)      = 2 (Limit)
 #
 send 35=G|11=2|41=1|54=1|38=50|40=2
+sleep 100
 
 #
 # Expect: Execution Report
@@ -91,6 +100,7 @@ send 35=G|11=2|41=1|54=1|38=50|40=2
 #
 # 35=8|37=...|11=2|41=1|17=...|150=E|39=E|55=AAPL|38=100|151=100|14=0|6=0.00
 #
+messages -2
 
 #
 # Expect: Execution Report
@@ -111,6 +121,7 @@ send 35=G|11=2|41=1|54=1|38=50|40=2
 #
 # 35=8|37=...|11=2|41=1|17=...|150=4|39=4|55=AAPL|38=50|151=50|14=0|6=0.00
 #
+messages -1
 
 #
 # Send: Order Cancel Request
@@ -122,6 +133,7 @@ send 35=G|11=2|41=1|54=1|38=50|40=2
 #   TransactTime(60) = <skipped>
 #
 send 35=F|11=3|41=2|54=1
+sleep 100
 
 #
 # Expect: Execution Report
@@ -142,6 +154,7 @@ send 35=F|11=3|41=2|54=1
 #
 # 35=8|37=...|11=3|41=2|17=...|150=6|39=6|55=AAPL|38=50|151=50|14=0|6=0.00
 #
+messages -2
 
 #
 # Expect: Execution Report
@@ -162,6 +175,7 @@ send 35=F|11=3|41=2|54=1
 #
 # 35=8|37=...|11=3|41=2|17=...|150=4|39=4|55=AAPL|38=50|151=0|14=0|6=0.00
 #
+messages -1
 
 #
 # Send: Logout
@@ -169,6 +183,7 @@ send 35=F|11=3|41=2|54=1
 #   MsgType(35) = 5
 #
 send 35=5
+sleep 100
 
 #
 # Expect: Logout
@@ -177,3 +192,6 @@ send 35=5
 #
 # 35=5
 #
+messages -1
+
+exit
