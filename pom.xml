@@ -37,7 +37,7 @@
     <jmh.version>1.19</jmh.version>
     <eclipse.collections.version>8.2.0</eclipse.collections.version>
     <nassau.version>0.13.0</nassau.version> <!-- (mentioned in documentation) -->
-    <philadelphia.version>0.6.1</philadelphia.version>
+    <philadelphia.version>0.7.0</philadelphia.version>
   </properties>
 
   <modules>
