@@ -13,11 +13,10 @@ import com.paritytrading.parity.net.poe.POEClientListener;
 import com.paritytrading.parity.util.Instrument;
 import com.paritytrading.parity.util.Instruments;
 import com.paritytrading.philadelphia.FIXConfig;
-import com.paritytrading.philadelphia.FIXField;
+import com.paritytrading.philadelphia.FIXConnection;
+import com.paritytrading.philadelphia.FIXConnectionStatusListener;
 import com.paritytrading.philadelphia.FIXMessage;
 import com.paritytrading.philadelphia.FIXMessageListener;
-import com.paritytrading.philadelphia.FIXSession;
-import com.paritytrading.philadelphia.FIXStatusListener;
 import com.paritytrading.philadelphia.FIXValue;
 import com.paritytrading.philadelphia.FIXValueFormatException;
 import java.io.Closeable;
@@ -43,7 +42,7 @@ class Session implements Closeable {
 
     private Orders orders;
 
-    private FIXSession fix;
+    private FIXConnection fix;
 
     private SoupBinTCPClient orderEntry;
 
@@ -61,7 +60,7 @@ class Session implements Closeable {
 
         FIXListener fixListener = new FIXListener();
 
-        this.fix = new FIXSession(fix, config, fixListener, fixListener);
+        this.fix = new FIXConnection(fix, config, fixListener, fixListener);
 
         this.instruments = instruments;
     }
@@ -72,7 +71,7 @@ class Session implements Closeable {
         orderEntry.close();
     }
 
-    public FIXSession getFIX() {
+    public FIXConnection getFIX() {
         return fix;
     }
 
@@ -88,7 +87,7 @@ class Session implements Closeable {
         orderEntry.send(txBuffer);
     }
 
-    private class FIXListener implements FIXMessageListener, FIXStatusListener {
+    private class FIXListener implements FIXMessageListener, FIXConnectionStatusListener {
 
         @Override
         public void message(FIXMessage message) throws IOException {
@@ -124,26 +123,24 @@ class Session implements Closeable {
             FIXValue priceValue    = null;
 
             for (int i = 0; i < message.getFieldCount(); i++) {
-                FIXField field = message.getField(i);
-
-                switch (field.getTag()) {
+                switch (message.tagAt(i)) {
                 case ClOrdID:
-                    clOrdIdValue = field.getValue();
+                    clOrdIdValue = message.valueAt(i);
                     break;
                 case Account:
-                    accountValue = field.getValue();
+                    accountValue = message.valueAt(i);
                     break;
                 case Side:
-                    sideValue = field.getValue();
+                    sideValue = message.valueAt(i);
                     break;
                 case Symbol:
-                    symbolValue = field.getValue();
+                    symbolValue = message.valueAt(i);
                     break;
                 case OrderQty:
-                    orderQtyValue = field.getValue();
+                    orderQtyValue = message.valueAt(i);
                     break;
                 case Price:
-                    priceValue = field.getValue();
+                    priceValue = message.valueAt(i);
                     break;
                 }
             }
@@ -265,17 +262,15 @@ class Session implements Closeable {
             FIXValue orderQtyValue    = null;
 
             for (int i = 0; i < message.getFieldCount(); i++) {
-                FIXField field = message.getField(i);
-
-                switch (field.getTag()) {
+                switch (message.tagAt(i)) {
                 case ClOrdID:
-                    clOrdIdValue = field.getValue();
+                    clOrdIdValue = message.valueAt(i);
                     break;
                 case OrigClOrdID:
-                    origClOrdIdValue = field.getValue();
+                    origClOrdIdValue = message.valueAt(i);
                     break;
                 case OrderQty:
-                    orderQtyValue = field.getValue();
+                    orderQtyValue = message.valueAt(i);
                     break;
                 }
             }
@@ -356,23 +351,23 @@ class Session implements Closeable {
         }
 
         @Override
-        public void close(FIXSession session, String message) throws IOException {
+        public void close(FIXConnection connection, String message) throws IOException {
             orderEntry.close();
         }
 
         @Override
-        public void heartbeatTimeout(FIXSession session) throws IOException {
+        public void heartbeatTimeout(FIXConnection connection) throws IOException {
         }
 
         @Override
-        public void logon(FIXSession session, FIXMessage message) throws IOException {
-            FIXValue username = message.findField(Username);
+        public void logon(FIXConnection connection, FIXMessage message) throws IOException {
+            FIXValue username = message.valueOf(Username);
             if (username == null) {
                 requiredTagMissing(message, "Username(553) missing");
                 return;
             }
 
-            FIXValue password = message.findField(Password);
+            FIXValue password = message.valueOf(Password);
             if (password == null) {
                 requiredTagMissing(message, "Password(554) missing");
                 return;
@@ -389,22 +384,22 @@ class Session implements Closeable {
         }
 
         @Override
-        public void logout(FIXSession session, FIXMessage message) throws IOException {
+        public void logout(FIXConnection connection, FIXMessage message) throws IOException {
             fix.sendLogout();
 
             orderEntry.logout();
         }
 
         @Override
-        public void reject(FIXSession session, FIXMessage message) {
+        public void reject(FIXConnection connection, FIXMessage message) {
         }
 
         @Override
-        public void sequenceReset(FIXSession session) {
+        public void sequenceReset(FIXConnection connection) {
         }
 
         @Override
-        public void tooLowMsgSeqNum(FIXSession session, long receivedMsgSeqNum, long expectedMsgSeqNum) {
+        public void tooLowMsgSeqNum(FIXConnection connection, long receivedMsgSeqNum, long expectedMsgSeqNum) {
         }
 
     }
