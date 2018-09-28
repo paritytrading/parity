@@ -95,9 +95,7 @@ public class OrderBook {
     boolean add(Side side, long price, long quantity) {
         Long2LongRBTreeMap levels = getLevels(side);
 
-        long size = levels.get(price);
-
-        levels.put(price, size + quantity);
+        levels.addTo(price, quantity);
 
         return price == levels.firstLongKey();
     }
