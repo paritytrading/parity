@@ -38,22 +38,22 @@ class PriceLevel {
 
     public long match(long orderId, Side side, long quantity, OrderBookListener listener) {
         while (quantity > 0 && !orders.isEmpty()) {
-            Order order = orders.get(0);
+            Order resting = orders.get(0);
 
-            long orderQuantity = order.getRemainingQuantity();
+            long restingQuantity = resting.getRemainingQuantity();
 
-            if (orderQuantity > quantity) {
-                order.reduce(quantity);
+            if (restingQuantity > quantity) {
+                resting.reduce(quantity);
 
-                listener.match(order.getId(), orderId, side, price, quantity, order.getRemainingQuantity());
+                listener.match(resting.getId(), orderId, side, price, quantity, resting.getRemainingQuantity());
 
                 quantity = 0;
             } else {
                 orders.remove(0);
 
-                listener.match(order.getId(), orderId, side, price, orderQuantity, 0);
+                listener.match(resting.getId(), orderId, side, price, restingQuantity, 0);
 
-                quantity -= orderQuantity;
+                quantity -= restingQuantity;
             }
         }
 
