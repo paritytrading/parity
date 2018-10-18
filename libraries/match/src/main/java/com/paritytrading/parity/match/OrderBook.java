@@ -63,7 +63,7 @@ public class OrderBook {
         PriceLevel bestLevel = getBestLevel(asks);
 
         while (remainingQuantity > 0 && bestLevel != null && bestLevel.getPrice() <= price) {
-            remainingQuantity = bestLevel.match(orderId, Side.BUY, remainingQuantity, listener);
+            remainingQuantity = bestLevel.match(orderId, Side.BUY, remainingQuantity, orders, listener);
 
             if (bestLevel.isEmpty())
                 asks.remove(bestLevel.getPrice());
@@ -84,7 +84,7 @@ public class OrderBook {
         PriceLevel bestLevel = getBestLevel(bids);
 
         while (remainingQuantity > 0 && bestLevel != null && bestLevel.getPrice() >= price) {
-            remainingQuantity = bestLevel.match(orderId, Side.SELL, remainingQuantity, listener);
+            remainingQuantity = bestLevel.match(orderId, Side.SELL, remainingQuantity, orders, listener);
 
             if (bestLevel.isEmpty())
                 bids.remove(bestLevel.getPrice());

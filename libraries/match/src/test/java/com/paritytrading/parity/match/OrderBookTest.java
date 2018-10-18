@@ -207,4 +207,17 @@ public class OrderBookTest {
         assertEquals(asList(bid, cancel), events.collect());
     }
 
+    @Test
+    public void reuseOrderId() {
+        book.enter(1, Side.BUY,  1000, 100);
+        book.enter(2, Side.SELL, 1000, 100);
+        book.enter(1, Side.BUY,  1000, 100);
+
+        Event firstBid  = new Add(1, Side.BUY, 1000, 100);
+        Event match     = new Match(1, 2, Side.SELL, 1000, 100, 0);
+        Event secondBid = new Add(1, Side.BUY, 1000, 100);
+
+        assertEquals(asList(firstBid, match, secondBid), events.collect());
+    }
+
 }
