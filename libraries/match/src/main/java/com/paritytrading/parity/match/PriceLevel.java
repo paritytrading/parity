@@ -1,5 +1,6 @@
 package com.paritytrading.parity.match;
 
+import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import java.util.ArrayList;
 
 class PriceLevel {
@@ -36,24 +37,28 @@ class PriceLevel {
         return order;
     }
 
-    public long match(long orderId, Side side, long quantity, OrderBookListener listener) {
+    public long match(long orderId, Side side, long quantity, Long2ObjectOpenHashMap<Order> orderIds, OrderBookListener listener) {
         while (quantity > 0 && !orders.isEmpty()) {
-            Order order = orders.get(0);
+            Order resting = orders.get(0);
 
-            long orderQuantity = order.getRemainingQuantity();
+            long restingId = resting.getId();
 
-            if (orderQuantity > quantity) {
-                order.reduce(quantity);
+            long restingQuantity = resting.getRemainingQuantity();
 
-                listener.match(order.getId(), orderId, side, price, quantity, order.getRemainingQuantity());
+            if (restingQuantity > quantity) {
+                resting.reduce(quantity);
+
+                listener.match(restingId, orderId, side, price, quantity, resting.getRemainingQuantity());
 
                 quantity = 0;
             } else {
                 orders.remove(0);
 
-                listener.match(order.getId(), orderId, side, price, orderQuantity, 0);
+                orderIds.remove(restingId);
 
-                quantity -= orderQuantity;
+                listener.match(restingId, orderId, side, price, restingQuantity, 0);
+
+                quantity -= restingQuantity;
             }
         }
 
