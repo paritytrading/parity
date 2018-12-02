@@ -1,5 +1,6 @@
 package com.paritytrading.parity.book;
 
+import it.unimi.dsi.fastutil.longs.Long2ObjectArrayMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 
 /**
@@ -7,7 +8,7 @@ import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
  */
 public class Market {
 
-    private Long2ObjectOpenHashMap<OrderBook> books;
+    private Long2ObjectArrayMap<OrderBook> books;
 
     private Long2ObjectOpenHashMap<Order> orders;
 
@@ -19,7 +20,7 @@ public class Market {
      * @param listener a listener for outbound events from the market
      */
     public Market(MarketListener listener) {
-        this.books  = new Long2ObjectOpenHashMap<>();
+        this.books  = new Long2ObjectArrayMap<>();
         this.orders = new Long2ObjectOpenHashMap<>();
 
         this.listener = listener;
