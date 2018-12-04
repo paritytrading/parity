@@ -20,7 +20,7 @@ java -jar parity-system.jar <configuration-file>
 The command line arguments are as follows:
 
 - `<configuration-file>`. The configuration file. The configuration file
-  specifies the services that are made available to market particpants.
+  specifies the services that are made available to market participants.
 
 Once started, the application starts listening for order entry sessions
 initiated by market participants and publishing market data and market
