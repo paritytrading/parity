@@ -26,7 +26,7 @@ using decimal point.
 A record consists of the fields enumerated below.
 
 Name        | Presence | Notes
-------------|----------|------------------------------------------------
+------------|----------|-------------------------------------------------
 Date        | `Q`, `T` |
 Timestamp   | `Q`, `T` |
 Instrument  | `Q`, `T` |
@@ -37,7 +37,7 @@ Ask Price   | `Q`      | Empty if not available
 Ask Size    | `Q`      | Empty if not available
 Trade Price | `T`      |
 Trade Size  | `T`      |
-Trade Side  | `T`      | Refers to resting order, empty if not available
+Trade Side  | `T`      | Refers to incoming order, empty if not available
 
 The record types are enumerated below.
 
