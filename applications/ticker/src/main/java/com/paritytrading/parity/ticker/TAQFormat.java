@@ -87,7 +87,7 @@ class TAQFormat extends MarketDataListener {
     }
 
     private char side(Side side) {
-        return side == Side.BUY ? TAQ.SELL : TAQ.BUY;
+        return side == Side.BUY ? TAQ.BUY : TAQ.SELL;
     }
 
 }

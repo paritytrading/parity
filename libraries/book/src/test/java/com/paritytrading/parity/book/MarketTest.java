@@ -88,7 +88,7 @@ public class MarketTest {
         Event updateAfterBid       = new Update(INSTRUMENT, true);
         Event updateAfterFirstAsk  = new Update(INSTRUMENT, true);
         Event updateAfterSecondAsk = new Update(INSTRUMENT, false);
-        Event trade                = new Trade(INSTRUMENT, Side.SELL, 1001, 200);
+        Event trade                = new Trade(INSTRUMENT, Side.BUY, 1001, 200);
         Event updateAfterTrade     = new Update(INSTRUMENT, true);
 
         assertEquals(asList(updateAfterBid, updateAfterFirstAsk, updateAfterSecondAsk,
@@ -107,7 +107,7 @@ public class MarketTest {
         Event updateAfterBid       = new Update(INSTRUMENT, true);
         Event updateAfterFirstAsk  = new Update(INSTRUMENT, true);
         Event updateAfterSecondAsk = new Update(INSTRUMENT, false);
-        Event trade                = new Trade(INSTRUMENT, Side.SELL, 1000, 200);
+        Event trade                = new Trade(INSTRUMENT, Side.BUY, 1000, 200);
         Event updateAfterTrade     = new Update(INSTRUMENT, true);
 
         assertEquals(asList(updateAfterBid, updateAfterFirstAsk, updateAfterSecondAsk,
@@ -124,7 +124,7 @@ public class MarketTest {
 
         Event updateAfterBid   = new Update(INSTRUMENT, true);
         Event updateAfterAsk   = new Update(INSTRUMENT, true);
-        Event trade            = new Trade(INSTRUMENT, Side.SELL, 1001, 100);
+        Event trade            = new Trade(INSTRUMENT, Side.BUY, 1001, 100);
         Event updateAfterTrade = new Update(INSTRUMENT, true);
 
         assertEquals(asList(updateAfterBid, updateAfterAsk, trade, updateAfterTrade),
