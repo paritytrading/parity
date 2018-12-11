@@ -161,7 +161,7 @@ public class Market {
 
         long executedQuantity = Math.min(quantity, remainingQuantity);
 
-        listener.trade(book, side, price, executedQuantity);
+        listener.trade(book, contra(side), price, executedQuantity);
 
         book.update(side, order.getPrice(), -executedQuantity);
 
@@ -231,6 +231,10 @@ public class Market {
         orders.remove(orderId);
 
         listener.update(book, bbo);
+    }
+
+    private static Side contra(Side side) {
+        return side == Side.BUY ? Side.SELL : Side.BUY;
     }
 
 }

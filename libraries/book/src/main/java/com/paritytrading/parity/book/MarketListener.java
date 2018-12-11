@@ -17,7 +17,7 @@ public interface MarketListener {
      * An event indicating that a trade has taken place.
      *
      * @param book the order book
-     * @param side the side of the resting order
+     * @param side the side of the incoming order
      * @param price the trade price
      * @param size the trade size
      */
