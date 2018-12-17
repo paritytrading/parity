@@ -11,10 +11,10 @@ import java.nio.ByteBuffer;
  */
 public class POEServerParser implements MessageListener {
 
-    private EnterOrder  enterOrder;
-    private CancelOrder cancelOrder;
+    private final EnterOrder  enterOrder;
+    private final CancelOrder cancelOrder;
 
-    private POEServerListener listener;
+    private final POEServerListener listener;
 
     /**
      * Create a parser for inbound messages on the server side.
