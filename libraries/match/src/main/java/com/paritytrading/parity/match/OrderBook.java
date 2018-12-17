@@ -9,12 +9,12 @@ import it.unimi.dsi.fastutil.longs.LongComparators;
  */
 public class OrderBook {
 
-    private Long2ObjectRBTreeMap<PriceLevel> bids;
-    private Long2ObjectRBTreeMap<PriceLevel> asks;
+    private final Long2ObjectRBTreeMap<PriceLevel> bids;
+    private final Long2ObjectRBTreeMap<PriceLevel> asks;
 
-    private Long2ObjectOpenHashMap<Order> orders;
+    private final Long2ObjectOpenHashMap<Order> orders;
 
-    private OrderBookListener listener;
+    private final OrderBookListener listener;
 
     /**
      * Create an order book.
