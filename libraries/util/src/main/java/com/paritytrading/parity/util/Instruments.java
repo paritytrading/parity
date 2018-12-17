@@ -19,18 +19,18 @@ import java.util.function.ToIntFunction;
  */
 public class Instruments implements Iterable<Instrument> {
 
-    private HashMap<String, Instrument> valuesByString;
+    private final HashMap<String, Instrument> valuesByString;
 
-    private Long2ObjectOpenHashMap<Instrument> valuesByLong;
+    private final Long2ObjectOpenHashMap<Instrument> valuesByLong;
 
-    private int maxPriceFractionDigits;
-    private int maxSizeFractionDigits;
+    private final int maxPriceFractionDigits;
+    private final int maxSizeFractionDigits;
 
-    private int priceWidth;
-    private int sizeWidth;
+    private final int priceWidth;
+    private final int sizeWidth;
 
-    private String pricePlaceholder;
-    private String sizePlaceholder;
+    private final String pricePlaceholder;
+    private final String sizePlaceholder;
 
     private Instruments(List<Instrument> values, int priceIntegerDigits, int maxPriceFractionDigits,
             int sizeIntegerDigits, int maxSizeFractionDigits) {
