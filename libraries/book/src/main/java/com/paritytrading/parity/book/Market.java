@@ -8,11 +8,11 @@ import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
  */
 public class Market {
 
-    private Long2ObjectArrayMap<OrderBook> books;
+    private final Long2ObjectArrayMap<OrderBook> books;
 
-    private Long2ObjectOpenHashMap<Order> orders;
+    private final Long2ObjectOpenHashMap<Order> orders;
 
-    private MarketListener listener;
+    private final MarketListener listener;
 
     /**
      * Create a market.
