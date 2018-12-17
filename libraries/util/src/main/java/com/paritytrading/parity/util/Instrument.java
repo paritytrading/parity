@@ -11,14 +11,14 @@ import com.typesafe.config.Config;
  */
 public class Instrument {
 
-    private String asString;
-    private long   asLong;
+    private final String asString;
+    private final long   asLong;
 
-    private int priceFractionDigits;
-    private int sizeFractionDigits;
+    private final int priceFractionDigits;
+    private final int sizeFractionDigits;
 
-    private long priceFactor;
-    private long sizeFactor;
+    private final long priceFactor;
+    private final long sizeFactor;
 
     private String priceFormat;
     private String sizeFormat;
