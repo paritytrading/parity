@@ -21,13 +21,13 @@ public class TAQConfig {
      */
     public static final TAQConfig DEFAULTS = new TAQConfig.Builder().build();
 
-    private Charset encoding;
+    private final Charset encoding;
 
-    private Map<String, DecimalFormat> priceFormats;
-    private Map<String, DecimalFormat> sizeFormats;
+    private final Map<String, DecimalFormat> priceFormats;
+    private final Map<String, DecimalFormat> sizeFormats;
 
-    private DecimalFormat defaultPriceFormat;
-    private DecimalFormat defaultSizeFormat;
+    private final DecimalFormat defaultPriceFormat;
+    private final DecimalFormat defaultSizeFormat;
 
     private TAQConfig(Charset encoding, Map<String, DecimalFormat> priceFormats,
             Map<String, DecimalFormat> sizeFormats, DecimalFormat defaultPriceFormat,
