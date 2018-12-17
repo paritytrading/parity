@@ -39,13 +39,13 @@ public class TAQWriter implements Closeable, Flushable {
         "Trade Size"  + FIELD_SEPARATOR +
         "Trade Side"  + RECORD_SEPARATOR;
 
-    private TAQConfig config;
+    private final TAQConfig config;
 
-    private FieldPosition position;
+    private final FieldPosition position;
 
-    private StringBuffer buffer;
+    private final StringBuffer buffer;
 
-    private PrintWriter sink;
+    private final PrintWriter sink;
 
     /**
      * Create a writer that writes to the specified file using the default
