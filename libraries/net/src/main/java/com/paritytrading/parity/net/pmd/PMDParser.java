@@ -11,12 +11,12 @@ import java.nio.ByteBuffer;
  */
 public class PMDParser implements MessageListener {
 
-    private Version       version;
-    private OrderAdded    orderAdded;
-    private OrderExecuted orderExecuted;
-    private OrderCanceled orderCanceled;
+    private final Version       version;
+    private final OrderAdded    orderAdded;
+    private final OrderExecuted orderExecuted;
+    private final OrderCanceled orderCanceled;
 
-    private PMDListener listener;
+    private final PMDListener listener;
 
     /**
      * Create a parser for inbound messages.
