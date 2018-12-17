@@ -10,7 +10,7 @@ public class OrderIDGenerator {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
 
-    private String prefix;
+    private final String prefix;
 
     private int count;
 
