@@ -11,12 +11,12 @@ import java.nio.ByteBuffer;
  */
 public class POEClientParser implements MessageListener {
 
-    private OrderAccepted orderAccepted;
-    private OrderRejected orderRejected;
-    private OrderExecuted orderExecuted;
-    private OrderCanceled orderCanceled;
+    private final OrderAccepted orderAccepted;
+    private final OrderRejected orderRejected;
+    private final OrderExecuted orderExecuted;
+    private final OrderCanceled orderCanceled;
 
-    private POEClientListener listener;
+    private final POEClientListener listener;
 
     /**
      * Create a parser for inbound messages on the client side.
