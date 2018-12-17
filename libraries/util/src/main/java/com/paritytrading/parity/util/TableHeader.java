@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class TableHeader {
 
-    private List<Column> columns;
+    private final List<Column> columns;
 
     /**
      * Construct a new instance.
