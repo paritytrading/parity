@@ -11,13 +11,13 @@ import java.nio.ByteBuffer;
  */
 public class PMRParser implements MessageListener {
 
-    private Version       version;
-    private OrderEntered  orderEntered;
-    private OrderAdded    orderAdded;
-    private OrderCanceled orderCanceled;
-    private Trade         trade;
+    private final Version       version;
+    private final OrderEntered  orderEntered;
+    private final OrderAdded    orderAdded;
+    private final OrderCanceled orderCanceled;
+    private final Trade         trade;
 
-    private PMRListener listener;
+    private final PMRListener listener;
 
     /**
      * Create a parser for inbound messages.
