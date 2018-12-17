@@ -5,11 +5,11 @@ import java.util.ArrayList;
 
 class PriceLevel {
 
-    private Side side;
+    private final Side side;
 
-    private long price;
+    private final long price;
 
-    private ArrayList<Order> orders;
+    private final ArrayList<Order> orders;
 
     public PriceLevel(Side side, long price) {
         this.side   = side;
