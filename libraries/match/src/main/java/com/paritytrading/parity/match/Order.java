@@ -2,9 +2,9 @@ package com.paritytrading.parity.match;
 
 class Order {
 
-    private PriceLevel level;
+    private final PriceLevel level;
 
-    private long id;
+    private final long id;
 
     private long remainingQuantity;
 
