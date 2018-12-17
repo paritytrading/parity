@@ -9,10 +9,10 @@ import it.unimi.dsi.fastutil.longs.LongSortedSet;
  */
 public class OrderBook {
 
-    private long instrument;
+    private final long instrument;
 
-    private Long2LongRBTreeMap bids;
-    private Long2LongRBTreeMap asks;
+    private final Long2LongRBTreeMap bids;
+    private final Long2LongRBTreeMap asks;
 
     OrderBook(long instrument) {
         this.instrument = instrument;
