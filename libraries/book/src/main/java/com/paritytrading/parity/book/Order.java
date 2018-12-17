@@ -5,10 +5,10 @@ package com.paritytrading.parity.book;
  */
 public class Order {
 
-    private OrderBook book;
+    private final OrderBook book;
 
-    private Side side;
-    private long price;
+    private final Side side;
+    private final long price;
 
     private long remainingQuantity;
 
