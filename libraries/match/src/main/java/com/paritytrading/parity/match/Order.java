@@ -8,7 +8,7 @@ class Order {
 
     private long remainingQuantity;
 
-    public Order(PriceLevel level, long id, long size) {
+    Order(PriceLevel level, long id, long size) {
         this.level = level;
 
         this.id = id;
@@ -16,23 +16,23 @@ class Order {
         this.remainingQuantity = size;
     }
 
-    public PriceLevel getLevel() {
+    PriceLevel getLevel() {
         return level;
     }
 
-    public long getId() {
+    long getId() {
         return id;
     }
 
-    public long getRemainingQuantity() {
+    long getRemainingQuantity() {
         return remainingQuantity;
     }
 
-    public void reduce(long quantity) {
+    void reduce(long quantity) {
         remainingQuantity -= quantity;
     }
 
-    public void resize(long size) {
+    void resize(long size) {
         remainingQuantity = size;
     }
 
