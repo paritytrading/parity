@@ -11,25 +11,25 @@ class PriceLevel {
 
     private final ArrayList<Order> orders;
 
-    public PriceLevel(Side side, long price) {
+    PriceLevel(Side side, long price) {
         this.side   = side;
         this.price  = price;
         this.orders = new ArrayList<>();
     }
 
-    public Side getSide() {
+    Side getSide() {
         return side;
     }
 
-    public long getPrice() {
+    long getPrice() {
         return price;
     }
 
-    public boolean isEmpty() {
+    boolean isEmpty() {
         return orders.isEmpty();
     }
 
-    public Order add(long orderId, long size) {
+    Order add(long orderId, long size) {
         Order order = new Order(this, orderId, size);
 
         orders.add(order);
@@ -37,7 +37,7 @@ class PriceLevel {
         return order;
     }
 
-    public long match(long orderId, Side side, long quantity, Long2ObjectOpenHashMap<Order> orderIds, OrderBookListener listener) {
+    long match(long orderId, Side side, long quantity, Long2ObjectOpenHashMap<Order> orderIds, OrderBookListener listener) {
         while (quantity > 0 && !orders.isEmpty()) {
             Order resting = orders.get(0);
 
@@ -65,7 +65,7 @@ class PriceLevel {
         return quantity;
     }
 
-    public void delete(Order order) {
+    void delete(Order order) {
         orders.remove(order);
     }
 
