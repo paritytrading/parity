@@ -38,7 +38,7 @@ class HelpCommand implements Command {
     }
 
     private int calculateMaxCommandNameLength() {
-        return Commands.all().collectInt(c -> c.getName().length()).max();
+        return Commands.names().collectInt(String::length).max();
     }
 
     @Override
