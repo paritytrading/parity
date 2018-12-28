@@ -29,7 +29,7 @@ public class Commands {
     }
 
     public static ImmutableList<String> names() {
-        return COMMANDS.collect(c -> c.getName());
+        return COMMANDS.collect(Command::getName);
     }
 
 }
