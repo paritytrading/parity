@@ -1,23 +1,25 @@
 package com.paritytrading.parity.client.event;
 
-import org.eclipse.collections.api.list.ImmutableList;
-import org.eclipse.collections.api.map.MutableMap;
-import org.eclipse.collections.api.multimap.bag.MutableBagMultimap;
-import org.eclipse.collections.impl.factory.Maps;
-import org.eclipse.collections.impl.factory.Multimaps;
+import static java.util.Comparator.*;
+import static java.util.stream.Collectors.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Trades extends DefaultEventVisitor {
 
-    private MutableMap<String, Order> orders;
+    private Map<String, Order> orders;
 
-    private MutableBagMultimap<Long, Trade> trades;
+    private Map<Long, List<Trade>> trades;
 
     private Trades() {
-        orders = Maps.mutable.with();
-        trades = Multimaps.mutable.bag.with();
+        orders = new HashMap<>();
+        trades = new HashMap<>();
     }
 
-    public static ImmutableList<Trade> collect(Events events) {
+    public static List<Trade> collect(Events events) {
         Trades visitor = new Trades();
 
         events.accept(visitor);
@@ -25,9 +27,12 @@ public class Trades extends DefaultEventVisitor {
         return visitor.getEvents();
     }
 
-    private ImmutableList<Trade> getEvents() {
-        return trades.valuesView().toSortedList((a, b) ->
-                Long.compare(a.getTimestamp(), b.getTimestamp())).toImmutable();
+    private List<Trade> getEvents() {
+        return trades.values()
+                .stream()
+                .flatMap(List::stream)
+                .sorted(comparing(Trade::getTimestamp))
+                .collect(toList());
     }
 
     @Override
@@ -41,7 +46,9 @@ public class Trades extends DefaultEventVisitor {
         if (order == null)
             return;
 
-        trades.put(event.matchNumber, new Trade(order, event));
+        List<Trade> trade = trades.computeIfAbsent(event.matchNumber, key -> new ArrayList<>());
+
+        trade.add(new Trade(order, event));
     }
 
 }

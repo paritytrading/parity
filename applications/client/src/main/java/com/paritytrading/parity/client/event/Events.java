@@ -2,18 +2,18 @@ package com.paritytrading.parity.client.event;
 
 import com.paritytrading.parity.net.poe.POE;
 import com.paritytrading.parity.net.poe.POEClientListener;
-import org.eclipse.collections.api.list.ImmutableList;
-import org.eclipse.collections.impl.factory.Lists;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Events implements POEClientListener {
 
-    private volatile ImmutableList<Event> events;
+    private List<Event> events;
 
     public Events() {
-        events = Lists.immutable.with();
+        events = new ArrayList<>();
     }
 
-    public void accept(EventVisitor visitor) {
+    public synchronized void accept(EventVisitor visitor) {
         for (Event event : events)
             event.accept(visitor);
     }
@@ -38,8 +38,8 @@ public class Events implements POEClientListener {
         add(new Event.OrderCanceled(message));
     }
 
-    private void add(Event event) {
-        events = events.newWith(event);
+    private synchronized void add(Event event) {
+        events.add(event);
     }
 
 }

@@ -1,18 +1,17 @@
 package com.paritytrading.parity.client.event;
 
-import org.eclipse.collections.api.list.ImmutableList;
-import org.eclipse.collections.api.list.MutableList;
-import org.eclipse.collections.impl.factory.Lists;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Errors extends DefaultEventVisitor {
 
-    private MutableList<Error> errors;
+    private List<Error> errors;
 
     private Errors() {
-        errors = Lists.mutable.with();
+        errors = new ArrayList<>();
     }
 
-    public static ImmutableList<Error> collect(Events events) {
+    public static List<Error> collect(Events events) {
         Errors visitor = new Errors();
 
         events.accept(visitor);
@@ -20,8 +19,8 @@ public class Errors extends DefaultEventVisitor {
         return visitor.getEvents();
     }
 
-    private ImmutableList<Error> getEvents() {
-        return errors.toImmutable();
+    private List<Error> getEvents() {
+        return errors;
     }
 
     @Override

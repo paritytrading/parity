@@ -85,7 +85,7 @@ public class TerminalClient implements Closeable {
 
     public void run() throws IOException {
         LineReader reader = LineReaderBuilder.builder()
-            .completer(new StringsCompleter(Commands.names().castToList()))
+            .completer(new StringsCompleter(Commands.names()))
             .build();
 
         printf("Type 'help' for help.\n");
