@@ -1,18 +1,22 @@
 package com.paritytrading.parity.client.event;
 
-import org.eclipse.collections.api.list.ImmutableList;
-import org.eclipse.collections.api.map.MutableMap;
-import org.eclipse.collections.impl.factory.Maps;
+import static java.util.Comparator.*;
+import static java.util.stream.Collectors.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Orders extends DefaultEventVisitor {
 
-    private MutableMap<String, Order> orders;
+    private Map<String, Order> orders;
 
     private Orders() {
-        orders = Maps.mutable.with();
+        orders = new HashMap<>();
     }
 
-    public static ImmutableList<Order> collect(Events events) {
+    public static List<Order> collect(Events events) {
         Orders visitor = new Orders();
 
         events.accept(visitor);
@@ -20,9 +24,11 @@ public class Orders extends DefaultEventVisitor {
         return visitor.getEvents();
     }
 
-    private ImmutableList<Order> getEvents() {
-        return orders.valuesView().toSortedList((a, b) ->
-                Long.compare(a.getTimestamp(), b.getTimestamp())).toImmutable();
+    private List<Order> getEvents() {
+        return orders.values()
+                .stream()
+                .sorted(comparing(Order::getTimestamp))
+                .collect(toList());
     }
 
     @Override
