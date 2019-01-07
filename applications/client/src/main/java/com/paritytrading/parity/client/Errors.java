@@ -5,7 +5,7 @@ import java.util.List;
 
 class Errors extends DefaultEventVisitor {
 
-    private List<Error> errors;
+    private final List<Error> errors;
 
     private Errors() {
         errors = new ArrayList<>();
