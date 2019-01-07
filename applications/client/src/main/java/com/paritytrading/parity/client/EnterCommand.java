@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 class EnterCommand implements Command {
 
-    private POE.EnterOrder message;
+    private final POE.EnterOrder message;
 
     EnterCommand(byte side) {
         this.message = new POE.EnterOrder();
