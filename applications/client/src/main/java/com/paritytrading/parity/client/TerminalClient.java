@@ -21,11 +21,11 @@ import org.jline.reader.LineReaderBuilder;
 import org.jline.reader.impl.completer.StringsCompleter;
 import org.jvirtanen.config.Configs;
 
-public class TerminalClient implements Closeable {
+class TerminalClient implements Closeable {
 
-    public static final Locale LOCALE = Locale.US;
+    static final Locale LOCALE = Locale.US;
 
-    public static final long NANOS_PER_MILLI = 1_000_000;
+    static final long NANOS_PER_MILLI = 1_000_000;
 
     private Events events;
 
@@ -45,7 +45,7 @@ public class TerminalClient implements Closeable {
         this.orderIdGenerator = new OrderIDGenerator();
     }
 
-    public static TerminalClient open(InetSocketAddress address, String username,
+    static TerminalClient open(InetSocketAddress address, String username,
             String password, Instruments instruments) throws IOException {
         Events events = new Events();
 
@@ -63,23 +63,23 @@ public class TerminalClient implements Closeable {
         return new TerminalClient(events, orderEntry, instruments);
     }
 
-    public OrderEntry getOrderEntry() {
+    OrderEntry getOrderEntry() {
         return orderEntry;
     }
 
-    public Instruments getInstruments() {
+    Instruments getInstruments() {
         return instruments;
     }
 
-    public OrderIDGenerator getOrderIdGenerator() {
+    OrderIDGenerator getOrderIdGenerator() {
         return orderIdGenerator;
     }
 
-    public Events getEvents() {
+    Events getEvents() {
         return events;
     }
 
-    public void run() throws IOException {
+    void run() throws IOException {
         LineReader reader = LineReaderBuilder.builder()
             .completer(new StringsCompleter(Commands.names()))
             .build();
@@ -121,7 +121,7 @@ public class TerminalClient implements Closeable {
         closed = true;
     }
 
-    public void printf(String format, Object... args) {
+    void printf(String format, Object... args) {
         System.out.printf(LOCALE, format, args);
     }
 
