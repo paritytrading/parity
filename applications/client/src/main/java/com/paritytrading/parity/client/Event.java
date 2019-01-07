@@ -1,4 +1,4 @@
-package com.paritytrading.parity.client.event;
+package com.paritytrading.parity.client;
 
 import com.paritytrading.foundation.ASCII;
 import com.paritytrading.parity.net.poe.POE;

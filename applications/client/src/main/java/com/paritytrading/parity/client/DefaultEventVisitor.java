@@ -1,4 +1,4 @@
-package com.paritytrading.parity.client.event;
+package com.paritytrading.parity.client;
 
 class DefaultEventVisitor implements EventVisitor {
 

@@ -1,7 +1,5 @@
 package com.paritytrading.parity.client;
 
-import com.paritytrading.parity.client.event.Order;
-import com.paritytrading.parity.client.event.Orders;
 import com.paritytrading.parity.util.Instruments;
 import com.paritytrading.parity.util.TableHeader;
 import java.util.Scanner;

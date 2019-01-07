@@ -1,4 +1,4 @@
-package com.paritytrading.parity.client.event;
+package com.paritytrading.parity.client;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.paritytrading.parity.client.event;
+package com.paritytrading.parity.client;
 
 import static com.paritytrading.parity.client.TerminalClient.*;
 

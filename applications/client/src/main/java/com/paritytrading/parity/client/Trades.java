@@ -1,4 +1,4 @@
-package com.paritytrading.parity.client.event;
+package com.paritytrading.parity.client;
 
 import static java.util.Comparator.*;
 import static java.util.stream.Collectors.*;

@@ -4,7 +4,6 @@ import static org.jvirtanen.util.Applications.*;
 
 import com.paritytrading.foundation.ASCII;
 import com.paritytrading.nassau.soupbintcp.SoupBinTCP;
-import com.paritytrading.parity.client.event.Events;
 import com.paritytrading.parity.util.Instruments;
 import com.paritytrading.parity.util.OrderIDGenerator;
 import com.typesafe.config.Config;
