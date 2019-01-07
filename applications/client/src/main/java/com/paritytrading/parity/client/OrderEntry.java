@@ -16,15 +16,15 @@ import java.nio.channels.SocketChannel;
 
 class OrderEntry implements Closeable {
 
-    private ByteBuffer txBuffer;
+    private final ByteBuffer txBuffer;
 
-    private Selector selector;
+    private final Selector selector;
 
-    private SoupBinTCPClient transport;
+    private final SoupBinTCPClient transport;
 
     private volatile boolean closed;
 
-    private Object txLock;
+    private final Object txLock;
 
     private OrderEntry(Selector selector, SocketChannel channel, POEClientListener listener) {
         this.txBuffer = ByteBuffer.allocateDirect(POE.MAX_INBOUND_MESSAGE_LENGTH);
