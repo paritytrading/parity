@@ -10,9 +10,9 @@ import java.util.Map;
 
 public class Trades extends DefaultEventVisitor {
 
-    private Map<String, Order> orders;
+    private final Map<String, Order> orders;
 
-    private Map<Long, List<Trade>> trades;
+    private final Map<Long, List<Trade>> trades;
 
     private Trades() {
         orders = new HashMap<>();
