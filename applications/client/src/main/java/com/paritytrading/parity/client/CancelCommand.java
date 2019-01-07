@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 class CancelCommand implements Command {
 
-    private POE.CancelOrder message;
+    private final POE.CancelOrder message;
 
     CancelCommand() {
         message = new POE.CancelOrder();
