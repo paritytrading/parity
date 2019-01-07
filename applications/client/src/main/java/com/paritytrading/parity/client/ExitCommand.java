@@ -5,9 +5,9 @@ import java.util.Scanner;
 class ExitCommand implements Command {
 
     @Override
-    public void execute(TerminalClient client, Scanner arguments) throws CommandException {
+    public void execute(TerminalClient client, Scanner arguments) {
         if (arguments.hasNext())
-            throw new CommandException();
+            throw new IllegalArgumentException();
 
         client.close();
     }

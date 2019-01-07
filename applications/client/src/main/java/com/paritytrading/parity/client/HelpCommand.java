@@ -6,12 +6,12 @@ import java.util.stream.Stream;
 class HelpCommand implements Command {
 
     @Override
-    public void execute(TerminalClient client, Scanner arguments) throws CommandException {
+    public void execute(TerminalClient client, Scanner arguments) {
         if (arguments.hasNext()) {
             Command command = Commands.find(arguments.next());
 
             if (arguments.hasNext())
-                throw new CommandException();
+                throw new IllegalArgumentException();
 
             if (command != null)
                 displayCommandHelp(client, command);

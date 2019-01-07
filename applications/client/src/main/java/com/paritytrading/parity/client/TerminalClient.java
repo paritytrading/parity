@@ -104,7 +104,7 @@ class TerminalClient implements Closeable {
 
             try {
                 command.execute(this, scanner);
-            } catch (CommandException e) {
+            } catch (IllegalArgumentException e) {
                 printf("Usage: %s\n", command.getUsage());
             } catch (ClosedChannelException e) {
                 printf("error: Connection closed\n");

@@ -7,9 +7,9 @@ import java.util.Scanner;
 class OrdersCommand implements Command {
 
     @Override
-    public void execute(TerminalClient client, Scanner arguments) throws CommandException {
+    public void execute(TerminalClient client, Scanner arguments) {
         if (arguments.hasNext())
-            throw new CommandException();
+            throw new IllegalArgumentException();
 
         Instruments instruments = client.getInstruments();
 

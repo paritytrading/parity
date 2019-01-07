@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 interface Command {
 
-    void execute(TerminalClient client, Scanner arguments) throws CommandException, IOException;
+    void execute(TerminalClient client, Scanner arguments) throws IOException;
 
     String getName();
 

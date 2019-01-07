@@ -20,22 +20,22 @@ class EnterCommand implements Command {
     }
 
     @Override
-    public void execute(TerminalClient client, Scanner arguments) throws CommandException, IOException {
+    public void execute(TerminalClient client, Scanner arguments) throws IOException {
         try {
             double quantity   = arguments.nextDouble();
             long   instrument = ASCII.packLong(arguments.next());
             double price      = arguments.nextDouble();
 
             if (arguments.hasNext())
-                throw new CommandException();
+                throw new IllegalArgumentException();
 
             Instrument config = client.getInstruments().get(instrument);
             if (config == null)
-                throw new CommandException();
+                throw new IllegalArgumentException();
 
             execute(client, Math.round(quantity * config.getSizeFactor()), instrument, Math.round(price * config.getPriceFactor()));
         } catch (NoSuchElementException e) {
-            throw new CommandException();
+            throw new IllegalArgumentException();
         }
     }
 

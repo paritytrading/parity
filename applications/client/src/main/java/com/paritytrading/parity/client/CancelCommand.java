@@ -15,16 +15,16 @@ class CancelCommand implements Command {
     }
 
     @Override
-    public void execute(TerminalClient client, Scanner arguments) throws CommandException, IOException {
+    public void execute(TerminalClient client, Scanner arguments) throws IOException {
         try {
             String orderId = arguments.next();
 
             if (arguments.hasNext())
-                throw new CommandException();
+                throw new IllegalArgumentException();
 
             execute(client, orderId);
         } catch (NoSuchElementException e) {
-            throw new CommandException();
+            throw new IllegalArgumentException();
         }
     }
 
