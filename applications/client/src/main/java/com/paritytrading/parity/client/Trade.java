@@ -9,10 +9,10 @@ import com.paritytrading.parity.util.Timestamps;
 
 public class Trade {
 
-    private long  timestamp;
-    private Order order;
-    private long  quantity;
-    private long  price;
+    private final long  timestamp;
+    private final Order order;
+    private final long  quantity;
+    private final long  price;
 
     public Trade(Order order, Event.OrderExecuted event) {
         this.timestamp = event.timestamp;
