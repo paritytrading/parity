@@ -2,16 +2,16 @@ package com.paritytrading.parity.client;
 
 import com.paritytrading.parity.net.poe.POE;
 
-public class Error {
+class Error {
 
-    public static final String HEADER = "" +
+    static final String HEADER = "" +
         "Order ID         Reason\n" +
         "---------------- ------------------";
 
     private String orderId;
     private byte   reason;
 
-    public Error(Event.OrderRejected event) {
+    Error(Event.OrderRejected event) {
         orderId = event.orderId;
         reason  = event.reason;
     }
@@ -29,7 +29,7 @@ public class Error {
         }
     }
 
-    public String format() {
+    String format() {
         return String.format("%16s %-18s", orderId, describe(reason));
     }
 
