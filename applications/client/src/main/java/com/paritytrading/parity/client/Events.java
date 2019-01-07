@@ -5,15 +5,15 @@ import com.paritytrading.parity.net.poe.POEClientListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Events implements POEClientListener {
+class Events implements POEClientListener {
 
     private List<Event> events;
 
-    public Events() {
+    Events() {
         events = new ArrayList<>();
     }
 
-    public synchronized void accept(EventVisitor visitor) {
+    synchronized void accept(EventVisitor visitor) {
         for (Event event : events)
             event.accept(visitor);
     }
