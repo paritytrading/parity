@@ -3,7 +3,7 @@ package com.paritytrading.parity.client;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Errors extends DefaultEventVisitor {
+class Errors extends DefaultEventVisitor {
 
     private List<Error> errors;
 
@@ -11,7 +11,7 @@ public class Errors extends DefaultEventVisitor {
         errors = new ArrayList<>();
     }
 
-    public static List<Error> collect(Events events) {
+    static List<Error> collect(Events events) {
         Errors visitor = new Errors();
 
         events.accept(visitor);
