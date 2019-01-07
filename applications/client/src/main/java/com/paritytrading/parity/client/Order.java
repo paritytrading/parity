@@ -9,13 +9,13 @@ import com.paritytrading.parity.util.Timestamps;
 
 class Order {
 
-    private long   timestamp;
-    private String orderId;
-    private byte   side;
-    private long   instrument;
-    private long   quantity;
-    private long   price;
-    private long   orderNumber;
+    private final long   timestamp;
+    private final String orderId;
+    private final byte   side;
+    private final long   instrument;
+    private       long   quantity;
+    private final long   price;
+    private final long   orderNumber;
 
     Order(Event.OrderAccepted event) {
         this.timestamp   = event.timestamp;
