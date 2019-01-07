@@ -27,13 +27,13 @@ class TerminalClient implements Closeable {
 
     static final long NANOS_PER_MILLI = 1_000_000;
 
-    private Events events;
+    private final Events events;
 
-    private OrderEntry orderEntry;
+    private final OrderEntry orderEntry;
 
-    private Instruments instruments;
+    private final Instruments instruments;
 
-    private OrderIDGenerator orderIdGenerator;
+    private final OrderIDGenerator orderIdGenerator;
 
     private boolean closed;
 
