@@ -13,7 +13,7 @@ class EnterCommand implements Command {
 
     private POE.EnterOrder message;
 
-    public EnterCommand(byte side) {
+    EnterCommand(byte side) {
         this.message = new POE.EnterOrder();
 
         this.message.side = side;
