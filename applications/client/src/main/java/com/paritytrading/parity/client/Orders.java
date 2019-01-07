@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Orders extends DefaultEventVisitor {
+class Orders extends DefaultEventVisitor {
 
     private Map<String, Order> orders;
 
@@ -15,7 +15,7 @@ public class Orders extends DefaultEventVisitor {
         orders = new HashMap<>();
     }
 
-    public static List<Order> collect(Events events) {
+    static List<Order> collect(Events events) {
         Orders visitor = new Orders();
 
         events.accept(visitor);
