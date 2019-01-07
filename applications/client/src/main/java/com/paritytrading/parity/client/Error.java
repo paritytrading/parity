@@ -8,8 +8,8 @@ class Error {
         "Order ID         Reason\n" +
         "---------------- ------------------";
 
-    private String orderId;
-    private byte   reason;
+    private final String orderId;
+    private final byte   reason;
 
     Error(Event.OrderRejected event) {
         orderId = event.orderId;
