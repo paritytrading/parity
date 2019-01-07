@@ -7,7 +7,7 @@ import java.util.List;
 
 class Events implements POEClientListener {
 
-    private List<Event> events;
+    private final List<Event> events;
 
     Events() {
         events = new ArrayList<>();
