@@ -1,13 +1,12 @@
-package com.paritytrading.parity.client.command;
+package com.paritytrading.parity.client;
 
-import com.paritytrading.parity.client.TerminalClient;
-import com.paritytrading.parity.client.event.Order;
-import com.paritytrading.parity.client.event.Orders;
+import com.paritytrading.parity.client.event.Trade;
+import com.paritytrading.parity.client.event.Trades;
 import com.paritytrading.parity.util.Instruments;
 import com.paritytrading.parity.util.TableHeader;
 import java.util.Scanner;
 
-class OrdersCommand implements Command {
+class TradesCommand implements Command {
 
     @Override
     public void execute(TerminalClient client, Scanner arguments) throws CommandException {
@@ -31,24 +30,24 @@ class OrdersCommand implements Command {
         client.printf("\n");
         client.printf(header.format());
 
-        for (Order order : Orders.collect(client.getEvents()))
-            client.printf("%s\n", order.format(client.getInstruments()));
+        for (Trade trade : Trades.collect(client.getEvents()))
+            client.printf("%s\n", trade.format(client.getInstruments()));
         client.printf("\n");
     }
 
     @Override
     public String getName() {
-        return "orders";
+        return "trades";
     }
 
     @Override
     public String getDescription() {
-        return "Display open orders";
+        return "Display occurred trades";
     }
 
     @Override
     public String getUsage() {
-        return "orders";
+        return "trades";
     }
 
 }

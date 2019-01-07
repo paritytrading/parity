@@ -1,6 +1,5 @@
-package com.paritytrading.parity.client.command;
+package com.paritytrading.parity.client;
 
-import com.paritytrading.parity.client.TerminalClient;
 import com.paritytrading.parity.client.event.Error;
 import com.paritytrading.parity.client.event.Errors;
 import java.util.Scanner;

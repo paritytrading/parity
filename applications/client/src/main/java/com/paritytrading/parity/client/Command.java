@@ -1,6 +1,5 @@
-package com.paritytrading.parity.client.command;
+package com.paritytrading.parity.client;
 
-import com.paritytrading.parity.client.TerminalClient;
 import java.io.IOException;
 import java.util.Scanner;
 

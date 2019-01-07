@@ -1,7 +1,6 @@
-package com.paritytrading.parity.client.command;
+package com.paritytrading.parity.client;
 
 import com.paritytrading.foundation.ASCII;
-import com.paritytrading.parity.client.TerminalClient;
 import com.paritytrading.parity.net.poe.POE;
 import java.io.IOException;
 import java.util.NoSuchElementException;

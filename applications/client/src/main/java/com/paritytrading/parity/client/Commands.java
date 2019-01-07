@@ -1,4 +1,4 @@
-package com.paritytrading.parity.client.command;
+package com.paritytrading.parity.client;
 
 import com.paritytrading.parity.net.poe.POE;
 import java.util.stream.Stream;

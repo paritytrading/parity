@@ -1,4 +1,4 @@
-package com.paritytrading.parity.client.command;
+package com.paritytrading.parity.client;
 
 public class CommandException extends Exception {
 }
