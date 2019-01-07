@@ -7,7 +7,7 @@ import com.paritytrading.parity.util.Instrument;
 import com.paritytrading.parity.util.Instruments;
 import com.paritytrading.parity.util.Timestamps;
 
-public class Order {
+class Order {
 
     private long   timestamp;
     private String orderId;
@@ -17,7 +17,7 @@ public class Order {
     private long   price;
     private long   orderNumber;
 
-    public Order(Event.OrderAccepted event) {
+    Order(Event.OrderAccepted event) {
         this.timestamp   = event.timestamp;
         this.orderId     = event.orderId;
         this.side        = event.side;
@@ -27,35 +27,35 @@ public class Order {
         this.orderNumber = event.orderNumber;
     }
 
-    public void apply(Event.OrderExecuted event) {
+    void apply(Event.OrderExecuted event) {
         quantity -= event.quantity;
     }
 
-    public void apply(Event.OrderCanceled event) {
+    void apply(Event.OrderCanceled event) {
         quantity -= event.canceledQuantity;
     }
 
-    public long getTimestamp() {
+    long getTimestamp() {
         return timestamp;
     }
 
-    public byte getSide() {
+    byte getSide() {
         return side;
     }
 
-    public long getInstrument() {
+    long getInstrument() {
         return instrument;
     }
 
-    public String getOrderId() {
+    String getOrderId() {
         return orderId;
     }
 
-    public long getQuantity() {
+    long getQuantity() {
         return quantity;
     }
 
-    public String format(Instruments instruments) {
+    String format(Instruments instruments) {
         Instrument config = instruments.get(instrument);
 
         String priceFormat = config.getPriceFormat();
