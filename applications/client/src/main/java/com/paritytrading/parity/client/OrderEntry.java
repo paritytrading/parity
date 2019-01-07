@@ -14,7 +14,7 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 
-public class OrderEntry implements Closeable {
+class OrderEntry implements Closeable {
 
     private ByteBuffer txBuffer;
 
@@ -41,7 +41,7 @@ public class OrderEntry implements Closeable {
         new Thread(new Receiver()).start();
     }
 
-    public static OrderEntry open(InetSocketAddress address, POEClientListener listener) throws IOException {
+    static OrderEntry open(InetSocketAddress address, POEClientListener listener) throws IOException {
         SocketChannel channel = SocketChannel.open();
 
         channel.connect(address);
@@ -59,11 +59,11 @@ public class OrderEntry implements Closeable {
         closed = true;
     }
 
-    public SoupBinTCPClient getTransport() {
+    SoupBinTCPClient getTransport() {
         return transport;
     }
 
-    public void send(POE.InboundMessage message) throws IOException {
+    void send(POE.InboundMessage message) throws IOException {
         txBuffer.clear();
         message.put(txBuffer);
         txBuffer.flip();
