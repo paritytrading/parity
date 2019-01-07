@@ -1,6 +1,6 @@
 package com.paritytrading.parity.client;
 
-public interface EventVisitor {
+interface EventVisitor {
 
     void visit(Event.OrderAccepted event);
 
