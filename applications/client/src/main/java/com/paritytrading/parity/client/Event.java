@@ -3,7 +3,7 @@ package com.paritytrading.parity.client;
 import com.paritytrading.foundation.ASCII;
 import com.paritytrading.parity.net.poe.POE;
 
-public interface Event {
+interface Event {
 
     void accept(EventVisitor visitor);
 
