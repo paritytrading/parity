@@ -10,7 +10,7 @@ class CancelCommand implements Command {
 
     private POE.CancelOrder message;
 
-    public CancelCommand() {
+    CancelCommand() {
         message = new POE.CancelOrder();
     }
 
