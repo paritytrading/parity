@@ -9,7 +9,7 @@ import java.util.Map;
 
 class Orders extends DefaultEventVisitor {
 
-    private Map<String, Order> orders;
+    private final Map<String, Order> orders;
 
     private Orders() {
         orders = new HashMap<>();
