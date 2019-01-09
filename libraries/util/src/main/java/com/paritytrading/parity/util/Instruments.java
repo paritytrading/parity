@@ -1,27 +1,22 @@
 package com.paritytrading.parity.util;
 
 import static com.paritytrading.parity.util.Strings.*;
+import static java.util.Arrays.*;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigException;
 import com.typesafe.config.ConfigObject;
-import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 import java.util.function.ToIntFunction;
+import java.util.stream.Stream;
 
 /**
  * The instruments configuration.
  */
 public class Instruments implements Iterable<Instrument> {
 
-    private final HashMap<String, Instrument> valuesByString;
-
-    private final Long2ObjectOpenHashMap<Instrument> valuesByLong;
+    private final Instrument[] values;
 
     private final int maxPriceFractionDigits;
     private final int maxSizeFractionDigits;
@@ -32,15 +27,9 @@ public class Instruments implements Iterable<Instrument> {
     private final String pricePlaceholder;
     private final String sizePlaceholder;
 
-    private Instruments(List<Instrument> values, int priceIntegerDigits, int maxPriceFractionDigits,
+    private Instruments(Instrument[] values, int priceIntegerDigits, int maxPriceFractionDigits,
             int sizeIntegerDigits, int maxSizeFractionDigits) {
-        this.valuesByString = new HashMap<>();
-        this.valuesByLong   = new Long2ObjectOpenHashMap<>();
-
-        for (Instrument value : values) {
-            valuesByString.put(value.asString(), value);
-            valuesByLong.put(value.asLong(), value);
-        }
+        this.values = values;
 
         this.maxPriceFractionDigits = maxPriceFractionDigits;
         this.maxSizeFractionDigits  = maxSizeFractionDigits;
@@ -59,7 +48,12 @@ public class Instruments implements Iterable<Instrument> {
      * @return the instrument
      */
     public Instrument get(String instrument) {
-        return valuesByString.get(instrument);
+        for (Instrument value : values) {
+            if (instrument.equals(value.asString()))
+                return value;
+        }
+
+        return null;
     }
 
     /**
@@ -69,7 +63,12 @@ public class Instruments implements Iterable<Instrument> {
      * @return the instrument
      */
     public Instrument get(long instrument) {
-        return valuesByLong.get(instrument);
+        for (Instrument value : values) {
+            if (instrument == value.asLong())
+                return value;
+        }
+
+        return null;
     }
 
     /**
@@ -78,7 +77,7 @@ public class Instruments implements Iterable<Instrument> {
      * @return an iterator over the instruments
      */
     public Iterator<Instrument> iterator() {
-        return valuesByString.values().iterator();
+        return asList(values).iterator();
     }
 
     /**
@@ -156,10 +155,9 @@ public class Instruments implements Iterable<Instrument> {
         instruments.remove("price-integer-digits");
         instruments.remove("size-integer-digits");
 
-        List<Instrument> values = new ArrayList<>();
-
-        for (String instrument : instruments)
-            values.add(Instrument.fromConfig(rootConfig, instrument));
+        Instrument[] values = instruments.stream()
+                .map(instrument -> Instrument.fromConfig(rootConfig, instrument))
+                .toArray(Instrument[]::new);
 
         int maxPriceFractionDigits = max(values, Instrument::getPriceFractionDigits);
         int maxSizeFractionDigits  = max(values, Instrument::getSizeFractionDigits);
@@ -177,8 +175,8 @@ public class Instruments implements Iterable<Instrument> {
         return config.hasPath(path) ? config.getInt(path) : defaultValue;
     }
 
-    private static <T> int max(Collection<T> collection, ToIntFunction<? super T> mapper) {
-        return collection.stream().mapToInt(mapper).max().orElse(0);
+    private static <T> int max(T[] collection, ToIntFunction<? super T> mapper) {
+        return Stream.of(collection).mapToInt(mapper).max().orElse(0);
     }
 
     private static String placeholder(int integerDigits, int maxFractionDigits) {
