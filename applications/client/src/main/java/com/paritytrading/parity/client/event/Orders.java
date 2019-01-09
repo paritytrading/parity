@@ -3,7 +3,6 @@ package com.paritytrading.parity.client.event;
 import static java.util.Comparator.*;
 import static java.util.stream.Collectors.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
