@@ -4,6 +4,7 @@ import static org.jvirtanen.util.Applications.*;
 
 import com.paritytrading.foundation.ASCII;
 import com.paritytrading.nassau.soupbintcp.SoupBinTCP;
+import com.paritytrading.parity.net.poe.POE;
 import com.paritytrading.parity.util.Instruments;
 import com.paritytrading.parity.util.OrderIDGenerator;
 import com.typesafe.config.Config;
@@ -16,12 +17,28 @@ import java.net.InetSocketAddress;
 import java.nio.channels.ClosedChannelException;
 import java.util.Locale;
 import java.util.Scanner;
+import java.util.stream.Stream;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
 import org.jline.reader.impl.completer.StringsCompleter;
 import org.jvirtanen.config.Configs;
 
 class TerminalClient implements Closeable {
+
+    static final Command[] COMMANDS = new Command[] {
+        new EnterCommand(POE.BUY),
+        new EnterCommand(POE.SELL),
+        new CancelCommand(),
+        new OrdersCommand(),
+        new TradesCommand(),
+        new ErrorsCommand(),
+        new HelpCommand(),
+        new ExitCommand(),
+    };
+
+    static final String[] COMMAND_NAMES = Stream.of(COMMANDS)
+            .map(Command::getName)
+            .toArray(String[]::new);
 
     static final Locale LOCALE = Locale.US;
 
@@ -81,7 +98,7 @@ class TerminalClient implements Closeable {
 
     void run() throws IOException {
         LineReader reader = LineReaderBuilder.builder()
-            .completer(new StringsCompleter(Commands.names()))
+            .completer(new StringsCompleter(COMMAND_NAMES))
             .build();
 
         printf("Type 'help' for help.\n");
@@ -96,7 +113,7 @@ class TerminalClient implements Closeable {
             if (!scanner.hasNext())
                 continue;
 
-            Command command = Commands.find(scanner.next());
+            Command command = findCommand(scanner.next());
             if (command == null) {
                 printf("error: Unknown command\n");
                 continue;
@@ -119,6 +136,15 @@ class TerminalClient implements Closeable {
         orderEntry.close();
 
         closed = true;
+    }
+
+    static Command findCommand(String name) {
+        for (Command command : COMMANDS) {
+            if (name.equals(command.getName()))
+                return command;
+        }
+
+        return null;
     }
 
     void printf(String format, Object... args) {
