@@ -49,7 +49,7 @@ class EnterCommand implements Command {
 
         client.getOrderEntry().send(message);
 
-        client.printf("\nOrder ID\n----------------\n%s\n\n", orderId);
+        printf("\nOrder ID\n----------------\n%s\n\n", orderId);
     }
 
     @Override

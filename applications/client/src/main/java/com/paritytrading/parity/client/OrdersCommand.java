@@ -1,5 +1,7 @@
 package com.paritytrading.parity.client;
 
+import static com.paritytrading.parity.client.TerminalClient.*;
+
 import com.paritytrading.parity.util.Instruments;
 import com.paritytrading.parity.util.TableHeader;
 import java.util.Scanner;
@@ -25,12 +27,12 @@ class OrdersCommand implements Command {
         header.add("Quantity", sizeWidth);
         header.add("Price",   priceWidth);
 
-        client.printf("\n");
-        client.printf(header.format());
+        printf("\n");
+        printf(header.format());
 
         for (Order order : Orders.collect(client.getEvents()))
-            client.printf("%s\n", order.format(client.getInstruments()));
-        client.printf("\n");
+            printf("%s\n", order.format(client.getInstruments()));
+        printf("\n");
     }
 
     @Override

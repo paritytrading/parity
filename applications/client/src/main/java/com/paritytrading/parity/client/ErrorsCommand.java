@@ -1,5 +1,7 @@
 package com.paritytrading.parity.client;
 
+import static com.paritytrading.parity.client.TerminalClient.*;
+
 import java.util.Scanner;
 
 class ErrorsCommand implements Command {
@@ -9,10 +11,10 @@ class ErrorsCommand implements Command {
         if (arguments.hasNext())
             throw new IllegalArgumentException();
 
-        client.printf("\n%s\n", Error.HEADER);
+        printf("\n%s\n", Error.HEADER);
         for (Error error : Errors.collect(client.getEvents()))
-            client.printf("%s\n", error.format());
-        client.printf("\n");
+            printf("%s\n", error.format());
+        printf("\n");
     }
 
     @Override

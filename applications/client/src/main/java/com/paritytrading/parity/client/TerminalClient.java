@@ -147,7 +147,7 @@ class TerminalClient implements Closeable {
         return null;
     }
 
-    void printf(String format, Object... args) {
+    static void printf(String format, Object... args) {
         System.out.printf(LOCALE, format, args);
     }
 
