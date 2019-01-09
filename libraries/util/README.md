@@ -7,7 +7,6 @@ Parity Utilities contains support functions used by the trading system.
 Parity Utilities depends on the following libraries:
 
 - Config 1.3.1
-- fastutil 8.1.0
 - [Foundation][] 0.2.1
 
   [Foundation]: https://github.com/paritytrading/foundation
