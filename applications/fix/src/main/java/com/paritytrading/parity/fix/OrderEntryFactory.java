@@ -14,11 +14,11 @@ class OrderEntryFactory {
 
     private InetSocketAddress address;
 
-    public OrderEntryFactory(InetSocketAddress address) {
+    OrderEntryFactory(InetSocketAddress address) {
         this.address = address;
     }
 
-    public SoupBinTCPClient create(POEClientListener listener,
+    SoupBinTCPClient create(POEClientListener listener,
             SoupBinTCPClientStatusListener statusListener) throws IOException {
         SocketChannel channel = SocketChannel.open();
 
