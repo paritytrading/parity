@@ -12,13 +12,13 @@ import java.nio.channels.SocketChannel;
 
 class FIXAcceptor {
 
-    private OrderEntryFactory orderEntry;
+    private final OrderEntryFactory orderEntry;
 
-    private ServerSocketChannel serverChannel;
+    private final ServerSocketChannel serverChannel;
 
-    private FIXConfig config;
+    private final FIXConfig config;
 
-    private Instruments instruments;
+    private final Instruments instruments;
 
     private FIXAcceptor(OrderEntryFactory orderEntry,
             ServerSocketChannel serverChannel, String senderCompId,
