@@ -7,15 +7,15 @@ class Orders {
 
     private List<Order> orders;
 
-    public Orders() {
+    Orders() {
         orders = new ArrayList<>();
     }
 
-    public void add(Order order) {
+    void add(Order order) {
         orders.add(order);
     }
 
-    public Order findByClOrdID(String clOrdId) {
+    Order findByClOrdID(String clOrdId) {
         for (int i = 0; i < orders.size(); i++) {
             Order order = orders.get(i);
 
@@ -26,7 +26,7 @@ class Orders {
         return null;
     }
 
-    public Order findByOrderEntryID(long orderEntryId) {
+    Order findByOrderEntryID(long orderEntryId) {
         for (int i = 0; i < orders.size(); i++) {
             Order order = orders.get(i);
 
@@ -37,7 +37,7 @@ class Orders {
         return null;
     }
 
-    public void removeByOrderEntryID(long orderEntryId) {
+    void removeByOrderEntryID(long orderEntryId) {
         for (int i = 0; i < orders.size(); i++) {
             Order order = orders.get(i);
 
