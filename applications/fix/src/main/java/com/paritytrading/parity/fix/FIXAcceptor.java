@@ -35,7 +35,7 @@ class FIXAcceptor {
         this.instruments = instruments;
     }
 
-    public static FIXAcceptor open(OrderEntryFactory orderEntry,
+    static FIXAcceptor open(OrderEntryFactory orderEntry,
             InetSocketAddress address, String senderCompId,
             Instruments instruments) throws IOException {
         ServerSocketChannel serverChannel = ServerSocketChannel.open();
@@ -46,11 +46,11 @@ class FIXAcceptor {
         return new FIXAcceptor(orderEntry, serverChannel, senderCompId, instruments);
     }
 
-    public ServerSocketChannel getServerChannel() {
+    ServerSocketChannel getServerChannel() {
         return serverChannel;
     }
 
-    public Session accept() {
+    Session accept() {
         try {
             SocketChannel fix = serverChannel.accept();
             if (fix == null)
