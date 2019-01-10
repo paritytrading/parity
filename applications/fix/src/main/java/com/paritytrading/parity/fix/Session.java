@@ -28,25 +28,25 @@ class Session implements Closeable {
 
     private static final String UNKNOWN_ORDER_ID = "NONE";
 
-    private static SoupBinTCP.LoginRequest loginRequest = new SoupBinTCP.LoginRequest();
+    private static final SoupBinTCP.LoginRequest loginRequest = new SoupBinTCP.LoginRequest();
 
-    private static POE.EnterOrder enterOrder = new POE.EnterOrder();
+    private static final POE.EnterOrder enterOrder = new POE.EnterOrder();
 
-    private static POE.CancelOrder cancelOrder = new POE.CancelOrder();
+    private static final POE.CancelOrder cancelOrder = new POE.CancelOrder();
 
-    private static FIXMessage txMessage = new FIXMessage(64, 64);
+    private static final FIXMessage txMessage = new FIXMessage(64, 64);
 
-    private static ByteBuffer txBuffer = ByteBuffer.allocateDirect(POE.MAX_INBOUND_MESSAGE_LENGTH);
+    private static final ByteBuffer txBuffer = ByteBuffer.allocateDirect(POE.MAX_INBOUND_MESSAGE_LENGTH);
 
     private long nextOrderEntryId;
 
-    private Orders orders;
+    private final Orders orders;
 
-    private FIXConnection fix;
+    private final FIXConnection fix;
 
-    private SoupBinTCPClient orderEntry;
+    private final SoupBinTCPClient orderEntry;
 
-    private Instruments instruments;
+    private final Instruments instruments;
 
     Session(OrderEntryFactory orderEntry, SocketChannel fix,
             FIXConfig config, Instruments instruments) throws IOException {
