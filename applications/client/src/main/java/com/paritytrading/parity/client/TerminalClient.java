@@ -18,8 +18,10 @@ import java.nio.channels.ClosedChannelException;
 import java.util.Locale;
 import java.util.Scanner;
 import java.util.stream.Stream;
+import org.jline.reader.EndOfFileException;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
+import org.jline.reader.UserInterruptException;
 import org.jline.reader.impl.completer.StringsCompleter;
 import org.jvirtanen.config.Configs;
 
@@ -164,6 +166,8 @@ class TerminalClient implements Closeable {
 
         try {
             main(config(args[0]));
+        } catch (EndOfFileException | UserInterruptException e) {
+            // Ignore.
         } catch (ConfigException | FileNotFoundException e) {
             error(e);
         }

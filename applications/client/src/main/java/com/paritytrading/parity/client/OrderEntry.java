@@ -38,7 +38,10 @@ class OrderEntry implements Closeable {
 
         this.txLock = new Object();
 
-        new Thread(new Receiver()).start();
+        Thread receiver = new Thread(new Receiver());
+
+        receiver.setDaemon(true);
+        receiver.start();
     }
 
     static OrderEntry open(InetSocketAddress address, POEClientListener listener) throws IOException {
