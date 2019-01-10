@@ -12,7 +12,7 @@ import java.nio.channels.SocketChannel;
 
 class OrderEntryFactory {
 
-    private InetSocketAddress address;
+    private final InetSocketAddress address;
 
     OrderEntryFactory(InetSocketAddress address) {
         this.address = address;
