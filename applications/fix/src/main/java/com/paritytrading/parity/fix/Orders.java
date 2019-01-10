@@ -5,7 +5,7 @@ import java.util.List;
 
 class Orders {
 
-    private List<Order> orders;
+    private final List<Order> orders;
 
     Orders() {
         orders = new ArrayList<>();
