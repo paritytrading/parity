@@ -18,7 +18,7 @@ class Order {
     private double avgPx;
     private char   cxlRejResponseTo;
 
-    public Order(long orderEntryId, String clOrdId, String account, char side,
+    Order(long orderEntryId, String clOrdId, String account, char side,
             String symbol, double orderQty) {
         this.orderEntryId     = orderEntryId;
         this.orderId          = 0;
@@ -35,11 +35,11 @@ class Order {
         this.cxlRejResponseTo = CxlRejResponseToValues.OrderCancelRequest;
     }
 
-    public void orderAccepted(long orderNumber) {
+    void orderAccepted(long orderNumber) {
         orderId = orderNumber;
     }
 
-    public void orderExecuted(double quantity, double price) {
+    void orderExecuted(double quantity, double price) {
         avgPx = (cumQty * avgPx + quantity * price) / (cumQty + quantity);
 
         cumQty += quantity;
@@ -47,7 +47,7 @@ class Order {
         ordStatus = getLeavesQty() == 0 ? OrdStatusValues.Filled : OrdStatusValues.PartiallyFilled;
     }
 
-    public void orderCanceled(double canceledQuantity) {
+    void orderCanceled(double canceledQuantity) {
         orderQty -= canceledQuantity;
 
         origClOrdId = clOrdId;
@@ -57,71 +57,71 @@ class Order {
         nextClOrdId = null;
     }
 
-    public long getOrderEntryID() {
+    long getOrderEntryID() {
         return orderEntryId;
     }
 
-    public long getOrderID() {
+    long getOrderID() {
         return orderId;
     }
 
-    public String getClOrdID() {
+    String getClOrdID() {
         return clOrdId;
     }
 
-    public String getOrigClOrdID() {
+    String getOrigClOrdID() {
         return origClOrdId;
     }
 
-    public void setNextClOrdID(String nextClOrdId) {
+    void setNextClOrdID(String nextClOrdId) {
         this.nextClOrdId = nextClOrdId;
     }
 
-    public String getNextClOrdID() {
+    String getNextClOrdID() {
         return nextClOrdId;
     }
 
-    public char getOrdStatus() {
+    char getOrdStatus() {
         return ordStatus;
     }
 
-    public String getAccount() {
+    String getAccount() {
         return account;
     }
 
-    public char getSide() {
+    char getSide() {
         return side;
     }
 
-    public String getSymbol() {
+    String getSymbol() {
         return symbol;
     }
 
-    public double getOrderQty() {
+    double getOrderQty() {
         return orderQty;
     }
 
-    public double getCumQty() {
+    double getCumQty() {
         return cumQty;
     }
 
-    public double getLeavesQty() {
+    double getLeavesQty() {
         return orderQty - cumQty;
     }
 
-    public double getAvgPx() {
+    double getAvgPx() {
         return avgPx;
     }
 
-    public void setCxlRejResponseTo(char cxlRejResponseTo) {
+    void setCxlRejResponseTo(char cxlRejResponseTo) {
         this.cxlRejResponseTo = cxlRejResponseTo;
     }
 
-    public char getCxlRejResponseTo() {
+    char getCxlRejResponseTo() {
         return cxlRejResponseTo;
     }
 
-    public boolean isInPendingStatus() {
+    boolean isInPendingStatus() {
         return nextClOrdId != null;
     }
 
