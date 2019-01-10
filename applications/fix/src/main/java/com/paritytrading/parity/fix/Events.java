@@ -11,7 +11,7 @@ class Events {
 
     private static final int TIMEOUT = 500;
 
-    public static void process(FIXAcceptor fix) throws IOException {
+    static void process(FIXAcceptor fix) throws IOException {
         Selector selector = Selector.open();
 
         final List<Session> toKeepAlive = new ArrayList<>();
