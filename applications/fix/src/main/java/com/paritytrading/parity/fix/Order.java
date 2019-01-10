@@ -4,19 +4,19 @@ import static com.paritytrading.philadelphia.fix44.FIX44Enumerations.*;
 
 class Order {
 
-    private long   orderEntryId;
-    private long   orderId;
-    private String nextClOrdId;
-    private String clOrdId;
-    private String origClOrdId;
-    private char   ordStatus;
-    private String account;
-    private char   side;
-    private String symbol;
-    private double orderQty;
-    private double cumQty;
-    private double avgPx;
-    private char   cxlRejResponseTo;
+    private final long   orderEntryId;
+    private       long   orderId;
+    private       String nextClOrdId;
+    private       String clOrdId;
+    private       String origClOrdId;
+    private       char   ordStatus;
+    private final String account;
+    private final char   side;
+    private final String symbol;
+    private       double orderQty;
+    private       double cumQty;
+    private       double avgPx;
+    private       char   cxlRejResponseTo;
 
     Order(long orderEntryId, String clOrdId, String account, char side,
             String symbol, double orderQty) {
