@@ -48,7 +48,7 @@ class Session implements Closeable {
 
     private Instruments instruments;
 
-    public Session(OrderEntryFactory orderEntry, SocketChannel fix,
+    Session(OrderEntryFactory orderEntry, SocketChannel fix,
             FIXConfig config, Instruments instruments) throws IOException {
         this.nextOrderEntryId = 1;
 
@@ -71,11 +71,11 @@ class Session implements Closeable {
         orderEntry.close();
     }
 
-    public FIXConnection getFIX() {
+    FIXConnection getFIX() {
         return fix;
     }
 
-    public SoupBinTCPClient getOrderEntry() {
+    SoupBinTCPClient getOrderEntry() {
         return orderEntry;
     }
 
