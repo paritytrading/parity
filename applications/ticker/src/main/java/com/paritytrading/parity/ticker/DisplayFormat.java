@@ -1,7 +1,5 @@
 package com.paritytrading.parity.ticker;
 
-import static com.paritytrading.parity.ticker.MarketDataListener.*;
-
 import com.paritytrading.parity.book.OrderBook;
 import com.paritytrading.parity.book.Side;
 import com.paritytrading.parity.util.Instrument;

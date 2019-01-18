@@ -2,7 +2,6 @@ package com.paritytrading.parity.match;
 
 import static com.paritytrading.parity.match.OrderBookEvents.*;
 import static java.util.Arrays.*;
-import static java.util.Collections.*;
 import static org.junit.Assert.*;
 
 import org.junit.Before;

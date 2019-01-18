@@ -1,7 +1,6 @@
 package com.paritytrading.parity.ticker;
 
 import static java.util.Arrays.*;
-import static java.util.Comparator.*;
 import static org.jvirtanen.util.Applications.*;
 
 import com.paritytrading.nassau.MessageListener;
