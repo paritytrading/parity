@@ -201,6 +201,7 @@ public class MarketTest {
                     updateAfterFirstDelete, updateAfterSecondDelete), events.collect());
     }
 
+    @SuppressWarnings("unused")
     private static class Level extends Value {
         public final long bidPrice;
         public final long bidSize;
