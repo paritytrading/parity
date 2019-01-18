@@ -17,10 +17,6 @@ class DisplayFormat extends MarketDataListener {
 
     private Long2ObjectArrayMap<Trade> trades;
 
-    private long timestamp;
-
-    private int counter;
-
     private String placeholder;
 
     public DisplayFormat(Instruments instruments) {
