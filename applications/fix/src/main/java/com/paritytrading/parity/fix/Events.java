@@ -96,7 +96,7 @@ class Events {
 
             for (int i = 0; i < toCleanUp.size(); i++) {
                 try (Session session = toCleanUp.get(i)) {
-                	toKeepAlive.remove(session);
+                    toKeepAlive.remove(session);
                 }
             }
 
