@@ -1,6 +1,5 @@
 package com.paritytrading.parity.ticker;
 
-import static com.paritytrading.parity.ticker.MarketDataListener.*;
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 
 import com.paritytrading.parity.book.OrderBook;
