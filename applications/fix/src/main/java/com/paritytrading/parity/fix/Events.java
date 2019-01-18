@@ -95,13 +95,8 @@ class Events {
                 continue;
 
             for (int i = 0; i < toCleanUp.size(); i++) {
-                Session session = toCleanUp.get(i);
-
-                toKeepAlive.remove(session);
-
-                try {
-                    session.close();
-                } catch (IOException e) {
+                try (Session session = toCleanUp.get(i)) {
+                	toKeepAlive.remove(session);
                 }
             }
 
