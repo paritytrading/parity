@@ -15,7 +15,6 @@ class Order {
     private final long   instrument;
     private       long   quantity;
     private final long   price;
-    private final long   orderNumber;
 
     Order(Event.OrderAccepted event) {
         this.timestamp   = event.timestamp;
@@ -24,7 +23,6 @@ class Order {
         this.instrument  = event.instrument;
         this.quantity    = event.quantity;
         this.price       = event.price;
-        this.orderNumber = event.orderNumber;
     }
 
     void apply(Event.OrderExecuted event) {
