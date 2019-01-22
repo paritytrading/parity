@@ -25,10 +25,7 @@ support.
 
 Parity Network Protocols depends on the following libraries:
 
-- [Foundation][] 0.2.1
 - [Nassau][] Core 0.13.0
-
-  [Foundation]: https://github.com/paritytrading/foundation
 
 ## Download
 

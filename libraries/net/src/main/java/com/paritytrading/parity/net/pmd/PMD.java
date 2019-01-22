@@ -1,7 +1,5 @@
 package com.paritytrading.parity.net.pmd;
 
-import static com.paritytrading.foundation.ByteBuffers.*;
-
 import com.paritytrading.parity.net.ProtocolMessage;
 import java.nio.ByteBuffer;
 
@@ -42,13 +40,13 @@ public class PMD {
 
         @Override
         public void get(ByteBuffer buffer) {
-            version = getUnsignedInt(buffer);
+            version = buffer.getInt() & 0xffffffffL;
         }
 
         @Override
         public void put(ByteBuffer buffer) {
             buffer.put(MESSAGE_TYPE_VERSION);
-            putUnsignedInt(buffer, version);
+            buffer.putInt((int)version);
         }
     }
 
@@ -99,7 +97,7 @@ public class PMD {
             timestamp   = buffer.getLong();
             orderNumber = buffer.getLong();
             quantity    = buffer.getLong();
-            matchNumber = getUnsignedInt(buffer);
+            matchNumber = buffer.getInt() & 0xffffffffL;
         }
 
         @Override
@@ -108,7 +106,7 @@ public class PMD {
             buffer.putLong(timestamp);
             buffer.putLong(orderNumber);
             buffer.putLong(quantity);
-            putUnsignedInt(buffer, matchNumber);
+            buffer.putInt((int)matchNumber);
         }
     }
 

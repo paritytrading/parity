@@ -1,7 +1,5 @@
 package com.paritytrading.parity.net.poe;
 
-import static com.paritytrading.foundation.ByteBuffers.*;
-
 import com.paritytrading.parity.net.ProtocolMessage;
 import java.nio.ByteBuffer;
 
@@ -229,7 +227,7 @@ public class POE {
             quantity      = buffer.getLong();
             price         = buffer.getLong();
             liquidityFlag = buffer.get();
-            matchNumber   = getUnsignedInt(buffer);
+            matchNumber   = buffer.getInt() & 0xffffffffL;
         }
 
         @Override
@@ -240,7 +238,7 @@ public class POE {
             buffer.putLong(quantity);
             buffer.putLong(price);
             buffer.put(liquidityFlag);
-            putUnsignedInt(buffer, matchNumber);
+            buffer.putInt((int)matchNumber);
         }
     }
 
