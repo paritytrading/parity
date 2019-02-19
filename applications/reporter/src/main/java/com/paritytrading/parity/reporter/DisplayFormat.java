@@ -8,7 +8,7 @@ class DisplayFormat extends TradeListener {
 
     private Instruments instruments;
 
-    public DisplayFormat(Instruments instruments) {
+    DisplayFormat(Instruments instruments) {
         this.instruments = instruments;
 
         int priceWidth = instruments.getPriceWidth();
@@ -28,7 +28,7 @@ class DisplayFormat extends TradeListener {
     }
 
     @Override
-    public void trade(Trade event) {
+    void trade(Trade event) {
         Instrument instrument = instruments.get(event.instrument);
 
         printf("%12s %-8s ", event.timestamp, event.instrument);
