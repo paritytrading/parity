@@ -2,14 +2,14 @@ package com.paritytrading.parity.reporter;
 
 class Trade {
 
-    public String timestamp;
-    public long   matchNumber;
-    public String instrument;
-    public long   quantity;
-    public long   price;
-    public String buyer;
-    public long   buyOrderNumber;
-    public String seller;
-    public long   sellOrderNumber;
+    String timestamp;
+    long   matchNumber;
+    String instrument;
+    long   quantity;
+    long   price;
+    String buyer;
+    long   buyOrderNumber;
+    String seller;
+    long   sellOrderNumber;
 
 }
