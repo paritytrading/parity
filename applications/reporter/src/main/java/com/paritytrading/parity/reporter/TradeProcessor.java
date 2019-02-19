@@ -17,7 +17,7 @@ class TradeProcessor implements PMRListener {
 
     private TradeListener listener;
 
-    public TradeProcessor(TradeListener listener) {
+    TradeProcessor(TradeListener listener) {
         this.orders = new HashMap<>();
 
         this.trade = new Trade();
@@ -87,13 +87,13 @@ class TradeProcessor implements PMRListener {
     }
 
     private static class Order {
-        public long username;
-        public byte side;
-        public long instrument;
-        public long price;
-        public long remainingQuantity;
+        long username;
+        byte side;
+        long instrument;
+        long price;
+        long remainingQuantity;
 
-        public Order(PMR.OrderEntered message) {
+        Order(PMR.OrderEntered message) {
             this.username          = message.username;
             this.side              = message.side;
             this.instrument        = message.instrument;
