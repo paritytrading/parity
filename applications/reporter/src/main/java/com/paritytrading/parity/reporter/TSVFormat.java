@@ -22,7 +22,7 @@ class TSVFormat extends TradeListener {
 
     private Map<String, String> formats;
 
-    public TSVFormat(Instruments instruments) {
+    TSVFormat(Instruments instruments) {
         this.instruments = instruments;
 
         this.formats = new HashMap<>();
@@ -40,7 +40,7 @@ class TSVFormat extends TradeListener {
     }
 
     @Override
-    public void trade(Trade event) {
+    void trade(Trade event) {
         printf("%s\t%d\t%s\t", event.timestamp, event.matchNumber, event.instrument);
 
         Instrument instrument = instruments.get(event.instrument);
