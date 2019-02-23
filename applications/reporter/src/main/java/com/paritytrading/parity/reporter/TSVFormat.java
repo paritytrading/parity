@@ -18,9 +18,9 @@ class TSVFormat extends TradeListener {
         "Seller\t" +
         "Sell Order Number\n";
 
-    private Instruments instruments;
+    private final Instruments instruments;
 
-    private Map<String, String> formats;
+    private final Map<String, String> formats;
 
     TSVFormat(Instruments instruments) {
         this.instruments = instruments;
