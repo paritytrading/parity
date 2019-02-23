@@ -6,7 +6,7 @@ import com.paritytrading.parity.util.TableHeader;
 
 class DisplayFormat extends TradeListener {
 
-    private Instruments instruments;
+    private final Instruments instruments;
 
     DisplayFormat(Instruments instruments) {
         this.instruments = instruments;
