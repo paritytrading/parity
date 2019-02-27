@@ -9,26 +9,26 @@ class Order {
     private Session   session;
     private OrderBook book;
 
-    public Order(byte[] orderId, long orderNumber, Session session, OrderBook book) {
+    Order(byte[] orderId, long orderNumber, Session session, OrderBook book) {
         this.orderId     = orderId.clone();
         this.orderNumber = orderNumber;
         this.session     = session;
         this.book        = book;
     }
 
-    public byte[] getOrderId() {
+    byte[] getOrderId() {
         return orderId;
     }
 
-    public long getOrderNumber() {
+    long getOrderNumber() {
         return orderNumber;
     }
 
-    public Session getSession() {
+    Session getSession() {
         return session;
     }
 
-    public OrderBook getBook() {
+    OrderBook getBook() {
         return book;
     }
 
