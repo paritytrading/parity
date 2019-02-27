@@ -11,14 +11,14 @@ class Events implements Runnable {
 
     private static final int TIMEOUT_MILLIS = 1000;
 
-    private MarketData      marketData;
-    private MarketReporting marketReporting;
-    private OrderEntry      orderEntry;
+    private final MarketData      marketData;
+    private final MarketReporting marketReporting;
+    private final OrderEntry      orderEntry;
 
-    private List<Session> toKeepAlive;
-    private List<Session> toCleanUp;
+    private final List<Session> toKeepAlive;
+    private final List<Session> toCleanUp;
 
-    private Selector selector;
+    private final Selector selector;
 
     Events(MarketData marketData, MarketReporting marketReporting,
             OrderEntry orderEntry) throws IOException {
