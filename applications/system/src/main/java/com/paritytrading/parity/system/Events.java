@@ -20,7 +20,7 @@ class Events implements Runnable {
 
     private Selector selector;
 
-    public Events(MarketData marketData, MarketReporting marketReporting,
+    Events(MarketData marketData, MarketReporting marketReporting,
             OrderEntry orderEntry) throws IOException {
         this.marketData      = marketData;
         this.marketReporting = marketReporting;
