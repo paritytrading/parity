@@ -50,7 +50,7 @@ class MarketReporting {
         this.buffer = ByteBuffer.allocateDirect(1024);
     }
 
-    public static MarketReporting open(String session, NetworkInterface multicastInterface,
+    static MarketReporting open(String session, NetworkInterface multicastInterface,
             InetSocketAddress multicastGroup,
             InetSocketAddress requestAddress) throws IOException {
         DatagramChannel channel = DatagramChannel.open(StandardProtocolFamily.INET);
@@ -70,15 +70,15 @@ class MarketReporting {
         return new MarketReporting(transport, requestTransport);
     }
 
-    public MoldUDP64Server getTransport() {
+    MoldUDP64Server getTransport() {
         return transport;
     }
 
-    public MoldUDP64RequestServer getRequestTransport() {
+    MoldUDP64RequestServer getRequestTransport() {
         return requestTransport;
     }
 
-    public void serve() {
+    void serve() {
         try {
             requestTransport.serve(messages);
         } catch (IOException e) {
@@ -86,13 +86,13 @@ class MarketReporting {
         }
     }
 
-    public void version() {
+    void version() {
         version.version = PMR.VERSION;
 
         send(version);
     }
 
-    public void orderEntered(long username, long orderNumber, byte side, long instrument, long quantity, long price) {
+    void orderEntered(long username, long orderNumber, byte side, long instrument, long quantity, long price) {
         orderEntered.timestamp   = timestamp();
         orderEntered.username    = username;
         orderEntered.orderNumber = orderNumber;
@@ -104,14 +104,14 @@ class MarketReporting {
         send(orderEntered);
     }
 
-    public void orderAdded(long orderNumber) {
+    void orderAdded(long orderNumber) {
         orderAdded.timestamp   = timestamp();
         orderAdded.orderNumber = orderNumber;
 
         send(orderAdded);
     }
 
-    public void orderCanceled(long orderNumber, long canceledQuantity) {
+    void orderCanceled(long orderNumber, long canceledQuantity) {
         orderCanceled.timestamp        = timestamp();
         orderCanceled.orderNumber      = orderNumber;
         orderCanceled.canceledQuantity = canceledQuantity;
@@ -119,7 +119,7 @@ class MarketReporting {
         send(orderCanceled);
     }
 
-    public void trade(long restingOrderNumber, long incomingOrderNumber,
+    void trade(long restingOrderNumber, long incomingOrderNumber,
             long quantity, long matchNumber) {
         trade.timestamp           = timestamp();
         trade.restingOrderNumber  = restingOrderNumber;
