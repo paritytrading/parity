@@ -18,7 +18,7 @@ class OrderEntry {
         this.books = books;
     }
 
-    public static OrderEntry open(InetSocketAddress address, OrderBooks books) throws IOException {
+    static OrderEntry open(InetSocketAddress address, OrderBooks books) throws IOException {
         ServerSocketChannel serverChannel = ServerSocketChannel.open();
 
         serverChannel.bind(address);
@@ -27,11 +27,11 @@ class OrderEntry {
         return new OrderEntry(serverChannel, books);
     }
 
-    public ServerSocketChannel getChannel() {
+    ServerSocketChannel getChannel() {
         return serverChannel;
     }
 
-    public Session accept() throws IOException {
+    Session accept() throws IOException {
         SocketChannel channel = serverChannel.accept();
         if (channel == null)
             return null;
