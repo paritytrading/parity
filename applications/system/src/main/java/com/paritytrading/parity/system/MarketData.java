@@ -48,7 +48,7 @@ class MarketData {
         this.buffer = ByteBuffer.allocateDirect(1024);
     }
 
-    public static MarketData open(String session, NetworkInterface multicastInterface,
+    static MarketData open(String session, NetworkInterface multicastInterface,
             InetSocketAddress multicastGroup,
             InetSocketAddress requestAddress) throws IOException {
         DatagramChannel channel = DatagramChannel.open(StandardProtocolFamily.INET);
@@ -68,15 +68,15 @@ class MarketData {
         return new MarketData(transport, requestTransport);
     }
 
-    public MoldUDP64Server getTransport() {
+    MoldUDP64Server getTransport() {
         return transport;
     }
 
-    public MoldUDP64RequestServer getRequestTransport() {
+    MoldUDP64RequestServer getRequestTransport() {
         return requestTransport;
     }
 
-    public void serve() {
+    void serve() {
         try {
             requestTransport.serve(messages);
         } catch (IOException e) {
@@ -84,13 +84,13 @@ class MarketData {
         }
     }
 
-    public void version() {
+    void version() {
         version.version = PMD.VERSION;
 
         send(version);
     }
 
-    public void orderAdded(long orderNumber, byte side, long instrument, long quantity, long price) {
+    void orderAdded(long orderNumber, byte side, long instrument, long quantity, long price) {
         orderAdded.timestamp   = timestamp();
         orderAdded.orderNumber = orderNumber;
         orderAdded.side        = side;
@@ -101,7 +101,7 @@ class MarketData {
         send(orderAdded);
     }
 
-    public void orderExecuted(long orderNumber, long quantity, long matchNumber) {
+    void orderExecuted(long orderNumber, long quantity, long matchNumber) {
         orderExecuted.timestamp   = timestamp();
         orderExecuted.orderNumber = orderNumber;
         orderExecuted.quantity    = quantity;
@@ -110,7 +110,7 @@ class MarketData {
         send(orderExecuted);
     }
 
-    public void orderCanceled(long orderNumber, long canceledQuantity) {
+    void orderCanceled(long orderNumber, long canceledQuantity) {
         orderCanceled.timestamp        = timestamp();
         orderCanceled.orderNumber      = orderNumber;
         orderCanceled.canceledQuantity = canceledQuantity;
