@@ -41,7 +41,7 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
 
     private long username;
 
-    public Session(SocketChannel channel, OrderBooks books) {
+    Session(SocketChannel channel, OrderBooks books) {
         this.transport = new SoupBinTCPServer(channel, POE.MAX_INBOUND_MESSAGE_LENGTH,
                 new POEServerParser(this), this);
 
@@ -53,15 +53,15 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
         this.terminated = false;
     }
 
-    public SoupBinTCPServer getTransport() {
+    SoupBinTCPServer getTransport() {
         return transport;
     }
 
-    public long getUsername() {
+    long getUsername() {
         return username;
     }
 
-    public boolean isTerminated() {
+    boolean isTerminated() {
         return terminated;
     }
 
@@ -132,15 +132,15 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
         books.cancelOrder(message, order);
     }
 
-    public void track(Order order) {
+    void track(Order order) {
         orders.put(order.getOrderId().clone(), order);
     }
 
-    public void release(Order order) {
+    void release(Order order) {
         orders.remove(order.getOrderId());
     }
 
-    public void orderAccepted(POE.EnterOrder message, Order order) {
+    void orderAccepted(POE.EnterOrder message, Order order) {
         orderAccepted.timestamp   = timestamp();
         System.arraycopy(message.orderId, 0, orderAccepted.orderId, 0, orderAccepted.orderId.length);
         orderAccepted.side        = message.side;
@@ -154,7 +154,7 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
         orderIds.add(message.orderId.clone());
     }
 
-    public void orderRejected(POE.EnterOrder message, byte reason) {
+    void orderRejected(POE.EnterOrder message, byte reason) {
         orderRejected.timestamp = timestamp();
         System.arraycopy(message.orderId, 0, orderRejected.orderId, 0, orderRejected.orderId.length);
         orderRejected.reason    = reason;
@@ -162,7 +162,7 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
         send(orderRejected);
     }
 
-    public void orderExecuted(long price, long quantity, byte liquidityFlag,
+    void orderExecuted(long price, long quantity, byte liquidityFlag,
             long matchNumber, Order order) {
         orderExecuted.timestamp     = timestamp();
         System.arraycopy(order.getOrderId(), 0, orderExecuted.orderId, 0, orderExecuted.orderId.length);
@@ -174,7 +174,7 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
         send(orderExecuted);
     }
 
-    public void orderCanceled(long canceledQuantity, byte reason, Order order) {
+    void orderCanceled(long canceledQuantity, byte reason, Order order) {
         orderCanceled.timestamp        = timestamp();
         System.arraycopy(order.getOrderId(), 0, orderCanceled.orderId, 0, orderCanceled.orderId.length);
         orderCanceled.canceledQuantity = canceledQuantity;
