@@ -20,22 +20,22 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
 
     private static final byte SPACE = ' ';
 
-    private static SoupBinTCP.LoginAccepted loginAccepted = new SoupBinTCP.LoginAccepted();
+    private static final SoupBinTCP.LoginAccepted loginAccepted = new SoupBinTCP.LoginAccepted();
 
-    private static POE.OrderAccepted orderAccepted = new POE.OrderAccepted();
-    private static POE.OrderRejected orderRejected = new POE.OrderRejected();
-    private static POE.OrderExecuted orderExecuted = new POE.OrderExecuted();
-    private static POE.OrderCanceled orderCanceled = new POE.OrderCanceled();
+    private static final POE.OrderAccepted orderAccepted = new POE.OrderAccepted();
+    private static final POE.OrderRejected orderRejected = new POE.OrderRejected();
+    private static final POE.OrderExecuted orderExecuted = new POE.OrderExecuted();
+    private static final POE.OrderCanceled orderCanceled = new POE.OrderCanceled();
 
-    private static ByteBuffer buffer = ByteBuffer.allocateDirect(POE.MAX_OUTBOUND_MESSAGE_LENGTH);
+    private static final ByteBuffer buffer = ByteBuffer.allocateDirect(POE.MAX_OUTBOUND_MESSAGE_LENGTH);
 
-    private SoupBinTCPServer transport;
+    private final SoupBinTCPServer transport;
 
-    private Object2ObjectOpenCustomHashMap<byte[], Order> orders;
+    private final Object2ObjectOpenCustomHashMap<byte[], Order> orders;
 
-    private ObjectOpenCustomHashSet<byte[]> orderIds;
+    private final ObjectOpenCustomHashSet<byte[]> orderIds;
 
-    private OrderBooks books;
+    private final OrderBooks books;
 
     private boolean terminated;
 
