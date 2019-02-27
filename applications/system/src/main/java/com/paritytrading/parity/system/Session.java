@@ -20,14 +20,25 @@ class Session implements Closeable, SoupBinTCPServerStatusListener, POEServerLis
 
     private static final byte SPACE = ' ';
 
-    private static final SoupBinTCP.LoginAccepted loginAccepted = new SoupBinTCP.LoginAccepted();
+    private static final SoupBinTCP.LoginAccepted loginAccepted;
 
-    private static final POE.OrderAccepted orderAccepted = new POE.OrderAccepted();
-    private static final POE.OrderRejected orderRejected = new POE.OrderRejected();
-    private static final POE.OrderExecuted orderExecuted = new POE.OrderExecuted();
-    private static final POE.OrderCanceled orderCanceled = new POE.OrderCanceled();
+    private static final POE.OrderAccepted orderAccepted;
+    private static final POE.OrderRejected orderRejected;
+    private static final POE.OrderExecuted orderExecuted;
+    private static final POE.OrderCanceled orderCanceled;
 
-    private static final ByteBuffer buffer = ByteBuffer.allocateDirect(POE.MAX_OUTBOUND_MESSAGE_LENGTH);
+    private static final ByteBuffer buffer;
+
+    static {
+        loginAccepted = new SoupBinTCP.LoginAccepted();
+
+        orderAccepted = new POE.OrderAccepted();
+        orderRejected = new POE.OrderRejected();
+        orderExecuted = new POE.OrderExecuted();
+        orderCanceled = new POE.OrderCanceled();
+
+        buffer = ByteBuffer.allocateDirect(POE.MAX_OUTBOUND_MESSAGE_LENGTH);
+    }
 
     private final SoupBinTCPServer transport;
 
