@@ -32,7 +32,7 @@ class OrderBooks {
 
     private CancelReason cancelReason;
 
-    public OrderBooks(List<String> instruments, MarketData marketData, MarketReporting marketReporting) {
+    OrderBooks(List<String> instruments, MarketData marketData, MarketReporting marketReporting) {
         this.books  = new Long2ObjectArrayMap<>();
         this.orders = new Long2ObjectOpenHashMap<>();
 
@@ -48,7 +48,7 @@ class OrderBooks {
         this.nextMatchNumber = 1;
     }
 
-    public void enterOrder(POE.EnterOrder message, Session session) {
+    void enterOrder(POE.EnterOrder message, Session session) {
         OrderBook book = books.get(message.instrument);
         if (book == null) {
             session.orderRejected(message, POE.ORDER_REJECT_REASON_UNKNOWN_INSTRUMENT);
@@ -79,7 +79,7 @@ class OrderBooks {
         book.enter(orderNumber, side(message.side), message.price, message.quantity);
     }
 
-    public void cancelOrder(POE.CancelOrder message, Order order) {
+    void cancelOrder(POE.CancelOrder message, Order order) {
         handling = order;
 
         cancelReason = CancelReason.REQUEST;
@@ -87,7 +87,7 @@ class OrderBooks {
         order.getBook().cancel(order.getOrderNumber(), message.quantity);
     }
 
-    public void cancel(Order order) {
+    void cancel(Order order) {
         handling = order;
 
         cancelReason = CancelReason.SYSTEM;
