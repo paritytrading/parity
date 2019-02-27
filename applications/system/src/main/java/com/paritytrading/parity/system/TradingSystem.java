@@ -16,7 +16,7 @@ import org.jvirtanen.config.Configs;
 
 class TradingSystem {
 
-    public static final long EPOCH_MILLIS = LocalDate.now().atStartOfDay(ZoneId.systemDefault())
+    static final long EPOCH_MILLIS = LocalDate.now().atStartOfDay(ZoneId.systemDefault())
         .toInstant().toEpochMilli();
 
     public static void main(String[] args) throws IOException {
