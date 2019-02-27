@@ -17,11 +17,11 @@ class OrderBooks {
         SYSTEM,
     }
 
-    private Long2ObjectArrayMap<OrderBook> books;
-    private Long2ObjectOpenHashMap<Order>  orders;
+    private final Long2ObjectArrayMap<OrderBook> books;
+    private final Long2ObjectOpenHashMap<Order>  orders;
 
-    private MarketData      marketData;
-    private MarketReporting marketReporting;
+    private final MarketData      marketData;
+    private final MarketReporting marketReporting;
 
     private long nextOrderNumber;
     private long nextMatchNumber;
