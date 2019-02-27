@@ -17,21 +17,21 @@ import java.nio.channels.DatagramChannel;
 
 class MarketReporting {
 
-    private PMR.Version       version;
-    private PMR.OrderEntered  orderEntered;
-    private PMR.OrderAdded    orderAdded;
-    private PMR.OrderCanceled orderCanceled;
-    private PMR.Trade         trade;
+    private final PMR.Version       version;
+    private final PMR.OrderEntered  orderEntered;
+    private final PMR.OrderAdded    orderAdded;
+    private final PMR.OrderCanceled orderCanceled;
+    private final PMR.Trade         trade;
 
-    private MoldUDP64Server transport;
+    private final MoldUDP64Server transport;
 
-    private MoldUDP64RequestServer requestTransport;
+    private final MoldUDP64RequestServer requestTransport;
 
-    private MoldUDP64DefaultMessageStore messages;
+    private final MoldUDP64DefaultMessageStore messages;
 
-    private MoldUDP64DownstreamPacket packet;
+    private final MoldUDP64DownstreamPacket packet;
 
-    private ByteBuffer buffer;
+    private final ByteBuffer buffer;
 
     private MarketReporting(MoldUDP64Server transport, MoldUDP64RequestServer requestTransport) {
         this.version       = new PMR.Version();
