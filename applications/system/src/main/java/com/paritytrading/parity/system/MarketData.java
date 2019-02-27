@@ -17,20 +17,20 @@ import java.nio.channels.DatagramChannel;
 
 class MarketData {
 
-    private PMD.Version       version;
-    private PMD.OrderAdded    orderAdded;
-    private PMD.OrderExecuted orderExecuted;
-    private PMD.OrderCanceled orderCanceled;
+    private final PMD.Version       version;
+    private final PMD.OrderAdded    orderAdded;
+    private final PMD.OrderExecuted orderExecuted;
+    private final PMD.OrderCanceled orderCanceled;
 
-    private MoldUDP64Server transport;
+    private final MoldUDP64Server transport;
 
-    private MoldUDP64RequestServer requestTransport;
+    private final MoldUDP64RequestServer requestTransport;
 
-    private MoldUDP64DefaultMessageStore messages;
+    private final MoldUDP64DefaultMessageStore messages;
 
-    private MoldUDP64DownstreamPacket packet;
+    private final MoldUDP64DownstreamPacket packet;
 
-    private ByteBuffer buffer;
+    private final ByteBuffer buffer;
 
     private MarketData(MoldUDP64Server transport, MoldUDP64RequestServer requestTransport) {
         this.version       = new PMD.Version();
