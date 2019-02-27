@@ -8,9 +8,9 @@ import java.nio.channels.SocketChannel;
 
 class OrderEntry {
 
-    private ServerSocketChannel serverChannel;
+    private final ServerSocketChannel serverChannel;
 
-    private OrderBooks books;
+    private final OrderBooks books;
 
     private OrderEntry(ServerSocketChannel serverChannel, OrderBooks books) {
         this.serverChannel = serverChannel;
