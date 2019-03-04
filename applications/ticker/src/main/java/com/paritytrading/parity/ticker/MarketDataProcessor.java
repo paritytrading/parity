@@ -9,9 +9,9 @@ import com.paritytrading.parity.net.pmd.PMDListener;
 
 class MarketDataProcessor implements PMDListener {
 
-    private Market market;
+    private final Market market;
 
-    private MarketDataListener listener;
+    private final MarketDataListener listener;
 
     MarketDataProcessor(Market market, MarketDataListener listener) {
         this.market   = market;
