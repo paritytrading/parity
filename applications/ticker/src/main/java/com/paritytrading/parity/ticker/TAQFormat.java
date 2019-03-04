@@ -21,7 +21,7 @@ class TAQFormat extends MarketDataListener {
 
     private TAQWriter writer;
 
-    public TAQFormat(Instruments instruments) {
+    TAQFormat(Instruments instruments) {
         this.instruments = instruments;
 
         this.quote = new TAQ.Quote();
