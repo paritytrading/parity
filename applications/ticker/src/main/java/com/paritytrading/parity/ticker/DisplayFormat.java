@@ -17,7 +17,7 @@ class DisplayFormat extends MarketDataListener {
 
     private String placeholder;
 
-    public DisplayFormat(Instruments instruments) {
+    DisplayFormat(Instruments instruments) {
         this.instruments = instruments;
 
         this.trades = new Long2ObjectArrayMap<>();
@@ -123,8 +123,8 @@ class DisplayFormat extends MarketDataListener {
     }
 
     private static class Trade {
-        public long price;
-        public long size;
+        long price;
+        long size;
     }
 
 }
