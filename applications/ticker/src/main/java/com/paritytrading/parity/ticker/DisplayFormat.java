@@ -11,11 +11,11 @@ import java.util.Locale;
 
 class DisplayFormat extends MarketDataListener {
 
-    private Instruments instruments;
+    private final Instruments instruments;
 
-    private Long2ObjectArrayMap<Trade> trades;
+    private final Long2ObjectArrayMap<Trade> trades;
 
-    private String placeholder;
+    private final String placeholder;
 
     DisplayFormat(Instruments instruments) {
         this.instruments = instruments;
