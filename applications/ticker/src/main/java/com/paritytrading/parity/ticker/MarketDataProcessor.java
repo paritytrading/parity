@@ -13,7 +13,7 @@ class MarketDataProcessor implements PMDListener {
 
     private MarketDataListener listener;
 
-    public MarketDataProcessor(Market market, MarketDataListener listener) {
+    MarketDataProcessor(Market market, MarketDataListener listener) {
         this.market   = market;
         this.listener = listener;
     }
