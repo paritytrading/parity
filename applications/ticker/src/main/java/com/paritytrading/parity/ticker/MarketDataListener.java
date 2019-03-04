@@ -6,11 +6,11 @@ abstract class MarketDataListener implements MarketListener {
 
     private long timestamp;
 
-    public void timestamp(long timestamp) {
+    void timestamp(long timestamp) {
         this.timestamp = timestamp;
     }
 
-    public long timestampMillis() {
+    long timestampMillis() {
         return timestamp / 1_000_000;
     }
 
