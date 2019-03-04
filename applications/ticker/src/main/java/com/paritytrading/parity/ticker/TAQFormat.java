@@ -14,12 +14,12 @@ import java.time.LocalDate;
 
 class TAQFormat extends MarketDataListener {
 
-    private Instruments instruments;
+    private final Instruments instruments;
 
-    private TAQ.Quote quote;
-    private TAQ.Trade trade;
+    private final TAQ.Quote quote;
+    private final TAQ.Trade trade;
 
-    private TAQWriter writer;
+    private final TAQWriter writer;
 
     TAQFormat(Instruments instruments) {
         this.instruments = instruments;
