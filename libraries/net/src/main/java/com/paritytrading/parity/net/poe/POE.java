@@ -227,7 +227,7 @@ public class POE {
             quantity      = buffer.getLong();
             price         = buffer.getLong();
             liquidityFlag = buffer.get();
-            matchNumber   = buffer.getInt() & 0xffffffffL;
+            matchNumber   = getUnsignedInt(buffer);
         }
 
         @Override
@@ -238,7 +238,7 @@ public class POE {
             buffer.putLong(quantity);
             buffer.putLong(price);
             buffer.put(liquidityFlag);
-            buffer.putInt((int)matchNumber);
+            putUnsignedInt(buffer, matchNumber);
         }
     }
 
@@ -274,6 +274,14 @@ public class POE {
             buffer.putLong(canceledQuantity);
             buffer.put(reason);
         }
+    }
+
+    private static long getUnsignedInt(ByteBuffer buffer) {
+        return buffer.getInt() & 0xffffffffL;
+    }
+
+    private static void putUnsignedInt(ByteBuffer buffer, long value) {
+        buffer.putInt((int)value);
     }
 
 }
