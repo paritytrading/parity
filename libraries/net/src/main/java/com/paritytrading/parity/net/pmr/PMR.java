@@ -45,13 +45,13 @@ public class PMR {
 
         @Override
         public void get(ByteBuffer buffer) {
-            version = buffer.getInt() & 0xffffffffL;
+            version = getUnsignedInt(buffer);
         }
 
         @Override
         public void put(ByteBuffer buffer) {
             buffer.put(MESSAGE_TYPE_VERSION);
-            buffer.putInt((int)version);
+            putUnsignedInt(buffer, version);
         }
     }
 
@@ -152,7 +152,7 @@ public class PMR {
             restingOrderNumber  = buffer.getLong();
             incomingOrderNumber = buffer.getLong();
             quantity            = buffer.getLong();
-            matchNumber         = buffer.getInt() & 0xffffffffL;
+            matchNumber         = getUnsignedInt(buffer);
         }
 
         @Override
@@ -162,8 +162,16 @@ public class PMR {
             buffer.putLong(restingOrderNumber);
             buffer.putLong(incomingOrderNumber);
             buffer.putLong(quantity);
-            buffer.putInt((int)matchNumber);
+            putUnsignedInt(buffer, matchNumber);
         }
+    }
+
+    private static long getUnsignedInt(ByteBuffer buffer) {
+        return buffer.getInt() & 0xffffffffL;
+    }
+
+    private static void putUnsignedInt(ByteBuffer buffer, long value) {
+        buffer.putInt((int)value);
     }
 
 }
