@@ -6,38 +6,30 @@ import com.paritytrading.parity.util.Instrument;
 import com.paritytrading.parity.util.Instruments;
 import com.paritytrading.parity.util.TableHeader;
 import com.paritytrading.parity.util.Timestamps;
-import it.unimi.dsi.fastutil.longs.Long2ObjectArrayMap;
 import java.util.Locale;
 
 class DisplayFormat extends MarketDataListener {
 
     private final Instruments instruments;
 
-    private final Long2ObjectArrayMap<Trade> trades;
-
     private final String placeholder;
 
     DisplayFormat(Instruments instruments) {
         this.instruments = instruments;
-
-        this.trades = new Long2ObjectArrayMap<>();
-
-        for (Instrument instrument : instruments)
-            trades.put(instrument.asLong(), new Trade());
 
         int priceWidth = instruments.getPriceWidth();
         int sizeWidth  = instruments.getSizeWidth();
 
         TableHeader header = new TableHeader();
 
-        header.add("Timestamp",        12);
-        header.add("Inst",              8);
-        header.add("Bid Px",   priceWidth);
-        header.add("Bid Size",  sizeWidth);
-        header.add("Ask Px",   priceWidth);
-        header.add("Ask Size",  sizeWidth);
-        header.add("Last Px",  priceWidth);
-        header.add("Last Size", sizeWidth);
+        header.add("Timestamp",         12);
+        header.add("Inst",               8);
+        header.add("Bid Px",    priceWidth);
+        header.add("Bid Size",   sizeWidth);
+        header.add("Ask Px",    priceWidth);
+        header.add("Ask Size",   sizeWidth);
+        header.add("Trade Px",  priceWidth);
+        header.add("Trade Size", sizeWidth);
 
         printf("\n");
         printf(header.format());
@@ -89,25 +81,22 @@ class DisplayFormat extends MarketDataListener {
             print(placeholder);
         }
 
-        Trade trade = trades.get(instrument.asLong());
-
-        if (trade.size != 0) {
-            printf(priceFormat, trade.price / priceFactor);
-            print(" ");
-            printf(sizeFormat, trade.size / sizeFactor);
-            print("\n");
-        }
-        else {
-            println(placeholder);
-        }
+        println(placeholder);
     }
 
     @Override
     public void trade(OrderBook book, Side side, long price, long size) {
-        Trade trade = trades.get(book.getInstrument());
+        Instrument instrument = instruments.get(book.getInstrument());
 
-        trade.price = price;
-        trade.size  = size;
+        printf("%12s %-8s ", Timestamps.format(timestampMillis()), instrument.asString());
+
+        print(placeholder);
+        print(placeholder);
+
+        printf(instrument.getPriceFormat(), price / instrument.getPriceFactor());
+        print(" ");
+        printf(instrument.getSizeFormat(), size / instrument.getSizeFactor());
+        print("\n");
     }
 
     private void printf(String format, Object... args) {
@@ -120,11 +109,6 @@ class DisplayFormat extends MarketDataListener {
 
     private void println(String x) {
         System.out.println(x);
-    }
-
-    private static class Trade {
-        long price;
-        long size;
     }
 
 }
