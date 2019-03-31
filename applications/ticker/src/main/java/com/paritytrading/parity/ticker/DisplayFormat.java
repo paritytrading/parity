@@ -28,6 +28,7 @@ class DisplayFormat extends MarketDataListener {
         header.add("Bid Size",   sizeWidth);
         header.add("Ask Px",    priceWidth);
         header.add("Ask Size",   sizeWidth);
+        header.add("T",                  1);
         header.add("Trade Px",  priceWidth);
         header.add("Trade Size", sizeWidth);
 
@@ -81,6 +82,7 @@ class DisplayFormat extends MarketDataListener {
             print(placeholder);
         }
 
+        print("  ");
         println(placeholder);
     }
 
@@ -93,6 +95,7 @@ class DisplayFormat extends MarketDataListener {
         print(placeholder);
         print(placeholder);
 
+        print(side == Side.BUY ? "B " : "S ");
         printf(instrument.getPriceFormat(), price / instrument.getPriceFactor());
         print(" ");
         printf(instrument.getSizeFormat(), size / instrument.getSizeFactor());
