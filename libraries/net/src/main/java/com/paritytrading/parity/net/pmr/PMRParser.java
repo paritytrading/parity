@@ -38,6 +38,9 @@ public class PMRParser implements MessageListener {
     public void message(ByteBuffer buffer) throws IOException {
         int length = buffer.remaining();
 
+        if (length < 1)
+            throw new PMRException("Malformed message: no message type");
+
         byte messageType = buffer.get();
 
         switch (messageType) {
