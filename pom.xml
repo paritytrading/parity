@@ -36,7 +36,7 @@
     <java.version>1.8</java.version>
     <jmh.version>1.19</jmh.version>
     <nassau.version>0.13.0</nassau.version> <!-- (mentioned in documentation) -->
-    <philadelphia.version>1.0.0</philadelphia.version>
+    <philadelphia.version>1.1.1</philadelphia.version>
   </properties>
 
   <modules>
