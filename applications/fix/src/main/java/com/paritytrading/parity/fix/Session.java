@@ -145,30 +145,20 @@ class Session implements Closeable {
                 }
             }
 
-            if (clOrdIdValue == null) {
-                requiredTagMissing(message, "ClOrdID(11) missing");
+            if (requiredTagMissing(message, clOrdIdValue, "ClOrdID(11)"))
                 return;
-            }
 
-            if (sideValue == null) {
-                requiredTagMissing(message, "Side(54) missing");
+            if (requiredTagMissing(message, sideValue, "Side(54)"))
                 return;
-            }
 
-            if (symbolValue == null) {
-                requiredTagMissing(message, "Symbol(55) missing");
+            if (requiredTagMissing(message, symbolValue, "Symbol(55)"))
                 return;
-            }
 
-            if (orderQtyValue == null) {
-                requiredTagMissing(message, "OrderQty(38) missing");
+            if (requiredTagMissing(message, orderQtyValue, "OrderQty(38)"))
                 return;
-            }
 
-            if (priceValue == null) {
-                requiredTagMissing(message, "Price(44) missing");
+            if (requiredTagMissing(message, priceValue, "Price(44)"))
                 return;
-            }
 
             long orderEntryId = nextOrderEntryId++;
 
@@ -275,19 +265,15 @@ class Session implements Closeable {
                 }
             }
 
-            if (origClOrdIdValue == null) {
-                requiredTagMissing(message, "OrigClOrdID(41) missing");
+            if (requiredTagMissing(message, origClOrdIdValue, "OrigClOrdID(41)"))
                 return;
-            }
 
-            if (clOrdIdValue == null) {
-                requiredTagMissing(message, "ClOrdID(11) missing");
+            if (requiredTagMissing(message, clOrdIdValue, "ClOrdID(11)"))
                 return;
-            }
 
-            if (msgType == OrderCancelReplaceRequest && orderQtyValue == null) {
-                requiredTagMissing(message, "OrderQty(38) missing");
-                return;
+            if (msgType == OrderCancelReplaceRequest) {
+                if (requiredTagMissing(message, orderQtyValue, "OrderQty(38)"))
+                    return;
             }
 
             char cxlRejResponseTo = CxlRejResponseToValues.OrderCancelRequest;
@@ -362,16 +348,13 @@ class Session implements Closeable {
         @Override
         public void logon(FIXConnection connection, FIXMessage message) throws IOException {
             FIXValue username = message.valueOf(Username);
-            if (username == null) {
-                requiredTagMissing(message, "Username(553) missing");
-                return;
-            }
-
             FIXValue password = message.valueOf(Password);
-            if (password == null) {
-                requiredTagMissing(message, "Password(554) missing");
+
+            if (requiredTagMissing(message, username, "Username(553)"))
                 return;
-            }
+
+            if (requiredTagMissing(message, password, "Password(554)"))
+                return;
 
             fix.updateCompID(message);
 
@@ -409,8 +392,13 @@ class Session implements Closeable {
                 "Invalid MsgType(35)");
     }
 
-    private void requiredTagMissing(FIXMessage message, String text) throws IOException {
-        fix.sendReject(message.getMsgSeqNum(), SessionRejectReasonValues.RequiredTagMissing, text);
+    private boolean requiredTagMissing(FIXMessage message, FIXValue value, String tag) throws IOException {
+        if (value != null)
+            return false;
+
+        fix.sendReject(message.getMsgSeqNum(), SessionRejectReasonValues.RequiredTagMissing, tag + " missing");
+
+        return true;
     }
 
     private void valueIsIncorrect(FIXMessage message, String text) throws IOException {
