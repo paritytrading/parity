@@ -1,3 +1,12 @@
+# Modifications to ParityTrading Parity for Transactive Energy
+This repository contains modified code based on a clone from [ParityTrading Parity](https://github.com/paritytrading/parity). Thanks to those authors for key elements of a clean architectural solution to a local micromarket implementation.
+
+The project in which this is used is The Energy Mashup Lab's [NIST-CTS-Agents](https://github.com/EnergyMashupLab/NIST-CTS-Agents) which uses the Common Transactive Services for market participation. See that project's project architecture and description. This code will be part of the open source implementation of a Local Market Engine (LME).
+
+These modifications, as well as the base code, is under the Apache 2.0 License.
+
+Base repository README from [ParityTrading Parity](https://github.com/paritytrading/parity):
+
 # Parity
 
 Parity is an open source software platform for trading venues. It can be
