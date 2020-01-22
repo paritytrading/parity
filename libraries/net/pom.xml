@@ -29,10 +29,12 @@
   <name>Parity Network Protocols</name>
 
   <dependencies>
+<!-- not using nassau
     <dependency>
       <groupId>com.paritytrading.nassau</groupId>
       <artifactId>nassau-core</artifactId>
     </dependency>
+-->
   </dependencies>
 
 </project>

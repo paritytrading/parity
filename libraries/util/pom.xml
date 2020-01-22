@@ -29,6 +29,7 @@
   <name>Parity Utilities</name>
 
   <dependencies>
+<!-- Need to examine requirement for foundation and typesafe. Some poms showed dependency, some not wtc -->
     <dependency>
       <groupId>com.paritytrading.foundation</groupId>
       <artifactId>foundation</artifactId>
@@ -36,7 +37,9 @@
     <dependency>
       <groupId>com.typesafe</groupId>
       <artifactId>config</artifactId>
+    <version>1.3.1</version>
     </dependency>
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
