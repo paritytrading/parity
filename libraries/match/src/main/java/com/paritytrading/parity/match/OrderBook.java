@@ -16,20 +16,21 @@
 package com.paritytrading.parity.match;
 
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
-import it.unimi.dsi.fastutil.longs.Long2ObjectRBTreeMap;
-import it.unimi.dsi.fastutil.longs.LongComparators;
+import java.util.TreeSet;
 
 /**
  * An order book.
  */
 public class OrderBook {
 
-    private final Long2ObjectRBTreeMap<PriceLevel> bids;
-    private final Long2ObjectRBTreeMap<PriceLevel> asks;
+    private final TreeSet<Order> bids;
+    private final TreeSet<Order> asks;
 
     private final Long2ObjectOpenHashMap<Order> orders;
 
     private final OrderBookListener listener;
+
+    private long nextOrderNumber;
 
     /**
      * Create an order book.
@@ -37,12 +38,14 @@ public class OrderBook {
      * @param listener a listener for outbound events from the order book
      */
     public OrderBook(OrderBookListener listener) {
-        this.bids = new Long2ObjectRBTreeMap<>(LongComparators.OPPOSITE_COMPARATOR);
-        this.asks = new Long2ObjectRBTreeMap<>(LongComparators.NATURAL_COMPARATOR);
+        this.bids = new TreeSet<>(OrderBook::compareBids);
+        this.asks = new TreeSet<>(OrderBook::compareAsks);
 
         this.orders = new Long2ObjectOpenHashMap<>();
 
         this.listener = listener;
+
+        this.nextOrderNumber = 0;
     }
 
     /**
@@ -72,46 +75,78 @@ public class OrderBook {
             sell(orderId, price, size);
     }
 
-    private void buy(long orderId, long price, long size) {
-        long remainingQuantity = size;
+    private void buy(long incomingId, long incomingPrice, long incomingQuantity) {
+        while (!asks.isEmpty()) {
+            Order resting = asks.first();
 
-        PriceLevel bestLevel = getBestLevel(asks);
+            long restingPrice = resting.getPrice();
+            if (restingPrice > incomingPrice)
+                break;
 
-        while (remainingQuantity > 0 && bestLevel != null && bestLevel.getPrice() <= price) {
-            remainingQuantity = bestLevel.match(orderId, Side.BUY, remainingQuantity, orders, listener);
+            long restingId = resting.getId();
 
-            if (bestLevel.isEmpty())
-                asks.remove(bestLevel.getPrice());
+            long restingQuantity = resting.getRemainingQuantity();
 
-            bestLevel = getBestLevel(asks);
+            if (restingQuantity > incomingQuantity) {
+                resting.reduce(incomingQuantity);
+
+                listener.match(restingId, incomingId, Side.BUY, restingPrice, incomingQuantity, resting.getRemainingQuantity());
+
+                return;
+            }
+
+            asks.remove(resting);
+            orders.remove(restingId);
+
+            listener.match(restingId, incomingId, Side.BUY, restingPrice, restingQuantity, 0);
+
+            incomingQuantity -= restingQuantity;
+            if (incomingQuantity == 0)
+                return;
         }
 
-        if (remainingQuantity > 0) {
-            orders.put(orderId, add(bids, orderId, Side.BUY, price, remainingQuantity));
-
-            listener.add(orderId, Side.BUY, price, remainingQuantity);
-        }
+        add(incomingId, Side.BUY, incomingPrice, incomingQuantity, bids);
     }
 
-    private void sell(long orderId, long price, long size) {
-        long remainingQuantity = size;
+    private void sell(long incomingId, long incomingPrice, long incomingQuantity) {
+        while (!bids.isEmpty()) {
+            Order resting = bids.first();
 
-        PriceLevel bestLevel = getBestLevel(bids);
+            long restingPrice = resting.getPrice();
+            if (restingPrice < incomingPrice)
+                break;
 
-        while (remainingQuantity > 0 && bestLevel != null && bestLevel.getPrice() >= price) {
-            remainingQuantity = bestLevel.match(orderId, Side.SELL, remainingQuantity, orders, listener);
+            long restingId = resting.getId();
 
-            if (bestLevel.isEmpty())
-                bids.remove(bestLevel.getPrice());
+            long restingQuantity = resting.getRemainingQuantity();
+            if (restingQuantity > incomingQuantity) {
+                resting.reduce(incomingQuantity);
 
-            bestLevel = getBestLevel(bids);
+                listener.match(restingId, incomingId, Side.SELL, restingPrice, incomingQuantity, resting.getRemainingQuantity());
+
+                return;
+            }
+
+            bids.remove(resting);
+            orders.remove(restingId);
+
+            listener.match(restingId, incomingId, Side.SELL, restingPrice, restingQuantity, 0);
+
+            incomingQuantity -= restingQuantity;
+            if (incomingQuantity == 0)
+                return;
         }
 
-        if (remainingQuantity > 0) {
-            orders.put(orderId, add(asks, orderId, Side.SELL, price, remainingQuantity));
+        add(incomingId, Side.SELL, incomingPrice, incomingQuantity, asks);
+    }
 
-            listener.add(orderId, Side.SELL, price, remainingQuantity);
-        }
+    private void add(long orderId, Side side, long price, long size, TreeSet<Order> queue) {
+        Order order = new Order(nextOrderNumber++, orderId, side, price, size);
+
+        queue.add(order);
+        orders.put(orderId, order);
+
+        listener.add(orderId, side, price, size);
     }
 
     /**
@@ -139,49 +174,29 @@ public class OrderBook {
         if (size > 0) {
             order.resize(size);
         } else {
-            delete(order);
+            TreeSet<Order> queue = order.getSide() == Side.BUY ? bids : asks;
 
+            queue.remove(order);
             orders.remove(orderId);
         }
 
         listener.cancel(orderId, remainingQuantity - size, size);
     }
 
-    private PriceLevel getBestLevel(Long2ObjectRBTreeMap<PriceLevel> levels) {
-        if (levels.isEmpty())
-            return null;
+    private static int compareBids(Order a, Order b) {
+        int result = Long.compare(b.getPrice(), a.getPrice());
+        if (result != 0)
+            return result;
 
-        return levels.get(levels.firstLongKey());
+        return Long.compare(a.getNumber(), b.getNumber());
     }
 
-    private Order add(Long2ObjectRBTreeMap<PriceLevel> levels, long orderId, Side side, long price, long size) {
-        PriceLevel level = levels.get(price);
-        if (level == null) {
-            level = new PriceLevel(side, price);
-            levels.put(price, level);
-        }
+    private static int compareAsks(Order a, Order b) {
+        int result = Long.compare(a.getPrice(), b.getPrice());
+        if (result != 0)
+            return result;
 
-        return level.add(orderId, size);
-    }
-
-    private void delete(Order order) {
-        PriceLevel level = order.getLevel();
-
-        level.delete(order);
-
-        if (level.isEmpty())
-            delete(level);
-    }
-
-    private void delete(PriceLevel level) {
-        switch (level.getSide()) {
-        case BUY:
-            bids.remove(level.getPrice());
-            break;
-        case SELL:
-            asks.remove(level.getPrice());
-            break;
-        }
-    }
+        return Long.compare(a.getNumber(), b.getNumber());
+    };
 
 }
