@@ -17,26 +17,42 @@ package com.paritytrading.parity.match;
 
 class Order {
 
-    private final PriceLevel level;
+    private final long number;
 
     private final long id;
 
+    private final Side side;
+
+    private final long price;
+
     private long remainingQuantity;
 
-    Order(PriceLevel level, long id, long size) {
-        this.level = level;
+    Order(long number, long id, Side side, long price, long size) {
+        this.number = number;
 
         this.id = id;
+
+        this.side = side;
+
+        this.price = price;
 
         this.remainingQuantity = size;
     }
 
-    PriceLevel getLevel() {
-        return level;
+    long getNumber() {
+        return number;
     }
 
     long getId() {
         return id;
+    }
+
+    Side getSide() {
+        return side;
+    }
+
+    long getPrice() {
+        return price;
     }
 
     long getRemainingQuantity() {
