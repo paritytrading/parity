@@ -138,24 +138,26 @@ class Session implements Closeable {
             FIXValue priceValue    = null;
 
             for (int i = 0; i < message.getFieldCount(); i++) {
+                FIXValue value = message.valueAt(i);
+
                 switch (message.tagAt(i)) {
                 case ClOrdID:
-                    clOrdIdValue = message.valueAt(i);
+                    clOrdIdValue = value;
                     break;
                 case Account:
-                    accountValue = message.valueAt(i);
+                    accountValue = value;
                     break;
                 case Side:
-                    sideValue = message.valueAt(i);
+                    sideValue = value;
                     break;
                 case Symbol:
-                    symbolValue = message.valueAt(i);
+                    symbolValue = value;
                     break;
                 case OrderQty:
-                    orderQtyValue = message.valueAt(i);
+                    orderQtyValue = value;
                     break;
                 case Price:
-                    priceValue = message.valueAt(i);
+                    priceValue = value;
                     break;
                 }
             }
@@ -267,15 +269,17 @@ class Session implements Closeable {
             FIXValue orderQtyValue    = null;
 
             for (int i = 0; i < message.getFieldCount(); i++) {
+                FIXValue value = message.valueAt(i);
+
                 switch (message.tagAt(i)) {
                 case ClOrdID:
-                    clOrdIdValue = message.valueAt(i);
+                    clOrdIdValue = value;
                     break;
                 case OrigClOrdID:
-                    origClOrdIdValue = message.valueAt(i);
+                    origClOrdIdValue = value;
                     break;
                 case OrderQty:
-                    orderQtyValue = message.valueAt(i);
+                    orderQtyValue = value;
                     break;
                 }
             }
@@ -294,7 +298,7 @@ class Session implements Closeable {
             char cxlRejResponseTo = CxlRejResponseToValues.OrderCancelRequest;
 
             if (msgType == OrderCancelReplaceRequest)
-                cxlRejResponseTo = CxlRejResponseToValues.OrderCancel;
+                cxlRejResponseTo = CxlRejResponseToValues.OrderCancelReplaceRequest;
 
             String origClOrdId = origClOrdIdValue.asString();
             String clOrdId     = clOrdIdValue.asString();
