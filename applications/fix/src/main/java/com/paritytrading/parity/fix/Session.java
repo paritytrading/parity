@@ -298,7 +298,7 @@ class Session implements Closeable {
             char cxlRejResponseTo = CxlRejResponseToValues.OrderCancelRequest;
 
             if (msgType == OrderCancelReplaceRequest)
-                cxlRejResponseTo = CxlRejResponseToValues.OrderCancel;
+                cxlRejResponseTo = CxlRejResponseToValues.OrderCancelReplaceRequest;
 
             String origClOrdId = origClOrdIdValue.asString();
             String clOrdId     = clOrdIdValue.asString();
