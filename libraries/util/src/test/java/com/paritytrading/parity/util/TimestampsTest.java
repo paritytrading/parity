@@ -15,28 +15,28 @@
  */
 package com.paritytrading.parity.util;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class TimestampsTest {
+class TimestampsTest {
 
     @Test
-    public void testFirstMidnight() {
+    void testFirstMidnight() {
         long timestampMillis = 0L;
 
         assertEquals("00:00:00.000", Timestamps.format(timestampMillis));
     }
 
     @Test
-    public void testFirstMidday() {
+    void testFirstMidday() {
         long timestampMillis = 12L * 60 * 60 * 1000;
 
         assertEquals("12:00:00.000", Timestamps.format(timestampMillis));
     }
 
     @Test
-    public void testSecondMidnight() {
+    void testSecondMidnight() {
         long timestampMillis = 24L * 60 * 60 * 1000;
 
         assertEquals("00:00:00.000", Timestamps.format(timestampMillis));
