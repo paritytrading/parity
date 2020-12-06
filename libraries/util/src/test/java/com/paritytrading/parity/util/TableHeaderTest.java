@@ -15,14 +15,14 @@
  */
 package com.paritytrading.parity.util;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class TableHeaderTest {
+class TableHeaderTest {
 
     @Test
-    public void foo() {
+    void foo() {
         TableHeader actual = new TableHeader();
 
         actual.add("Foo",  5);

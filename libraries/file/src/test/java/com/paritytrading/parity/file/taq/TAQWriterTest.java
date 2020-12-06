@@ -15,15 +15,15 @@
  */
 package com.paritytrading.parity.file.taq;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayOutputStream;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class TAQWriterTest {
+class TAQWriterTest {
 
     @Test
-    public void writeWithDefaultConfiguration() throws Exception {
+    void writeWithDefaultConfiguration() throws Exception {
         TAQ.Quote quote = new TAQ.Quote();
 
         quote.date            = "2016-01-01";
@@ -68,7 +68,7 @@ public class TAQWriterTest {
     }
 
     @Test
-    public void writeWithCustomConfiguration() throws Exception {
+    void writeWithCustomConfiguration() throws Exception {
         TAQ.Trade trade = new TAQ.Trade();
 
         trade.date            = "2016-01-01";

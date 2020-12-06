@@ -18,16 +18,16 @@ package com.paritytrading.parity.book;
 import static com.paritytrading.parity.book.MarketEvents.*;
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import it.unimi.dsi.fastutil.longs.LongIterator;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.jvirtanen.value.Value;
 
-public class MarketTest {
+class MarketTest {
 
     private static final long INSTRUMENT = 1;
 
@@ -37,8 +37,8 @@ public class MarketTest {
 
     private OrderBook book;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         events = new MarketEvents();
         market = new Market(events);
 
@@ -46,7 +46,7 @@ public class MarketTest {
     }
 
     @Test
-    public void bbo() {
+    void bbo() {
         market.add(INSTRUMENT, 1, Side.BUY,   999, 100);
         market.add(INSTRUMENT, 2, Side.SELL, 1001, 200);
 
@@ -59,7 +59,7 @@ public class MarketTest {
     }
 
     @Test
-    public void addition() {
+    void addition() {
         market.add(INSTRUMENT, 1, Side.BUY,   999, 100);
         market.add(INSTRUMENT, 2, Side.SELL, 1001, 200);
         market.add(INSTRUMENT, 3, Side.BUY,  1000,  50);
@@ -76,7 +76,7 @@ public class MarketTest {
     }
 
     @Test
-    public void modification() {
+    void modification() {
         market.add(INSTRUMENT, 1, Side.BUY,   999, 100);
         market.add(INSTRUMENT, 2, Side.SELL, 1001, 200);
         market.modify(2, 100);
@@ -92,7 +92,7 @@ public class MarketTest {
     }
 
     @Test
-    public void execution() {
+    void execution() {
         market.add(INSTRUMENT, 1, Side.BUY,   999, 100);
         market.add(INSTRUMENT, 2, Side.SELL, 1001, 200);
         market.add(INSTRUMENT, 3, Side.SELL, 1002,  50);
@@ -111,7 +111,7 @@ public class MarketTest {
     }
 
     @Test
-    public void executionWithPrice() {
+    void executionWithPrice() {
         market.add(INSTRUMENT, 1, Side.BUY,   999, 100);
         market.add(INSTRUMENT, 2, Side.SELL, 1001, 200);
         market.add(INSTRUMENT, 3, Side.SELL, 1002,  50);
@@ -130,7 +130,7 @@ public class MarketTest {
     }
 
     @Test
-    public void partialExecution() {
+    void partialExecution() {
         market.add(INSTRUMENT, 1, Side.BUY,   999, 100);
         market.add(INSTRUMENT, 2, Side.SELL, 1001, 200);
         assertEquals(100, market.execute(2, 100));
@@ -147,7 +147,7 @@ public class MarketTest {
     }
 
     @Test
-    public void cancellation() {
+    void cancellation() {
         market.add(INSTRUMENT, 1, Side.BUY,   999, 100);
         market.add(INSTRUMENT, 2, Side.SELL, 1001, 200);
         market.add(INSTRUMENT, 3, Side.SELL, 1002,  50);
@@ -165,7 +165,7 @@ public class MarketTest {
     }
 
     @Test
-    public void partialCancellation() {
+    void partialCancellation() {
         market.add(INSTRUMENT, 1, Side.BUY,   999, 100);
         market.add(INSTRUMENT, 2, Side.SELL, 1001, 200);
         assertEquals(100, market.cancel(2, 100));
@@ -181,7 +181,7 @@ public class MarketTest {
     }
 
     @Test
-    public void deletion() {
+    void deletion() {
         market.add(INSTRUMENT, 1, Side.BUY,   999, 100);
         market.add(INSTRUMENT, 2, Side.SELL, 1001, 200);
         market.add(INSTRUMENT, 3, Side.SELL, 1002,  50);
@@ -199,7 +199,7 @@ public class MarketTest {
     }
 
     @Test
-    public void empty() {
+    void empty() {
         market.add(INSTRUMENT, 1, Side.BUY,   999, 100);
         market.add(INSTRUMENT, 2, Side.SELL, 1001, 200);
         market.delete(2);

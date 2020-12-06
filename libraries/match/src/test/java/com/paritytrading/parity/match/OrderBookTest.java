@@ -17,25 +17,25 @@ package com.paritytrading.parity.match;
 
 import static com.paritytrading.parity.match.OrderBookEvents.*;
 import static java.util.Arrays.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class OrderBookTest {
+class OrderBookTest {
 
     private OrderBookEvents events;
 
     private OrderBook book;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         events = new OrderBookEvents();
         book   = new OrderBook(events);
     }
 
     @Test
-    public void bid() {
+    void bid() {
         book.enter(1, Side.BUY, 1000, 100);
 
         Event bid = new Add(1, Side.BUY, 1000, 100);
@@ -44,7 +44,7 @@ public class OrderBookTest {
     }
 
     @Test
-    public void ask() {
+    void ask() {
         book.enter(1, Side.SELL, 1000, 100);
 
         Event ask = new Add(1, Side.SELL, 1000, 100);
@@ -53,7 +53,7 @@ public class OrderBookTest {
     }
 
     @Test
-    public void buy() {
+    void buy() {
         book.enter(1, Side.SELL, 1000, 100);
         book.enter(2, Side.BUY,  1000, 100);
 
@@ -64,7 +64,7 @@ public class OrderBookTest {
     }
 
     @Test
-    public void sell() {
+    void sell() {
         book.enter(1, Side.BUY,  1000, 100);
         book.enter(2, Side.SELL, 1000, 100);
 
@@ -75,7 +75,7 @@ public class OrderBookTest {
     }
 
     @Test
-    public void multiLevelBuy() {
+    void multiLevelBuy() {
         book.enter(1, Side.SELL, 1000, 100);
         book.enter(2, Side.SELL, 1001, 100);
         book.enter(3, Side.SELL,  999,  50);
@@ -93,7 +93,7 @@ public class OrderBookTest {
     }
 
     @Test
-    public void multiLevelSell() {
+    void multiLevelSell() {
         book.enter(1, Side.BUY,  1000, 100);
         book.enter(2, Side.BUY,   999, 100);
         book.enter(3, Side.BUY,  1001,  50);
@@ -111,7 +111,7 @@ public class OrderBookTest {
     }
 
     @Test
-    public void partialBuy() {
+    void partialBuy() {
         book.enter(1, Side.SELL, 1000,  50);
         book.enter(2, Side.BUY,  1000, 100);
 
@@ -123,7 +123,7 @@ public class OrderBookTest {
     }
 
     @Test
-    public void partialSell() {
+    void partialSell() {
         book.enter(1, Side.BUY,  1000,  50);
         book.enter(2, Side.SELL, 1000, 100);
 
@@ -135,7 +135,7 @@ public class OrderBookTest {
     }
 
     @Test
-    public void partialBidFill() {
+    void partialBidFill() {
         book.enter(1, Side.BUY,  1000, 100);
         book.enter(2, Side.SELL, 1000,  50);
         book.enter(3, Side.SELL, 1000,  50);
@@ -152,7 +152,7 @@ public class OrderBookTest {
     }
 
     @Test
-    public void partialAskFill() {
+    void partialAskFill() {
         book.enter(1, Side.SELL, 1000, 100);
         book.enter(2, Side.BUY,  1000,  50);
         book.enter(3, Side.BUY,  1000,  50);
@@ -169,7 +169,7 @@ public class OrderBookTest {
     }
 
     @Test
-    public void cancel() {
+    void cancel() {
         book.enter(1, Side.BUY, 1000, 100);
         book.cancel(1, 0);
         book.enter(2, Side.SELL, 1000, 100);
@@ -182,7 +182,7 @@ public class OrderBookTest {
     }
 
     @Test
-    public void partialCancel() {
+    void partialCancel() {
         book.enter(1, Side.BUY, 1000, 100);
         book.cancel(1, 75);
         book.enter(2, Side.SELL, 1000, 100);
@@ -196,7 +196,7 @@ public class OrderBookTest {
     }
 
     @Test
-    public void ineffectiveCancel() {
+    void ineffectiveCancel() {
         book.enter(1, Side.BUY, 1000, 100);
         book.cancel(1, 100);
         book.cancel(1, 150);
@@ -210,7 +210,7 @@ public class OrderBookTest {
     }
 
     @Test
-    public void unknownOrder() {
+    void unknownOrder() {
         book.enter(1, Side.BUY, 1000, 100);
         book.cancel(1, 0);
         book.cancel(1, 0);
@@ -222,7 +222,7 @@ public class OrderBookTest {
     }
 
     @Test
-    public void reuseOrderId() {
+    void reuseOrderId() {
         book.enter(1, Side.BUY,  1000, 100);
         book.enter(2, Side.SELL, 1000, 100);
         book.enter(1, Side.BUY,  1000, 100);
