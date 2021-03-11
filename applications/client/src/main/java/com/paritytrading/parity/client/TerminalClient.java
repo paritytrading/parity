@@ -38,7 +38,6 @@ import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
 import org.jline.reader.UserInterruptException;
 import org.jline.reader.impl.completer.StringsCompleter;
-import org.jvirtanen.config.Configs;
 
 class TerminalClient implements Closeable {
 
@@ -189,10 +188,10 @@ class TerminalClient implements Closeable {
     }
 
     private static void main(Config config) throws IOException {
-        InetAddress orderEntryAddress  = Configs.getInetAddress(config, "order-entry.address");
-        int         orderEntryPort     = Configs.getPort(config, "order-entry.port");
-        String      orderEntryUsername = config.getString("order-entry.username");
-        String      orderEntryPassword = config.getString("order-entry.password");
+        String orderEntryAddress  = config.getString("order-entry.address");
+        int    orderEntryPort     = config.getInt("order-entry.port");
+        String orderEntryUsername = config.getString("order-entry.username");
+        String orderEntryPassword = config.getString("order-entry.password");
 
         Instruments instruments = Instruments.fromConfig(config, "instruments");
 

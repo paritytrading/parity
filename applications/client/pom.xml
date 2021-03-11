@@ -56,10 +56,6 @@
       <artifactId>jline-reader</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.jvirtanen.config</groupId>
-      <artifactId>config-extras</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.jvirtanen.util</groupId>
       <artifactId>util-extras</artifactId>
     </dependency>
