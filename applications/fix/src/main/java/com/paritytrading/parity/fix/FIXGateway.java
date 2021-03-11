@@ -24,7 +24,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
-import org.jvirtanen.config.Configs;
 
 class FIXGateway {
 
@@ -49,16 +48,16 @@ class FIXGateway {
     }
 
     private static OrderEntryFactory orderEntry(Config config) {
-        InetAddress address = Configs.getInetAddress(config, "order-entry.address");
-        int         port    = Configs.getPort(config, "order-entry.port");
+        String address = config.getString("order-entry.address");
+        int    port    = config.getInt("order-entry.port");
 
         return new OrderEntryFactory(new InetSocketAddress(address, port));
     }
 
     private static FIXAcceptor fix(OrderEntryFactory orderEntry, Config config) throws IOException {
-        InetAddress address      = Configs.getInetAddress(config, "fix.address");
-        int         port         = Configs.getPort(config, "fix.port");
-        String      senderCompId = config.getString("fix.sender-comp-id");
+        String address      = config.getString("fix.address");
+        int    port         = config.getInt("fix.port");
+        String senderCompId = config.getString("fix.sender-comp-id");
 
         Instruments instruments = Instruments.fromConfig(config, "instruments");
 
