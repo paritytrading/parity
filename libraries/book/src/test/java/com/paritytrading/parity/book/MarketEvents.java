@@ -17,7 +17,6 @@ package com.paritytrading.parity.book;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.jvirtanen.value.Value;
 
 class MarketEvents implements MarketListener {
 
