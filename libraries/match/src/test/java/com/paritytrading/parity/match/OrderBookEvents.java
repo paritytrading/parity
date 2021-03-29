@@ -17,7 +17,6 @@ package com.paritytrading.parity.match;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.jvirtanen.value.Value;
 
 class OrderBookEvents implements OrderBookListener {
 
