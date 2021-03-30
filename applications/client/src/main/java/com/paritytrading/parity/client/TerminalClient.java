@@ -15,8 +15,6 @@
  */
 package com.paritytrading.parity.client;
 
-import static org.jvirtanen.util.Applications.*;
-
 import com.paritytrading.foundation.ASCII;
 import com.paritytrading.nassau.soupbintcp.SoupBinTCP;
 import com.paritytrading.parity.net.poe.POE;
@@ -24,7 +22,9 @@ import com.paritytrading.parity.util.Instruments;
 import com.paritytrading.parity.util.OrderIDGenerator;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigException;
+import com.typesafe.config.ConfigFactory;
 import java.io.Closeable;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -177,7 +177,7 @@ class TerminalClient implements Closeable {
 
     public static void main(String[] args) throws IOException {
         if (args.length != 1)
-            usage("parity-client <configuration-file>");
+            usage();
 
         try {
             main(config(args[0]));
@@ -198,6 +198,24 @@ class TerminalClient implements Closeable {
 
         TerminalClient.open(new InetSocketAddress(orderEntryAddress, orderEntryPort),
                 orderEntryUsername, orderEntryPassword, instruments).run();
+    }
+
+    private static Config config(String filename) throws FileNotFoundException {
+        File file = new File(filename);
+        if (!file.exists() || !file.isFile())
+            throw new FileNotFoundException(filename + ": No such file");
+
+        return ConfigFactory.parseFile(file);
+    }
+
+    private static void usage() {
+        System.err.println("Usage: parity-client <configuration-file>");
+        System.exit(2);
+    }
+
+    private static void error(Throwable throwable) {
+        System.err.println("error: " + throwable.getMessage());
+        System.exit(1);
     }
 
 }
