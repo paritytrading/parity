@@ -15,8 +15,6 @@
  */
 package com.paritytrading.parity.reporter;
 
-import static org.jvirtanen.util.Applications.*;
-
 import com.paritytrading.nassau.MessageListener;
 import com.paritytrading.nassau.util.MoldUDP64;
 import com.paritytrading.nassau.util.SoupBinTCP;
@@ -24,6 +22,8 @@ import com.paritytrading.parity.net.pmr.PMRParser;
 import com.paritytrading.parity.util.Instruments;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigException;
+import com.typesafe.config.ConfigFactory;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -33,17 +33,15 @@ import org.jvirtanen.config.Configs;
 
 class TradeReporter {
 
-    private static final String USAGE = "parity-reporter [-t] <configuration-file>";
-
     public static void main(String[] args) {
         if (args.length != 1 && args.length != 2)
-            usage(USAGE);
+            usage();
 
         boolean tsv = false;
 
         if (args.length == 2) {
             if (!args[0].equals("-t"))
-                usage(USAGE);
+                usage();
 
             tsv = true;
         }
@@ -80,6 +78,32 @@ class TradeReporter {
 
             SoupBinTCP.receive(new InetSocketAddress(address, port), username, password, listener);
         }
+    }
+
+    private static Config config(String filename) throws FileNotFoundException {
+        File file = new File(filename);
+        if (!file.exists() || !file.isFile())
+            throw new FileNotFoundException(filename + ": No such file");
+
+        return ConfigFactory.parseFile(file);
+    }
+
+    private static void usage() {
+        System.err.println("Usage: parity-reporter [-t] <configuration-file>");
+        System.exit(2);
+    }
+
+    private static void error(Throwable throwable) {
+        System.err.println("error: " + throwable.getMessage());
+        System.exit(1);
+    }
+
+    private static void fatal(Throwable throwable) {
+        System.err.println("fatal: " + throwable.getMessage());
+        System.err.println();
+        throwable.printStackTrace(System.err);
+        System.err.println();
+        System.exit(1);
     }
 
 }

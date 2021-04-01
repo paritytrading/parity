@@ -15,8 +15,6 @@
  */
 package com.paritytrading.parity.reporter;
 
-import static org.jvirtanen.util.Applications.*;
-
 import com.paritytrading.foundation.ASCII;
 import com.paritytrading.parity.net.pmr.PMR;
 import com.paritytrading.parity.net.pmr.PMRListener;
@@ -115,6 +113,11 @@ class TradeProcessor implements PMRListener {
             this.price             = message.price;
             this.remainingQuantity = message.quantity;
         }
+    }
+
+    private static void error(String message) {
+        System.err.println("error: " + message);
+        System.exit(1);
     }
 
 }
