@@ -1,3 +1,6 @@
+> :warning: This repository is **archived** and no further development
+> will take place.
+
 # Parity
 
 Parity is an open source software platform for trading venues. It can be
@@ -68,15 +71,6 @@ Build Parity with Maven:
 ```
 mvn package
 ```
-
-## Links
-
-For more information on Parity:
-
-- Follow [@paritytrading](https://twitter.com/paritytrading) on Twitter for
-  news and announcements
-- Join [paritytrading/chat](https://gitter.im/paritytrading/chat) on Gitter
-  for discussions
 
 ## License
 
